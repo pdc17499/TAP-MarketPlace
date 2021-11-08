@@ -26,7 +26,7 @@ export const SIZE = {
   //Input
   input_height: scaleWidth(60),
   //Input
-  btn_height: scaleWidth(60),
+  btn_height: scaleWidth(56),
   btn_height_small: scaleWidth(48),
 
   //Text
@@ -34,7 +34,7 @@ export const SIZE = {
 
   // space
   medium_space: scaleWidth(36),
-  big_space: scaleWidth(60),
+  big_space: scaleHeight(60),
   base_space: scaleWidth(16),
   padding: scaleWidth(24),
 

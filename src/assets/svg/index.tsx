@@ -84,3 +84,36 @@ export const IconBack = (props: iconProps) => (
     />
   </Svg>
 );
+
+export const IconNext = (props: iconProps) => (
+  <Svg width={20} height={20} fill="none" {...props}>
+    <Path
+      d="M3.125 10h13.75M11.25 4.375L16.875 10l-5.625 5.625"
+      stroke="#B09E88"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </Svg>
+);
+
+export const IconPickLocation = (props: iconProps) => (
+  <Svg width={24} height={24} fill="none" {...props}>
+    <Path
+      d="M12 1.5a8.26 8.26 0 00-8.25 8.25c0 7.059 7.5 12.39 7.819 12.614a.752.752 0 00.861 0c.32-.223 7.82-5.555 7.82-12.614A8.26 8.26 0 0012 1.5zm0 5.25a3 3 0 110 6 3 3 0 010-6z"
+      fill="#805D27"
+    />
+  </Svg>
+);
+
+export const IconClear = (props: iconProps) => (
+  <Svg width={20} height={20} fill="none" {...props}>
+    <Path
+      d="M15.625 4.375l-11.25 11.25M15.625 15.625L4.375 4.375"
+      stroke="#AAA"
+      strokeWidth={2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </Svg>
+);

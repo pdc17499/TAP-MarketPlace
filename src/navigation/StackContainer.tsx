@@ -1,12 +1,29 @@
 import * as React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
-import {LOGIN} from './routeName';
-import {Login} from '../screens';
+import {CHOOSE_ROLE, HOMEOWNER_PROPERTY, LOGIN} from './routeName';
+import {ChooseRole, HomeOwnerProperty, Login} from '../screens';
 import {useSelector} from 'react-redux';
 
 const Stack = createStackNavigator();
+const screenOptions = {
+  headerShown: false,
+};
 
+// unauthenticate stack screens
+const UnAuthenStack = () => {
+  return (
+    <Stack.Navigator
+      screenOptions={screenOptions}
+      initialRouteName={HOMEOWNER_PROPERTY}>
+      <Stack.Screen name={LOGIN} component={Login} />
+      <Stack.Screen name={CHOOSE_ROLE} component={ChooseRole} />
+      <Stack.Screen name={HOMEOWNER_PROPERTY} component={HomeOwnerProperty} />
+    </Stack.Navigator>
+  );
+};
+
+//main stack app
 const NavigationApp = React.forwardRef((props: any, ref: any) => {
   const screenOptions = {
     headerShown: false,
@@ -15,13 +32,7 @@ const NavigationApp = React.forwardRef((props: any, ref: any) => {
     (state: any) => state?.auth?.showIntroScreen,
   );
   let token = useSelector((state: any) => state?.auth?.token);
-  // let typeUser = useSelector((state: any) => state?.auth?.user?.type_account);
-  // let vertifi_Email = useSelector(
-  //   (state: any) => state?.auth?.user?.email_verified_at,
-  // );
-  // let vertifi_infoScreen = useSelector(
-  //   (state: any) => state?.auth?.user?.complete_info,
-  // );
+  console.log({token});
 
   const renderScreenSigned = () => {
     return <Stack.Screen name={LOGIN} component={Login} />;
@@ -29,11 +40,7 @@ const NavigationApp = React.forwardRef((props: any, ref: any) => {
 
   const renderStackApp = () => {
     if (!token) {
-      return (
-        <Stack.Navigator screenOptions={screenOptions}>
-          <Stack.Screen name={LOGIN} component={Login} />
-        </Stack.Navigator>
-      );
+      return <UnAuthenStack />;
     } else {
       return (
         <Stack.Navigator screenOptions={screenOptions}>

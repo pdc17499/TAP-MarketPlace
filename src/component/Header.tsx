@@ -2,30 +2,25 @@ import React from 'react';
 import {StyleSheet, View, TouchableOpacity} from 'react-native';
 import {AppText} from '@component';
 import {getStatusBarHeight} from 'react-native-iphone-x-helper';
-import {colors, DEVICE, fontFamily, scaleWidth, SIZE} from '@util';
+import {colors, DEVICE, fontFamily, scaleHeight, scaleWidth, SIZE} from '@util';
 import {IconBack} from '@assets';
 import {useNavigation} from '@react-navigation/native';
 import {ifIphoneX} from 'react-native-iphone-x-helper';
+import {HeaderProps} from '@interfaces';
 
-interface HeaderProp {
-  customTitleStyle?: any;
-  title?: string;
-  customContainer?: any;
-  back?: any;
-  btnCountine?: boolean;
-  onPressCountine?: () => void;
-  btnRight?: any;
-  iconRight?: any;
-}
 interface screenNavigationProp {
   goBack: any;
 }
 
-const Header = React.memo((props: HeaderProp) => {
-  const {customTitleStyle, title, customContainer, back} = props;
+const Header = React.memo((props: HeaderProps) => {
+  const {customTitleStyle, title, customContainer, back, onPressBack} = props;
   const navigation = useNavigation<screenNavigationProp>();
   const goBack = () => {
-    navigation.goBack();
+    if (onPressBack) {
+      onPressBack();
+    } else {
+      navigation.goBack();
+    }
   };
   return (
     <View style={[styles.container, customContainer]}>
@@ -48,13 +43,13 @@ const styles = StyleSheet.create({
   container: {
     ...ifIphoneX(
       {
-        paddingTop: scaleWidth(50),
+        paddingTop: scaleHeight(50),
       },
       {
-        paddingTop: getStatusBarHeight() + 20,
+        paddingTop: getStatusBarHeight() + scaleHeight(20),
       },
     ),
-    paddingBottom: 15,
+    paddingBottom: scaleHeight(20),
     backgroundColor: colors.white,
   },
   txtTitle: {

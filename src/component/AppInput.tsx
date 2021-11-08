@@ -2,7 +2,7 @@ import {AppText} from '@component';
 import React from 'react';
 import {StyleSheet, TextInput, View, TouchableOpacity} from 'react-native';
 import {colors, fontFamily, DEVICE, scaleWidth, SIZE} from '@util';
-import {EyeIconClose, EyeIconOpen} from '@assets';
+import {EyeIconClose, EyeIconOpen, IconClear, IconPickLocation} from '@assets';
 import {IAppInput} from '@interfaces';
 
 export const AppInput = (props: IAppInput) => {
@@ -21,6 +21,7 @@ export const AppInput = (props: IAppInput) => {
     keyboardType,
     editable,
     iconLeft,
+    iconRight,
   } = props;
   const [isFocused, setIsFocused] = React.useState(false);
   const [hidePasssWord, setHidePassWord] = React.useState(true);
@@ -50,11 +51,29 @@ export const AppInput = (props: IAppInput) => {
       },
   ];
 
+  const renderIconLeft = () => {
+    switch (iconLeft) {
+      case 'map':
+        return <IconPickLocation />;
+    }
+
+    return null;
+  };
+
+  const renderIconRight = () => {
+    switch (iconRight) {
+      case 'clear':
+        return <IconClear />;
+    }
+
+    return null;
+  };
+
   return (
     <>
       {label && <AppText style={styles.label}>{label}</AppText>}
       <View style={viewStyle}>
-        {iconLeft && <View style={styles.iconLeft}>{iconLeft}</View>}
+        {iconLeft && <View style={styles.iconLeft}>{renderIconLeft()}</View>}
         <TextInput
           style={ipStyle}
           editable={editable}
@@ -75,6 +94,7 @@ export const AppInput = (props: IAppInput) => {
             {hidePasssWord ? <EyeIconOpen /> : <EyeIconClose />}
           </TouchableOpacity>
         )}
+        {iconRight && <View style={styles.iconRight}>{renderIconRight()}</View>}
       </View>
       {!!error && <AppText style={styles.error}>{error}</AppText>}
     </>
@@ -83,7 +103,7 @@ export const AppInput = (props: IAppInput) => {
 
 const styles = StyleSheet.create({
   inputWrap: {
-    minHeight: SIZE.btn_height,
+    minHeight: SIZE.input_height,
     borderRadius: 8,
     flexDirection: 'row',
     backgroundColor: colors.bgInput,
@@ -94,6 +114,7 @@ const styles = StyleSheet.create({
   label: {
     color: colors.primary,
     marginTop: SIZE.base_space,
+    marginBottom: 10,
   },
   iconLeft: {
     marginRight: SIZE.base_space,
@@ -103,12 +124,10 @@ const styles = StyleSheet.create({
   },
   input: {
     flex: 1,
-    alignItems: 'center',
     height: '100%',
     color: colors.textPrimary,
     fontSize: SIZE.base_size,
     ...fontFamily.fontWeight400,
-    marginTop: 10,
   },
   error: {
     marginTop: 5,

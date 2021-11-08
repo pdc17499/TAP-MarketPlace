@@ -1,4 +1,4 @@
-import {ViewStyle} from 'react-native';
+import {ImageStyle, ViewStyle} from 'react-native';
 
 export interface screenNavigationProp {
   navigate: any;
@@ -15,6 +15,7 @@ export interface ButtonProps {
   typeButton?: 'linear' | 'full';
   isActive?: boolean;
   iconRight?: any;
+  imageStyle?: ImageStyle,
 }
 
 export interface IAppInput {
@@ -32,5 +33,30 @@ export interface IAppInput {
   onValueChange: (e: any) => void;
   keyboardType?: any;
   editable?: boolean;
-  iconLeft?: any;
+  iconLeft?: 'map' | 'other';
+  iconRight?: 'clear' | 'other'
+}
+
+export interface AppSwiperProps {
+  children: any;
+}
+
+export interface RefAppSwiper {
+  onNextButton: () => void;
+}
+
+export interface HeaderProps {
+  customTitleStyle?: any;
+  title?: string;
+  customContainer?: any;
+  back?: any;
+  btnCountine?: boolean;
+  onPressCountine?: () => void;
+  btnRight?: any;
+  iconRight?: any;
+  onPressBack?: () => void;
+}
+export interface mockProps {
+  id: number;
+  value: string;
 }

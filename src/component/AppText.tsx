@@ -21,7 +21,7 @@ const AppText = React.memo((props: AppTextProps) => {
 
 const styles = StyleSheet.create({
   txtStyle: {
-    ...fontFamily.fontCampWeight600,
+    ...fontFamily.fontWeight400,
     fontSize: SIZE.base_size,
     color: colors.textPrimary,
   },

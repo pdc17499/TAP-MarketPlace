@@ -40,6 +40,7 @@
     "baseUrl": "./" /* Base directory to resolve non-absolute module names. */,
     "paths": {
       "@assets": ["src/assets"],
+      "@mocks": ["src/mocks"],
       "@navigation": ["src/navigation"],
       "@screens": ["src/screens"],
       "@interfaces": ["src/interfaces"],

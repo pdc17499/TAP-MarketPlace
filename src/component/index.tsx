@@ -2,6 +2,7 @@ export * from './AppText';
 export * from './Header';
 export * from './AppButton';
 export * from './AppInput';
+export * from './AppSwiper';
 // export * from './AppPhoneNumber';
 // export * from './AppPicker';
 // export * from './AppDatePicker';
