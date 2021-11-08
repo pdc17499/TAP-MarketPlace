@@ -1,4 +1,4 @@
-import {ViewStyle} from 'react-native';
+import {ImageStyle, ViewStyle} from 'react-native';
 
 export interface screenNavigationProp {
   navigate: any;
@@ -15,6 +15,7 @@ export interface ButtonProps {
   typeButton?: 'linear' | 'full';
   isActive?: boolean;
   iconRight?: any;
+  imageStyle?: ImageStyle;
 }
 
 export interface IAppInput {

@@ -1,4 +1,4 @@
-import {colors} from '@util';
+import { colors } from '@util';
 import React from 'react';
 import Svg, {
   Path,
@@ -73,6 +73,24 @@ export const DownIcon = (props: iconProps) => (
   </Svg>
 );
 
+export const CaretRight = (props: iconProps) => (
+  <Svg
+    width={20}
+    height={20}
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    {...props}
+  >
+    <Path
+      d="M7.5 3.75L13.75 10 7.5 16.25"
+      stroke="#B09E88"
+      strokeWidth={2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </Svg>
+);
+
 export const IconBack = (props: iconProps) => (
   <Svg width={29} height={20} fill="none" {...props}>
     <Path
@@ -81,6 +99,61 @@ export const IconBack = (props: iconProps) => (
       strokeWidth={1.5}
       strokeLinecap="round"
       strokeLinejoin="round"
+    />
+  </Svg>
+);
+
+export const IconEmail = (props: iconProps) => (
+  <Svg
+    width={24}
+    height={24}
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    {...props}
+  >
+    <Path
+      d="M12 15.75a3.75 3.75 0 100-7.5 3.75 3.75 0 000 7.5z"
+      stroke="#B09E88"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <Path
+      d="M16.977 19.5A9 9 0 1121 12c0 2.07-.75 3.75-2.625 3.75S15.75 14.07 15.75 12V8.25"
+      stroke="#B09E88"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </Svg>
+);
+
+export const Key = (props: iconProps) => (
+  <Svg
+    width={24}
+    height={24}
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    {...props}
+  >
+    <Path
+      d="M8.735 11.515a6.744 6.744 0 113.75 3.75h0L11.25 16.5H9v2.25H6.75V21H3v-3.75l5.735-5.735h0z"
+      stroke="#B09E88"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <Path
+      opacity={0.5}
+      d="M16.875 7.5a.375.375 0 100-.75.375.375 0 000 .75z"
+      stroke="#B09E88"
+      strokeWidth={2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <Path
+      d="M16.875 8.25a1.125 1.125 0 100-2.25 1.125 1.125 0 000 2.25z"
+      fill="#B09E88"
     />
   </Svg>
 );
