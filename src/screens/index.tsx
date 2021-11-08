@@ -1,13 +1,7 @@
-//Common
-import { Login } from './auth/Login';
-import { Welcome } from './auth/Welcome';
-import { SignIn } from './auth/SignIn';
-
-
 //UnAuthenticate
-import {Login} from './auth/Login';
 import {ChooseRole} from './auth/ChooseRole';
 import {HomeOwnerProperty} from './auth/HomeOwnerProperty';
+import {Welcome} from './auth/Welcome';
+import {SignIn} from './auth/SignIn';
 
-export {Login, ChooseRole, HomeOwnerProperty, Welcome,
-SignIn};
+export {ChooseRole, HomeOwnerProperty, Welcome, SignIn};

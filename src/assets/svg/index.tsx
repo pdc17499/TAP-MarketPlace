@@ -1,4 +1,4 @@
-import { colors } from '@util';
+import {colors} from '@util';
 import React from 'react';
 import Svg, {
   Path,
@@ -74,13 +74,7 @@ export const DownIcon = (props: iconProps) => (
 );
 
 export const CaretRight = (props: iconProps) => (
-  <Svg
-    width={20}
-    height={20}
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-    {...props}
-  >
+  <Svg width={20} height={20} fill="none" {...props}>
     <Path
       d="M7.5 3.75L13.75 10 7.5 16.25"
       stroke="#B09E88"
@@ -104,13 +98,7 @@ export const IconBack = (props: iconProps) => (
 );
 
 export const IconEmail = (props: iconProps) => (
-  <Svg
-    width={24}
-    height={24}
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-    {...props}
-  >
+  <Svg width={24} height={24} fill="none" {...props}>
     <Path
       d="M12 15.75a3.75 3.75 0 100-7.5 3.75 3.75 0 000 7.5z"
       stroke="#B09E88"
@@ -129,13 +117,7 @@ export const IconEmail = (props: iconProps) => (
 );
 
 export const Key = (props: iconProps) => (
-  <Svg
-    width={24}
-    height={24}
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-    {...props}
-  >
+  <Svg width={24} height={24} fill="none" {...props}>
     <Path
       d="M8.735 11.515a6.744 6.744 0 113.75 3.75h0L11.25 16.5H9v2.25H6.75V21H3v-3.75l5.735-5.735h0z"
       stroke="#B09E88"
@@ -187,6 +169,15 @@ export const IconClear = (props: iconProps) => (
       strokeWidth={2}
       strokeLinecap="round"
       strokeLinejoin="round"
+    />
+  </Svg>
+);
+
+export const IconDola = (props: iconProps) => (
+  <Svg width={11} height={18} fill="none" {...props}>
+    <Path
+      d="M7.278 8.642L5.568 8.3c-1.314-.252-2.034-.756-2.034-1.728 0-1.188 1.026-1.854 2.592-1.854 1.782 0 2.664.792 2.88 2.088h1.908c-.234-2.376-1.962-3.42-3.852-3.69V.974H5.37v2.088c-2.358.216-3.888 1.602-3.888 3.654 0 1.8 1.062 2.97 3.348 3.402l2.142.414c1.44.252 1.926.918 1.926 1.656 0 1.134-.99 1.8-2.592 1.8-1.944 0-3.168-.918-3.402-2.466H.978c.216 2.376 1.872 3.888 4.392 4.158v2.034h1.692v-2.052c2.322-.27 3.816-1.674 3.816-3.708 0-1.89-1.314-2.862-3.6-3.312z"
+      fill="#AAA"
     />
   </Svg>
 );

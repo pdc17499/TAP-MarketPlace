@@ -2,7 +2,15 @@ import {AppText} from '@component';
 import React from 'react';
 import {StyleSheet, TextInput, View, TouchableOpacity} from 'react-native';
 import {colors, fontFamily, DEVICE, scaleWidth, SIZE} from '@util';
-import {EyeIconClose, EyeIconOpen, IconClear, IconPickLocation} from '@assets';
+import {
+  EyeIconClose,
+  EyeIconOpen,
+  IconClear,
+  IconPickLocation,
+  Key,
+  IconEmail,
+  IconDola,
+} from '@assets';
 import {IAppInput} from '@interfaces';
 
 export const AppInput = (props: IAppInput) => {
@@ -22,6 +30,7 @@ export const AppInput = (props: IAppInput) => {
     editable,
     iconLeft,
     iconRight,
+    name,
   } = props;
   const [isFocused, setIsFocused] = React.useState(false);
   const [hidePasssWord, setHidePassWord] = React.useState(true);
@@ -55,6 +64,12 @@ export const AppInput = (props: IAppInput) => {
     switch (iconLeft) {
       case 'map':
         return <IconPickLocation />;
+      case 'email':
+        return <IconEmail />;
+      case 'key':
+        return <Key />;
+      case 'dolar':
+        return <IconDola />;
     }
 
     return null;
@@ -67,6 +82,10 @@ export const AppInput = (props: IAppInput) => {
     }
 
     return null;
+  };
+
+  const onChangeText = (text: string) => {
+    onValueChange(text, name);
   };
 
   return (
@@ -85,7 +104,7 @@ export const AppInput = (props: IAppInput) => {
           onBlur={handleBlur}
           numberOfLines={numberOfLines}
           blurOnSubmit={false}
-          onChangeText={onValueChange}
+          onChangeText={onChangeText}
           secureTextEntry={hidePasssWord && secureTextEntry}
           keyboardType={keyboardType}
         />

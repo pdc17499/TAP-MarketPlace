@@ -4,6 +4,7 @@ import {AppText} from './AppText';
 import {colors, fontFamily, SIZE} from '@util';
 import {debounce} from 'lodash';
 import {ButtonProps} from '@interfaces';
+import {CaretRight} from '@assets';
 
 const AppButton = React.memo((props: ButtonProps) => {
   const {
@@ -25,7 +26,7 @@ const AppButton = React.memo((props: ButtonProps) => {
       if (onPress) {
         onPress();
       }
-    }, 250),
+    }, 200),
     [onPress],
   );
 
@@ -53,6 +54,15 @@ const AppButton = React.memo((props: ButtonProps) => {
     customStyleTitle,
   ];
 
+  const renderIconRight = () => {
+    switch (iconRight) {
+      case 'right':
+        return <CaretRight />;
+    }
+
+    return null;
+  };
+
   return (
     <TouchableOpacity
       style={buttonStyle}
@@ -61,7 +71,7 @@ const AppButton = React.memo((props: ButtonProps) => {
       activeOpacity={0.75}>
       {image && <Image source={image} style={imageStyle} />}
       {title && <AppText style={titleStyle}>{title}</AppText>}
-      {iconRight && <View>{iconRight}</View>}
+      {iconRight && <View>{renderIconRight()}</View>}
     </TouchableOpacity>
   );
 });
@@ -70,6 +80,7 @@ const styles = StyleSheet.create({
   container: {
     // flex: 1,
     borderRadius: 8,
+    flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
     // marginBottom: SIZE.base_space,

@@ -24,11 +24,11 @@ const StepPrice = (props: stepProps) => {
   const data = HOME_OWNER_PROPERTY;
 
   const onSelect = (item: mockProps, name?: string) => {
-    // if (name) {
-    const nProperty: any = {...property};
-    nProperty['rental_price'] = item;
-    setProperty(nProperty);
-    // }
+    if (name) {
+      const nProperty: any = {...property};
+      nProperty[name] = item;
+      setProperty(nProperty);
+    }
   };
 
   const renderFixedPrice = () => {
@@ -36,50 +36,27 @@ const StepPrice = (props: stepProps) => {
       <AppInput
         value={property.fixed_price}
         name={'fixed_price'}
-        iconLeft={'dolar'}
         onValueChange={onSelect}
       />
     );
   };
 
-  const renderPriceRange = () => {
-    return (
-      <View>
-        <AppInput
-          value={property.min_range}
-          name={'min_range'}
-          iconLeft={'dolar'}
-          onValueChange={onSelect}
-          editable={false}
-        />
-        <AppInput
-          value={property.max_range}
-          name={'max_range'}
-          iconLeft={'dolar'}
-          onValueChange={onSelect}
-          editable={false}
-        />
-      </View>
-    );
-  };
-
-  const renderChildren = () => {
-    if (property.rental_price?.id === 1) {
-      return renderFixedPrice();
-    } else if (property.rental_price.id === 2) {
-      return renderPriceRange();
-    }
-  };
-
   return (
     <View style={styles.container}>
+      <AppQA
+        data={data.place}
+        title={'What kind of place will you host?'}
+        selected={property.kind_place}
+        onSelect={onSelect}
+        typeList={'row'}
+      />
+
       <AppQA
         data={data.rentalPrice}
         title={'What is your rental price?'}
         selected={property.rental_price}
         onSelect={onSelect}
         typeList={'column'}
-        children={renderChildren()}
         customStyleTitle={{maxWidth: 'auto'}}
       />
     </View>

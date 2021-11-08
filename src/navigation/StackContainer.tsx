@@ -1,8 +1,14 @@
 import * as React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
-import {CHOOSE_ROLE, HOMEOWNER_PROPERTY, LOGIN, WELCOME, SIGNIN} from './routeName';
-import {ChooseRole, HomeOwnerProperty, Login, Welcome, SignIn} from '../screens';
+import {
+  CHOOSE_ROLE,
+  HOMEOWNER_PROPERTY,
+  LOGIN,
+  WELCOME,
+  SIGNIN,
+} from './routeName';
+import {ChooseRole, HomeOwnerProperty, Welcome, SignIn} from '../screens';
 import {useSelector} from 'react-redux';
 
 const Stack = createStackNavigator();
@@ -16,12 +22,10 @@ const UnAuthenStack = () => {
     <Stack.Navigator
       screenOptions={screenOptions}
       initialRouteName={HOMEOWNER_PROPERTY}>
-      <Stack.Screen name={LOGIN} component={Login} />
       <Stack.Screen name={CHOOSE_ROLE} component={ChooseRole} />
       <Stack.Screen name={HOMEOWNER_PROPERTY} component={HomeOwnerProperty} />
-<Stack.Screen name={WELCOME} component={Welcome} />
-<Stack.Screen name={LOGIN} component={Login} />
-<Stack.Screen name={SIGNIN} component={SignIn} />
+      <Stack.Screen name={WELCOME} component={Welcome} />
+      <Stack.Screen name={SIGNIN} component={SignIn} />
     </Stack.Navigator>
   );
 };
@@ -38,17 +42,8 @@ const NavigationApp = React.forwardRef((props: any, ref: any) => {
   console.log({token});
 
   const renderScreenSigned = () => {
-    return <Stack.Screen name={LOGIN} component={Login} />;
-  };
-
-  const renderScreenWelcome = () => {
-    return <Stack.Screen name={WELCOME} component={Welcome} />;
-  };
-
-  const renderScreenSignIn = () => {
     return <Stack.Screen name={SIGNIN} component={SignIn} />;
   };
-
 
   const renderStackApp = () => {
     if (!token) {
