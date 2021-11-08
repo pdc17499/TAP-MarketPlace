@@ -1,0 +1,10 @@
+export const LOGIN_CLIENT = 'LOGIN_CLIENT';
+export const SAVE_DATA_REDUX = 'SAVE_DATA_REDUX';
+export const HIDE_INTRO_SCREEN = 'HIDE_INTRO_SCREEN';
+export const SIGNUP_CLIENT = 'SIGNUP_CLIENT';
+export const LOGOUT = 'LOGOUT';
+export const SAVE_TYPE_USER = 'SAVE_TYPE_USER';
+export const REMOVE_TOKEN = 'REMOVE_TOKEN';
+export const VERIFY_EMAIL = 'VERIFY_EMAIL';
+export const SEND_VERIFY_EMAIL = 'SEND_VERIFY_EMAIL';
+export const UPDATE_USER_INFOR = 'UPDATE_USER_INFOR';
