@@ -15,7 +15,7 @@ export interface ButtonProps {
   typeButton?: 'linear' | 'full';
   isActive?: boolean;
   iconRight?: any;
-  imageStyle?: ImageStyle,
+  imageStyle?: ImageStyle;
 }
 
 export interface IAppInput {
