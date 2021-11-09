@@ -34,7 +34,7 @@ export const SIZE = {
 
   // space
   medium_space: scaleWidth(36),
-  big_space: scaleWidth(64),
+  big_space: scaleHeight(64),
   base_space: scaleWidth(16),
   padding: scaleWidth(24),
 

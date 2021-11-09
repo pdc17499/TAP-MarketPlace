@@ -1,4 +1,4 @@
-export const HOME_OWNER_PROPERTY = {
+export const ROOM_UNIT_HOWNER = {
   place: [
     {
       id: 1,
@@ -27,7 +27,7 @@ export const HOME_OWNER_PROPERTY = {
       value: 'Price range',
     },
   ],
-  leaseProperty: [
+  lease_your_place: [
     {
       id: 1,
       value: '1 year',
@@ -47,6 +47,16 @@ export const HOME_OWNER_PROPERTY = {
     {
       id: 5,
       value: 'Flexible',
+    },
+  ],
+  staying_width_guests: [
+    {
+      id: 1,
+      value: 'Yes',
+    },
+    {
+      id: 2,
+      value: 'No',
     },
   ],
   roomType: [
@@ -115,7 +125,7 @@ export const HOME_OWNER_PROPERTY = {
       value: 'Fully Furnished',
     },
   ],
-  floorNumber: [
+  floor_level: [
     {
       id: 1,
       value: 'Ground',
@@ -135,6 +145,16 @@ export const HOME_OWNER_PROPERTY = {
     {
       id: 5,
       value: 'Penhouse',
+    },
+  ],
+  allow_cooking: [
+    {
+      id: 1,
+      value: 'Yes',
+    },
+    {
+      id: 2,
+      value: 'No',
     },
   ],
   utilities: [
@@ -184,14 +204,6 @@ export const HOME_OWNER_PROPERTY = {
     },
     {
       id: 12,
-      value: 'Parking lot',
-    },
-    {
-      id: 13,
-      value: 'LGBT friendly',
-    },
-    {
-      id: 14,
       value: 'Diversity friendly',
     },
   ],

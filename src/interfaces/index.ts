@@ -1,6 +1,5 @@
 import {ReactElement} from 'react';
 import {ImageStyle, TextStyle, ViewStyle} from 'react-native';
-import {JsxElement} from 'typescript';
 
 export interface screenNavigationProp {
   navigate: any;
@@ -8,7 +7,8 @@ export interface screenNavigationProp {
 
 export interface ButtonProps {
   title?: string;
-  customStyleButton?: any;
+  containerStyle?: ViewStyle;
+  customStyleButton?: ViewStyle | ViewStyle[];
   customStyleTitle?: any;
   onPress?: any;
   disabled?: boolean;
@@ -26,18 +26,20 @@ export interface IAppInput {
   value?: string;
   secureTextEntry?: boolean;
   type?: string;
+  containerStyle?: ViewStyle | ViewStyle[];
   style?: ViewStyle | ViewStyle[];
-  inputStyle?: ViewStyle | ViewStyle[];
+  inputStyle?: TextStyle | TextStyle[];
   multiline?: boolean;
   numberOfLines?: number;
   error?: string;
   showEye?: boolean;
-  onValueChange: (e: any, name?: string) => void;
+  onValueChange?: (e: any, name?: string) => void;
   keyboardType?: any;
   editable?: boolean;
   iconLeft?: 'map' | 'key' | 'email' | 'dolar' | 'other';
   iconRight?: 'clear' | 'other';
   name?: string;
+  autoFocus?: boolean
 }
 
 export interface AppSwiperProps {
@@ -65,7 +67,7 @@ export interface mockProps {
   value?: string;
 }
 
-export interface homePropertyProps {
+export interface RoomUnitHOwnerProps {
   location: {
     lat: number;
     long: number;
@@ -74,15 +76,16 @@ export interface homePropertyProps {
   kind_place: mockProps;
   rental_price: mockProps;
   fixed_price: string;
-  min_range: string;
-  max_range: string;
+  min_range: number;
+  max_range: number;
   lease_your_place: mockProps;
-  staying_with_guests: boolean;
+  staying_with_guests: mockProps;
   room_type: mockProps;
   floor_size: number;
   bathroom: mockProps;
   room_furnishing: mockProps;
   floor_level: mockProps;
+  allow_cooking: mockProps;
   built_year: string;
   key_your_place: Array<mockProps>;
 }
@@ -90,10 +93,22 @@ export interface homePropertyProps {
 export interface AppQAProps {
   data: Array<mockProps>;
   title: string;
-  selected: any;
-  onSelect: (item: mockProps) => void;
+  subTitle?: string;
+  value: any;
+  setValue: any;
   typeList?: 'column' | 'row';
   isMultiChoice?: boolean;
   children?: ReactElement;
   customStyleTitle?: TextStyle;
+  customStyleViewButton?: ViewStyle;
+  name: string;
+  isFlex?: boolean;
 }
+
+export interface RoomStepProps {
+  onNext: () => void;
+  room: RoomUnitHOwnerProps;
+  onChangeValue: (item: mockProps, name?: string) => void;
+  setRoom?: (item: RoomUnitHOwnerProps) => void;
+}
+

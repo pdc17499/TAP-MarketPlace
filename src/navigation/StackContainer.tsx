@@ -8,7 +8,7 @@ import {
   WELCOME,
   SIGNIN,
 } from './routeName';
-import {ChooseRole, HomeOwnerProperty, Welcome, SignIn} from '../screens';
+import {ChooseRole, RoomUnitHomeowner, Welcome, SignIn} from '../screens';
 import {useSelector} from 'react-redux';
 
 const Stack = createStackNavigator();
@@ -23,7 +23,7 @@ const UnAuthenStack = () => {
       screenOptions={screenOptions}
       initialRouteName={HOMEOWNER_PROPERTY}>
       <Stack.Screen name={CHOOSE_ROLE} component={ChooseRole} />
-      <Stack.Screen name={HOMEOWNER_PROPERTY} component={HomeOwnerProperty} />
+      <Stack.Screen name={HOMEOWNER_PROPERTY} component={RoomUnitHomeowner} />
       <Stack.Screen name={WELCOME} component={Welcome} />
       <Stack.Screen name={SIGNIN} component={SignIn} />
     </Stack.Navigator>

@@ -1,7 +1,7 @@
 //UnAuthenticate
 import {ChooseRole} from './auth/ChooseRole';
-import {HomeOwnerProperty} from './auth/HomeOwnerProperty';
+import {RoomUnitHomeowner} from './auth/RoomUnitHomeowner';
 import {Welcome} from './auth/Welcome';
 import {SignIn} from './auth/SignIn';
 
-export {ChooseRole, HomeOwnerProperty, Welcome, SignIn};
+export {ChooseRole, RoomUnitHomeowner, Welcome, SignIn};
