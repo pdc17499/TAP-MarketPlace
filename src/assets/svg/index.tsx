@@ -1,4 +1,4 @@
-import {colors} from '@util';
+import { colors } from '@util';
 import React from 'react';
 import Svg, {
   Path,
@@ -178,6 +178,64 @@ export const IconDola = (props: iconProps) => (
     <Path
       d="M7.278 8.642L5.568 8.3c-1.314-.252-2.034-.756-2.034-1.728 0-1.188 1.026-1.854 2.592-1.854 1.782 0 2.664.792 2.88 2.088h1.908c-.234-2.376-1.962-3.42-3.852-3.69V.974H5.37v2.088c-2.358.216-3.888 1.602-3.888 3.654 0 1.8 1.062 2.97 3.348 3.402l2.142.414c1.44.252 1.926.918 1.926 1.656 0 1.134-.99 1.8-2.592 1.8-1.944 0-3.168-.918-3.402-2.466H.978c.216 2.376 1.872 3.888 4.392 4.158v2.034h1.692v-2.052c2.322-.27 3.816-1.674 3.816-3.708 0-1.89-1.314-2.862-3.6-3.312z"
       fill="#AAA"
+    />
+  </Svg>
+);
+
+export const IconResetMail = (props: iconProps) => (
+  <Svg
+    width={21}
+    height={20}
+    fill="none"
+    {...props}
+  >
+    <Path
+      d="M3 4.375h15V15a.624.624 0 01-.625.625H3.625A.625.625 0 013 15V4.375z"
+      stroke="#B09E88"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <Path
+      d="M18 4.375l-7.5 6.875L3 4.375"
+      stroke="#B09E88"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </Svg>
+);
+
+export const ArrowBlack = (props: iconProps) => (
+  <Svg
+    width={20}
+    height={20}
+    fill="none"
+    {...props}
+  >
+    <Path
+      d="M3.125 10h13.75M11.25 4.375L16.875 10l-5.625 5.625"
+      stroke="#073729"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </Svg>
+);
+
+export const ArrowGray = (props: iconProps) => (
+  <Svg
+    width={20}
+    height={20}
+    fill="none"
+    {...props}
+  >
+    <Path
+      d="M3.125 10h13.75M11.25 4.375L16.875 10l-5.625 5.625"
+      stroke="#B09E88"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
     />
   </Svg>
 );

@@ -77,10 +77,16 @@ const styles = StyleSheet.create({
 
     },
     signUpTxt: {
+        ...fontFamily.fontWeight400,
+        color: colors.textSecondPrimary,
+    },
+    signUpLine: {
         flexDirection: 'row',
         marginTop: SIZE.big_space,
         alignSelf: 'center'
-    }
+    },
+
+
 
 
 });

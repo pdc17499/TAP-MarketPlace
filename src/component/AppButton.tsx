@@ -1,10 +1,10 @@
-import React, {useCallback} from 'react';
-import {TouchableOpacity, StyleSheet, View, Image} from 'react-native';
-import {AppText} from './AppText';
-import {colors, fontFamily, SIZE} from '@util';
-import {debounce} from 'lodash';
-import {ButtonProps} from '@interfaces';
-import {CaretRight} from '@assets';
+import React, { useCallback } from 'react';
+import { TouchableOpacity, StyleSheet, View, Image } from 'react-native';
+import { AppText } from './AppText';
+import { colors, fontFamily, SIZE } from '@util';
+import { debounce } from 'lodash';
+import { ButtonProps } from '@interfaces';
+import { ArrowBlack, ArrowGray, CaretRight, IconResetMail } from '@assets';
 
 const AppButton = React.memo((props: ButtonProps) => {
   const {
@@ -44,7 +44,7 @@ const AppButton = React.memo((props: ButtonProps) => {
   const buttonStyle = [
     styles.container,
     typeButton === 'linear' && bgLinear,
-    {minHeight: size === 'small' ? SIZE.btn_height_small : SIZE.btn_height},
+    { minHeight: size === 'small' ? SIZE.btn_height_small : SIZE.btn_height },
     customStyleButton,
   ];
 
@@ -58,6 +58,12 @@ const AppButton = React.memo((props: ButtonProps) => {
     switch (iconRight) {
       case 'right':
         return <CaretRight />;
+      case 'email':
+        return <IconResetMail />;
+      case 'arrowBlack':
+        return <ArrowBlack />;
+      case 'arrowGray':
+        return <ArrowGray />;
     }
 
     return null;
@@ -90,7 +96,8 @@ const styles = StyleSheet.create({
     ...fontFamily.fontWeight600,
     color: colors.white,
     fontSize: SIZE.base_size,
+
   },
 });
 
-export {AppButton};
+export { AppButton };

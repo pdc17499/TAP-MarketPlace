@@ -16,7 +16,7 @@ export interface ButtonProps {
   size?: 'base' | 'small';
   typeButton?: 'linear' | 'full';
   isActive?: boolean;
-  iconRight?: 'right' | 'other';
+  iconRight?: 'right' | 'email' | 'arrowBlack' | 'arrowGray' | 'other';
   imageStyle?: ImageStyle;
 }
 
@@ -90,10 +90,14 @@ export interface homePropertyProps {
 export interface AppQAProps {
   data: Array<mockProps>;
   title: string;
+  subTitle?: string;
   selected: any;
-  onSelect: (item: mockProps) => void;
+  onSelect: (item: mockProps, name: string) => void;
   typeList?: 'column' | 'row';
   isMultiChoice?: boolean;
   children?: ReactElement;
   customStyleTitle?: TextStyle;
+  customStyleViewButton?: ViewStyle;
+  name: string;
+  isFlex?: boolean;
 }

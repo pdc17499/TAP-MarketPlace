@@ -1,14 +1,16 @@
-import {IconEmail, iconFacebook, iconGoogle, Key, logo} from '@assets';
-import {AppButton, AppInput, AppText} from '@component';
-import {useNavigation} from '@react-navigation/core';
-import {colors, fontFamily, scaleHeight, validateForm} from '@util';
-import {Formik} from 'formik';
-import React, {useState} from 'react';
-import {View, Image, KeyboardAvoidingView} from 'react-native';
-import {useDispatch} from 'react-redux';
-import {styles} from './style';
+import { IconEmail, iconFacebook, iconGoogle, Key, logo } from '@assets';
+import { AppButton, AppInput, AppText } from '@component';
+import { useNavigation } from '@react-navigation/core';
+import { RESETPASSWORD, SIGNUP } from '@routeName';
+import { colors, fontFamily, scaleHeight, validateForm } from '@util';
+import { Formik } from 'formik';
+import React, { useState } from 'react';
+import { View, Image, KeyboardAvoidingView, TouchableOpacity } from 'react-native';
+import { useDispatch } from 'react-redux';
+import { styles } from './style';
+import * as yup from 'yup';
 
-interface SignInProp {}
+interface SignInProp { }
 
 interface screenNavigationProp {
   navigate: any;
@@ -24,25 +26,49 @@ const SignIn = React.memo((props: SignInProp) => {
     error: '',
   };
 
+  const validationSign = yup.object().shape({
+    email: yup
+      .string()
+      .required('This field is required')
+      .email('Email is not valid'),
+    password: yup
+      .string()
+      .required('This field is required')
+      .min(6, 'Password must be at least 6 characters')
+      .max(32, 'Password may not be greater than 32 characters'),
+  });
+
+  const moveToResetPassword = () => {
+    navigation.navigate(RESETPASSWORD)
+  }
+
+  const moveToSignUp = () => {
+    navigation.navigate(SIGNUP)
+  }
+
   const RenderSignInForm = () => (
     <KeyboardAvoidingView>
       <Formik
         initialValues={formInitialValues}
-        validationSchema={validateForm}
+        validationSchema={validationSign}
         validateOnChange={false}
-        onSubmit={values => {}}>
+        onSubmit={values => {
+          console.log('email', values.email);
+        }}>
         {props => (
           <View>
-            <View style={{marginBottom: scaleHeight(16)}}>
+            <View style={{ marginBottom: scaleHeight(16) }}>
               <AppInput
+                placeholder={'Email'}
                 iconLeft={'email'}
                 value={props.values.email}
                 onValueChange={props.handleChange('email')}
                 error={props.errors.email}
               />
             </View>
-            <View style={{marginBottom: scaleHeight(16)}}>
+            <View style={{ marginBottom: scaleHeight(16) }}>
               <AppInput
+                placeholder={'Password'}
                 showEye={true}
                 secureTextEntry={true}
                 iconLeft={'key'}
@@ -50,6 +76,12 @@ const SignIn = React.memo((props: SignInProp) => {
                 onValueChange={props.handleChange('password')}
                 error={props.errors.password}
               />
+            </View>
+            <View>
+              <TouchableOpacity onPress={() => moveToResetPassword()}>
+                <AppText style={styles.forgetTxt}>{'Forget password ?'}</AppText>
+              </TouchableOpacity>
+              <AppButton title={'Sign in'} size={'small'} onPress={props.handleSubmit} />
             </View>
           </View>
         )}
@@ -63,11 +95,6 @@ const SignIn = React.memo((props: SignInProp) => {
       <AppText style={styles.title}>{'Sign in'}</AppText>
 
       {RenderSignInForm()}
-
-      <View>
-        <AppText style={styles.forgetTxt}>{'Forget password ?'}</AppText>
-        <AppButton title={'Sign in'} size={'small'} />
-      </View>
 
       <View style={styles.signInWith}>
         <View style={styles.line} />
@@ -92,18 +119,17 @@ const SignIn = React.memo((props: SignInProp) => {
         />
       </View>
 
-      <View style={styles.signUpTxt}>
+      <View style={styles.signUpLine}>
         <AppText
-          style={{
-            ...fontFamily.fontWeight400,
-            color: colors.textSecondPrimary,
-          }}>
+          style={styles.signUpTxt}>
           {"Don't have an account?"}
         </AppText>
-        <AppText>{' Sign up'}</AppText>
+        <TouchableOpacity onPress={() => moveToSignUp()}>
+          <AppText>{' Sign up'}</AppText>
+        </TouchableOpacity>
       </View>
     </View>
   );
 });
 
-export {SignIn};
+export { SignIn };
