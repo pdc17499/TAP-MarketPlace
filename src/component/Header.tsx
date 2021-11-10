@@ -13,7 +13,14 @@ interface screenNavigationProp {
 }
 
 const Header = React.memo((props: HeaderProps) => {
-  const {customTitleStyle, title, customContainer, back, onPressBack} = props;
+  const {
+    customTitleStyle,
+    title,
+    customContainer,
+    back,
+    onPressBack,
+    iconFillColor,
+  } = props;
   const navigation = useNavigation<screenNavigationProp>();
   const goBack = () => {
     if (onPressBack) {
@@ -30,7 +37,7 @@ const Header = React.memo((props: HeaderProps) => {
             style={styles.buttonLeft}
             onPress={goBack}
             hitSlop={{top: 20, bottom: 20, left: 20, right: 20}}>
-            <IconBack />
+            <IconBack iconFillColor={iconFillColor} />
           </TouchableOpacity>
         )}
         <AppText style={[styles.txtTitle, customTitleStyle]}>{title}</AppText>

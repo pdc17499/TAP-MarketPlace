@@ -3,6 +3,7 @@ import {
   HIDE_INTRO_SCREEN,
   REMOVE_TOKEN,
   UPDATE_USER_INFOR,
+  SET_DATA_SIGNUP,
 } from './type';
 import {INITIAL_STATE_AUTH} from './state';
 
@@ -30,6 +31,11 @@ export default function dataSave(state = INITIAL_STATE_AUTH, action: any) {
       return {
         ...state,
         user: action?.payload?.data?.user_info,
+      };
+    case SET_DATA_SIGNUP:
+      return {
+        ...state,
+        dataSignup: action?.payload?.data,
       };
     default:
       return state;

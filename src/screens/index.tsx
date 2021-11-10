@@ -9,7 +9,7 @@ import { SignUpEmail } from './auth/SignUpEmail';
 import { SignUpProperty } from './auth/SignUpProperty';
 import { VerifyAccount } from './auth/VerifyAccount';
 import { VerifyCode } from './auth/VerifyCode';
+import {RoomUnitPicture} from './auth/RoomUnitPicture';
 
 
-
-export { ChooseRole, RoomUnitHomeowner, Welcome, SignIn, ResetPassword, SignUp, SignUpEmail, SignUpProperty, VerifyAccount, VerifyCode };
+export { ChooseRole, RoomUnitHomeowner, Welcome, SignIn, ResetPassword, SignUp, SignUpEmail, SignUpProperty, VerifyAccount, VerifyCode, RoomUnitPicture};

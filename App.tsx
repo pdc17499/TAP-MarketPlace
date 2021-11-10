@@ -10,6 +10,7 @@ import FlashMessage from 'react-native-flash-message';
 import {GlobalUI} from '@component';
 import {GlobalService} from '@services';
 import {NavigationUtils} from '@navigation';
+import {ActionSheetProvider} from '@expo/react-native-action-sheet';
 
 const App = () => {
   return (
@@ -19,15 +20,17 @@ const App = () => {
         translucent={true}
         backgroundColor="transparent"
       />
-      <Provider store={store}>
-        <PersistGate loading={null} persistor={persistor}>
-          <NavigationApp
-            ref={(navigatorRef: any) =>
-              NavigationUtils.setTopLevelNavigator(navigatorRef)
-            }
-          />
-        </PersistGate>
-      </Provider>
+      <ActionSheetProvider>
+        <Provider store={store}>
+          <PersistGate loading={null} persistor={persistor}>
+            <NavigationApp
+              ref={(navigatorRef: any) =>
+                NavigationUtils.setTopLevelNavigator(navigatorRef)
+              }
+            />
+          </PersistGate>
+        </Provider>
+      </ActionSheetProvider>
       <FlashMessage
         position="top"
         floating={true}

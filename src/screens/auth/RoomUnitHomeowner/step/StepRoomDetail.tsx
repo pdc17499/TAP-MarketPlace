@@ -1,15 +1,26 @@
-import { AppButton, AppPicker, AppQA, AppText } from '@component';
-import { mockProps, RoomStepProps } from '@interfaces';
-import { ROOM_UNIT_HOWNER as ROOM_UNIT_HOWLER } from '@mocks';
-import { colors, fontFamily, scaleWidth, SIZE, YEARS } from '@util';
+import {AppButton, AppPicker, AppQA, AppText} from '@component';
+import {mockProps, RoomStepProps} from '@interfaces';
+import {ROOM_UNIT_HOWNER} from '@mocks';
+import {setDataSignup} from '@redux';
+import {colors, fontFamily, scaleWidth, SIZE, YEARS} from '@util';
 import React from 'react';
-import { View, StyleSheet, ScrollView } from 'react-native';
+import {View, StyleSheet, ScrollView} from 'react-native';
+import {useDispatch, useSelector} from 'react-redux';
 
 const StepRoomDetail = (props: RoomStepProps) => {
-  const { onNext, room, onChangeValue, setRoom } = props;
-  const data = ROOM_UNIT_HOWLER;
+  const {onNext} = props;
+  const dispatch = useDispatch();
+  const list = ROOM_UNIT_HOWNER;
+  const dataSignUp = useSelector((state: any) => state?.auth?.dataSignup);
+  const setData = (data: any) => {
+    dispatch(setDataSignup({data}));
+  };
   const onChangeText = (item: mockProps, name?: string) => {
-    if (onChangeValue) onChangeValue(item, name);
+    if (name) {
+      const nData: any = {...dataSignUp};
+      nData[name] = item;
+      setData(nData);
+    }
   };
 
   return (
@@ -17,35 +28,35 @@ const StepRoomDetail = (props: RoomStepProps) => {
       <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
         <AppText style={styles.titleHeading}>{'Room details'}</AppText>
         <AppQA
-          data={data.roomFurnishing}
+          data={list.room_furnishing}
           title={'Room furnishing'}
-          value={room}
-          setValue={setRoom}
+          value={dataSignUp}
+          setValue={setData}
+          typeList={'column'}
           name={'room_furnishing'}
         />
         <AppQA
-          data={data.floor_level}
+          data={list.floor_level}
           title={'Floor level'}
-          value={room}
-          setValue={setRoom}
-          typeList={'row'}
+          value={dataSignUp}
+          setValue={setData}
+          typeList={'wrap'}
           name={'floor_level'}
         />
         <AppQA
-          data={data.allow_cooking}
+          data={list.allow_cooking}
           title={'Allow cooking?'}
-          value={room}
-          setValue={setRoom}
-          typeList={'row'}
+          value={dataSignUp}
+          setValue={setData}
+          typeList={'even'}
           name={'allow_cooking'}
-          customStyleViewButton={{ flex: 1 }}
         />
         <AppText style={styles.title}>
           {'Built year'}
           <AppText style={styles.optional}>{' (optional)'}</AppText>
         </AppText>
         <AppPicker
-          value={room.built_year}
+          value={dataSignUp?.built_year}
           name={'built_year'}
           onValueChange={onChangeText}
           items={YEARS()}
@@ -56,6 +67,7 @@ const StepRoomDetail = (props: RoomStepProps) => {
         title={'Continue'}
         onPress={onNext}
         containerStyle={styles.customStyleButton}
+        iconRight={'arNext'}
       />
     </View>
   );

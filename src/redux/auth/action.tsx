@@ -8,6 +8,7 @@ import {
   VERIFY_EMAIL,
   SEND_VERIFY_EMAIL,
   UPDATE_USER_INFOR,
+  SET_DATA_SIGNUP,
 } from './type';
 
 export const loginClientApp = (payload: any) => ({
@@ -48,5 +49,10 @@ export const sendVerifyEmail = () => ({
 
 export const updateUserInfor = (payload: any) => ({
   type: UPDATE_USER_INFOR,
+  payload,
+});
+
+export const setDataSignup = (payload: any) => ({
+  type: SET_DATA_SIGNUP,
   payload,
 });

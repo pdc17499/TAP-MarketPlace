@@ -1,5 +1,6 @@
 import {ReactElement} from 'react';
 import {ImageStyle, TextStyle, ViewStyle} from 'react-native';
+import { StringLocale } from 'yup/lib/locale';
 
 export interface screenNavigationProp {
   navigate: any;
@@ -16,7 +17,7 @@ export interface ButtonProps {
   size?: 'base' | 'small';
   typeButton?: 'linear' | 'full';
   isActive?: boolean;
-  iconRight?: 'right' | 'email' | 'arrowBlack' | 'arrowGray' | 'other';
+  iconRight?: 'right' | 'email' | 'arNextBlack' | 'arNext' | 'upload' | 'photo' | 'tick' | 'other';
   imageStyle?: ImageStyle;
 }
 
@@ -44,6 +45,7 @@ export interface IAppInput {
 
 export interface AppSwiperProps {
   children: any;
+  showPagination?: boolean;
 }
 
 export interface RefAppSwiper {
@@ -60,6 +62,7 @@ export interface HeaderProps {
   btnRight?: any;
   iconRight?: any;
   onPressBack?: () => void;
+  iconFillColor?: string;
 }
 
 export interface mockProps {
@@ -67,7 +70,7 @@ export interface mockProps {
   value?: string;
 }
 
-export interface RoomUnitHOwnerProps {
+export interface DataSignupProps {
   location: {
     lat: number;
     long: number;
@@ -75,14 +78,18 @@ export interface RoomUnitHOwnerProps {
   };
   kind_place: mockProps;
   rental_price: mockProps;
+  negotiable_price: string;
   fixed_price: string;
-  min_range: number;
-  max_range: number;
+  min_range_price: number;
+  max_range_price: number;
   lease_your_place: mockProps;
   staying_with_guests: mockProps;
   room_type: mockProps;
-  floor_size: number;
-  bathroom: mockProps;
+  bedroom_number: mockProps;
+  bathroom_number: mockProps;
+  floor_size_min: number;
+  floor_size_max: number;
+  attached_room: mockProps; 
   room_furnishing: mockProps;
   floor_level: mockProps;
   allow_cooking: mockProps;
@@ -96,7 +103,7 @@ export interface AppQAProps {
   subTitle?: string;
   value: any;
   setValue: any;
-  typeList?: 'column' | 'row';
+  typeList?: 'column' | 'wrap' | 'even' | 'row';
   isMultiChoice?: boolean;
   children?: ReactElement;
   customStyleTitle?: TextStyle;
@@ -106,10 +113,7 @@ export interface AppQAProps {
 }
 
 export interface RoomStepProps {
-  room: RoomUnitHOwnerProps;
   onNext: () => void;
-  onChangeValue: (item: mockProps, name?: string) => void;
-  setRoom?: (item: RoomUnitHOwnerProps) => void;
 }
 
 export interface VerifyAccountProps {
