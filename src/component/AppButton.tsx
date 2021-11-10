@@ -109,7 +109,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginTop: SIZE.base_space,
     backgroundColor: colors.primary,
-    marginTop: 16
   },
   txtButton: {
     ...fontFamily.fontWeight500,

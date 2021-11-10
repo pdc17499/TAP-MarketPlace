@@ -14,8 +14,20 @@ import {
   VERIFY_CODE,
   ROOM_UNIT_PICTURE,
 } from './routeName';
-import { ChooseRole, RoomUnitHomeowner, Welcome, SignIn, ResetPassword, SignUp, SignUpEmail, SignUpProperty, VerifyAccount, VerifyCode, RoomUnitPicture, } from '../screens';
-import { useSelector } from 'react-redux';
+import {
+  ChooseRole,
+  RoomUnitHomeowner,
+  Welcome,
+  SignIn,
+  ResetPassword,
+  SignUp,
+  SignUpEmail,
+  SignUpProperty,
+  VerifyAccount,
+  VerifyCode,
+  RoomUnitPicture,
+} from '../screens';
+import {useSelector} from 'react-redux';
 
 const Stack = createStackNavigator();
 const screenOptions = {
@@ -25,9 +37,7 @@ const screenOptions = {
 // unauthenticate stack screens
 const UnAuthenStack = () => {
   return (
-    <Stack.Navigator
-      screenOptions={screenOptions}
-      initialRouteName={WELCOME}>
+    <Stack.Navigator screenOptions={screenOptions} initialRouteName={WELCOME}>
       <Stack.Screen name={CHOOSE_ROLE} component={ChooseRole} />
       <Stack.Screen name={ROOM_UNIT_HOMEOWNER} component={RoomUnitHomeowner} />
       <Stack.Screen name={ROOM_UNIT_PICTURE} component={RoomUnitPicture} />
@@ -39,7 +49,6 @@ const UnAuthenStack = () => {
       <Stack.Screen name={SIGNUP_PROPERTY} component={SignUpProperty} />
       <Stack.Screen name={VERIFY_ACCOUNT} component={VerifyAccount} />
       <Stack.Screen name={VERIFY_CODE} component={VerifyCode} />
-
     </Stack.Navigator>
   );
 };

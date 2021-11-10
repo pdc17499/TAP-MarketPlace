@@ -7,11 +7,11 @@
 #define TIMEOUT_SECONDS 600
 #define TEXT_TO_LOOK_FOR @"Welcome to React"
 
-@interface tap_marketplaceTests : XCTestCase
+@interface TAPMarketplaceTests : XCTestCase
 
 @end
 
-@implementation tap_marketplaceTests
+@implementation TAPMarketplaceTests
 
 - (BOOL)findSubviewInView:(UIView *)view matching:(BOOL(^)(UIView *view))test
 {

@@ -1,4 +1,4 @@
-package com.tap_marketplace;
+package com.adamo.tap;
 
 import com.facebook.react.ReactActivity;
 
@@ -10,6 +10,6 @@ public class MainActivity extends ReactActivity {
    */
   @Override
   protected String getMainComponentName() {
-    return "tap_marketplace";
+    return "TAPMarketplace";
   }
 }

@@ -1,7 +1,8 @@
 import {list_place, rent_place} from '@assets';
 import {AppButton, AppText, Header} from '@component';
 import {useNavigation} from '@react-navigation/core';
-import {colors, scaleWidth, SIZE} from '@util';
+import {ROOM_UNIT_HOMEOWNER} from '@routeName';
+import {colors, fontFamily, scaleWidth, SIZE} from '@util';
 import React, {useState} from 'react';
 import {View, TouchableOpacity, Image} from 'react-native';
 import {useDispatch} from 'react-redux';
@@ -16,7 +17,9 @@ const ChooseRole = (props: any) => {
   const dispath = useDispatch();
   const [role, setRole] = useState(0);
 
-  const onNext = () => {};
+  const onNext = () => {
+    navigation.navigate(ROOM_UNIT_HOMEOWNER);
+  };
 
   return (
     <View style={styles.container}>
@@ -26,7 +29,11 @@ const ChooseRole = (props: any) => {
           <AppText style={styles.heading}>
             {'What are you looking for?'}
           </AppText>
-          <AppText style={{fontSize: SIZE.medium_size}}>
+          <AppText
+            style={{
+              fontSize: SIZE.medium_size,
+              ...fontFamily.fontCampWeight600,
+            }}>
             {'I want to ...'}
           </AppText>
           <View style={styles.row}>
@@ -56,14 +63,14 @@ const ChooseRole = (props: any) => {
                 <AppButton
                   title={'Agent'}
                   typeButton={'linear'}
-                  customStyleButton={styles.btnAgent}
+                  containerStyle={styles.btnAgent}
                   isActive={role === 2}
                   onPress={() => setRole(2)}
                 />
                 <AppButton
                   title={'Homeowner'}
                   typeButton={'linear'}
-                  customStyleButton={styles.btnHomeOwner}
+                  containerStyle={styles.btnHomeOwner}
                   isActive={role === 1}
                   onPress={() => setRole(1)}
                 />
@@ -76,6 +83,8 @@ const ChooseRole = (props: any) => {
         <AppButton
           title={'Continue'}
           customStyleButton={{marginBottom: SIZE.medium_space}}
+          iconRight={'arNext'}
+          onPress={onNext}
         />
       </View>
     </View>

@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-               BuildableName = "tap_marketplace.app"
-               BlueprintName = "tap_marketplace"
-               ReferencedContainer = "container:tap_marketplace.xcodeproj">
+               BuildableName = "TAPMarketplace.app"
+               BlueprintName = "TAPMarketplace"
+               ReferencedContainer = "container:TAPMarketplace.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "00E356ED1AD99517003FC87E"
-               BuildableName = "tap_marketplaceTests.xctest"
-               BlueprintName = "tap_marketplaceTests"
-               ReferencedContainer = "container:tap_marketplace.xcodeproj">
+               BuildableName = "TAPMarketplaceTests.xctest"
+               BlueprintName = "TAPMarketplaceTests"
+               ReferencedContainer = "container:TAPMarketplace.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -55,9 +55,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "tap_marketplace.app"
-            BlueprintName = "tap_marketplace"
-            ReferencedContainer = "container:tap_marketplace.xcodeproj">
+            BuildableName = "TAPMarketplace.app"
+            BlueprintName = "TAPMarketplace"
+            ReferencedContainer = "container:TAPMarketplace.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -72,9 +72,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "tap_marketplace.app"
-            BlueprintName = "tap_marketplace"
-            ReferencedContainer = "container:tap_marketplace.xcodeproj">
+            BuildableName = "TAPMarketplace.app"
+            BlueprintName = "TAPMarketplace"
+            ReferencedContainer = "container:TAPMarketplace.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
