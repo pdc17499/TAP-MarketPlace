@@ -13,6 +13,9 @@ import {
   VERIFY_ACCOUNT,
   VERIFY_CODE,
   ROOM_UNIT_PICTURE,
+  USER_INFORMATION_GENDER,
+  LIFE_STYLE,
+  LIFE_STYLE_STEP,
 } from './routeName';
 import {
   ChooseRole,
@@ -26,6 +29,9 @@ import {
   VerifyAccount,
   VerifyCode,
   RoomUnitPicture,
+  UserInformationGender,
+  LifeStyle,
+  LifeStyleStep,
 } from '../screens';
 import {useSelector} from 'react-redux';
 
@@ -49,6 +55,12 @@ const UnAuthenStack = () => {
       <Stack.Screen name={SIGNUP_PROPERTY} component={SignUpProperty} />
       <Stack.Screen name={VERIFY_ACCOUNT} component={VerifyAccount} />
       <Stack.Screen name={VERIFY_CODE} component={VerifyCode} />
+      <Stack.Screen
+        name={USER_INFORMATION_GENDER}
+        component={UserInformationGender}
+      />
+      <Stack.Screen name={LIFE_STYLE} component={LifeStyle} />
+      <Stack.Screen name={LIFE_STYLE_STEP} component={LifeStyleStep} />
     </Stack.Navigator>
   );
 };

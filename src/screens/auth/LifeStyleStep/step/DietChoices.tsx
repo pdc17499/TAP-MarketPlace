@@ -1,14 +1,17 @@
 import {AppButton, AppQA} from '@component';
 import {RoomStepProps} from '@interfaces';
 import {ROOM_UNIT_HOWNER} from '@mocks';
+import {useNavigation} from '@react-navigation/core';
 import {setDataSignup} from '@redux';
+import {SIGNUP} from '@routeName';
 import {fontFamily, scaleWidth, SIZE} from '@util';
 import React from 'react';
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet, ScrollView} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 
-const StepLeasePeriod = (props: RoomStepProps) => {
+const DietChoice = (props: RoomStepProps) => {
   const {onNext} = props;
+  const navigation: any = useNavigation();
   const dispatch = useDispatch();
   const list = ROOM_UNIT_HOWNER;
   const dataSignUp = useSelector((state: any) => state?.auth?.dataSignup);
@@ -16,32 +19,27 @@ const StepLeasePeriod = (props: RoomStepProps) => {
     dispatch(setDataSignup({data}));
   };
 
+  const onPress = () => {
+    navigation.navigate(SIGNUP);
+  };
+
   return (
-    <View style={styles.container}>
-      <View style={{flex: 1}}>
-        <AppQA
-          data={list.lease_your_place}
-          title={'How long will you want to lease your place?'}
-          value={dataSignUp}
-          setValue={setData}
-          typeList={'even'}
-          name={'lease_your_place'}
-        />
-        <AppQA
-          data={list.staying_width_guests}
-          title={'Will you be staying with your guests?'}
-          value={dataSignUp}
-          setValue={setData}
-          typeList={'row'}
-          name={'staying_with_guests'}
-        />
-      </View>
-      <AppButton title={'Continue'} onPress={onNext} iconRight={'arNext'} />
-    </View>
+    <ScrollView style={styles.container}>
+      <AppQA
+        data={list.diet_choices}
+        title={'Your Diet choices ?'}
+        value={dataSignUp}
+        setValue={setData}
+        typeList={'column'}
+        name={'diet_choice'}
+        customStyleTitle={{textAlign: 'center'}}
+      />
+      <AppButton title={'Continue'} onPress={onPress} iconRight={'arNext'} />
+    </ScrollView>
   );
 };
 
-export {StepLeasePeriod};
+export {DietChoice};
 
 const styles = StyleSheet.create({
   container: {

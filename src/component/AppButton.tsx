@@ -1,7 +1,7 @@
 import React, {useCallback} from 'react';
 import {TouchableOpacity, StyleSheet, View, Image} from 'react-native';
 import {AppText} from './AppText';
-import {colors, fontFamily, SIZE} from '@util';
+import {colors, fontFamily, scaleWidth, SIZE} from '@util';
 import {debounce} from 'lodash';
 import {ButtonProps} from '@interfaces';
 import {
@@ -53,14 +53,16 @@ const AppButton = React.memo((props: ButtonProps) => {
 
   const buttonStyle = [
     styles.container,
-    typeButton === 'linear' && bgLinear,
+    typeButton === 'linear' ? bgLinear : {},
     {minHeight: size === 'small' ? SIZE.btn_height_small : SIZE.btn_height},
+    typeButton === 'underline' ? styles.bgUnderline : {},
     customStyleButton,
   ];
 
   const titleStyle = [
     styles.txtButton,
     typeButton === 'linear' && titleLinear,
+    typeButton === 'underline' ? styles.titleUnderline : {},
     customStyleTitle,
   ];
 
@@ -120,6 +122,23 @@ const styles = StyleSheet.create({
   },
   iconRight: {
     marginLeft: SIZE.base_space / 2,
+    marginRight: -SIZE.base_space / 2,
+  },
+  bgUnderline: {
+    backgroundColor: 'transparent',
+    minHeight: 'auto',
+    alignItems: 'flex-end',
+    alignSelf: 'center',
+    borderRadius: 0,
+    marginTop: SIZE.medium_space - 4,
+  },
+  titleUnderline: {
+    color: colors.textSecondPrimary,
+    ...fontFamily.fontCampWeight500,
+    lineHeight: SIZE.base_size * 1.6,
+    textDecorationLine: 'underline',
+    textDecorationStyle: 'solid',
+    textDecorationColor: colors.textSecondPrimary,
   },
 });
 

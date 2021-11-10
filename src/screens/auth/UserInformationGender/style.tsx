@@ -7,6 +7,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.white,
   },
   body: {
+    flex: 1,
     paddingHorizontal: SIZE.padding,
   },
   title: {
@@ -20,7 +21,7 @@ const styles = StyleSheet.create({
     fontSize: SIZE.medium_size,
     ...fontFamily.fontCampWeight600,
     lineHeight: scaleWidth(31),
-    marginBottom: SIZE.base_space + 2,
+    marginBottom: SIZE.medium_space,
     color: colors.textPrimary,
   },
   text: {
@@ -43,8 +44,7 @@ const styles = StyleSheet.create({
     width: scaleWidth(106),
   },
   button: {
-    marginTop: scaleWidth(250),
-    marginBottom: scaleWidth(20),
+    // marginBottom: scaleWidth(20),
   },
 });
 

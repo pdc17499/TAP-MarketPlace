@@ -4,7 +4,7 @@ import {useNavigation} from '@react-navigation/core';
 import {VERIFY_CODE} from '@routeName';
 import {scaleWidth} from '@util';
 import React, {useState} from 'react';
-import {Alert, TouchableOpacity, View} from 'react-native';
+import {Alert, Pressable, TouchableOpacity, View} from 'react-native';
 import {styles} from './style';
 import {VerifyAccountProps} from '@interfaces';
 
@@ -41,12 +41,12 @@ const VerifyAccount = (props: VerifyAccountProps) => {
           {"We'll send a text with a verification code to create your account."}
         </AppText>
 
-        <TouchableOpacity style={styles.question} onPress={showRules}>
+        <Pressable style={styles.question} onPress={showRules}>
           <IconQuestion />
           <AppText style={styles.questionTxt}>
             {'How TAP use my phone number?'}
           </AppText>
-        </TouchableOpacity>
+        </Pressable>
 
         <View style={{height: scaleWidth(170)}}>
           {isShowRules ? (
@@ -70,9 +70,15 @@ const VerifyAccount = (props: VerifyAccountProps) => {
           size={'small'}
           onPress={moveToVerifyCode}
         />
-        <View style={styles.skip}>
+        <AppButton
+          title={'Skip for now'}
+          typeButton={'underline'}
+          customStyleTitle={styles.skipTxt}
+          // onPress={moveToVerifyCode}
+        />
+        {/* <View style={styles.skip}>
           <AppText style={styles.skipTxt}>{'Skip for now'}</AppText>
-        </View>
+        </View> */}
       </View>
     </View>
   );
