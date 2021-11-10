@@ -1,6 +1,6 @@
 import {AppText} from '@component';
 import {DownIcon} from '@assets';
-import {colors, fontFamily, scaleSize, scaleWidth} from '@util';
+import {colors, fontFamily, scaleSize, scaleWidth, SIZE} from '@util';
 import React from 'react';
 import {StyleSheet, View, Animated} from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
@@ -8,13 +8,14 @@ import RNPickerSelect from 'react-native-picker-select';
 interface IAppPicker {
   label?: string;
   // value?: any;
-  onValueChange: (value: any) => void;
+  onValueChange: (value: any, name?: string) => void;
   items?: any;
   style?: any;
   placeholder?: any;
   value?: any;
   error?: string;
   styleError?: any;
+  name?: string;
 }
 
 export const AppPicker: React.FC<IAppPicker> = React.memo((props: any) => {
@@ -27,6 +28,7 @@ export const AppPicker: React.FC<IAppPicker> = React.memo((props: any) => {
     placeholder,
     error,
     styleError,
+    name,
   } = props;
 
   return (
@@ -34,7 +36,7 @@ export const AppPicker: React.FC<IAppPicker> = React.memo((props: any) => {
       {label && <Animated.Text style={[styles.label]}>{label}</Animated.Text>}
       <View style={[styles.container, style]}>
         <RNPickerSelect
-          onValueChange={onValueChange}
+          onValueChange={item => onValueChange(item, name)}
           useNativeAndroidPickerStyle={false}
           placeholder={placeholder}
           value={value}
@@ -65,6 +67,8 @@ const styles = StyleSheet.create({
     minHeight: scaleWidth(60),
     marginTop: scaleWidth(30),
     backgroundColor: colors.bgInput,
+    borderRadius: 8,
+    justifyContent: 'center',
   },
   label: {
     ...fontFamily.fontWeight400,
@@ -75,31 +79,32 @@ const styles = StyleSheet.create({
   },
   inputAndroid: {
     ...fontFamily.fontWeight400,
-    fontSize: scaleSize(16),
+    fontSize: SIZE.base_size,
     color: colors.textPrimary,
     position: 'absolute',
     top: 2,
     width: '100%',
     margin: 0,
-    height: scaleWidth(60),
+    height: SIZE.input_height,
   },
   inputIOS: {
     ...fontFamily.fontWeight400,
-    height: scaleWidth(60),
+    height: SIZE.input_height,
     color: colors.textPrimary,
     width: '100%',
-    fontSize: scaleSize(16),
+    fontSize: SIZE.base_size,
+    paddingLeft: SIZE.base_space,
   },
   iconContainer: {
     position: 'absolute',
-    top: 0,
-    height: scaleWidth(60),
+    top: scaleWidth(20),
+    right: 8,
     justifyContent: 'center',
     marginRight: scaleWidth(10),
   },
   placeholder: {
     ...fontFamily.fontWeight400,
     color: colors.textSecondPrimary,
-    fontSize: scaleSize(16),
+    fontSize: SIZE.base_size,
   },
 });

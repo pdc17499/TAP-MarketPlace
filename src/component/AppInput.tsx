@@ -31,6 +31,8 @@ export const AppInput = (props: IAppInput) => {
     iconLeft,
     iconRight,
     name,
+    containerStyle,
+    autoFocus,
   } = props;
   const [isFocused, setIsFocused] = React.useState(false);
   const [hidePasssWord, setHidePassWord] = React.useState(true);
@@ -85,11 +87,11 @@ export const AppInput = (props: IAppInput) => {
   };
 
   const onChangeText = (text: string) => {
-    onValueChange(text, name);
+    if (onValueChange) onValueChange(text, name);
   };
 
   return (
-    <>
+    <View style={containerStyle}>
       {label && <AppText style={styles.label}>{label}</AppText>}
       <View style={viewStyle}>
         {iconLeft && <View style={styles.iconLeft}>{renderIconLeft()}</View>}
@@ -107,6 +109,7 @@ export const AppInput = (props: IAppInput) => {
           onChangeText={onChangeText}
           secureTextEntry={hidePasssWord && secureTextEntry}
           keyboardType={keyboardType}
+          autoFocus={autoFocus}
         />
         {showEye && (
           <TouchableOpacity onPress={onShowPassWord} style={styles.iconRight}>
@@ -116,7 +119,7 @@ export const AppInput = (props: IAppInput) => {
         {iconRight && <View style={styles.iconRight}>{renderIconRight()}</View>}
       </View>
       {!!error && <AppText style={styles.error}>{error}</AppText>}
-    </>
+    </View>
   );
 };
 
@@ -131,7 +134,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: SIZE.base_space,
   },
   label: {
-    color: colors.primary,
+    color: colors.textSecondPrimary,
+    ...fontFamily.fontWeight600,
     marginTop: SIZE.base_space,
     marginBottom: 10,
   },
@@ -146,7 +150,7 @@ const styles = StyleSheet.create({
     height: '100%',
     color: colors.textPrimary,
     fontSize: SIZE.base_size,
-    ...fontFamily.fontWeight400,
+    ...fontFamily.fontWeight500,
   },
   error: {
     marginTop: 5,

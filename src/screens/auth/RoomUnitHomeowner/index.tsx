@@ -1,25 +1,24 @@
-import {list_place, rent_place} from '@assets';
 import {AppButton, AppSwiper, AppText, Header} from '@component';
-import {homePropertyProps, mockProps, RefAppSwiper} from '@interfaces';
+import {RoomUnitHOwnerProps, mockProps, RefAppSwiper} from '@interfaces';
 import {useNavigation} from '@react-navigation/core';
 import {colors, scaleWidth, SIZE} from '@util';
 import moment from 'moment';
 import React, {MutableRefObject, useRef, useState} from 'react';
 import {View, TouchableOpacity, Image} from 'react-native';
 import {useDispatch} from 'react-redux';
-import {string} from 'yup/lib/locale';
 import {StepFinal} from './step/StepFinal';
 import {StepFirst} from './step/StepFirst';
-import {StepPlace} from './step/StepPlace';
+import {StepLeasePeriod} from './step/StepLeasePeriod';
 import {StepPrice} from './step/StepPrice';
 import {StepRoomDetail} from './step/StepRoomDetail';
+import {StepSecond} from './step/StepSecond';
 import {styles} from './style';
 
 interface screenNavigationProp {
   navigate: any;
 }
 
-const initProperty: homePropertyProps = {
+const initStateRoom: RoomUnitHOwnerProps = {
   location: {
     lat: -1,
     long: -1,
@@ -28,57 +27,61 @@ const initProperty: homePropertyProps = {
   kind_place: {},
   rental_price: {},
   fixed_price: '',
-  range_price: {
-    min: 10,
-    max: 1000,
-  },
+  min_range: 4000,
+  max_range: 25000,
   lease_your_place: {},
-  staying_with_guests: false,
+  staying_with_guests: {},
   room_type: {},
   floor_size: 0,
   bathroom: {},
   room_furnishing: {},
   floor_level: {},
+  allow_cooking: {},
   built_year: moment().format('YYYY').toString(),
   key_your_place: [],
 };
 
-const HomeOwnerProperty = (props: any) => {
+const RoomUnitHomeowner = (props: any) => {
   const navigation = useNavigation<screenNavigationProp>();
   const dispath = useDispatch();
-  const [property, setProperty] = useState(initProperty);
+  const [room, setRoom] = useState(initStateRoom);
   const refSwiper = useRef() as MutableRefObject<RefAppSwiper>;
 
   const onNext = () => {
     refSwiper.current.onNextButton();
   };
 
+  const onChangeValue = (nRoom: any) => {
+    // if (name) {
+    //   const nRoom: any = {...room};
+    //   nRoom[name] = item;
+    //   setRoom(nRoom);
+    // }
+    setRoom(nRoom);
+  };
+
   return (
     <View style={styles.container}>
       <AppSwiper ref={refSwiper}>
-        <StepFirst onNext={onNext} property={property} />
+        <StepRoomDetail
+          onNext={onNext}
+          room={room}
+          onChangeValue={onChangeValue}
+          setRoom={setRoom}
+        />
+        <StepFinal onNext={onNext} room={room} setRoom={setRoom} />
+        <StepLeasePeriod onNext={onNext} room={room} setRoom={setRoom} />
+        <StepFirst onNext={onNext} property={room} />
+        <StepSecond onNext={onNext} room={room} />
         <StepPrice
           onNext={onNext}
-          property={property}
-          setProperty={setProperty}
+          room={room}
+          onChangeValue={onChangeValue}
+          setRoom={setRoom}
         />
-        <StepPrice
-          onNext={onNext}
-          property={property}
-          setProperty={setProperty}
-        />
-        <StepPrice
-          onNext={onNext}
-          property={property}
-          setProperty={setProperty}
-        />
-        {/* <StepPrice onNext={onNext} />
-        <StepPlace onNext={onNext} />
-        <StepRoomDetail onNext={onNext} />
-        <StepFinal onNext={onNext} /> */}
       </AppSwiper>
     </View>
   );
 };
 
-export {HomeOwnerProperty};
+export {RoomUnitHomeowner};

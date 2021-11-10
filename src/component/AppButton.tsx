@@ -19,6 +19,7 @@ const AppButton = React.memo((props: ButtonProps) => {
     isActive,
     image,
     imageStyle,
+    containerStyle,
   } = props;
 
   const onPressButton = useCallback(
@@ -32,13 +33,15 @@ const AppButton = React.memo((props: ButtonProps) => {
 
   const bgLinear = {
     backgroundColor: 'white',
-    borderWidth: 1,
+    borderWidth: isActive ? 1.5 : 1,
     borderColor: isActive ? colors.orange : colors.borderPrimary,
   };
 
   const titleLinear = {
     color: isActive ? colors.textPrimary : colors.textSecondPrimary,
-    ...fontFamily.fontWeight500,
+    fontFamily: isActive
+      ? fontFamily.fontWeight600.fontFamily
+      : fontFamily.fontWeight500.fontFamily,
   };
 
   const buttonStyle = [
@@ -70,15 +73,17 @@ const AppButton = React.memo((props: ButtonProps) => {
   };
 
   return (
-    <TouchableOpacity
-      style={buttonStyle}
-      disabled={disabled}
-      onPress={onPressButton}
-      activeOpacity={0.75}>
-      {image && <Image source={image} style={imageStyle} />}
-      {title && <AppText style={titleStyle}>{title}</AppText>}
-      {iconRight && <View>{renderIconRight()}</View>}
-    </TouchableOpacity>
+    <View style={containerStyle}>
+      <TouchableOpacity
+        style={buttonStyle}
+        disabled={disabled}
+        onPress={onPressButton}
+        activeOpacity={0.75}>
+        {image && <Image source={image} style={imageStyle} />}
+        {title && <AppText style={titleStyle}>{title}</AppText>}
+        {iconRight && <View>{renderIconRight()}</View>}
+      </TouchableOpacity>
+    </View>
   );
 });
 

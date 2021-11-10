@@ -11,4 +11,9 @@ const DEVICE = {
   isSmallDevice: width < 375,
 };
 
-export {DEVICE};
+const SLIDER = {
+  min: 400,
+  max: 50000,
+};
+
+export {DEVICE, SLIDER};

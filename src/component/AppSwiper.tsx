@@ -1,9 +1,16 @@
 import {Header} from '@component';
 import {AppSwiperProps, RefAppSwiper} from '@interfaces';
 import {colors, fontFamily, scaleWidth, SIZE} from '@util';
-import React, {forwardRef, Ref, useImperativeHandle, useRef} from 'react';
+import React, {
+  forwardRef,
+  Ref,
+  useImperativeHandle,
+  useRef,
+  useState,
+} from 'react';
 import {StyleSheet, View} from 'react-native';
 import Swiper from 'react-native-swiper';
+import Carousel from 'react-native-snap-carousel';
 
 const AppSwiper = forwardRef(
   (props: AppSwiperProps, ref: Ref<RefAppSwiper>) => {
@@ -27,6 +34,7 @@ const AppSwiper = forwardRef(
         <Header back onPressBack={onPrevButton} />
         <Swiper
           ref={refSwiper}
+          removeClippedSubviews={false}
           paginationStyle={styles.paginationStyle}
           activeDotColor={colors.orange}
           activeDotStyle={styles.activeDotStyle}
