@@ -1,41 +1,43 @@
 import {AppButton, AppQA} from '@component';
 import {RoomStepProps} from '@interfaces';
 import {ROOM_UNIT_HOWNER} from '@mocks';
+import {setDataSignup} from '@redux';
 import {fontFamily, scaleWidth, SIZE} from '@util';
 import React from 'react';
 import {View, StyleSheet} from 'react-native';
-
-interface screenNavigationProp {
-  navigate: any;
-}
+import {useDispatch, useSelector} from 'react-redux';
 
 const StepLeasePeriod = (props: RoomStepProps) => {
-  const {onNext, room, setRoom} = props;
-
-  const data = ROOM_UNIT_HOWNER;
+  const {onNext} = props;
+  const dispatch = useDispatch();
+  const list = ROOM_UNIT_HOWNER;
+  const dataSignUp = useSelector((state: any) => state?.auth?.dataSignup);
+  const setData = (data: any) => {
+    dispatch(setDataSignup({data}));
+  };
 
   return (
     <View style={styles.container}>
       <View style={{flex: 1}}>
         <AppQA
-          data={data.lease_your_place}
+          data={list.lease_your_place}
           title={'How long will you want to lease your place?'}
-          value={room}
-          setValue={setRoom}
-          typeList={'row'}
+          value={dataSignUp}
+          setValue={setData}
+          typeList={'even'}
           name={'lease_your_place'}
         />
         <AppQA
-          data={data.staying_width_guests}
+          data={list.staying_width_guests}
           title={'Will you be staying with your guests?'}
-          value={room}
-          setValue={setRoom}
-          typeList={'row'}
+          value={dataSignUp}
+          setValue={setData}
+          typeList={'wrap'}
           name={'staying_with_guests'}
           customStyleViewButton={{flex: 1}}
         />
       </View>
-      <AppButton title={'Continue'} onPress={onNext} />
+      <AppButton title={'Continue'} onPress={onNext} iconRight={'arNext'} />
     </View>
   );
 };

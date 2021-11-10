@@ -1,18 +1,29 @@
 import * as React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+import {NavigationContainer} from '@react-navigation/native';
+import {createStackNavigator} from '@react-navigation/stack';
 import {
   CHOOSE_ROLE,
-  HOMEOWNER_PROPERTY,
+  ROOM_UNIT_HOMEOWNER,
   RESETPASSWORD,
   WELCOME,
   SIGNIN,
   SIGNUP,
   SIGNUP_EMAIL,
-  SIGNUP_PROPERTY
+  SIGNUP_PROPERTY,
+  ROOM_UNIT_PICTURE,
 } from './routeName';
-import { ChooseRole, RoomUnitHomeowner, Welcome, SignIn, ResetPassword, SignUp, SignUpEmail, SignUpProperty } from '../screens';
-import { useSelector } from 'react-redux';
+import {
+  ChooseRole,
+  RoomUnitHomeowner,
+  Welcome,
+  SignIn,
+  ResetPassword,
+  SignUp,
+  SignUpEmail,
+  SignUpProperty,
+  RoomUnitPicture,
+} from '../screens';
+import {useSelector} from 'react-redux';
 
 const Stack = createStackNavigator();
 const screenOptions = {
@@ -24,16 +35,16 @@ const UnAuthenStack = () => {
   return (
     <Stack.Navigator
       screenOptions={screenOptions}
-      initialRouteName={WELCOME}>
+      initialRouteName={ROOM_UNIT_HOMEOWNER}>
       <Stack.Screen name={CHOOSE_ROLE} component={ChooseRole} />
-      <Stack.Screen name={HOMEOWNER_PROPERTY} component={RoomUnitHomeowner} />
+      <Stack.Screen name={ROOM_UNIT_HOMEOWNER} component={RoomUnitHomeowner} />
+      <Stack.Screen name={ROOM_UNIT_PICTURE} component={RoomUnitPicture} />
       <Stack.Screen name={WELCOME} component={Welcome} />
       <Stack.Screen name={SIGNIN} component={SignIn} />
       <Stack.Screen name={RESETPASSWORD} component={ResetPassword} />
       <Stack.Screen name={SIGNUP} component={SignUp} />
       <Stack.Screen name={SIGNUP_EMAIL} component={SignUpEmail} />
       <Stack.Screen name={SIGNUP_PROPERTY} component={SignUpProperty} />
-
     </Stack.Navigator>
   );
 };
@@ -47,7 +58,7 @@ const NavigationApp = React.forwardRef((props: any, ref: any) => {
     (state: any) => state?.auth?.showIntroScreen,
   );
   let token = useSelector((state: any) => state?.auth?.token);
-  console.log({ token });
+  console.log({token});
 
   const renderScreenSigned = () => {
     return <Stack.Screen name={SIGNIN} component={SignIn} />;

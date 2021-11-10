@@ -1,5 +1,6 @@
 import {list_place, rent_place} from '@assets';
 import {AppButton, AppInput, AppText, Header} from '@component';
+import {RoomStepProps} from '@interfaces';
 import {useNavigation} from '@react-navigation/core';
 import {colors, fontFamily, scaleWidth, SIZE} from '@util';
 import React, {useState} from 'react';
@@ -11,16 +12,16 @@ interface screenNavigationProp {
   navigate: any;
 }
 
-const StepFirst = (props: any) => {
+const StepFirst = (props: RoomStepProps) => {
   const navigation = useNavigation<screenNavigationProp>();
   const [location, setLocation] = useState('');
+  const {onNext} = props;
 
   const onChangeLocation = (text: string) => {
     setLocation(text);
   };
 
   const getMyLocation = () => {
-    props.onNext();
     // Geolocation.getCurrentPosition(
     //   position => {
     //     console.log(position);
@@ -35,15 +36,16 @@ const StepFirst = (props: any) => {
 
   return (
     <View style={styles.container}>
-      <AppText style={styles.title}>{'Where’s your place located?'}</AppText>
-      <AppInput
-        iconRight={location == '' ? 'other' : 'clear'}
-        iconLeft="map"
-        placeholder={'Search by Address'}
-        value={location}
-        onValueChange={onChangeLocation}
-      />
-      {/* <View style={{flex: 1}}>
+      <View style={{flex: 1}}>
+        <AppText style={styles.title}>{'Where’s your place located?'}</AppText>
+        <AppInput
+          iconRight={location == '' ? 'other' : 'clear'}
+          iconLeft="map"
+          placeholder={'Search by Address'}
+          value={location}
+          onValueChange={onChangeLocation}
+        />
+        {/* <View style={{flex: 1}}>
         <GooglePlacesAutocomplete
           placeholder="Enter Location"
           minLength={2}
@@ -68,12 +70,19 @@ const StepFirst = (props: any) => {
           }}
         />
       </View> */}
-      <TouchableOpacity style={styles.btnYourLocation}>
-        <AppText style={styles.textYourLocation} onPress={getMyLocation}>
-          {'Use your current location'}
-        </AppText>
-      </TouchableOpacity>
-      <View style={styles.line} />
+        <TouchableOpacity style={styles.btnYourLocation}>
+          <AppText style={styles.textYourLocation} onPress={getMyLocation}>
+            {'Use your current location'}
+          </AppText>
+        </TouchableOpacity>
+        <View style={styles.line} />
+      </View>
+      <AppButton
+        title={'Continue'}
+        onPress={onNext}
+        containerStyle={styles.customStyleButton}
+        iconRight={'arNext'}
+      />
     </View>
   );
 };
@@ -105,5 +114,9 @@ const styles = StyleSheet.create({
     height: 1,
     width: '100%',
     backgroundColor: colors.borderPrimary,
+  },
+  customStyleButton: {
+    paddingTop: SIZE.base_space,
+    paddingBottom: SIZE.medium_space,
   },
 });

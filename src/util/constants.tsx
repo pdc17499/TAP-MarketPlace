@@ -12,8 +12,10 @@ const DEVICE = {
 };
 
 const SLIDER = {
-  min: 400,
-  max: 50000,
+  MIN_PRICE: 400,
+  MAX_PRICE: 50000,
+  MIN_FLOOR_SIZE: 500,
+  MAX_FLOOR_SIZE: 10000,
 };
 
 export {DEVICE, SLIDER};

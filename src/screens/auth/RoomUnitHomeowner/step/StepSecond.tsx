@@ -1,31 +1,33 @@
 import {AppButton, AppQA} from '@component';
 import {RoomStepProps} from '@interfaces';
 import {ROOM_UNIT_HOWNER} from '@mocks';
+import {setDataSignup} from '@redux';
 import {fontFamily, scaleWidth, SIZE} from '@util';
 import React from 'react';
 import {View, StyleSheet} from 'react-native';
-
-interface screenNavigationProp {
-  navigate: any;
-}
+import {useDispatch, useSelector} from 'react-redux';
 
 const StepSecond = (props: RoomStepProps) => {
-  const {onNext, room, setRoom} = props;
-
-  const data = ROOM_UNIT_HOWNER;
+  const {onNext} = props;
+  const dispatch = useDispatch();
+  const list = ROOM_UNIT_HOWNER;
+  const dataSignUp = useSelector((state: any) => state?.auth?.dataSignup);
+  const setData = (data: any) => {
+    dispatch(setDataSignup({data}));
+  };
 
   return (
     <View style={styles.container}>
       <AppQA
         isFlex
-        data={data.place}
+        data={list.kind_place}
         title={'What kind of place will you host?'}
-        value={room}
-        setValue={setRoom}
-        typeList={'row'}
+        value={dataSignUp}
+        setValue={setData}
+        typeList={'even'}
         name={'kind_place'}
       />
-      <AppButton title={'Continue'} onPress={onNext} />
+      <AppButton title={'Continue'} onPress={onNext} iconRight={'arNext'} />
     </View>
   );
 };

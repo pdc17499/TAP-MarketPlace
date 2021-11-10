@@ -1,5 +1,5 @@
 export const ROOM_UNIT_HOWNER = {
-  place: [
+  kind_place: [
     {
       id: 1,
       value: 'Condo',
@@ -12,8 +12,12 @@ export const ROOM_UNIT_HOWNER = {
       id: 3,
       value: 'Landed',
     },
+    {
+      id: 4,
+      value: 'Shophouse',
+    },
   ],
-  rentalPrice: [
+  rental_price: [
     {
       id: 1,
       value: 'Negotiable',
@@ -30,23 +34,19 @@ export const ROOM_UNIT_HOWNER = {
   lease_your_place: [
     {
       id: 1,
-      value: '1 year',
+      value: '3 months',
     },
     {
       id: 2,
-      value: '2 years',
+      value: '9 months',
     },
     {
       id: 3,
-      value: '3 years',
+      value: '12 months',
     },
     {
       id: 4,
-      value: 'Short term',
-    },
-    {
-      id: 5,
-      value: 'Flexible',
+      value: '36 months',
     },
   ],
   staying_width_guests: [
@@ -59,37 +59,17 @@ export const ROOM_UNIT_HOWNER = {
       value: 'No',
     },
   ],
-  roomType: [
+  room_type: [
     {
       id: 1,
-      value: 'Entire Unit',
+      value: 'Entire Home',
     },
     {
       id: 2,
-      value: 'Studio',
-    },
-    {
-      id: 3,
-      value: '1 Bed',
-    },
-    {
-      id: 4,
-      value: '2 Beds',
-    },
-    {
-      id: 5,
-      value: '3 Beds',
-    },
-    {
-      id: 6,
-      value: '4 Beds',
-    },
-    {
-      id: 7,
-      value: '5+ Beds',
+      value: 'Room',
     },
   ],
-  bathroomNumber: [
+  bedroom_number: [
     {
       id: 1,
       value: '1',
@@ -111,7 +91,39 @@ export const ROOM_UNIT_HOWNER = {
       value: '5+',
     },
   ],
-  roomFurnishing: [
+  bathroom_number: [
+    {
+      id: 1,
+      value: '1',
+    },
+    {
+      id: 2,
+      value: '2',
+    },
+    {
+      id: 3,
+      value: '3',
+    },
+    {
+      id: 4,
+      value: '4',
+    },
+    {
+      id: 5,
+      value: '5+',
+    },
+  ],
+  attached_bathroom: [
+    {
+      id: 1,
+      value: 'Yes',
+    },
+    {
+      id: 2,
+      value: 'No',
+    },
+  ],
+  room_furnishing: [
     {
       id: 1,
       value: 'Unfurnished',

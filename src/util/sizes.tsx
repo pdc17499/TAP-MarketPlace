@@ -39,6 +39,7 @@ export const SIZE = {
   padding: scaleWidth(24),
 
   //Font size
+  small_size: scaleSize(12),
   base_size: scaleSize(16),
   medium_size: scaleSize(24),
   semi_size: scaleSize(28),

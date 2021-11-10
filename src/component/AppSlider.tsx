@@ -6,20 +6,26 @@ import {StyleSheet, Text, View} from 'react-native';
 
 interface AppSliderProps {
   onValuesChangeFinish: (values: any) => void;
-  min_range: number;
-  max_range: number;
+  min_range_value: number;
+  max_range_value: number;
+  min_range?: number;
+  max_range?: number;
 }
 
 const AppSlider = React.memo((props: AppSliderProps) => {
   const {onValuesChangeFinish, min_range, max_range} = props;
+  const min_range_value = props.min_range_value || 0;
+  const max_range_value = props.max_range_value || 0;
+  const min_default = min_range || SLIDER.MIN_PRICE;
+  const max_default = max_range || SLIDER.MAX_PRICE;
 
   return (
     <>
       <View style={styles.container}>
         <AppInput
           label={'Min'}
-          value={min_range.toString()}
-          name={'min_range'}
+          value={min_range_value.toString()}
+          name={'min_range_value'}
           iconLeft={'dolar'}
           editable={false}
           containerStyle={{flex: 1}}
@@ -28,8 +34,8 @@ const AppSlider = React.memo((props: AppSliderProps) => {
         <View style={styles.line} />
         <AppInput
           label={'Max'}
-          value={max_range.toString()}
-          name={'max_range'}
+          value={max_range_value.toString()}
+          name={'max_range_value'}
           iconLeft={'dolar'}
           editable={false}
           containerStyle={{flex: 1}}
@@ -37,11 +43,11 @@ const AppSlider = React.memo((props: AppSliderProps) => {
         />
       </View>
       <MultiSlider
-        values={[min_range, max_range]}
+        values={[min_range_value, max_range_value]}
         sliderLength={DEVICE.width - 2 * SIZE.padding}
         onValuesChangeFinish={onValuesChangeFinish}
-        min={SLIDER.min}
-        max={SLIDER.max}
+        min={min_default}
+        max={max_default}
         allowOverlap={false}
         trackStyle={styles.trackStyle}
         selectedStyle={{
@@ -50,8 +56,8 @@ const AppSlider = React.memo((props: AppSliderProps) => {
         markerStyle={styles.markerStyle}
       />
       <View style={styles.bottomView}>
-        <AppText style={styles.textBottom}>{`${SLIDER.min}`}</AppText>
-        <AppText style={styles.textBottom}>{`${SLIDER.max}`}</AppText>
+        <AppText style={styles.textBottom}>{`${min_default}`}</AppText>
+        <AppText style={styles.textBottom}>{`${max_default}`}</AppText>
       </View>
     </>
   );

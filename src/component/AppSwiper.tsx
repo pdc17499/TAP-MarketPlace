@@ -8,13 +8,12 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import {StyleSheet, View} from 'react-native';
+import {Animated, StyleSheet, View} from 'react-native';
 import Swiper from 'react-native-swiper';
-import Carousel from 'react-native-snap-carousel';
 
 const AppSwiper = forwardRef(
   (props: AppSwiperProps, ref: Ref<RefAppSwiper>) => {
-    const {children} = props;
+    const {children, showPagination} = props;
     const refSwiper = useRef<any>();
 
     useImperativeHandle(ref, () => ({
@@ -29,13 +28,17 @@ const AppSwiper = forwardRef(
       refSwiper.current.scrollBy(-1);
     };
 
+    const customPaginationStyle = showPagination
+      ? styles.paginationStyle
+      : styles.hidePagination;
+
     return (
       <>
         <Header back onPressBack={onPrevButton} />
         <Swiper
           ref={refSwiper}
           removeClippedSubviews={false}
-          paginationStyle={styles.paginationStyle}
+          paginationStyle={customPaginationStyle}
           activeDotColor={colors.orange}
           activeDotStyle={styles.activeDotStyle}
           scrollEnabled={false}>
@@ -62,6 +65,9 @@ const styles = StyleSheet.create({
     bottom: 'auto',
     right: SIZE.padding,
     justifyContent: 'flex-end',
+  },
+  hidePagination: {
+    display: 'none',
   },
   activeDotStyle: {
     width: 16,

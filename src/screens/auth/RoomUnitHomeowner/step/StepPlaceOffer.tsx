@@ -1,49 +1,64 @@
 import {AppButton, AppQA} from '@component';
 import {RoomStepProps} from '@interfaces';
 import {ROOM_UNIT_HOWNER} from '@mocks';
-import {colors, fontFamily, scaleWidth, SIZE} from '@util';
+import {useNavigation} from '@react-navigation/core';
+import {setDataSignup} from '@redux';
+import {ROOM_UNIT_PICTURE} from '@routeName';
+import {colors, DEVICE, fontFamily, scaleWidth, SIZE} from '@util';
 import React from 'react';
 import {View, StyleSheet} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
+import {useDispatch, useSelector} from 'react-redux';
 
-interface screenNavigationProp {
-  navigate: any;
-}
+const StepPlaceOffer = (props: RoomStepProps) => {
+  const {onNext} = props;
+  const navigation: any = useNavigation();
+  const dispatch = useDispatch();
+  const list = ROOM_UNIT_HOWNER;
+  const dataSignUp = useSelector((state: any) => state?.auth?.dataSignup);
+  const setData = (data: any) => {
+    dispatch(setDataSignup({data}));
+  };
 
-const StepFinal = (props: RoomStepProps) => {
-  const {onNext, room, onChangeValue, setRoom} = props;
+  console.log({dataSignUp});
 
-  const data = ROOM_UNIT_HOWNER;
+  const onContinue = () => {
+    navigation.navigate(ROOM_UNIT_PICTURE);
+  };
 
   return (
     <View style={styles.container}>
-      <ScrollView style={{flex: 1}} showsVerticalScrollIndicator={false}>
+      <ScrollView
+        style={{flex: 1, height: DEVICE.height}}
+        showsVerticalScrollIndicator={false}>
         <AppQA
-          data={data.utilities}
+          data={list.utilities}
           title={'Let your guests know what your place has to offer'}
           subTitle={'Select some keywords that describe your place'}
-          value={room}
-          setValue={setRoom}
-          typeList={'row'}
+          value={dataSignUp}
+          setValue={setData}
+          typeList={'wrap'}
           isMultiChoice
           name={'key_your_place'}
         />
       </ScrollView>
       <AppButton
         title={'Continue'}
-        onPress={onNext}
+        onPress={onContinue}
         containerStyle={styles.customStyleButton}
+        iconRight={'arNext'}
       />
     </View>
   );
 };
 
-export {StepFinal};
+export {StepPlaceOffer};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: SIZE.padding,
+    height: DEVICE.height,
   },
   titleHeading: {
     ...fontFamily.fontCampWeight600,

@@ -1,75 +1,89 @@
 import React from 'react';
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet, ScrollView, KeyboardAvoidingView} from 'react-native';
 import {AppButton, AppInput, AppQA, AppSlider} from '@component';
 import {RoomStepProps} from '@interfaces';
 import {ROOM_UNIT_HOWNER} from '@mocks';
 import {fontFamily, scaleWidth, SIZE} from '@util';
-import {ScrollView} from 'react-native-gesture-handler';
+import {setDataSignup} from '@redux';
+import {useDispatch, useSelector} from 'react-redux';
 
 const StepPrice = (props: RoomStepProps) => {
-  const {onNext, room, onChangeValue, setRoom} = props;
-
-  const onValuesChangeFinish = (values: any) => {
-    const nRoom: any = {...room};
-    nRoom['min_range'] = values[0];
-    nRoom['max_range'] = values[1];
-    if (setRoom) setRoom(nRoom);
+  const {onNext} = props;
+  const dispatch = useDispatch();
+  const list = ROOM_UNIT_HOWNER;
+  const dataSignUp = useSelector((state: any) => state?.auth?.dataSignup);
+  const setData = (data: any) => {
+    dispatch(setDataSignup({data}));
   };
 
-  const data = ROOM_UNIT_HOWNER;
+  const onValuesChangeFinish = (values: any) => {
+    const nData: any = {...dataSignUp};
+    nData['min_range_price'] = values[0];
+    nData['max_range_price'] = values[1];
+    setData(nData);
+  };
 
-  const renderFixedPrice = () => {
+  const onChangeValue = (item: any, name?: string) => {
+    if (name) {
+      const nData: any = {...dataSignUp};
+      nData[name] = item;
+      setData(nData);
+    }
+  };
+
+  const renderFixedPrice = (id: number) => {
+    const name = id === 1 ? 'negotiable_price' : 'fixed_price';
     return (
       <AppInput
-        value={room.fixed_price}
-        name={'fixed_price'}
+        value={dataSignUp[name]}
+        name={name}
         iconLeft={'dolar'}
         onValueChange={onChangeValue}
         keyboardType={'number-pad'}
-        containerStyle={{marginBottom: SIZE.medium_space}}
+        containerStyle={styles.inputStyle}
         autoFocus
       />
     );
   };
 
-  console.log({room});
-
   const renderPriceRange = () => {
     return (
       <AppSlider
         onValuesChangeFinish={onValuesChangeFinish}
-        min_range={room.min_range}
-        max_range={room.max_range}
+        min_range_value={dataSignUp.min_range_price}
+        max_range_value={dataSignUp.max_range_price}
       />
     );
   };
 
   const renderChildren = () => {
-    if (room.rental_price?.id === 2) {
-      return renderFixedPrice();
-    } else if (room.rental_price?.id === 3) {
+    const id = dataSignUp?.rental_price?.id;
+    if (id === 1 || id === 2) {
+      return renderFixedPrice(id);
+    } else if (id === 3) {
       return renderPriceRange();
     }
   };
 
   return (
     <View style={styles.container}>
-      <ScrollView>
+      <KeyboardAvoidingView style={{flex: 1}}>
         <AppQA
           isFlex
-          data={data.rentalPrice}
+          data={list.rental_price}
           title={'What is your rental price?'}
-          value={room}
+          value={dataSignUp}
           name={'rental_price'}
-          setValue={setRoom}
+          setValue={setData}
           typeList={'column'}
           children={renderChildren()}
         />
-      </ScrollView>
+      </KeyboardAvoidingView>
       <AppButton
         title={'Continue'}
         onPress={onNext}
         containerStyle={styles.customStyleButton}
+        iconRight={'arNext'}
       />
     </View>
   );
@@ -93,5 +107,9 @@ const styles = StyleSheet.create({
   customStyleButton: {
     paddingTop: SIZE.base_space,
     paddingBottom: SIZE.medium_space,
+  },
+  inputStyle: {
+    marginTop: SIZE.base_space,
+    marginBottom: SIZE.padding,
   },
 });

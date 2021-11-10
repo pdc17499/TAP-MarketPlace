@@ -21,7 +21,6 @@ interface IAppPicker {
 export const AppPicker: React.FC<IAppPicker> = React.memo((props: any) => {
   const {
     label,
-    value,
     onValueChange,
     items,
     style,
@@ -30,6 +29,7 @@ export const AppPicker: React.FC<IAppPicker> = React.memo((props: any) => {
     styleError,
     name,
   } = props;
+  const value = props.value || '';
 
   return (
     <>
@@ -64,10 +64,8 @@ export const AppPicker: React.FC<IAppPicker> = React.memo((props: any) => {
 
 const styles = StyleSheet.create({
   container: {
-    minHeight: scaleWidth(60),
-    marginTop: scaleWidth(30),
-    backgroundColor: colors.bgInput,
-    borderRadius: 8,
+    minHeight: SIZE.input_height,
+    marginTop: SIZE.medium_space,
     justifyContent: 'center',
   },
   label: {
@@ -86,6 +84,9 @@ const styles = StyleSheet.create({
     width: '100%',
     margin: 0,
     height: SIZE.input_height,
+    paddingLeft: SIZE.base_space,
+    backgroundColor: colors.bgInput,
+    borderRadius: 8,
   },
   inputIOS: {
     ...fontFamily.fontWeight400,
@@ -94,6 +95,8 @@ const styles = StyleSheet.create({
     width: '100%',
     fontSize: SIZE.base_size,
     paddingLeft: SIZE.base_space,
+    backgroundColor: colors.bgInput,
+    borderRadius: 8,
   },
   iconContainer: {
     position: 'absolute',

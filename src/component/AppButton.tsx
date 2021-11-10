@@ -1,10 +1,17 @@
-import React, { useCallback } from 'react';
-import { TouchableOpacity, StyleSheet, View, Image } from 'react-native';
-import { AppText } from './AppText';
-import { colors, fontFamily, SIZE } from '@util';
-import { debounce } from 'lodash';
-import { ButtonProps } from '@interfaces';
-import { ArrowBlack, ArrowGray, CaretRight, IconResetMail } from '@assets';
+import React, {useCallback} from 'react';
+import {TouchableOpacity, StyleSheet, View, Image} from 'react-native';
+import {AppText} from './AppText';
+import {colors, fontFamily, SIZE} from '@util';
+import {debounce} from 'lodash';
+import {ButtonProps} from '@interfaces';
+import {
+  ArrowNext,
+  CaretRight,
+  IconResetMail,
+  IconTakePhoto,
+  IconTick,
+  IconUpload,
+} from '@assets';
 
 const AppButton = React.memo((props: ButtonProps) => {
   const {
@@ -32,7 +39,7 @@ const AppButton = React.memo((props: ButtonProps) => {
   );
 
   const bgLinear = {
-    backgroundColor: 'white',
+    backgroundColor: 'transparent',
     borderWidth: isActive ? 1.5 : 1,
     borderColor: isActive ? colors.orange : colors.borderPrimary,
   };
@@ -47,7 +54,7 @@ const AppButton = React.memo((props: ButtonProps) => {
   const buttonStyle = [
     styles.container,
     typeButton === 'linear' && bgLinear,
-    { minHeight: size === 'small' ? SIZE.btn_height_small : SIZE.btn_height },
+    {minHeight: size === 'small' ? SIZE.btn_height_small : SIZE.btn_height},
     customStyleButton,
   ];
 
@@ -63,10 +70,16 @@ const AppButton = React.memo((props: ButtonProps) => {
         return <CaretRight />;
       case 'email':
         return <IconResetMail />;
-      case 'arrowBlack':
-        return <ArrowBlack />;
-      case 'arrowGray':
-        return <ArrowGray />;
+      case 'arNextBlack':
+        return <ArrowNext iconFillColor={colors.primary} />;
+      case 'arNext':
+        return <ArrowNext />;
+      case 'upload':
+        return <IconUpload />;
+      case 'photo':
+        return <IconTakePhoto />;
+      case 'tick':
+        return <IconTick />;
     }
 
     return null;
@@ -81,7 +94,7 @@ const AppButton = React.memo((props: ButtonProps) => {
         activeOpacity={0.75}>
         {image && <Image source={image} style={imageStyle} />}
         {title && <AppText style={titleStyle}>{title}</AppText>}
-        {iconRight && <View>{renderIconRight()}</View>}
+        {iconRight && <View style={styles.iconRight}>{renderIconRight()}</View>}
       </TouchableOpacity>
     </View>
   );
@@ -94,15 +107,20 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    // marginBottom: SIZE.base_space,
+    marginTop: SIZE.base_space,
     backgroundColor: colors.primary,
   },
   txtButton: {
-    ...fontFamily.fontWeight600,
+    ...fontFamily.fontWeight500,
     color: colors.white,
     fontSize: SIZE.base_size,
-
+  },
+  iconLeft: {
+    marginRight: SIZE.base_space,
+  },
+  iconRight: {
+    marginLeft: SIZE.base_space / 2,
   },
 });
 
-export { AppButton };
+export {AppButton};
