@@ -13,7 +13,8 @@ const colors = {
   red: '#FF4C41',
   facebook: '#287AE3',
   google: '#EFEFEF',
-  borderTextFacebook: '#5A9DF4'
+  borderTextFacebook: '#5A9DF4',
+
 };
 
 export { colors };

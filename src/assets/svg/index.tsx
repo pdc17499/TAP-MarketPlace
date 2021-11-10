@@ -239,3 +239,31 @@ export const ArrowGray = (props: iconProps) => (
     />
   </Svg>
 );
+
+export const IconQuestion = (props: iconProps) => (
+  <Svg
+    width={24}
+    height={24}
+    fill="none"
+    {...props}
+  >
+    <Path
+      d="M12 21a9 9 0 100-18 9 9 0 000 18z"
+      stroke="#B09E88"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <Path
+      d="M12 18a1.125 1.125 0 100-2.25A1.125 1.125 0 0012 18z"
+      fill="#B09E88"
+    />
+    <Path
+      d="M12.001 13.5v-.75a2.625 2.625 0 10-2.625-2.625"
+      stroke="#B09E88"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </Svg>
+);

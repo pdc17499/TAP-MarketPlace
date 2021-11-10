@@ -14,16 +14,17 @@ const styles = StyleSheet.create({
   title: {
     fontSize: SIZE.big_size,
     marginTop: scaleWidth(20),
-    ...fontFamily.fontCampWeight600
+    ...fontFamily.fontCampWeight600,
+    width: scaleWidth(241)
   },
 
   description: {
-    color: colors.textThirdPrimary,
-    ...fontFamily.fontWeight400,
-    width: scaleWidth(264),
-    marginTop: scaleWidth(16),
+    color: colors.textSecondPrimary,
+    ...fontFamily.fontCampWeight600,
+    fontSize: SIZE.medium_size,
+    marginTop: scaleWidth(24),
     marginBottom: scaleWidth(36),
-    lineHeight: scaleWidth(22)
+    lineHeight: scaleWidth(30)
   },
   sendButton: {
     marginTop: scaleWidth(15)
@@ -56,6 +57,7 @@ const styles = StyleSheet.create({
     color: colors.textThirdPrimary,
     flex: 1,
     textAlign: 'center',
+    ...fontFamily.fontWeight500
   },
   facebookTxt: {
     borderLeftWidth: 1,
@@ -83,6 +85,7 @@ const styles = StyleSheet.create({
   },
   emailTxt: {
     color: colors.primary,
+    ...fontFamily.fontWeight600
   },
 
 });

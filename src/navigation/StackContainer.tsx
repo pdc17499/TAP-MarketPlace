@@ -9,9 +9,11 @@ import {
   SIGNIN,
   SIGNUP,
   SIGNUP_EMAIL,
-  SIGNUP_PROPERTY
+  SIGNUP_PROPERTY,
+  VERIFY_ACCOUNT,
+  VERIFY_CODE
 } from './routeName';
-import { ChooseRole, RoomUnitHomeowner, Welcome, SignIn, ResetPassword, SignUp, SignUpEmail, SignUpProperty } from '../screens';
+import { ChooseRole, RoomUnitHomeowner, Welcome, SignIn, ResetPassword, SignUp, SignUpEmail, SignUpProperty, VerifyAccount, VerifyCode } from '../screens';
 import { useSelector } from 'react-redux';
 
 const Stack = createStackNavigator();
@@ -33,6 +35,8 @@ const UnAuthenStack = () => {
       <Stack.Screen name={SIGNUP} component={SignUp} />
       <Stack.Screen name={SIGNUP_EMAIL} component={SignUpEmail} />
       <Stack.Screen name={SIGNUP_PROPERTY} component={SignUpProperty} />
+      <Stack.Screen name={VERIFY_ACCOUNT} component={VerifyAccount} />
+      <Stack.Screen name={VERIFY_CODE} component={VerifyCode} />
 
     </Stack.Navigator>
   );

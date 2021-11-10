@@ -1,4 +1,4 @@
-import { colors, fontFamily, scaleWidth, SIZE } from '@util';
+import { colors, fontFamily, scaleHeight, scaleWidth, SIZE } from '@util';
 import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
@@ -8,12 +8,27 @@ const styles = StyleSheet.create({
   },
   body: {
     paddingHorizontal: SIZE.padding,
+    flex: 1
   },
   title: {
     fontSize: SIZE.big_size,
-    marginVertical: scaleWidth(36),
+    marginBottom: scaleWidth(30),
     ...fontFamily.fontCampWeight600
   },
+  text: {
+    ...fontFamily.fontWeight500,
+    marginTop: 20,
+    marginBottom: 10,
+  },
+  formInPut: {
+    height: scaleHeight(585),
+
+  },
+  button: {
+    position: 'absolute',
+    bottom: 0,
+    width: '100%'
+  }
 
 });
 

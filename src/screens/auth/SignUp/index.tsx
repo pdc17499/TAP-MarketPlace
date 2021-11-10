@@ -28,16 +28,16 @@ const SignUp = (props: SignUpProp) => {
 
         <AppText
           style={styles.title}>
-          {'Sign up'}
+          {"Let's create an account"}
         </AppText>
 
         <AppText
           style={styles.description}>
-          {'Create an account to find the best room for your self'}
+          {'Finally, sign up and meet your potential guests'}
         </AppText>
 
         <AppButton
-          title={'Sign up with google'}
+          title={'Sign up with Google'}
           typeButton={'linear'}
           image={iconGoogle}
           size={'small'}
@@ -47,7 +47,7 @@ const SignUp = (props: SignUpProp) => {
         />
 
         <AppButton
-          title={'Sign up with facebook'}
+          title={'Sign up with Facebook'}
           typeButton={'linear'}
           image={iconFacebook}
           size={'small'}

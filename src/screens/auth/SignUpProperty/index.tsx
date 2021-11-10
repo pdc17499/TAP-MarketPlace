@@ -59,19 +59,6 @@ const SignUpProperty = (props: SignUpPropertyProp) => {
               />
 
             </View>
-            {(props.values.name !== '')
-              ? <View>
-                <AppQA
-                  data={data.gender}
-                  onSelect={onSelect}
-                  typeList={'row'}
-                  title={'Your gender'}
-                  customStyleTitle={styles.text2}
-                  selected={selectedItem}
-                  name={''} />
-              </View>
-              : null
-            }
 
             {(props.values.name !== '')
               ? <AppButton customStyleButton={styles.button} title={"Continue "} size={'small'} iconRight={'arrowGray'} onPress={props.handleSubmit} />

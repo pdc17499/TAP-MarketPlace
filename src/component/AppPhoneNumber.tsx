@@ -1,9 +1,9 @@
 import CountryPicker from 'react-native-country-picker-modal';
-import React, {useState, useEffect} from 'react';
-import {StyleSheet, TouchableOpacity, View} from 'react-native';
-import {AppInput, AppText} from '@component';
-import {colors, fontFamily, scaleWidth, SIZE} from '@util';
-import {DownIcon} from '@assets';
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import { AppInput, AppText } from '@component';
+import { colors, fontFamily, scaleWidth, SIZE } from '@util';
+import { DownIcon } from '@assets';
 
 interface IAppPhoneNumber {
   label?: string;
@@ -14,17 +14,17 @@ interface IAppPhoneNumber {
 }
 
 export const AppPhoneNumber = React.memo((props: IAppPhoneNumber) => {
-  const {label, value, onChangePhone, onChangeFlag, error} = props;
-  const [countryCode, setCountryCode]: any = useState('AU');
+  const { label, value, onChangePhone, onChangeFlag, error } = props;
+  const [countryCode, setCountryCode]: any = useState('SG');
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    onChangeFlag('61');
+    onChangeFlag('65');
   }, []);
 
   const onSelectFlag = (country: any) => {
     setCountryCode(country?.cca2);
-    onChangeFlag(country?.callingCode[0] || '61');
+    onChangeFlag(country?.callingCode[0] || '65');
   };
 
   const showModal = () => {
@@ -43,12 +43,12 @@ export const AppPhoneNumber = React.memo((props: IAppPhoneNumber) => {
             visible={visible}
             withCallingCode={true}
             withCallingCodeButton={true}
-            countryCode={countryCode || 'AU'}
+            countryCode={countryCode || 'SG'}
             withFlagButton={false}
             onSelect={onSelectFlag}
             withFilter={true}
           />
-          <DownIcon style={{top: 2}} />
+          <DownIcon />
         </TouchableOpacity>
         <View style={styles.input}>
           <AppInput
@@ -84,6 +84,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: scaleWidth(86),
     justifyContent: 'space-between',
+    backgroundColor: colors.bgInput,
+    borderRadius: 8,
+    paddingHorizontal: 13
   },
   error: {
     marginTop: 4,

@@ -6,7 +6,7 @@ import React from 'react';
 import { View, KeyboardAvoidingView } from 'react-native';
 import { styles } from './style';
 import * as yup from 'yup';
-import { SIGNUP_PROPERTY } from '@routeName';
+import { SIGNUP_PROPERTY, VERIFY_ACCOUNT } from '@routeName';
 
 interface SignUpEmailProp { }
 
@@ -19,6 +19,8 @@ const SignUpEmail = (props: SignUpEmailProp) => {
 
   const formInitialValues = {
     email: '',
+    password: '',
+    confirm_password: '',
     error: '',
   };
 
@@ -27,6 +29,15 @@ const SignUpEmail = (props: SignUpEmailProp) => {
       .string()
       .required('This field is required')
       .email('Email is not valid'),
+    password: yup
+      .string()
+      .required('This field is required')
+      .min(6, 'Password must be at least 6 characters')
+      .max(32, 'Password may not be greater than 32 characters'),
+    confirm_password: yup
+      .string()
+      .oneOf([yup.ref('password'), null], 'Confirm password must match')
+
   });
 
   const RenderEmailForm = () => (
@@ -35,20 +46,41 @@ const SignUpEmail = (props: SignUpEmailProp) => {
         initialValues={formInitialValues}
         validationSchema={validationEmail}
         validateOnChange={false}
-        onSubmit={values => { navigation.navigate(SIGNUP_PROPERTY) }}
+        onSubmit={values => { navigation.navigate(VERIFY_ACCOUNT) }}
       >
         {props => (
-          <View>
-            <View style={{ marginBottom: scaleHeight(24) }}>
+          <View style={styles.formInPut} >
+            <View style={{ marginBottom: scaleHeight(24), flex: 1 }}>
+              <AppText style={styles.text}>{'Email'}</AppText>
               <AppInput
-                placeholder={'Email'}
+                placeholder={'Enter your email'}
                 iconLeft={'email'}
                 value={props.values.email}
                 onValueChange={props.handleChange('email')}
                 error={props.errors.email}
               ></AppInput>
+              <AppText style={styles.text}>{'Password'}</AppText>
+              <AppInput
+                secureTextEntry={true}
+                showEye={true}
+                placeholder={'Enter your password'}
+                iconLeft={'key'}
+                value={props.values.password}
+                onValueChange={props.handleChange('password')}
+                error={props.errors.password}
+              ></AppInput>
+              <AppText style={styles.text}>{'Confirm Password'}</AppText>
+              <AppInput
+                secureTextEntry={true}
+                showEye={true}
+                placeholder={'Confirm your password'}
+                iconLeft={'key'}
+                value={props.values.confirm_password}
+                onValueChange={props.handleChange('confirm_password')}
+                error={props.errors.confirm_password}
+              ></AppInput>
             </View>
-            <AppButton title={"Continue "} size={'small'} iconRight={'arrowGray'} onPress={props.handleSubmit} />
+            <AppButton customStyleButton={styles.button} title={"Continue "} size={'small'} iconRight={'arrowGray'} onPress={props.handleSubmit} />
           </View>
         )}
       </Formik>
@@ -59,16 +91,11 @@ const SignUpEmail = (props: SignUpEmailProp) => {
     <View style={styles.container}>
       <Header back />
       <View style={styles.body}>
-
         <AppText
           style={styles.title}>
           {'Sign up'}
         </AppText>
-
         {RenderEmailForm()}
-
-
-
       </View>
     </View>
   );

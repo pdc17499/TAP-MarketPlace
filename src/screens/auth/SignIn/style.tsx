@@ -12,11 +12,9 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         width: scaleWidth(45),
         height: scaleHeight(49),
-        marginTop: scaleHeight(60),
+        marginTop: scaleHeight(85),
         marginBottom: scaleHeight(26)
-
     },
-
     title: {
         color: colors.primary,
         fontSize: SIZE.big_size,
@@ -24,18 +22,16 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         marginBottom: scaleHeight(40),
     },
-
     signInTxt: {
         flexDirection: 'row',
         alignItems: 'center',
         marginBottom: scaleHeight(81),
-
     },
     forgetTxt: {
         ...fontFamily.fontWeight500,
         color: colors.textThirdPrimary,
         textAlign: 'right',
-        marginBottom: scaleHeight(54)
+        marginBottom: scaleHeight(30)
     },
     signInWithTxt: {
         flex: 1,
@@ -50,7 +46,8 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1,
     },
     signInWith: {
-        flexDirection: 'row', marginTop: scaleHeight(60), alignItems: 'center'
+        flexDirection: 'row', marginTop: scaleHeight(45), alignItems: 'center',
+        marginBottom: scaleHeight(15)
     },
     blockButton: {
         flexDirection: 'row',

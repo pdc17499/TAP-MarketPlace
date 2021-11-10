@@ -47,8 +47,7 @@ const styles = StyleSheet.create({
     width: scaleWidth(106)
   },
   button: {
-
-    marginTop: scaleWidth(100),
+    marginTop: scaleWidth(250),
     marginBottom: scaleWidth(20)
   },
 

@@ -1,21 +1,20 @@
-import {AppButton, AppPicker, AppQA, AppText} from '@component';
-import {mockProps, RoomStepProps} from '@interfaces';
-import {ROOM_UNIT_HOWNER} from '@mocks';
-import {colors, fontFamily, scaleWidth, SIZE, YEARS} from '@util';
+import { AppButton, AppPicker, AppQA, AppText } from '@component';
+import { mockProps, RoomStepProps } from '@interfaces';
+import { ROOM_UNIT_HOWNER as ROOM_UNIT_HOWLER } from '@mocks';
+import { colors, fontFamily, scaleWidth, SIZE, YEARS } from '@util';
 import React from 'react';
-import {View, StyleSheet, ScrollView} from 'react-native';
+import { View, StyleSheet, ScrollView } from 'react-native';
 
 const StepRoomDetail = (props: RoomStepProps) => {
-  const {onNext, room, onChangeValue, setRoom} = props;
-  const data = ROOM_UNIT_HOWNER;
-
+  const { onNext, room, onChangeValue, setRoom } = props;
+  const data = ROOM_UNIT_HOWLER;
   const onChangeText = (item: mockProps, name?: string) => {
     if (onChangeValue) onChangeValue(item, name);
   };
 
   return (
     <View style={styles.container}>
-      <ScrollView style={{flex: 1}} showsVerticalScrollIndicator={false}>
+      <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
         <AppText style={styles.titleHeading}>{'Room details'}</AppText>
         <AppQA
           data={data.roomFurnishing}
@@ -39,7 +38,7 @@ const StepRoomDetail = (props: RoomStepProps) => {
           setValue={setRoom}
           typeList={'row'}
           name={'allow_cooking'}
-          customStyleViewButton={{flex: 1}}
+          customStyleViewButton={{ flex: 1 }}
         />
         <AppText style={styles.title}>
           {'Built year'}
@@ -62,7 +61,7 @@ const StepRoomDetail = (props: RoomStepProps) => {
   );
 };
 
-export {StepRoomDetail};
+export { StepRoomDetail };
 
 const styles = StyleSheet.create({
   container: {

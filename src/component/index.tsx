@@ -5,7 +5,7 @@ export * from './AppInput';
 export * from './AppSwiper';
 export * from './AppQA';
 export * from './AppSlider';
-// export * from './AppPhoneNumber';
+export * from './AppPhoneNumber';
 export * from './AppPicker';
 // export * from './AppDatePicker';
 export * from './GlobalUI';

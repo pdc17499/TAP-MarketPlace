@@ -39,7 +39,7 @@ export interface IAppInput {
   iconLeft?: 'map' | 'key' | 'email' | 'dolar' | 'other';
   iconRight?: 'clear' | 'other';
   name?: string;
-  autoFocus?: boolean
+  autoFocus?: boolean;
 }
 
 export interface AppSwiperProps {
@@ -106,9 +106,14 @@ export interface AppQAProps {
 }
 
 export interface RoomStepProps {
-  onNext: () => void;
   room: RoomUnitHOwnerProps;
+  onNext: () => void;
   onChangeValue: (item: mockProps, name?: string) => void;
   setRoom?: (item: RoomUnitHOwnerProps) => void;
 }
 
+export interface VerifyAccountProps {
+  countryCode: string;
+  onChangeValue: (item: string) => void;
+  setCountryCode?: (item: string) => void;
+}
