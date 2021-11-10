@@ -3,16 +3,10 @@ import {View, StyleSheet} from 'react-native';
 import {AppButton, AppInput, AppQA, AppSlider} from '@component';
 import {RoomStepProps} from '@interfaces';
 import {ROOM_UNIT_HOWNER} from '@mocks';
-import {useNavigation} from '@react-navigation/core';
 import {fontFamily, scaleWidth, SIZE} from '@util';
 import {ScrollView} from 'react-native-gesture-handler';
 
-interface screenNavigationProp {
-  navigate: any;
-}
-
 const StepPrice = (props: RoomStepProps) => {
-  const navigation = useNavigation<screenNavigationProp>();
   const {onNext, room, onChangeValue, setRoom} = props;
 
   const onValuesChangeFinish = (values: any) => {

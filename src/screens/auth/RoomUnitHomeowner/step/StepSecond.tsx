@@ -1,19 +1,16 @@
-import {AppButton, AppInput, AppQA, AppText, Header} from '@component';
+import {AppButton, AppQA} from '@component';
 import {RoomStepProps} from '@interfaces';
 import {ROOM_UNIT_HOWNER} from '@mocks';
-import {useNavigation} from '@react-navigation/core';
-import {colors, fontFamily, scaleWidth, SIZE} from '@util';
-import React, {useState} from 'react';
-import {View, Image, StyleSheet} from 'react-native';
+import {fontFamily, scaleWidth, SIZE} from '@util';
+import React from 'react';
+import {View, StyleSheet} from 'react-native';
 
 interface screenNavigationProp {
   navigate: any;
 }
 
 const StepSecond = (props: RoomStepProps) => {
-  const navigation = useNavigation<screenNavigationProp>();
-  const [location, setLocation] = useState('');
-  const {onNext, room, onChangeValue, setRoom} = props;
+  const {onNext, room, setRoom} = props;
 
   const data = ROOM_UNIT_HOWNER;
 

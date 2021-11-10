@@ -25,29 +25,24 @@ const AppQA = React.memo((props: AppQAProps) => {
     flex: isFlex ? 1 : 0,
     marginBottom: SIZE.big_space - SIZE.medium_space,
   };
-  const selected = value[name];
+  const selected = isMultiChoice ? [...value[name]] : {...value[name]};
   console.log({selected});
 
   const onChangeValue = (item: mockProps, isActive: boolean) => {
     let nValue: any = {...value};
     if (isMultiChoice) {
-      let nData = selected;
-      let nList = nData;
       if (isActive) {
-        nData = value[name].filter(
+        nValue[name] = value[name].filter(
           (itm: mockProps) => itm.value !== item.value,
         );
-        // nData[name] = nList;
       } else {
-        console.log(nData, name, selected);
-        selected.push(item);
+        nValue[name].push(item);
       }
-      nValue[name] = selected;
-      if (setValue) setValue(selected);
     } else {
-      nData[name] = item;
-      if (setValue) setValue(nData);
+      nValue[name] = item;
     }
+
+    if (setValue) setValue(nValue);
   };
 
   return (

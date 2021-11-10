@@ -1,24 +1,21 @@
 import {AppButton, AppPicker, AppQA, AppText} from '@component';
-import {RoomStepProps} from '@interfaces';
+import {mockProps, RoomStepProps} from '@interfaces';
 import {ROOM_UNIT_HOWNER} from '@mocks';
-import {useNavigation} from '@react-navigation/core';
 import {colors, fontFamily, scaleWidth, SIZE, YEARS} from '@util';
 import React from 'react';
-import {View, StyleSheet} from 'react-native';
-import {ScrollView} from 'react-native-gesture-handler';
-
-interface screenNavigationProp {
-  navigate: any;
-}
+import {View, StyleSheet, ScrollView} from 'react-native';
 
 const StepRoomDetail = (props: RoomStepProps) => {
-  const navigation = useNavigation<screenNavigationProp>();
   const {onNext, room, onChangeValue, setRoom} = props;
   const data = ROOM_UNIT_HOWNER;
 
+  const onChangeText = (item: mockProps, name?: string) => {
+    if (onChangeValue) onChangeValue(item, name);
+  };
+
   return (
     <View style={styles.container}>
-      <ScrollView style={{flex: 1}}>
+      <ScrollView style={{flex: 1}} showsVerticalScrollIndicator={false}>
         <AppText style={styles.titleHeading}>{'Room details'}</AppText>
         <AppQA
           data={data.roomFurnishing}
@@ -30,7 +27,7 @@ const StepRoomDetail = (props: RoomStepProps) => {
         <AppQA
           data={data.floor_level}
           title={'Floor level'}
-          value={room.floor_level}
+          value={room}
           setValue={setRoom}
           typeList={'row'}
           name={'floor_level'}
@@ -51,7 +48,7 @@ const StepRoomDetail = (props: RoomStepProps) => {
         <AppPicker
           value={room.built_year}
           name={'built_year'}
-          onValueChange={onChangeValue}
+          onValueChange={onChangeText}
           items={YEARS()}
           style={styles.customContainerPicker}
         />

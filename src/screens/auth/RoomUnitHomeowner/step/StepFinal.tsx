@@ -1,7 +1,6 @@
-import {AppButton, AppQA, AppText} from '@component';
-import {mockProps, RoomStepProps} from '@interfaces';
+import {AppButton, AppQA} from '@component';
+import {RoomStepProps} from '@interfaces';
 import {ROOM_UNIT_HOWNER} from '@mocks';
-import {useNavigation} from '@react-navigation/core';
 import {colors, fontFamily, scaleWidth, SIZE} from '@util';
 import React from 'react';
 import {View, StyleSheet} from 'react-native';
@@ -12,36 +11,13 @@ interface screenNavigationProp {
 }
 
 const StepFinal = (props: RoomStepProps) => {
-  const navigation = useNavigation<screenNavigationProp>();
   const {onNext, room, onChangeValue, setRoom} = props;
 
   const data = ROOM_UNIT_HOWNER;
 
-  const onMultiSelect = (
-    value: mockProps,
-    name: string,
-    isActive?: boolean,
-  ) => {
-    console.log('values', value, isActive);
-    const nRoom: any = {...room};
-    let nList = nRoom.key_your_place;
-    if (isActive) {
-      nList = nRoom.key_your_place.filter(
-        (item: mockProps) => item.id !== value.id,
-      );
-      nRoom.key_your_place = nList;
-    } else {
-      nRoom.key_your_place.push(value);
-    }
-
-    console.log('key_your_place', nList);
-
-    if (setRoom) setRoom(nRoom);
-  };
-
   return (
     <View style={styles.container}>
-      <ScrollView style={{flex: 1}}>
+      <ScrollView style={{flex: 1}} showsVerticalScrollIndicator={false}>
         <AppQA
           data={data.utilities}
           title={'Let your guests know what your place has to offer'}

@@ -63,26 +63,16 @@ const RoomUnitHomeowner = (props: any) => {
   return (
     <View style={styles.container}>
       <AppSwiper ref={refSwiper}>
-        <StepFinal
-          onNext={onNext}
-          room={room}
-          onChangeValue={onChangeValue}
-          setRoom={setRoom}
-        />
         <StepRoomDetail
           onNext={onNext}
           room={room}
           onChangeValue={onChangeValue}
           setRoom={setRoom}
         />
-        <StepLeasePeriod
-          onNext={onNext}
-          room={room}
-          onChangeValue={onChangeValue}
-          setRoom={setRoom}
-        />
+        <StepFinal onNext={onNext} room={room} setRoom={setRoom} />
+        <StepLeasePeriod onNext={onNext} room={room} setRoom={setRoom} />
         <StepFirst onNext={onNext} property={room} />
-        <StepSecond onNext={onNext} room={room} onChangeValue={onChangeValue} />
+        <StepSecond onNext={onNext} room={room} />
         <StepPrice
           onNext={onNext}
           room={room}

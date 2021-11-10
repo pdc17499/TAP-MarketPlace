@@ -1,7 +1,6 @@
 import {AppButton, AppQA} from '@component';
 import {RoomStepProps} from '@interfaces';
 import {ROOM_UNIT_HOWNER} from '@mocks';
-import {useNavigation} from '@react-navigation/core';
 import {fontFamily, scaleWidth, SIZE} from '@util';
 import React from 'react';
 import {View, StyleSheet} from 'react-native';
@@ -11,8 +10,7 @@ interface screenNavigationProp {
 }
 
 const StepLeasePeriod = (props: RoomStepProps) => {
-  const navigation = useNavigation<screenNavigationProp>();
-  const {onNext, room, onChangeValue, setRoom} = props;
+  const {onNext, room, setRoom} = props;
 
   const data = ROOM_UNIT_HOWNER;
 
