@@ -55,7 +55,8 @@ export interface IAppInput {
 
 export interface AppSwiperProps {
   children: any;
-  showPagination?: boolean;
+  showPagination?: 'hide' | 'right-header' | 'center-top';
+  onSkip?: (index: number) => void;
 }
 
 export interface RefAppSwiper {
@@ -68,9 +69,9 @@ export interface HeaderProps {
   customContainer?: any;
   back?: any;
   btnCountine?: boolean;
-  onPressCountine?: () => void;
+  onPressRight?: () => void;
   btnRight?: any;
-  iconRight?: any;
+  iconRight?: 'skip' | 'hide';
   onPressBack?: () => void;
   iconFillColor?: string;
 }
@@ -113,10 +114,10 @@ export interface DataSignupProps {
   country: any;
   occupation: any;
   ethnicity: any;
-  your_place: mockProps;
+  your_place: Array<mockProps>;
   have_pet: mockProps;
   smoke: mockProps;
-  diet_choice: mockProps;
+  diet_choice: Array<mockProps>;
   your_religion: mockProps;
   email: string;
   password: string;

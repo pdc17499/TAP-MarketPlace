@@ -1,9 +1,9 @@
 import {AppButton, AppPicker, AppText, Header} from '@component';
 import {useNavigation} from '@react-navigation/core';
-import {validateForm, YEARS} from '@util';
+import {fontFamily, SIZE, validateForm, YEARS} from '@util';
 import {Formik} from 'formik';
-import React from 'react';
-import {View, ScrollView} from 'react-native';
+import React, {useState} from 'react';
+import {View, ScrollView, TouchableOpacity} from 'react-native';
 import {styles} from './style';
 import * as yup from 'yup';
 import {ROOM_UNIT_HOWNER} from '@mocks';
@@ -11,6 +11,8 @@ import {useDispatch, useSelector} from 'react-redux';
 import {setDataSignup} from '@redux';
 import {LIFE_STYLE} from '@routeName';
 import {DataSignupProps, mockProps} from '@interfaces';
+import CountryPicker from 'react-native-country-picker-modal';
+import {DownIcon} from '@assets';
 interface screenNavigationProp {
   navigate: any;
 }
@@ -25,6 +27,8 @@ const UserInformationCountry = () => {
   const setData = (data: any) => {
     dispatch(setDataSignup({data}));
   };
+  const [countryCode, setCountryCode]: any = useState('SG');
+  const [visible, setVisible] = useState(false);
 
   const formInitialValues = {
     country: dataSignUp?.country?.value,
@@ -59,6 +63,15 @@ const UserInformationCountry = () => {
     navigation.navigate(LIFE_STYLE);
   };
 
+  const onSelectFlag = (country: any) => {
+    setCountryCode(country?.cca2);
+    // onChangeFlag(country?.callingCode[0] || '65');
+  };
+
+  const showModal = () => {
+    setVisible(true);
+  };
+
   const RenderForm = () => (
     <Formik
       initialValues={formInitialValues}
@@ -68,14 +81,31 @@ const UserInformationCountry = () => {
       {(props: any) => (
         <>
           <View style={{flex: 1}}>
-            <AppPicker
+            {/* <AppPicker
               value={dataSignUp?.country}
               name={'country'}
               label={'Where do you come from?'}
               onValueChange={onChangeText}
               items={YEARS()}
               error={props.errors.country}
-            />
+            /> */}
+
+            <TouchableOpacity style={styles.code} onPress={showModal}>
+              <CountryPicker
+                theme={{
+                  fontSize: SIZE.base_size,
+                  ...fontFamily.fontWeight400,
+                }}
+                visible={visible}
+                withCallingCode={false}
+                withCallingCodeButton={false}
+                countryCode={countryCode || 'SG'}
+                withFlagButton={false}
+                onSelect={onSelectFlag}
+                withFilter={true}
+              />
+              <DownIcon />
+            </TouchableOpacity>
 
             <AppPicker
               value={dataSignUp?.occupation}

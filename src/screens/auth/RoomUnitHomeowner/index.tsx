@@ -25,7 +25,7 @@ const RoomUnitHomeowner = (props: any) => {
 
   return (
     <View style={styles.container}>
-      <AppSwiper ref={refSwiper} showPagination={false}>
+      <AppSwiper ref={refSwiper} showPagination={'hide'}>
         <StepFirst onNext={onNext} />
         <StepSecond onNext={onNext} />
         <StepPrice onNext={onNext} />

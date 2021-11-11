@@ -53,7 +53,7 @@ const AppQA = React.memo((props: AppQAProps) => {
       flex: typeList === 'row' ? 1 : 0,
     },
   ];
-  // console.log({selected, value});
+  console.log({selected, value});
 
   const onChangeValue = (item: mockProps, isActive: boolean) => {
     let nValue: any = {...value};

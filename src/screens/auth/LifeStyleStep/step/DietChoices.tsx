@@ -1,16 +1,15 @@
 import {AppButton, AppQA} from '@component';
-import {RoomStepProps} from '@interfaces';
+import {DataSignupProps, RoomStepProps} from '@interfaces';
 import {ROOM_UNIT_HOWNER} from '@mocks';
 import {useNavigation} from '@react-navigation/core';
 import {setDataSignup} from '@redux';
 import {SIGNUP} from '@routeName';
-import {fontFamily, scaleWidth, SIZE} from '@util';
-import React from 'react';
+import {colors, fontFamily, scaleWidth, SIZE} from '@util';
+import React, {forwardRef, useImperativeHandle} from 'react';
 import {View, StyleSheet, ScrollView} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 
-const DietChoice = (props: RoomStepProps) => {
-  const {onNext} = props;
+const DietChoice = forwardRef((props: RoomStepProps, ref) => {
   const navigation: any = useNavigation();
   const dispatch = useDispatch();
   const list = ROOM_UNIT_HOWNER;
@@ -21,6 +20,16 @@ const DietChoice = (props: RoomStepProps) => {
 
   const onPress = () => {
     navigation.navigate(SIGNUP);
+  };
+
+  useImperativeHandle(ref, () => ({
+    onSkip,
+  }));
+
+  const onSkip = () => {
+    const nData: DataSignupProps = {...dataSignUp};
+    nData.diet_choice = [];
+    setData(nData);
   };
 
   return (
@@ -34,10 +43,16 @@ const DietChoice = (props: RoomStepProps) => {
         name={'diet_choice'}
         customStyleTitle={{textAlign: 'center'}}
       />
-      <AppButton title={'Continue'} onPress={onPress} iconRight={'arNext'} />
+      <AppButton
+        title={'Continue'}
+        onPress={onPress}
+        iconRight={'arNext'}
+        customStyleButton={{backgroundColor: colors.bgSreen}}
+        customStyleTitle={{color: colors.primary}}
+      />
     </ScrollView>
   );
-};
+});
 
 export {DietChoice};
 

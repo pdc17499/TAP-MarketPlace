@@ -49,6 +49,16 @@ const styles = StyleSheet.create({
   skip: {
     marginBottom: SIZE.medium_space,
   },
+  code: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    // width: scaleWidth(86),
+    justifyContent: 'space-between',
+    backgroundColor: colors.bgInput,
+    borderRadius: 8,
+    paddingHorizontal: 13,
+    minHeight: SIZE.input_height,
+  },
 });
 
 export {styles};
