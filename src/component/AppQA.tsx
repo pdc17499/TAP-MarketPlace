@@ -18,6 +18,7 @@ const AppQA = React.memo((props: AppQAProps) => {
     name,
     subTitle,
     isFlex,
+    typeTitle,
   } = props;
   const listStyle = typeList === 'column' ? {} : styles.listRow;
   const itemStyle =
@@ -31,15 +32,27 @@ const AppQA = React.memo((props: AppQAProps) => {
 
   const containerView = {
     flex: isFlex ? 1 : 0,
-    marginBottom: SIZE.base_space * 2,
+    marginBottom: SIZE.medium_space,
   };
+
+  const titleStyle =
+    typeTitle === 'base'
+      ? [styles.baseTitle, customStyleTitle]
+      : [styles.title, customStyleTitle];
 
   const selected = value
     ? isMultiChoice
       ? [...value[name]]
       : {...value[name]}
     : null;
-  console.log({selected, value});
+
+  const styleViewButton = [
+    customStyleViewButton,
+    {
+      flex: typeList === 'row' ? 1 : 0,
+    },
+  ];
+  // console.log({selected, value});
 
   const onChangeValue = (item: mockProps, isActive: boolean) => {
     let nValue: any = {...value};
@@ -61,7 +74,7 @@ const AppQA = React.memo((props: AppQAProps) => {
 
   return (
     <View style={containerView}>
-      <AppText style={[styles.title, customStyleTitle]}>{title}</AppText>
+      <AppText style={titleStyle}>{title}</AppText>
       {subTitle && <AppText style={styles.subTitle}>{subTitle}</AppText>}
 
       <View style={listStyle}>
@@ -73,7 +86,7 @@ const AppQA = React.memo((props: AppQAProps) => {
                 ) > -1
               : item.value == selected?.value;
           return (
-            <View key={item.id} style={customStyleViewButton}>
+            <View key={item.id} style={styleViewButton}>
               <AppButton
                 onPress={() => onChangeValue(item, isActive)}
                 isActive={isActive}
@@ -98,7 +111,6 @@ const styles = StyleSheet.create({
   },
   itemRow: {
     marginRight: SIZE.base_space,
-    minWidth: scaleWidth(52),
   },
   itemWrap: {
     paddingHorizontal: SIZE.padding - 2,
@@ -115,7 +127,13 @@ const styles = StyleSheet.create({
     fontSize: SIZE.medium_size,
     lineHeight: SIZE.medium_size * 1.3,
     marginBottom: SIZE.padding - SIZE.base_space,
-    marginTop: SIZE.base_space,
+    marginTop: SIZE.base_space - 4,
+  },
+  baseTitle: {
+    ...fontFamily.fontCampWeight500,
+    fontSize: SIZE.base_size - 1,
+    lineHeight: SIZE.base_size - 1,
+    color: colors.primary,
   },
   subTitle: {
     lineHeight: SIZE.base_size * 1.6,

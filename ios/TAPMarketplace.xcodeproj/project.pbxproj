@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		00E356F31AD99517003FC87E /* tap_marketplaceTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* tap_marketplaceTests.m */; };
+		00E356F31AD99517003FC87E /* TAPMarketplaceTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* TAPMarketplaceTests.m */; };
 		0D6681886DB14372A8C52868 /* CamptonSemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 73FE1BCF0FEF4D078DAB84C8 /* CamptonSemiBold.otf */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
@@ -16,8 +16,8 @@
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		81ED53DFDC8043EDA5B29088 /* Metropolis-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1A76BFD130D942298C263E58 /* Metropolis-Regular.ttf */; };
 		96CB7D75860042EE8C498676 /* Metropolis-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6FE7081043724854BCEBC202 /* Metropolis-Medium.ttf */; };
-		B6517BFB6571760AD72F5C56 /* libPods-tap_marketplace-tap_marketplaceTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CF5EE2541E9DBEF3F7FEA48 /* libPods-tap_marketplace-tap_marketplaceTests.a */; };
-		D8F618CC990531CA7EE9D657 /* libPods-tap_marketplace.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D635D97049A369B38D5284A /* libPods-tap_marketplace.a */; };
+		B6517BFB6571760AD72F5C56 /* libPods-TAPMarketplace-TAPMarketplaceTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CF5EE2541E9DBEF3F7FEA48 /* libPods-TAPMarketplace-TAPMarketplaceTests.a */; };
+		D8F618CC990531CA7EE9D657 /* libPods-TAPMarketplace.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D635D97049A369B38D5284A /* libPods-TAPMarketplace.a */; };
 		DBE6113F273BA844000BCD93 /* QBImagePicker.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DBE6113E273BA843000BCD93 /* QBImagePicker.storyboard */; };
 		F9586F6942E0410AB81FD746 /* Metropolis-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 34A521ECA50F4CEC888BE843 /* Metropolis-SemiBold.ttf */; };
 /* End PBXBuildFile section */
@@ -28,31 +28,31 @@
 			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 13B07F861A680F5B00A75B9A;
-			remoteInfo = tap_marketplace;
+			remoteInfo = TAPMarketplace;
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		00E356EE1AD99517003FC87E /* tap_marketplaceTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = tap_marketplaceTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		00E356EE1AD99517003FC87E /* TAPMarketplaceTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TAPMarketplaceTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		00E356F21AD99517003FC87E /* tap_marketplaceTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = tap_marketplaceTests.m; sourceTree = "<group>"; };
-		06634F1BE46DD037AE671740 /* Pods-tap_marketplace-tap_marketplaceTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-tap_marketplace-tap_marketplaceTests.release.xcconfig"; path = "Target Support Files/Pods-tap_marketplace-tap_marketplaceTests/Pods-tap_marketplace-tap_marketplaceTests.release.xcconfig"; sourceTree = "<group>"; };
-		13B07F961A680F5B00A75B9A /* tap_marketplace.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = tap_marketplace.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = tap_marketplace/AppDelegate.h; sourceTree = "<group>"; };
-		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = tap_marketplace/AppDelegate.m; sourceTree = "<group>"; };
-		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = tap_marketplace/Images.xcassets; sourceTree = "<group>"; };
-		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = tap_marketplace/Info.plist; sourceTree = "<group>"; };
-		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = tap_marketplace/main.m; sourceTree = "<group>"; };
+		00E356F21AD99517003FC87E /* TAPMarketplaceTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TAPMarketplaceTests.m; sourceTree = "<group>"; };
+		06634F1BE46DD037AE671740 /* Pods-TAPMarketplace-TAPMarketplaceTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TAPMarketplace-TAPMarketplaceTests.release.xcconfig"; path = "Target Support Files/Pods-TAPMarketplace-TAPMarketplaceTests/Pods-TAPMarketplace-TAPMarketplaceTests.release.xcconfig"; sourceTree = "<group>"; };
+		13B07F961A680F5B00A75B9A /* TAPMarketplace.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TAPMarketplace.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = TAPMarketplace/AppDelegate.h; sourceTree = "<group>"; };
+		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = TAPMarketplace/AppDelegate.m; sourceTree = "<group>"; };
+		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = TAPMarketplace/Images.xcassets; sourceTree = "<group>"; };
+		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = TAPMarketplace/Info.plist; sourceTree = "<group>"; };
+		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = TAPMarketplace/main.m; sourceTree = "<group>"; };
 		1A76BFD130D942298C263E58 /* Metropolis-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Metropolis-Regular.ttf"; path = "../src/assets/fonts/Metropolis-Regular.ttf"; sourceTree = "<group>"; };
-		2556B452E893C7A9AF0F6C0A /* Pods-tap_marketplace-tap_marketplaceTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-tap_marketplace-tap_marketplaceTests.debug.xcconfig"; path = "Target Support Files/Pods-tap_marketplace-tap_marketplaceTests/Pods-tap_marketplace-tap_marketplaceTests.debug.xcconfig"; sourceTree = "<group>"; };
+		2556B452E893C7A9AF0F6C0A /* Pods-TAPMarketplace-TAPMarketplaceTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TAPMarketplace-TAPMarketplaceTests.debug.xcconfig"; path = "Target Support Files/Pods-TAPMarketplace-TAPMarketplaceTests/Pods-TAPMarketplace-TAPMarketplaceTests.debug.xcconfig"; sourceTree = "<group>"; };
 		34A521ECA50F4CEC888BE843 /* Metropolis-SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Metropolis-SemiBold.ttf"; path = "../src/assets/fonts/Metropolis-SemiBold.ttf"; sourceTree = "<group>"; };
-		6D635D97049A369B38D5284A /* libPods-tap_marketplace.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-tap_marketplace.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		6D635D97049A369B38D5284A /* libPods-TAPMarketplace.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TAPMarketplace.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6FE7081043724854BCEBC202 /* Metropolis-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Metropolis-Medium.ttf"; path = "../src/assets/fonts/Metropolis-Medium.ttf"; sourceTree = "<group>"; };
 		73FE1BCF0FEF4D078DAB84C8 /* CamptonSemiBold.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = CamptonSemiBold.otf; path = ../src/assets/fonts/CamptonSemiBold.otf; sourceTree = "<group>"; };
-		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = tap_marketplace/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		92D10479A8B07CD8B20D9198 /* Pods-tap_marketplace.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-tap_marketplace.debug.xcconfig"; path = "Target Support Files/Pods-tap_marketplace/Pods-tap_marketplace.debug.xcconfig"; sourceTree = "<group>"; };
-		9CF5EE2541E9DBEF3F7FEA48 /* libPods-tap_marketplace-tap_marketplaceTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-tap_marketplace-tap_marketplaceTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		A97FB4E1316409A4D2751B21 /* Pods-tap_marketplace.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-tap_marketplace.release.xcconfig"; path = "Target Support Files/Pods-tap_marketplace/Pods-tap_marketplace.release.xcconfig"; sourceTree = "<group>"; };
+		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = TAPMarketplace/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		92D10479A8B07CD8B20D9198 /* Pods-TAPMarketplace.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TAPMarketplace.debug.xcconfig"; path = "Target Support Files/Pods-TAPMarketplace/Pods-TAPMarketplace.debug.xcconfig"; sourceTree = "<group>"; };
+		9CF5EE2541E9DBEF3F7FEA48 /* libPods-TAPMarketplace-TAPMarketplaceTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TAPMarketplace-TAPMarketplaceTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A97FB4E1316409A4D2751B21 /* Pods-TAPMarketplace.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TAPMarketplace.release.xcconfig"; path = "Target Support Files/Pods-TAPMarketplace/Pods-TAPMarketplace.release.xcconfig"; sourceTree = "<group>"; };
 		DBE6113E273BA843000BCD93 /* QBImagePicker.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = QBImagePicker.storyboard; path = "../node_modules/react-native-image-crop-picker/ios/QBImagePicker/QBImagePicker/QBImagePicker.storyboard"; sourceTree = "<group>"; };
 		E1E9E59CC6494A7DB2F1CB22 /* CamptonMedium.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = CamptonMedium.otf; path = ../src/assets/fonts/CamptonMedium.otf; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
@@ -63,7 +63,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B6517BFB6571760AD72F5C56 /* libPods-tap_marketplace-tap_marketplaceTests.a in Frameworks */,
+				B6517BFB6571760AD72F5C56 /* libPods-TAPMarketplace-TAPMarketplaceTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -71,20 +71,20 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D8F618CC990531CA7EE9D657 /* libPods-tap_marketplace.a in Frameworks */,
+				D8F618CC990531CA7EE9D657 /* libPods-TAPMarketplace.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		00E356EF1AD99517003FC87E /* tap_marketplaceTests */ = {
+		00E356EF1AD99517003FC87E /* TAPMarketplaceTests */ = {
 			isa = PBXGroup;
 			children = (
-				00E356F21AD99517003FC87E /* tap_marketplaceTests.m */,
+				00E356F21AD99517003FC87E /* TAPMarketplaceTests.m */,
 				00E356F01AD99517003FC87E /* Supporting Files */,
 			);
-			path = tap_marketplaceTests;
+			path = TAPMarketplaceTests;
 			sourceTree = "<group>";
 		};
 		00E356F01AD99517003FC87E /* Supporting Files */ = {
@@ -95,7 +95,7 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		13B07FAE1A68108700A75B9A /* tap_marketplace */ = {
+		13B07FAE1A68108700A75B9A /* TAPMarketplace */ = {
 			isa = PBXGroup;
 			children = (
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
@@ -106,15 +106,15 @@
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FB71A68108700A75B9A /* main.m */,
 			);
-			name = tap_marketplace;
+			name = TAPMarketplace;
 			sourceTree = "<group>";
 		};
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
-				6D635D97049A369B38D5284A /* libPods-tap_marketplace.a */,
-				9CF5EE2541E9DBEF3F7FEA48 /* libPods-tap_marketplace-tap_marketplaceTests.a */,
+				6D635D97049A369B38D5284A /* libPods-TAPMarketplace.a */,
+				9CF5EE2541E9DBEF3F7FEA48 /* libPods-TAPMarketplace-TAPMarketplaceTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -134,10 +134,10 @@
 		545E28F9C69C50032FADEE47 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				92D10479A8B07CD8B20D9198 /* Pods-tap_marketplace.debug.xcconfig */,
-				A97FB4E1316409A4D2751B21 /* Pods-tap_marketplace.release.xcconfig */,
-				2556B452E893C7A9AF0F6C0A /* Pods-tap_marketplace-tap_marketplaceTests.debug.xcconfig */,
-				06634F1BE46DD037AE671740 /* Pods-tap_marketplace-tap_marketplaceTests.release.xcconfig */,
+				92D10479A8B07CD8B20D9198 /* Pods-TAPMarketplace.debug.xcconfig */,
+				A97FB4E1316409A4D2751B21 /* Pods-TAPMarketplace.release.xcconfig */,
+				2556B452E893C7A9AF0F6C0A /* Pods-TAPMarketplace-TAPMarketplaceTests.debug.xcconfig */,
+				06634F1BE46DD037AE671740 /* Pods-TAPMarketplace-TAPMarketplaceTests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -152,9 +152,9 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
-				13B07FAE1A68108700A75B9A /* tap_marketplace */,
+				13B07FAE1A68108700A75B9A /* TAPMarketplace */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
-				00E356EF1AD99517003FC87E /* tap_marketplaceTests */,
+				00E356EF1AD99517003FC87E /* TAPMarketplaceTests */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				545E28F9C69C50032FADEE47 /* Pods */,
@@ -168,8 +168,8 @@
 		83CBBA001A601CBA00E9B192 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				13B07F961A680F5B00A75B9A /* tap_marketplace.app */,
-				00E356EE1AD99517003FC87E /* tap_marketplaceTests.xctest */,
+				13B07F961A680F5B00A75B9A /* TAPMarketplace.app */,
+				00E356EE1AD99517003FC87E /* TAPMarketplaceTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -177,9 +177,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		00E356ED1AD99517003FC87E /* tap_marketplaceTests */ = {
+		00E356ED1AD99517003FC87E /* TAPMarketplaceTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "tap_marketplaceTests" */;
+			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "TAPMarketplaceTests" */;
 			buildPhases = (
 				4B3F114D047A53D6A18729FD /* [CP] Check Pods Manifest.lock */,
 				00E356EA1AD99517003FC87E /* Sources */,
@@ -193,14 +193,14 @@
 			dependencies = (
 				00E356F51AD99517003FC87E /* PBXTargetDependency */,
 			);
-			name = tap_marketplaceTests;
-			productName = tap_marketplaceTests;
-			productReference = 00E356EE1AD99517003FC87E /* tap_marketplaceTests.xctest */;
+			name = TAPMarketplaceTests;
+			productName = TAPMarketplaceTests;
+			productReference = 00E356EE1AD99517003FC87E /* TAPMarketplaceTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		13B07F861A680F5B00A75B9A /* tap_marketplace */ = {
+		13B07F861A680F5B00A75B9A /* TAPMarketplace */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "tap_marketplace" */;
+			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "TAPMarketplace" */;
 			buildPhases = (
 				E602ACA26CCBAA3C39F8DCE2 /* [CP] Check Pods Manifest.lock */,
 				FD10A7F022414F080027D42C /* Start Packager */,
@@ -215,9 +215,9 @@
 			);
 			dependencies = (
 			);
-			name = tap_marketplace;
-			productName = tap_marketplace;
-			productReference = 13B07F961A680F5B00A75B9A /* tap_marketplace.app */;
+			name = TAPMarketplace;
+			productName = TAPMarketplace;
+			productReference = 13B07F961A680F5B00A75B9A /* TAPMarketplace.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -237,7 +237,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "tap_marketplace" */;
+			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "TAPMarketplace" */;
 			compatibilityVersion = "Xcode 12.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -250,8 +250,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				13B07F861A680F5B00A75B9A /* tap_marketplace */,
-				00E356ED1AD99517003FC87E /* tap_marketplaceTests */,
+				13B07F861A680F5B00A75B9A /* TAPMarketplace */,
+				00E356ED1AD99517003FC87E /* TAPMarketplaceTests */,
 			);
 		};
 /* End PBXProject section */
@@ -302,15 +302,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-tap_marketplace-tap_marketplaceTests/Pods-tap_marketplace-tap_marketplaceTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-TAPMarketplace-TAPMarketplaceTests/Pods-TAPMarketplace-TAPMarketplaceTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-tap_marketplace-tap_marketplaceTests/Pods-tap_marketplace-tap_marketplaceTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-TAPMarketplace-TAPMarketplaceTests/Pods-TAPMarketplace-TAPMarketplaceTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-tap_marketplace-tap_marketplaceTests/Pods-tap_marketplace-tap_marketplaceTests-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TAPMarketplace-TAPMarketplaceTests/Pods-TAPMarketplace-TAPMarketplaceTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		39FAE81724AEC72D3E34E1BF /* [CP] Copy Pods Resources */ = {
@@ -319,15 +319,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-tap_marketplace/Pods-tap_marketplace-resources-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-TAPMarketplace/Pods-TAPMarketplace-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-tap_marketplace/Pods-tap_marketplace-resources-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-TAPMarketplace/Pods-TAPMarketplace-resources-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-tap_marketplace/Pods-tap_marketplace-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TAPMarketplace/Pods-TAPMarketplace-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		4B3F114D047A53D6A18729FD /* [CP] Check Pods Manifest.lock */ = {
@@ -345,7 +345,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-tap_marketplace-tap_marketplaceTests-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-TAPMarketplace-TAPMarketplaceTests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -358,15 +358,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-tap_marketplace-tap_marketplaceTests/Pods-tap_marketplace-tap_marketplaceTests-resources-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-TAPMarketplace-TAPMarketplaceTests/Pods-TAPMarketplace-TAPMarketplaceTests-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-tap_marketplace-tap_marketplaceTests/Pods-tap_marketplace-tap_marketplaceTests-resources-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-TAPMarketplace-TAPMarketplaceTests/Pods-TAPMarketplace-TAPMarketplaceTests-resources-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-tap_marketplace-tap_marketplaceTests/Pods-tap_marketplace-tap_marketplaceTests-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TAPMarketplace-TAPMarketplaceTests/Pods-TAPMarketplace-TAPMarketplaceTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		D9AAC16E171C511EC5B53F8D /* [CP] Embed Pods Frameworks */ = {
@@ -375,15 +375,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-tap_marketplace/Pods-tap_marketplace-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-TAPMarketplace/Pods-TAPMarketplace-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-tap_marketplace/Pods-tap_marketplace-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-TAPMarketplace/Pods-TAPMarketplace-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-tap_marketplace/Pods-tap_marketplace-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TAPMarketplace/Pods-TAPMarketplace-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		E602ACA26CCBAA3C39F8DCE2 /* [CP] Check Pods Manifest.lock */ = {
@@ -401,7 +401,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-tap_marketplace-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-TAPMarketplace-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -434,7 +434,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				00E356F31AD99517003FC87E /* tap_marketplaceTests.m in Sources */,
+				00E356F31AD99517003FC87E /* TAPMarketplaceTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -452,7 +452,7 @@
 /* Begin PBXTargetDependency section */
 		00E356F51AD99517003FC87E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 13B07F861A680F5B00A75B9A /* tap_marketplace */;
+			target = 13B07F861A680F5B00A75B9A /* TAPMarketplace */;
 			targetProxy = 00E356F41AD99517003FC87E /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -460,14 +460,14 @@
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2556B452E893C7A9AF0F6C0A /* Pods-tap_marketplace-tap_marketplaceTests.debug.xcconfig */;
+			baseConfigurationReference = 2556B452E893C7A9AF0F6C0A /* Pods-TAPMarketplace-TAPMarketplaceTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = tap_marketplaceTests/Info.plist;
+				INFOPLIST_FILE = TAPMarketplaceTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -481,17 +481,17 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/tap_marketplace.app/tap_marketplace";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TAPMarketplace.app/TAPMarketplace";
 			};
 			name = Debug;
 		};
 		00E356F71AD99517003FC87E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 06634F1BE46DD037AE671740 /* Pods-tap_marketplace-tap_marketplaceTests.release.xcconfig */;
+			baseConfigurationReference = 06634F1BE46DD037AE671740 /* Pods-TAPMarketplace-TAPMarketplaceTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
-				INFOPLIST_FILE = tap_marketplaceTests/Info.plist;
+				INFOPLIST_FILE = TAPMarketplaceTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -505,19 +505,20 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/tap_marketplace.app/tap_marketplace";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TAPMarketplace.app/TAPMarketplace";
 			};
 			name = Release;
 		};
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 92D10479A8B07CD8B20D9198 /* Pods-tap_marketplace.debug.xcconfig */;
+			baseConfigurationReference = 92D10479A8B07CD8B20D9198 /* Pods-TAPMarketplace.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = T5C8JTGRDX;
 				ENABLE_BITCODE = NO;
-				INFOPLIST_FILE = tap_marketplace/Info.plist;
+				INFOPLIST_FILE = TAPMarketplace/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -527,8 +528,8 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = tap_marketplace;
+				PRODUCT_BUNDLE_IDENTIFIER = com.adamo.tap;
+				PRODUCT_NAME = TAPMarketplace;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -537,12 +538,13 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A97FB4E1316409A4D2751B21 /* Pods-tap_marketplace.release.xcconfig */;
+			baseConfigurationReference = A97FB4E1316409A4D2751B21 /* Pods-TAPMarketplace.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
-				INFOPLIST_FILE = tap_marketplace/Info.plist;
+				DEVELOPMENT_TEAM = T5C8JTGRDX;
+				INFOPLIST_FILE = TAPMarketplace/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -552,8 +554,8 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = tap_marketplace;
+				PRODUCT_BUNDLE_IDENTIFIER = com.adamo.tap;
+				PRODUCT_NAME = TAPMarketplace;
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -687,7 +689,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "tap_marketplaceTests" */ = {
+		00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "TAPMarketplaceTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				00E356F61AD99517003FC87E /* Debug */,
@@ -696,7 +698,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "tap_marketplace" */ = {
+		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "TAPMarketplace" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				13B07F941A680F5B00A75B9A /* Debug */,
@@ -705,7 +707,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "tap_marketplace" */ = {
+		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "TAPMarketplace" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				83CBBA201A601CBA00E9B192 /* Debug */,

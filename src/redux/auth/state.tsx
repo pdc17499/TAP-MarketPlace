@@ -34,6 +34,22 @@ const INITIAL_STATE_DATA_SIGN_UP: DataSignupProps = {
   allow_cooking: {},
   built_year: moment().format('YYYY').toString(),
   key_your_place: [],
+  role_user: 0,
+  list_photo: [],
+  user_name: '',
+  gender: {},
+  age_group: {},
+  country: {},
+  occupation: {},
+  ethnicity: {},
+  your_place: {},
+  have_pet: {},
+  smoke: {},
+  diet_choice: {},
+  your_religion: {},
+  email: '',
+  password: '',
+  confirm_password: '',
 };
 
 export const INITIAL_STATE_AUTH: AuthState = {

@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-	<string>tap_marketplace</string>
+	<string>TAP Marketplace</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -35,8 +35,26 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>NSCameraUsageDescription</key>
+	<string>App requires Photo Library permission to open camera</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>We need access to your location to show you relevant search results. With "Always" access we'll also send you some nice notifications</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>We need access to your location to show you relevant search results. With "Always" access we'll also send you some nice notifications</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>We need access to your location to show you relevant search results.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>App requires Photo Library permission to use microphone</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>App requires Photo Library permission to share your photos with everyone</string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>CamptonSemiBold.otf</string>
+		<string>Metropolis-Medium.ttf</string>
+		<string>Metropolis-Regular.ttf</string>
+		<string>Metropolis-SemiBold.ttf</string>
+		<string>CamptonMedium.otf</string>
+	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIRequiredDeviceCapabilities</key>
@@ -51,23 +69,5 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-	<key>NSCameraUsageDescription</key>
-	<string>App requires Photo Library permission to open camera</string>
-	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>We need access to your location to show you relevant search results. With &quot;Always&quot; access we&apos;ll also send you some nice notifications</string>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string>We need access to your location to show you relevant search results. With &quot;Always&quot; access we&apos;ll also send you some nice notifications</string>
-	<key>NSMicrophoneUsageDescription</key>
-	<string>App requires Photo Library permission to use microphone</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>App requires Photo Library permission to share your photos with everyone</string>
-	<key>UIAppFonts</key>
-	<array>
-		<string>CamptonSemiBold.otf</string>
-		<string>Metropolis-Medium.ttf</string>
-		<string>Metropolis-Regular.ttf</string>
-		<string>Metropolis-SemiBold.ttf</string>
-		<string>CamptonMedium.otf</string>
-	</array>
 </dict>
 </plist>

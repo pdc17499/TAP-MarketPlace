@@ -4,10 +4,11 @@ import {StyleSheet} from 'react-native';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.white,
+    backgroundColor: colors.bgSreen,
   },
   body: {
     paddingHorizontal: SIZE.padding,
+    flex: 1,
   },
   title: {
     fontSize: scaleSize(18),
@@ -16,6 +17,11 @@ const styles = StyleSheet.create({
     marginBottom: scaleWidth(15),
     color: colors.textSecondPrimary,
   },
+  subTitle: {
+    ...fontFamily.fontCampWeight500,
+    color: colors.textSecondPrimary,
+    lineHeight: SIZE.base_size * 1.6,
+  },
   message: {
     fontSize: SIZE.medium_size,
     ...fontFamily.fontCampWeight600,
@@ -23,19 +29,14 @@ const styles = StyleSheet.create({
     marginBottom: SIZE.base_space + 2,
     color: colors.textPrimary,
   },
-  text: {
-    fontSize: scaleSize(15),
-    ...fontFamily.fontWeight500,
-    lineHeight: scaleWidth(15),
-    marginBottom: scaleWidth(10),
-    color: colors.primary,
+  containerBottom: {
+    paddingBottom: SIZE.medium_space,
+    paddingHorizontal: SIZE.padding,
   },
-  text2: {
-    fontSize: scaleSize(15),
-    ...fontFamily.fontWeight500,
-    lineHeight: scaleWidth(15),
-    color: colors.primary,
-    marginBottom: -5,
+  textBottom: {
+    color: colors.textSecondPrimary,
+    lineHeight: SIZE.medium_size,
+    textAlign: 'center',
   },
   input: {},
   inputAge: {
@@ -43,8 +44,7 @@ const styles = StyleSheet.create({
     width: scaleWidth(106),
   },
   button: {
-    marginTop: scaleWidth(250),
-    marginBottom: scaleWidth(20),
+    marginTop: SIZE.base_space * 2,
   },
 });
 

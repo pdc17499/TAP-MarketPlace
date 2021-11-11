@@ -1,5 +1,6 @@
 import {Header} from '@component';
 import {AppSwiperProps, RefAppSwiper} from '@interfaces';
+import {useNavigation} from '@react-navigation/core';
 import {colors, fontFamily, scaleWidth, SIZE} from '@util';
 import React, {
   forwardRef,
@@ -13,8 +14,10 @@ import Swiper from 'react-native-swiper';
 
 const AppSwiper = forwardRef(
   (props: AppSwiperProps, ref: Ref<RefAppSwiper>) => {
+    const navigation = useNavigation();
     const {children, showPagination} = props;
     const refSwiper = useRef<any>();
+    const currentIndex = useRef<number>(0);
 
     useImperativeHandle(ref, () => ({
       onNextButton,
@@ -25,18 +28,28 @@ const AppSwiper = forwardRef(
     };
 
     const onPrevButton = () => {
-      refSwiper.current.scrollBy(-1);
+      if (currentIndex.current === 0) {
+        navigation.goBack();
+      } else {
+        refSwiper.current.scrollBy(-1);
+      }
     };
 
     const customPaginationStyle = showPagination
       ? styles.paginationStyle
       : styles.hidePagination;
 
+    const onIndexChanged = (index: any) => {
+      console.log({index});
+      currentIndex.current = index;
+    };
+
     return (
       <>
         <Header back onPressBack={onPrevButton} />
         <Swiper
           ref={refSwiper}
+          onIndexChanged={onIndexChanged}
           removeClippedSubviews={false}
           paginationStyle={customPaginationStyle}
           activeDotColor={colors.orange}

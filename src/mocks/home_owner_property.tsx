@@ -219,4 +219,96 @@ export const ROOM_UNIT_HOWNER = {
       value: 'Diversity friendly',
     },
   ],
+  gender: [
+    {
+      id: 1,
+      value: 'Male',
+    },
+    {
+      id: 2,
+      value: 'Female',
+    },
+    {
+      id: 3,
+      value: 'Other',
+    },
+  ],
+  group_age: [
+    {
+      id: 1,
+      value: '18 - 28',
+    },
+    {
+      id: 2,
+      value: '29 - 40',
+    },
+    {
+      id: 3,
+      value: '41 - 55',
+    },
+    {
+      id: 4,
+      value: 'Over 55',
+    },
+  ],
+  your_place: [
+    {
+      id: 1,
+      value: 'LGBT friendly',
+    },
+    {
+      id: 2,
+      value: 'Diversity friendly',
+    },
+  ],
+  have_pets: [
+    {
+      id: 1,
+      value: 'Yes',
+    },
+    {
+      id: 2,
+      value: 'No',
+    },
+    {
+      id: 3,
+      value: 'May have',
+    },
+  ],
+  smoking: [
+    {
+      id: 1,
+      value: 'Non-smoker',
+    },
+    {
+      id: 2,
+      value: 'Social',
+    },
+    {
+      id: 3,
+      value: 'Heavy',
+    },
+  ],
+  diet_choices: [
+    {
+      id: 1,
+      value: 'Gluten free',
+    },
+    {
+      id: 2,
+      value: 'Halal',
+    },
+    {
+      id: 3,
+      value: 'Lactose free',
+    },
+    {
+      id: 4,
+      value: 'Nuts free',
+    },
+    {
+      id: 5,
+      value: 'Vegeterian',
+    },
+  ],
 };

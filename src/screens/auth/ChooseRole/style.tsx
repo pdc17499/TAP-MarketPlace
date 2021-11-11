@@ -32,16 +32,19 @@ const styles = StyleSheet.create({
     paddingBottom: scaleWidth(22),
     borderRadius: SIZE.base_size,
     marginRight: SIZE.base_space / 2,
+    flexDirection: 'column',
   },
   buttonRight: {
     padding: SIZE.base_space,
     paddingBottom: scaleWidth(22),
     borderRadius: SIZE.base_size,
     marginLeft: SIZE.base_space / 2,
+    flexDirection: 'column',
   },
   title: {
     fontSize: SIZE.medium_size,
     marginTop: SIZE.base_space * 3,
+    ...fontFamily.fontCampWeight600,
   },
   btnAgent: {
     marginRight: scaleWidth(8),

@@ -1,6 +1,6 @@
 import {ReactElement} from 'react';
 import {ImageStyle, TextStyle, ViewStyle} from 'react-native';
-import { StringLocale } from 'yup/lib/locale';
+import {ImageOrVideo} from 'react-native-image-crop-picker';
 
 export interface screenNavigationProp {
   navigate: any;
@@ -15,9 +15,17 @@ export interface ButtonProps {
   disabled?: boolean;
   image?: any;
   size?: 'base' | 'small';
-  typeButton?: 'linear' | 'full';
+  typeButton?: 'linear' | 'full' | 'underline';
   isActive?: boolean;
-  iconRight?: 'right' | 'email' | 'arNextBlack' | 'arNext' | 'upload' | 'photo' | 'tick' | 'other';
+  iconRight?:
+    | 'right'
+    | 'email'
+    | 'arNextBlack'
+    | 'arNext'
+    | 'upload'
+    | 'photo'
+    | 'tick'
+    | 'other';
   imageStyle?: ImageStyle;
 }
 
@@ -71,6 +79,7 @@ export interface mockProps {
 }
 
 export interface DataSignupProps {
+  role_user: 0 | 1 | 2 | 3;
   location: {
     lat: number;
     long: number;
@@ -89,18 +98,34 @@ export interface DataSignupProps {
   bathroom_number: mockProps;
   floor_size_min: number;
   floor_size_max: number;
-  attached_room: mockProps; 
+  attached_room: mockProps;
   room_furnishing: mockProps;
   floor_level: mockProps;
   allow_cooking: mockProps;
   built_year: string;
   key_your_place: Array<mockProps>;
+  list_photo: Array<ImageOrVideo>;
+  user_name: string;
+  gender: mockProps;
+  age_group: mockProps;
+  country: any;
+  occupation: any;
+  ethnicity: any;
+  your_place: mockProps;
+  have_pet: mockProps;
+  smoke: mockProps;
+  diet_choice: mockProps;
+  your_religion: mockProps;
+  email: string;
+  password: string;
+  confirm_password: string;
 }
 
 export interface AppQAProps {
   data: Array<mockProps>;
   title: string;
   subTitle?: string;
+  typeTitle?: 'base' | 'strong';
   value: any;
   setValue: any;
   typeList?: 'column' | 'wrap' | 'even' | 'row';

@@ -7,7 +7,7 @@ import React from 'react';
 import {View, StyleSheet} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 
-const StepLeasePeriod = (props: RoomStepProps) => {
+const YourPlace = (props: RoomStepProps) => {
   const {onNext} = props;
   const dispatch = useDispatch();
   const list = ROOM_UNIT_HOWNER;
@@ -18,30 +18,21 @@ const StepLeasePeriod = (props: RoomStepProps) => {
 
   return (
     <View style={styles.container}>
-      <View style={{flex: 1}}>
-        <AppQA
-          data={list.lease_your_place}
-          title={'How long will you want to lease your place?'}
-          value={dataSignUp}
-          setValue={setData}
-          typeList={'even'}
-          name={'lease_your_place'}
-        />
-        <AppQA
-          data={list.staying_width_guests}
-          title={'Will you be staying with your guests?'}
-          value={dataSignUp}
-          setValue={setData}
-          typeList={'row'}
-          name={'staying_with_guests'}
-        />
-      </View>
+      <AppQA
+        data={list.your_place}
+        title={'Is your place?'}
+        value={dataSignUp}
+        setValue={setData}
+        typeList={'column'}
+        name={'your_place'}
+        customStyleTitle={{textAlign: 'center'}}
+      />
       <AppButton title={'Continue'} onPress={onNext} iconRight={'arNext'} />
     </View>
   );
 };
 
-export {StepLeasePeriod};
+export {YourPlace};
 
 const styles = StyleSheet.create({
   container: {
