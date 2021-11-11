@@ -213,7 +213,7 @@ export const ArrowNext = (props: iconProps) => (
   </Svg>
 );
 
-export const iconFloorSize = (props: iconProps) => (
+export const IconFloorSize = (props: iconProps) => (
   <Svg width={21} height={14} fill="none" {...props}>
     <Path
       d="M4.338 3.906c0-1.098.72-1.782 1.818-1.782.342 0 .846.09 1.296.234l.27-1.584C7.056.594 6.498.504 5.94.504 3.942.504 2.484 1.8 2.484 3.906V5.04H.09v1.566h2.394V13.5h1.854V6.606h3.348V5.04H4.338V3.906zm9.784 7.758c-.432.18-.936.324-1.44.324-1.044 0-1.656-.522-1.656-1.746V6.606h3.132V5.04h-3.132V1.926H9.154V5.04H7.156v1.566h1.998v3.636c0 2.178 1.152 3.474 3.312 3.474.576 0 1.188-.072 1.926-.342l-.27-1.71zm3.95-4.626l1.475-1.584c.954-1.026 1.296-1.674 1.296-2.412 0-1.116-.882-2.106-2.538-2.106-1.602 0-2.52.954-2.556 2.34h1.404c.036-.684.45-1.098 1.206-1.098.648 0 1.08.396 1.08.954 0 .54-.36.936-1.098 1.692l-2.556 2.664v.738h5.166V7.038h-2.88z"
@@ -266,12 +266,7 @@ export const IconTick = (props: iconProps) => (
 );
 
 export const IconQuestion = (props: iconProps) => (
-  <Svg
-    width={24}
-    height={24}
-    fill="none"
-    {...props}
-  >
+  <Svg width={24} height={24} fill="none" {...props}>
     <Path
       d="M12 21a9 9 0 100-18 9 9 0 000 18z"
       stroke="#B09E88"

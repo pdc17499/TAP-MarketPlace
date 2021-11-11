@@ -32,7 +32,7 @@ export interface ButtonProps {
 export interface IAppInput {
   label?: string;
   placeholder?: string;
-  value?: string;
+  value?: any;
   secureTextEntry?: boolean;
   type?: string;
   containerStyle?: ViewStyle | ViewStyle[];
@@ -45,10 +45,12 @@ export interface IAppInput {
   onValueChange?: (e: any, name?: string) => void;
   keyboardType?: any;
   editable?: boolean;
-  iconLeft?: 'map' | 'key' | 'email' | 'dolar' | 'other';
+  iconLeft?: 'map' | 'key' | 'email' | 'dolar' | 'floor_size' | 'other';
   iconRight?: 'clear' | 'other';
   name?: string;
   autoFocus?: boolean;
+  typeInput?: 'default' | 'price' | 'phone' | 'password';
+  delimiter?: string;
 }
 
 export interface AppSwiperProps {
@@ -135,6 +137,7 @@ export interface AppQAProps {
   customStyleViewButton?: ViewStyle;
   name: string;
   isFlex?: boolean;
+  error?: string;
 }
 
 export interface RoomStepProps {

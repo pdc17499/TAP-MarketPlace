@@ -43,7 +43,9 @@ const screenOptions = {
 // unauthenticate stack screens
 const UnAuthenStack = () => {
   return (
-    <Stack.Navigator screenOptions={screenOptions} initialRouteName={WELCOME}>
+    <Stack.Navigator
+      screenOptions={screenOptions}
+      initialRouteName={ROOM_UNIT_HOMEOWNER}>
       <Stack.Screen name={CHOOSE_ROLE} component={ChooseRole} />
       <Stack.Screen name={ROOM_UNIT_HOMEOWNER} component={RoomUnitHomeowner} />
       <Stack.Screen name={ROOM_UNIT_PICTURE} component={RoomUnitPicture} />

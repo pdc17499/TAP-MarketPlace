@@ -20,8 +20,6 @@ const StepPlaceOffer = (props: RoomStepProps) => {
     dispatch(setDataSignup({data}));
   };
 
-  console.log({dataSignUp});
-
   const onContinue = () => {
     navigation.navigate(ROOM_UNIT_PICTURE);
   };
@@ -34,7 +32,7 @@ const StepPlaceOffer = (props: RoomStepProps) => {
         <AppQA
           data={list.utilities}
           title={'Let your guests know what your place has to offer'}
-          subTitle={'Select some keywords that describe your place'}
+          subTitle={'Select some keywords'}
           value={dataSignUp}
           setValue={setData}
           typeList={'wrap'}

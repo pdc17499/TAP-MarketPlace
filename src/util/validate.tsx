@@ -2,6 +2,10 @@
 import * as yup from 'yup';
 export const validateForm = () => {
   return {
+    common: {
+      reuqire: yup.string().required('This field is required'),
+    },
+    selectAtLeast: yup.string().required('You must select 1 option '),
     email: yup
       .string()
       .required('This field is required')

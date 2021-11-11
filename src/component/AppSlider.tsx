@@ -30,6 +30,7 @@ const AppSlider = React.memo((props: AppSliderProps) => {
           editable={false}
           containerStyle={{flex: 1}}
           inputStyle={{fontSize: SIZE.base_size + 2}}
+          typeInput={'price'}
         />
         <View style={styles.line} />
         <AppInput
@@ -40,6 +41,7 @@ const AppSlider = React.memo((props: AppSliderProps) => {
           editable={false}
           containerStyle={{flex: 1}}
           inputStyle={{fontSize: SIZE.base_size + 2}}
+          typeInput={'price'}
         />
       </View>
       <MultiSlider
