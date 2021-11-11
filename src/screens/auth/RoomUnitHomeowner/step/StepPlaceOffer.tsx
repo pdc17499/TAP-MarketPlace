@@ -4,14 +4,22 @@ import {ROOM_UNIT_HOWNER} from '@mocks';
 import {useNavigation} from '@react-navigation/core';
 import {setDataSignup} from '@redux';
 import {ROOM_UNIT_PICTURE} from '@routeName';
-import {colors, DEVICE, fontFamily, scaleWidth, SIZE} from '@util';
+import {
+  colors,
+  DEVICE,
+  fontFamily,
+  scaleWidth,
+  SIZE,
+  validateForm,
+} from '@util';
 import React from 'react';
 import {View, StyleSheet} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import {useDispatch, useSelector} from 'react-redux';
+import * as yup from 'yup';
+import {Formik} from 'formik';
 
 const StepPlaceOffer = (props: RoomStepProps) => {
-  const {onNext} = props;
   const navigation: any = useNavigation();
   const dispatch = useDispatch();
   const list = ROOM_UNIT_HOWNER;
@@ -19,6 +27,14 @@ const StepPlaceOffer = (props: RoomStepProps) => {
   const setData = (data: any) => {
     dispatch(setDataSignup({data}));
   };
+
+  const formInitialValues = {
+    key_your_place: dataSignUp?.key_your_place,
+  };
+
+  const validationSchema = yup.object().shape({
+    key_your_place: validateForm().common.atLeastOneArray,
+  });
 
   const onContinue = () => {
     navigation.navigate(ROOM_UNIT_PICTURE);
@@ -29,23 +45,35 @@ const StepPlaceOffer = (props: RoomStepProps) => {
       <ScrollView
         style={{flex: 1, height: DEVICE.height}}
         showsVerticalScrollIndicator={false}>
-        <AppQA
-          data={list.utilities}
-          title={'Let your guests know what your place has to offer'}
-          subTitle={'Select some keywords'}
-          value={dataSignUp}
-          setValue={setData}
-          typeList={'wrap'}
-          isMultiChoice
-          name={'key_your_place'}
-        />
+        <Formik
+          initialValues={formInitialValues}
+          validationSchema={validationSchema}
+          validateOnChange={false}
+          enableReinitialize
+          onSubmit={onContinue}>
+          {(propsFormik: any) => (
+            <>
+              <AppQA
+                data={list.utilities}
+                title={'Let your guests know what your place has to offer'}
+                subTitle={'Select some keywords'}
+                value={dataSignUp}
+                setValue={setData}
+                typeList={'wrap'}
+                isMultiChoice
+                name={'key_your_place'}
+                error={propsFormik.errors.key_your_place}
+              />
+              <AppButton
+                title={'Continue'}
+                onPress={propsFormik.handleSubmit}
+                containerStyle={styles.customStyleButton}
+                iconRight={'arNext'}
+              />
+            </>
+          )}
+        </Formik>
       </ScrollView>
-      <AppButton
-        title={'Continue'}
-        onPress={onContinue}
-        containerStyle={styles.customStyleButton}
-        iconRight={'arNext'}
-      />
     </View>
   );
 };

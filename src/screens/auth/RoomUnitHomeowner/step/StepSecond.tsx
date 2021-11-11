@@ -23,7 +23,7 @@ const StepSecond = (props: RoomStepProps) => {
   };
 
   const validationSchema = yup.object().shape({
-    kind_place: validateForm().common.reuqire,
+    kind_place: validateForm().common.selectAtLeast,
   });
 
   const renderFormStepSecond = (props: any) => {

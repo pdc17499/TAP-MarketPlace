@@ -4,8 +4,12 @@ export const validateForm = () => {
   return {
     common: {
       reuqire: yup.string().required('This field is required'),
+      selectAtLeast: yup.string().required('You must select 1 option'),
+      atLeastOneArray: yup
+        .array()
+        .min(1, 'You must select 1 option')
+        .required(),
     },
-    selectAtLeast: yup.string().required('You must select 1 option '),
     email: yup
       .string()
       .required('This field is required')
@@ -18,8 +22,6 @@ export const validateForm = () => {
     confirmPassword: yup
       .string()
       .required('This field is required')
-      // .min(VALIDATE.minPassLength, trans("validate.minConfirmPassError"))
-      // .max(VALIDATE.maxPassLength, trans("validate.maxConfirmPassError"))
       .oneOf(
         [yup.ref('password'), null],
         'Confirm Password does not match the password',

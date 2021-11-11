@@ -2,10 +2,12 @@ import {AppButton, AppQA} from '@component';
 import {RoomStepProps} from '@interfaces';
 import {ROOM_UNIT_HOWNER} from '@mocks';
 import {setDataSignup} from '@redux';
-import {fontFamily, scaleWidth, SIZE} from '@util';
+import {fontFamily, scaleWidth, SIZE, validateForm} from '@util';
 import React from 'react';
 import {View, StyleSheet} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
+import * as yup from 'yup';
+import {Formik} from 'formik';
 
 const StepLeasePeriod = (props: RoomStepProps) => {
   const {onNext} = props;
@@ -16,27 +18,54 @@ const StepLeasePeriod = (props: RoomStepProps) => {
     dispatch(setDataSignup({data}));
   };
 
+  const formInitialValues = {
+    lease_your_place: dataSignUp?.lease_your_place?.id,
+    staying_with_guests: dataSignUp?.staying_with_guests?.id,
+  };
+
+  const validationSchema = yup.object().shape({
+    lease_your_place: validateForm().common.selectAtLeast,
+    staying_with_guests: validateForm().common.selectAtLeast,
+  });
+
   return (
     <View style={styles.container}>
-      <View style={{flex: 1}}>
-        <AppQA
-          data={list.lease_your_place}
-          title={'How long will you want to lease your place?'}
-          value={dataSignUp}
-          setValue={setData}
-          typeList={'even'}
-          name={'lease_your_place'}
-        />
-        <AppQA
-          data={list.staying_width_guests}
-          title={'Will you be staying with your guests?'}
-          value={dataSignUp}
-          setValue={setData}
-          typeList={'row'}
-          name={'staying_with_guests'}
-        />
-      </View>
-      <AppButton title={'Continue'} onPress={onNext} iconRight={'arNext'} />
+      <Formik
+        initialValues={formInitialValues}
+        validationSchema={validationSchema}
+        validateOnChange={false}
+        enableReinitialize
+        onSubmit={onNext}>
+        {(propsFormik: any) => (
+          <>
+            <View style={{flex: 1}}>
+              <AppQA
+                data={list.lease_your_place}
+                title={'How long will you want to lease your place?'}
+                value={dataSignUp}
+                setValue={setData}
+                typeList={'even'}
+                name={'lease_your_place'}
+                error={propsFormik.errors.lease_your_place}
+              />
+              <AppQA
+                data={list.staying_width_guests}
+                title={'Will you be staying with your guests?'}
+                value={dataSignUp}
+                setValue={setData}
+                typeList={'row'}
+                name={'staying_with_guests'}
+                error={propsFormik.errors.staying_with_guests}
+              />
+            </View>
+            <AppButton
+              title={'Continue'}
+              onPress={propsFormik.handleSubmit}
+              iconRight={'arNext'}
+            />
+          </>
+        )}
+      </Formik>
     </View>
   );
 };

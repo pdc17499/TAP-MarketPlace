@@ -7,10 +7,10 @@ import {ButtonProps} from '@interfaces';
 import {
   ArrowNext,
   CaretRight,
+  IconAddPhotos,
+  IconAddVideos,
   IconResetMail,
-  IconTakePhoto,
   IconTick,
-  IconUpload,
 } from '@assets';
 
 const AppButton = React.memo((props: ButtonProps) => {
@@ -76,10 +76,10 @@ const AppButton = React.memo((props: ButtonProps) => {
         return <ArrowNext iconFillColor={colors.primary} />;
       case 'arNext':
         return <ArrowNext />;
-      case 'upload':
-        return <IconUpload />;
-      case 'photo':
-        return <IconTakePhoto />;
+      case 'addPhoto':
+        return <IconAddPhotos />;
+      case 'addVideo':
+        return <IconAddVideos />;
       case 'tick':
         return <IconTick />;
     }
