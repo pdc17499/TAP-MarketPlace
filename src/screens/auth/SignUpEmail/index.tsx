@@ -51,16 +51,18 @@ const SignUpEmail = (props: SignUpEmailProp) => {
         {props => (
           <View style={styles.formInPut} >
             <View style={{ marginBottom: scaleHeight(24), flex: 1 }}>
-              <AppText style={styles.text}>{'Email'}</AppText>
+
               <AppInput
+                label={'Email'}
                 placeholder={'Enter your email'}
                 iconLeft={'email'}
                 value={props.values.email}
                 onValueChange={props.handleChange('email')}
                 error={props.errors.email}
               ></AppInput>
-              <AppText style={styles.text}>{'Password'}</AppText>
+
               <AppInput
+                label={'Password'}
                 secureTextEntry={true}
                 showEye={true}
                 placeholder={'Enter your password'}
@@ -69,8 +71,9 @@ const SignUpEmail = (props: SignUpEmailProp) => {
                 onValueChange={props.handleChange('password')}
                 error={props.errors.password}
               ></AppInput>
-              <AppText style={styles.text}>{'Confirm Password'}</AppText>
+
               <AppInput
+                label={'Confirm Password'}
                 secureTextEntry={true}
                 showEye={true}
                 placeholder={'Confirm your password'}
@@ -80,7 +83,7 @@ const SignUpEmail = (props: SignUpEmailProp) => {
                 error={props.errors.confirm_password}
               ></AppInput>
             </View>
-            <AppButton customStyleButton={styles.button} title={"Continue "} size={'small'} iconRight={'arrowGray'} onPress={props.handleSubmit} />
+            <AppButton customStyleButton={styles.button} title={"Continue "} size={'small'} iconRight={'arNext'} onPress={props.handleSubmit} />
           </View>
         )}
       </Formik>

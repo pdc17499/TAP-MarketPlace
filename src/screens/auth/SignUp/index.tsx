@@ -67,7 +67,7 @@ const SignUp = (props: SignUpProp) => {
           typeButton={'linear'}
           size={'small'}
           customStyleTitle={styles.emailTxt}
-          iconRight={'arrowBlack'}
+          iconRight={'arNextBlack'}
           onPress={moveToSignUpWithEmail}
         />
       </View>

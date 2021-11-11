@@ -61,7 +61,7 @@ const SignUpProperty = (props: SignUpPropertyProp) => {
             </View>
 
             {(props.values.name !== '')
-              ? <AppButton customStyleButton={styles.button} title={"Continue "} size={'small'} iconRight={'arrowGray'} onPress={props.handleSubmit} />
+              ? <AppButton customStyleButton={styles.button} title={"Continue "} size={'small'} iconRight={'arNext'} onPress={props.handleSubmit} />
               : null
             }
 
