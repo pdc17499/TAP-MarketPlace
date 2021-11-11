@@ -81,7 +81,6 @@ const StepPrice = (props: RoomStepProps) => {
 
   const renderChildren = (props: any) => {
     const id = dataSignUp?.rental_price?.id;
-    console.log({props});
     if (id === 1 || id === 2) {
       return renderFixedPrice(id, props);
     } else if (id === 3) {
@@ -89,17 +88,15 @@ const StepPrice = (props: RoomStepProps) => {
     }
   };
 
-  const onSubmit = () => {};
-
   return (
     <View style={styles.container}>
       <KeyboardAvoidingView style={{flex: 1}}>
         <Formik
           initialValues={formInitialValues}
           validationSchema={validationSchema}
-          validateOnChange
+          validateOnChange={false}
           enableReinitialize
-          onSubmit={onSubmit}>
+          onSubmit={onNext}>
           {(propsFormik: any) => (
             <>
               <AppQA

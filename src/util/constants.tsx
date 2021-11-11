@@ -18,4 +18,8 @@ const SLIDER = {
   MAX_FLOOR_SIZE: 10000,
 };
 
-export {DEVICE, SLIDER};
+const FILE_SIZE = {
+  MAX_IMAGE: 1048576,
+};
+
+export {DEVICE, SLIDER, FILE_SIZE};

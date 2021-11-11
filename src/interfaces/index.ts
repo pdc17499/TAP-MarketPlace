@@ -22,8 +22,8 @@ export interface ButtonProps {
     | 'email'
     | 'arNextBlack'
     | 'arNext'
-    | 'upload'
-    | 'photo'
+    | 'addPhoto'
+    | 'addVideo'
     | 'tick'
     | 'other';
   imageStyle?: ImageStyle;

@@ -2,9 +2,16 @@ import {AppButton, AppQA, AppText, Header} from '@component';
 import {RoomStepProps} from '@interfaces';
 import {ROOM_UNIT_HOWNER} from '@mocks';
 import {setDataSignup} from '@redux';
-import {colors, fontFamily, scaleHeight, scaleWidth, SIZE} from '@util';
+import {
+  colors,
+  FILE_SIZE,
+  fontFamily,
+  scaleHeight,
+  scaleWidth,
+  SIZE,
+} from '@util';
 import React, {createRef, useState} from 'react';
-import {View, StyleSheet, Image, ScrollView} from 'react-native';
+import {View, StyleSheet, Image, ScrollView, Alert} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import ImagePicker, {ImageOrVideo} from 'react-native-image-crop-picker';
 import {useActionSheet} from '@expo/react-native-action-sheet';
@@ -12,29 +19,34 @@ import Video from 'react-native-video';
 import {bg_room_unit_picture} from '@assets';
 import {NavigationUtils} from '@navigation';
 import {SIGNUP_PROPERTY} from '@routeName';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 
-const RoomUnitPicture = (props: RoomStepProps) => {
-  const {onNext} = props;
+const RoomUnitPicture = () => {
   const dispatch = useDispatch();
-  const list = ROOM_UNIT_HOWNER;
   const dataSignUp = useSelector((state: any) => state?.auth?.dataSignup);
   const setData = (data: any) => {
     dispatch(setDataSignup({data}));
   };
-  const [files, setFiles] = useState([]);
+  const files = dataSignUp.list_photo || [];
+  // const [files, setFiles] = useState([]);
   const {showActionSheetWithOptions} = useActionSheet();
   const optionPhotos = ['Upload Photos', 'Take a photo', 'Cancel'];
   const optionVideos = ['Upload Video', 'Take a video', 'Cancel'];
 
   const uploadPhotos = (mediaType: any) => {
+    const isPhoto = mediaType === 'photo';
     ImagePicker.openPicker({
       multiple: true,
-      cropping: mediaType === 'photo',
+      cropping: isPhoto,
       mediaType: mediaType,
     }).then((images: any) => {
+      // images.forEach((image: ImageOrVideo) => {
+      //   if (image.size > FILE_SIZE.MAX_IMAGE) {
+      //     image = ImagePicker.(image);
+      //   }
+      // });
       const nFiles: any = [...files, ...images];
-      setFiles(nFiles);
-      console.log({images});
+      validateFile(nFiles);
     });
   };
 
@@ -45,12 +57,54 @@ const RoomUnitPicture = (props: RoomStepProps) => {
     }).then((image: any) => {
       const nFiles: any = [...files];
       nFiles.push(image);
-      setFiles(nFiles);
-      console.log({image});
+      validateFile(nFiles);
+      // setFiles(nFiles);
     });
   };
 
   console.log({files});
+
+  const validateFile = (nFiles: any) => {
+    const photos = nFiles.filter((file: ImageOrVideo) =>
+      file.mime.includes('image'),
+    );
+    const videos = nFiles.filter(
+      (file: ImageOrVideo) => !file.mime.includes('image'),
+    );
+
+    // console.log({nFiles, photos, videos});
+
+    if (photos.length > 10) {
+      Alert.alert('You can only upload up to 10 photos');
+    } else if (videos.length > 1) {
+      Alert.alert('You can only upload up to 1 video');
+    } else {
+      const nData = {...dataSignUp};
+      nData.list_photo = nFiles;
+      setData(nData);
+      // setFiles(nFiles);
+    }
+  };
+
+  const removeFile = (index: number) => {
+    Alert.alert('Do you want remove this image', '', [
+      {
+        text: 'Cancel',
+        style: 'cancel',
+      },
+      {
+        text: 'OK',
+        onPress: () => {
+          const nFiles = files.filter(
+            (file: ImageOrVideo, idx: number) => index !== idx,
+          );
+          const nData = {...dataSignUp};
+          nData.list_photo = nFiles;
+          setData(nData);
+        },
+      },
+    ]);
+  };
 
   const onDone = () => {
     NavigationUtils.navigate(SIGNUP_PROPERTY);
@@ -80,58 +134,54 @@ const RoomUnitPicture = (props: RoomStepProps) => {
   const renderImage = (file: ImageOrVideo, index: number) => {
     const isPhoto = file.mime.includes('image');
     return (
-      <View
+      <TouchableOpacity
+        onPress={() => removeFile(index)}
+        activeOpacity={0.8}
         key={index}
         style={{marginBottom: SIZE.padding, marginRight: SIZE.padding}}>
         {isPhoto ? (
-          <Image
-            source={{uri: file.path}}
-            style={{
-              width: scaleWidth(93),
-              height: scaleWidth(93),
-              borderRadius: 8,
-            }}
-          />
+          <Image source={{uri: file.path}} style={styles.itemImage} />
         ) : (
-          <Video
-            source={{uri: file.path}} // Can be a URL or a local file.
-            // ref={ref => {
-            //   this.player = ref;
-            // }} // Store reference
-            // onBuffer={this.onBuffer} // Callback when remote video is buffering
-            // onError={this.videoError} // Callback when video cannot be loaded
-            style={{
-              width: scaleWidth(93),
-              height: scaleWidth(93),
-              borderRadius: 8,
-            }}
-          />
+          <Video source={{uri: file.path}} style={styles.itemImage} />
         )}
         {index === 0 && (
-          <View
-            style={{
-              position: 'absolute',
-              top: -scaleWidth(44),
-              left: -SIZE.padding / 2,
-              right: -SIZE.padding / 2,
-              bottom: -SIZE.padding / 2,
-              alignItems: 'center',
-              borderRadius: 14,
-              borderWidth: 1,
-              borderColor: colors.google,
-            }}>
-            <AppText
-              style={{
-                fontSize: SIZE.small_size,
-                marginTop: SIZE.base_space,
-                color: colors.textThirdPrimary,
-                ...fontFamily.fontWeight500,
-              }}>
-              {'Profile photo'}
-            </AppText>
+          <View style={styles.viewProfile}>
+            <AppText style={styles.profilePhoto}>{'Profile photo'}</AppText>
           </View>
         )}
-      </View>
+      </TouchableOpacity>
+    );
+  };
+
+  const renderListImage = () => {
+    return (
+      <>
+        {files.length > 0 ? (
+          <>
+            <View style={styles.viewSubtitle}>
+              <AppText style={styles.subTitle}>
+                {'Hold and drag to reorder'}
+              </AppText>
+              <AppText style={styles.subTitle}>{'Tap to remove'}</AppText>
+            </View>
+
+            <View style={styles.listImage}>
+              {files.map((file: ImageOrVideo, index: number) =>
+                renderImage(file, index),
+              )}
+            </View>
+          </>
+        ) : (
+          <>
+            <View style={{paddingBottom: scaleWidth(400)}}>
+              <Image source={bg_room_unit_picture} style={styles.bgImage} />
+            </View>
+            <AppText style={styles.title}>
+              {'Finally, let’s add some photos of your place'}
+            </AppText>
+          </>
+        )}
+      </>
     );
   };
 
@@ -149,66 +199,21 @@ const RoomUnitPicture = (props: RoomStepProps) => {
         }}
       />
       <ScrollView style={{flex: 1}} showsVerticalScrollIndicator={false}>
-        {files.length > 0 ? (
-          <>
-            <View
-              style={{
-                marginTop: SIZE.base_space,
-                marginBottom: SIZE.big_space,
-              }}>
-              <AppText style={styles.subTitle}>
-                {'Hold and drag to reorder'}
-              </AppText>
-              <AppText style={styles.subTitle}>{'Tap to remove'}</AppText>
-            </View>
-
-            <View
-              style={{
-                flexDirection: 'row',
-                flexWrap: 'wrap',
-                marginRight: -SIZE.padding,
-                paddingHorizontal: SIZE.padding,
-              }}>
-              {files.map((file: ImageOrVideo, index: number) =>
-                renderImage(file, index),
-              )}
-            </View>
-          </>
-        ) : (
-          <>
-            <View style={{paddingBottom: scaleWidth(410)}}>
-              <Image
-                source={bg_room_unit_picture}
-                style={{
-                  width: scaleWidth(375),
-                  height: scaleWidth(390),
-                  resizeMode: 'contain',
-                  // marginHorizontal: -SIZE.padding,
-                  position: 'absolute',
-                  // top: -100,
-                }}
-              />
-            </View>
-            <AppText style={styles.title}>
-              {'Finally, let’s add some photos of your place'}
-            </AppText>
-          </>
-        )}
-
+        {renderListImage()}
         <View style={styles.padding}>
           <AppButton
             onPress={() => addFile('photo')}
             title={'Add photos'}
             typeButton={'linear'}
-            iconRight={'upload'}
-            customStyleTitle={{color: colors.primary}}
+            iconRight={'addPhoto'}
+            customStyleTitle={styles.customStyleTitle}
           />
           <AppButton
             onPress={() => addFile('video')}
             title={'Add videos'}
             typeButton={'linear'}
-            iconRight={'photo'}
-            customStyleTitle={{color: colors.primary}}
+            iconRight={'addVideo'}
+            customStyleTitle={styles.customStyleTitle}
           />
         </View>
       </ScrollView>
@@ -217,7 +222,7 @@ const RoomUnitPicture = (props: RoomStepProps) => {
           title={'Done'}
           onPress={onDone}
           iconRight={'tick'}
-          customStyleButton={styles.padding}
+          containerStyle={styles.padding}
         />
       )}
     </View>
@@ -227,6 +232,45 @@ const RoomUnitPicture = (props: RoomStepProps) => {
 export {RoomUnitPicture};
 
 const styles = StyleSheet.create({
+  viewSubtitle: {
+    marginTop: SIZE.base_space,
+    marginBottom: SIZE.big_space,
+  },
+  listImage: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    marginRight: -SIZE.padding,
+    paddingHorizontal: SIZE.padding,
+  },
+  bgImage: {
+    width: scaleWidth(375),
+    height: scaleWidth(390),
+    resizeMode: 'contain',
+    position: 'absolute',
+  },
+  customStyleTitle: {color: colors.primary},
+  itemImage: {
+    width: scaleWidth(93),
+    height: scaleWidth(93),
+    borderRadius: 8,
+  },
+  viewProfile: {
+    position: 'absolute',
+    top: -scaleWidth(44),
+    left: -SIZE.padding / 2,
+    right: -SIZE.padding / 2,
+    bottom: -SIZE.padding / 2,
+    alignItems: 'center',
+    borderRadius: 14,
+    borderWidth: 1,
+    borderColor: colors.google,
+  },
+  profilePhoto: {
+    fontSize: SIZE.small_size,
+    marginTop: SIZE.base_space,
+    color: colors.textThirdPrimary,
+    ...fontFamily.fontWeight500,
+  },
   padding: {
     marginHorizontal: SIZE.padding,
     paddingBottom: SIZE.medium_space,

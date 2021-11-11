@@ -287,3 +287,61 @@ export const IconQuestion = (props: iconProps) => (
     />
   </Svg>
 );
+
+export const IconAddPhotos = (props: iconProps) => (
+  <Svg width={24} height={24} fill="none" {...props}>
+    <Path
+      d="M20.25 4.5H3.75a.75.75 0 00-.75.75v13.5c0 .414.336.75.75.75h16.5a.75.75 0 00.75-.75V5.25a.75.75 0 00-.75-.75z"
+      stroke="#2A6B58"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <Path
+      d="M3 15.75l4.72-4.72a.75.75 0 011.06 0l4.19 4.19a.75.75 0 001.06 0l1.94-1.94a.75.75 0 011.06 0L21 17.25"
+      stroke="#2A6B58"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <Path
+      d="M14.625 10.5a1.125 1.125 0 100-2.25 1.125 1.125 0 000 2.25z"
+      fill="#2A6B58"
+    />
+  </Svg>
+);
+
+export const IconAddVideos = (props: iconProps) => (
+  <Svg width={24} height={24} fill="none" {...props}>
+    <Path
+      d="M19.5 3h-15A1.5 1.5 0 003 4.5v15A1.5 1.5 0 004.5 21h15a1.5 1.5 0 001.5-1.5v-15A1.5 1.5 0 0019.5 3z"
+      stroke="#2A6B58"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <Path
+      d="M10.25 14v-3.031l2.625 1.515L15.5 14l-2.625 1.515-2.625 1.516V14z"
+      fill="#fff"
+      stroke="#2A6B58"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <Path
+      d="M3 7.5h18"
+      stroke="#2A6B58"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <Path d="M16.5 3l-3 4.5 3-4.5z" fill="#2A6B58" />
+    <Path
+      d="M16.5 3l-3 4.5M10.5 3l-3 4.5"
+      stroke="#2A6B58"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </Svg>
+);
