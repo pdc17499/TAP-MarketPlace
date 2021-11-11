@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   focusCell: {
-    borderBottomColor: colors.black,
+    borderBottomColor: colors.bgInput,
     borderBottomWidth: 1,
   },
   miniTxt: {

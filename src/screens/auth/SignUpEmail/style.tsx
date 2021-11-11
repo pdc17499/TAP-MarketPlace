@@ -22,8 +22,8 @@ const styles = StyleSheet.create({
   },
 
   button: {
-    // marginBottom: SIZE.medium_space,
-    marginTop: scaleWidth(150),
+
+    marginTop: scaleWidth(100),
     marginBottom: scaleWidth(200)
   },
 

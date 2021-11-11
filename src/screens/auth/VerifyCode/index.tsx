@@ -24,7 +24,7 @@ const VerifyCode = (props: VerifyCodeProp) => {
   const COUNTRY_CODE = props.route.params.coutryCode
   console.log('hi', PHONE);
   const navigation = useNavigation<screenNavigationProp>();
-  const [timerCount, setTimer] = useState(25)
+  const [timerCount, setTimer] = useState(5)
 
   const CELL_COUNT = 4;
   const [value, setValue] = useState('');
@@ -36,11 +36,10 @@ const VerifyCode = (props: VerifyCodeProp) => {
   useEffect(() => {
     let interval = setInterval(() => {
       setTimer(lastTimerCount => {
-        lastTimerCount <= 1 && clearInterval(interval)
+        lastTimerCount <= 0 && clearInterval(interval)
         return lastTimerCount - 1
       })
-    }, 1000) //each count lasts for a second
-    //cleanup the interval on complete
+    }, 1000)
     return () => clearInterval(interval)
   }, []);
 
@@ -70,16 +69,20 @@ const VerifyCode = (props: VerifyCodeProp) => {
             )}
           />
         </View>
-        <AppText style={styles.miniTxt}>
-          {`We've send a code to +${COUNTRY_CODE} ${PHONE} . You can send another code in ${timerCount} seconds. `}
-        </AppText>
+
+        {(timerCount >= 1
+          ? <AppText style={styles.miniTxt}>
+            {`We've send a code to +${COUNTRY_CODE} ${PHONE}. You can send another code in ${timerCount} seconds. `}
+          </AppText>
+          : <AppText style={styles.miniTxt}>
+            {`We've send a code to +${COUNTRY_CODE} ${PHONE}. You can send another code in 0 second. `}
+          </AppText>
+        )}
 
         {(timerCount <= 0 ?
           <AppButton title={'Resend'} size={'small'} />
           : null
         )}
-
-
         <AppButton title={'Verify'} size={'small'} />
       </View>
     </View>

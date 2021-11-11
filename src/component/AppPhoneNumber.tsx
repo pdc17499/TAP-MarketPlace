@@ -4,7 +4,6 @@ import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { AppInput, AppText } from '@component';
 import { colors, fontFamily, scaleWidth, SIZE } from '@util';
 import { DownIcon } from '@assets';
-
 interface IAppPhoneNumber {
   label?: string;
   value?: string;
@@ -25,10 +24,11 @@ export const AppPhoneNumber = React.memo((props: IAppPhoneNumber) => {
   const onSelectFlag = (country: any) => {
     setCountryCode(country?.cca2);
     onChangeFlag(country?.callingCode[0] || '65');
+    setVisible(false)
   };
 
   const showModal = () => {
-    setVisible(true);
+    setVisible(true)
   };
 
   return (
@@ -41,7 +41,7 @@ export const AppPhoneNumber = React.memo((props: IAppPhoneNumber) => {
               ...fontFamily.fontWeight400,
             }}
             visible={visible}
-            withCallingCode={true}
+            withCallingCode={false}
             withCallingCodeButton={true}
             countryCode={countryCode || 'SG'}
             withFlagButton={false}
