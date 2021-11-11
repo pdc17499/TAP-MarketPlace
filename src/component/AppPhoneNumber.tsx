@@ -52,6 +52,8 @@ export const AppPhoneNumber = React.memo((props: IAppPhoneNumber) => {
         </TouchableOpacity>
         <View style={styles.input}>
           <AppInput
+            typeInput={"phone"}
+            delimiter={' - '}
             label={label}
             style={styles.inputPhone}
             keyboardType="number-pad"

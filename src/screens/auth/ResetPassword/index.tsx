@@ -9,7 +9,6 @@ import { styles } from './style';
 import * as yup from 'yup';
 
 interface ResetPasswordProp { }
-
 interface screenNavigationProp {
   navigate: any;
 }
@@ -31,7 +30,7 @@ const ResetPassword = (props: ResetPasswordProp) => {
   });
 
   const RenderResetForm = () => (
-    <KeyboardAvoidingView  >
+    <KeyboardAvoidingView >
       <Formik
         initialValues={formInitialValues}
         validationSchema={validationResetPassword}
@@ -47,9 +46,9 @@ const ResetPassword = (props: ResetPasswordProp) => {
                 value={props.values.email}
                 onValueChange={props.handleChange('email')}
                 error={props.errors.email}
-              ></AppInput>
+              />
             </View>
-            <AppButton title={"Send reset link  "} size={'small'} iconRight={'email'} onPress={props.handleSubmit} />
+            <AppButton title={"Send reset link"} size={'small'} iconRight={'email'} onPress={props.handleSubmit} />
           </View>
         )}
       </Formik>

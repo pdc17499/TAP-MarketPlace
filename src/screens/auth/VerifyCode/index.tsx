@@ -10,14 +10,19 @@ import {
   useClearByFocusCell,
 } from 'react-native-confirmation-code-field';
 
-interface VerifyCodeProp { }
-
+interface VerifyCodeProp {
+  navigation: any,
+  route: any;
+}
 interface screenNavigationProp {
   navigate: any;
   route: any;
 }
 
 const VerifyCode = (props: VerifyCodeProp) => {
+  const PHONE = props.route.params.phone.toString().slice(1)
+  const COUNTRY_CODE = props.route.params.coutryCode
+  console.log('hi', PHONE);
   const navigation = useNavigation<screenNavigationProp>();
   const [timerCount, setTimer] = useState(25)
 
@@ -32,7 +37,7 @@ const VerifyCode = (props: VerifyCodeProp) => {
     let interval = setInterval(() => {
       setTimer(lastTimerCount => {
         lastTimerCount <= 1 && clearInterval(interval)
-        return lastTimerCount
+        return lastTimerCount - 1
       })
     }, 1000) //each count lasts for a second
     //cleanup the interval on complete
@@ -66,8 +71,15 @@ const VerifyCode = (props: VerifyCodeProp) => {
           />
         </View>
         <AppText style={styles.miniTxt}>
-          {`We've send a code to your phone . You can send another code in ${timerCount} seconds. `}
+          {`We've send a code to +${COUNTRY_CODE} ${PHONE} . You can send another code in ${timerCount} seconds. `}
         </AppText>
+
+        {(timerCount <= 0 ?
+          <AppButton title={'Resend'} size={'small'} />
+          : null
+        )}
+
+
         <AppButton title={'Verify'} size={'small'} />
       </View>
     </View>

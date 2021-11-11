@@ -1,5 +1,5 @@
 import { IconQuestion } from '@assets';
-import { AppButton, AppText, Header, AppPhoneNumber } from '@component';
+import { AppButton, AppText, Header, AppPhoneNumber, AppInput } from '@component';
 import { useNavigation } from '@react-navigation/core';
 import { VERIFY_CODE } from '@routeName';
 import { scaleWidth } from '@util';
@@ -8,11 +8,18 @@ import { Alert, Pressable, TouchableOpacity, View } from 'react-native';
 import { styles } from './style';
 import { VerifyAccountProps } from '@interfaces';
 
+interface VerifyCodeProp {
+  navigation: any,
+  route: any;
+}
 interface screenNavigationProp {
   navigate: any;
+  route: any;
 }
 
-const VerifyAccount = (props: VerifyAccountProps) => {
+const VerifyAccount = (props: VerifyCodeProp) => {
+
+
   const navigation = useNavigation<screenNavigationProp>();
   const [isShowRules, setIsShowRules] = useState(false);
   const [phoneNumber, setPhoneNumber] = useState('');
@@ -22,9 +29,12 @@ const VerifyAccount = (props: VerifyAccountProps) => {
   };
   const moveToVerifyCode = () => {
     phoneNumber !== ''
-      ? navigation.navigate(VERIFY_CODE)
+      ? navigation.navigate(VERIFY_CODE, { coutryCode: countryCode, phone: phoneNumber })
       : Alert.alert('Please enter your phone number!');
   };
+
+  // console.log('phone', phoneNumber);
+
   return (
     <View style={styles.container}>
       <Header back />
@@ -34,9 +44,11 @@ const VerifyAccount = (props: VerifyAccountProps) => {
         <AppText style={styles.yourPhoneTxt}>{'Your Phone Number'}</AppText>
 
         <AppPhoneNumber
+          value={phoneNumber}
           onChangeFlag={setCountryCode}
           onChangePhone={setPhoneNumber}
         />
+
         <AppText style={styles.sendCodeTxt}>
           {"We'll send a text with a verification code to create your account."}
         </AppText>

@@ -1,7 +1,7 @@
-import {AppText} from '@component';
+import { AppText } from '@component';
 import React from 'react';
-import {StyleSheet, TextInput, View, TouchableOpacity} from 'react-native';
-import {colors, fontFamily, DEVICE, scaleWidth, SIZE} from '@util';
+import { StyleSheet, TextInput, View, TouchableOpacity } from 'react-native';
+import { colors, fontFamily, DEVICE, scaleWidth, SIZE } from '@util';
 import {
   EyeIconClose,
   EyeIconOpen,
@@ -12,7 +12,7 @@ import {
   IconDola,
   IconFloorSize,
 } from '@assets';
-import {IAppInput} from '@interfaces';
+import { IAppInput } from '@interfaces';
 import CurrencyInput from 'react-native-currency-input';
 
 export const AppInput = (props: IAppInput) => {
@@ -53,7 +53,7 @@ export const AppInput = (props: IAppInput) => {
 
   const viewStyle: any = [
     styles.inputWrap,
-    {borderColor: isFocused ? colors.secondPrimary : colors.bgInput},
+    { borderColor: isFocused ? colors.secondPrimary : colors.bgInput },
     style,
   ];
 
@@ -61,9 +61,9 @@ export const AppInput = (props: IAppInput) => {
     styles.input,
     inputStyle,
     DEVICE.isIos &&
-      multiline && {
-        paddingTop: scaleWidth(16),
-      },
+    multiline && {
+      paddingTop: scaleWidth(16),
+    },
   ];
 
   const renderIconLeft = () => {
@@ -102,24 +102,7 @@ export const AppInput = (props: IAppInput) => {
       {label && <AppText style={styles.label}>{label}</AppText>}
       <View style={viewStyle}>
         {iconLeft && <View style={styles.iconLeft}>{renderIconLeft()}</View>}
-        {typeInput === 'default' ? (
-          <TextInput
-            style={ipStyle}
-            editable={editable}
-            placeholder={placeholder}
-            placeholderTextColor={colors.textThirdPrimary}
-            value={value}
-            multiline={multiline}
-            onFocus={handleFocus}
-            onBlur={handleBlur}
-            numberOfLines={numberOfLines}
-            blurOnSubmit={false}
-            onChangeText={onChangeText}
-            secureTextEntry={hidePasssWord && secureTextEntry}
-            keyboardType={keyboardType}
-            autoFocus={autoFocus}
-          />
-        ) : (
+        {typeInput === 'price' || typeInput === 'phone' ? (
           <CurrencyInput
             style={ipStyle}
             value={value}
@@ -139,6 +122,23 @@ export const AppInput = (props: IAppInput) => {
             onBlur={handleBlur}
             numberOfLines={numberOfLines}
             blurOnSubmit={false}
+            secureTextEntry={hidePasssWord && secureTextEntry}
+            keyboardType={keyboardType}
+            autoFocus={autoFocus}
+          />
+        ) : (
+          <TextInput
+            style={ipStyle}
+            editable={editable}
+            placeholder={placeholder}
+            placeholderTextColor={colors.textThirdPrimary}
+            value={value}
+            multiline={multiline}
+            onFocus={handleFocus}
+            onBlur={handleBlur}
+            numberOfLines={numberOfLines}
+            blurOnSubmit={false}
+            onChangeText={onChangeText}
             secureTextEntry={hidePasssWord && secureTextEntry}
             keyboardType={keyboardType}
             autoFocus={autoFocus}

@@ -8,9 +8,7 @@ const styles = StyleSheet.create({
   },
   body: {
     paddingHorizontal: SIZE.padding,
-    flex: 1,
-
-
+    // flex: 1,
   },
   title: {
     fontSize: SIZE.big_size,
@@ -22,14 +20,11 @@ const styles = StyleSheet.create({
     marginTop: 20,
     marginBottom: 10,
   },
-  formInPut: {
-    height: scaleHeight(585),
 
-  },
   button: {
-    width: '100%',
-
-    bottom: SIZE.medium_space
+    // marginBottom: SIZE.medium_space,
+    marginTop: scaleWidth(150),
+    marginBottom: scaleWidth(200)
   },
 
 });

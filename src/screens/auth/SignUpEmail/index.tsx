@@ -1,6 +1,6 @@
 import { AppButton, AppInput, AppText, Header } from '@component';
 import { useNavigation } from '@react-navigation/core';
-import { scaleHeight } from '@util';
+import { scaleHeight, SIZE } from '@util';
 import { Formik } from 'formik';
 import React from 'react';
 import { View, KeyboardAvoidingView, ScrollView } from 'react-native';
@@ -40,7 +40,7 @@ const SignUpEmail = (props: SignUpEmailProp) => {
   });
 
   const RenderEmailForm = () => (
-    <KeyboardAvoidingView  >
+    <KeyboardAvoidingView style={{ flex: 1, paddingHorizontal: SIZE.padding }} >
       <Formik
         initialValues={formInitialValues}
         validationSchema={validationEmail}
@@ -48,8 +48,8 @@ const SignUpEmail = (props: SignUpEmailProp) => {
         onSubmit={values => { navigation.navigate(VERIFY_ACCOUNT) }}
       >
         {props => (
-          <View style={{ height: '100%' }}>
-            <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
+          <>
+            <View style={{ flex: 1 }}>
               <AppText
                 style={styles.title}>
                 {'Sign up'}
@@ -57,11 +57,12 @@ const SignUpEmail = (props: SignUpEmailProp) => {
               <AppInput
                 label={'Email'}
                 placeholder={'Enter your email'}
+                typeInput={'default'}
                 iconLeft={'email'}
                 value={props.values.email}
                 onValueChange={props.handleChange('email')}
                 error={props.errors.email}
-              ></AppInput>
+              />
 
               <AppInput
                 label={'Password'}
@@ -72,7 +73,7 @@ const SignUpEmail = (props: SignUpEmailProp) => {
                 value={props.values.password}
                 onValueChange={props.handleChange('password')}
                 error={props.errors.password}
-              ></AppInput>
+              />
 
               <AppInput
                 label={'Confirm Password'}
@@ -83,10 +84,16 @@ const SignUpEmail = (props: SignUpEmailProp) => {
                 value={props.values.confirm_password}
                 onValueChange={props.handleChange('confirm_password')}
                 error={props.errors.confirm_password}
-              ></AppInput>
-            </ScrollView>
-            <AppButton customStyleButton={styles.button} title={"Continue "} size={'small'} iconRight={'arNext'} onPress={props.handleSubmit} />
-          </View>
+              />
+
+              <AppButton
+                customStyleButton={styles.button}
+                title={"Continue "}
+                size={'small'}
+                iconRight={'arNext'}
+                onPress={props.handleSubmit} />
+            </View>
+          </>
         )}
       </Formik>
     </KeyboardAvoidingView>
@@ -95,9 +102,7 @@ const SignUpEmail = (props: SignUpEmailProp) => {
   return (
     <View style={styles.container}>
       <Header back />
-      <View style={styles.body} >
-        {RenderEmailForm()}
-      </View>
+      {RenderEmailForm()}
     </View>
   );
 };
