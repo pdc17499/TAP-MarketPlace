@@ -1,11 +1,13 @@
 import React from 'react';
-import {View, StyleSheet, ScrollView, KeyboardAvoidingView} from 'react-native';
+import {View, StyleSheet, KeyboardAvoidingView} from 'react-native';
 import {AppButton, AppInput, AppQA, AppSlider} from '@component';
 import {RoomStepProps} from '@interfaces';
 import {ROOM_UNIT_HOWNER} from '@mocks';
-import {fontFamily, scaleWidth, SIZE} from '@util';
+import {fontFamily, scaleSize, scaleWidth, SIZE, validateForm} from '@util';
 import {setDataSignup} from '@redux';
 import {useDispatch, useSelector} from 'react-redux';
+import * as yup from 'yup';
+import {Formik} from 'formik';
 
 const StepPrice = (props: RoomStepProps) => {
   const {onNext} = props;
@@ -15,6 +17,24 @@ const StepPrice = (props: RoomStepProps) => {
   const setData = (data: any) => {
     dispatch(setDataSignup({data}));
   };
+
+  const formInitialValues = {
+    rental_price: dataSignUp?.rental_price?.id,
+    negotiable_price: dataSignUp?.negotiable_price,
+    fixed_price: dataSignUp?.fixed_price,
+  };
+
+  const validationSchema = yup.object().shape({
+    rental_price: validateForm().common.reuqire,
+    negotiable_price: yup.string().when('rental_price', {
+      is: '1',
+      then: validateForm().common.reuqire,
+    }),
+    fixed_price: yup.string().when('rental_price', {
+      is: '2',
+      then: validateForm().common.reuqire,
+    }),
+  });
 
   const onValuesChangeFinish = (values: any) => {
     const nData: any = {...dataSignUp};
@@ -31,7 +51,7 @@ const StepPrice = (props: RoomStepProps) => {
     }
   };
 
-  const renderFixedPrice = (id: number) => {
+  const renderFixedPrice = (id: number, propsFormik: any) => {
     const name = id === 1 ? 'negotiable_price' : 'fixed_price';
     return (
       <AppInput
@@ -41,7 +61,10 @@ const StepPrice = (props: RoomStepProps) => {
         onValueChange={onChangeValue}
         keyboardType={'number-pad'}
         containerStyle={styles.inputStyle}
+        inputStyle={{fontSize: scaleSize(18)}}
         autoFocus
+        typeInput={'price'}
+        error={propsFormik.errors[name]}
       />
     );
   };
@@ -56,35 +79,50 @@ const StepPrice = (props: RoomStepProps) => {
     );
   };
 
-  const renderChildren = () => {
+  const renderChildren = (props: any) => {
     const id = dataSignUp?.rental_price?.id;
+    console.log({props});
     if (id === 1 || id === 2) {
-      return renderFixedPrice(id);
+      return renderFixedPrice(id, props);
     } else if (id === 3) {
       return renderPriceRange();
     }
   };
 
+  const onSubmit = () => {};
+
   return (
     <View style={styles.container}>
       <KeyboardAvoidingView style={{flex: 1}}>
-        <AppQA
-          isFlex
-          data={list.rental_price}
-          title={'What is your rental price?'}
-          value={dataSignUp}
-          name={'rental_price'}
-          setValue={setData}
-          typeList={'column'}
-          children={renderChildren()}
-        />
+        <Formik
+          initialValues={formInitialValues}
+          validationSchema={validationSchema}
+          validateOnChange
+          enableReinitialize
+          onSubmit={onSubmit}>
+          {(propsFormik: any) => (
+            <>
+              <AppQA
+                isFlex
+                data={list.rental_price}
+                title={'What is your rental price?'}
+                value={dataSignUp}
+                name={'rental_price'}
+                setValue={setData}
+                typeList={'column'}
+                children={renderChildren(propsFormik)}
+                error={propsFormik.errors.rental_price}
+              />
+              <AppButton
+                title={'Continue'}
+                onPress={propsFormik.handleSubmit}
+                containerStyle={styles.customStyleButton}
+                iconRight={'arNext'}
+              />
+            </>
+          )}
+        </Formik>
       </KeyboardAvoidingView>
-      <AppButton
-        title={'Continue'}
-        onPress={onNext}
-        containerStyle={styles.customStyleButton}
-        iconRight={'arNext'}
-      />
     </View>
   );
 };

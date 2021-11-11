@@ -19,7 +19,6 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginTop: SIZE.base_space,
   },
   imageStyle: {
     width: scaleWidth(124),

@@ -19,6 +19,7 @@ const AppQA = React.memo((props: AppQAProps) => {
     subTitle,
     isFlex,
     typeTitle,
+    error,
   } = props;
   const listStyle = typeList === 'column' ? {} : styles.listRow;
   const itemStyle =
@@ -76,7 +77,7 @@ const AppQA = React.memo((props: AppQAProps) => {
     <View style={containerView}>
       <AppText style={titleStyle}>{title}</AppText>
       {subTitle && <AppText style={styles.subTitle}>{subTitle}</AppText>}
-
+      {!!error && <AppText style={styles.error}>{error}</AppText>}
       <View style={listStyle}>
         {data.map((item: mockProps) => {
           const isActive =
@@ -139,6 +140,10 @@ const styles = StyleSheet.create({
     lineHeight: SIZE.base_size * 1.6,
     color: colors.textThirdPrimary,
     ...fontFamily.fontCampWeight500,
+  },
+  error: {
+    marginTop: SIZE.base_space,
+    color: colors.red,
   },
 });
 

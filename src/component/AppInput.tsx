@@ -10,8 +10,10 @@ import {
   Key,
   IconEmail,
   IconDola,
+  IconFloorSize,
 } from '@assets';
 import {IAppInput} from '@interfaces';
+import CurrencyInput from 'react-native-currency-input';
 
 export const AppInput = (props: IAppInput) => {
   const {
@@ -33,6 +35,8 @@ export const AppInput = (props: IAppInput) => {
     name,
     containerStyle,
     autoFocus,
+    typeInput,
+    delimiter,
   } = props;
   const [isFocused, setIsFocused] = React.useState(false);
   const [hidePasssWord, setHidePassWord] = React.useState(true);
@@ -72,6 +76,8 @@ export const AppInput = (props: IAppInput) => {
         return <Key />;
       case 'dolar':
         return <IconDola />;
+      case 'floor_size':
+        return <IconFloorSize />;
     }
 
     return null;
@@ -86,8 +92,9 @@ export const AppInput = (props: IAppInput) => {
     return null;
   };
 
-  const onChangeText = (text: string) => {
-    if (onValueChange) onValueChange(text, name);
+  const onChangeText = (text: any) => {
+    const nText = text || '';
+    if (onValueChange) onValueChange(nText, name);
   };
 
   return (
@@ -95,22 +102,49 @@ export const AppInput = (props: IAppInput) => {
       {label && <AppText style={styles.label}>{label}</AppText>}
       <View style={viewStyle}>
         {iconLeft && <View style={styles.iconLeft}>{renderIconLeft()}</View>}
-        <TextInput
-          style={ipStyle}
-          editable={editable}
-          placeholder={placeholder}
-          placeholderTextColor={colors.textThirdPrimary}
-          value={value}
-          multiline={multiline}
-          onFocus={handleFocus}
-          onBlur={handleBlur}
-          numberOfLines={numberOfLines}
-          blurOnSubmit={false}
-          onChangeText={onChangeText}
-          secureTextEntry={hidePasssWord && secureTextEntry}
-          keyboardType={keyboardType}
-          autoFocus={autoFocus}
-        />
+        {typeInput === 'default' ? (
+          <TextInput
+            style={ipStyle}
+            editable={editable}
+            placeholder={placeholder}
+            placeholderTextColor={colors.textThirdPrimary}
+            value={value}
+            multiline={multiline}
+            onFocus={handleFocus}
+            onBlur={handleBlur}
+            numberOfLines={numberOfLines}
+            blurOnSubmit={false}
+            onChangeText={onChangeText}
+            secureTextEntry={hidePasssWord && secureTextEntry}
+            keyboardType={keyboardType}
+            autoFocus={autoFocus}
+          />
+        ) : (
+          <CurrencyInput
+            style={ipStyle}
+            value={value}
+            onChangeValue={onChangeText}
+            delimiter={delimiter || ','}
+            separator=""
+            precision={0}
+            minValue={0}
+            onChangeText={formattedValue => {
+              console.log(formattedValue); // R$ +2.310,46
+            }}
+            editable={editable}
+            placeholder={placeholder}
+            placeholderTextColor={colors.textThirdPrimary}
+            multiline={multiline}
+            onFocus={handleFocus}
+            onBlur={handleBlur}
+            numberOfLines={numberOfLines}
+            blurOnSubmit={false}
+            secureTextEntry={hidePasssWord && secureTextEntry}
+            keyboardType={keyboardType}
+            autoFocus={autoFocus}
+          />
+        )}
+
         {showEye && (
           <TouchableOpacity onPress={onShowPassWord} style={styles.iconRight}>
             {hidePasssWord ? <EyeIconOpen /> : <EyeIconClose />}
@@ -150,6 +184,7 @@ const styles = StyleSheet.create({
     height: '100%',
     color: colors.textPrimary,
     fontSize: SIZE.base_size,
+    lineHeight: SIZE.base_size + 4,
     ...fontFamily.fontWeight500,
   },
   error: {

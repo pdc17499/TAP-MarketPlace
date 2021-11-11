@@ -229,12 +229,12 @@ export {RoomUnitPicture};
 const styles = StyleSheet.create({
   padding: {
     marginHorizontal: SIZE.padding,
+    paddingBottom: SIZE.medium_space,
   },
   container: {
     flex: 1,
     backgroundColor: colors.bgSreen,
     // paddingHorizontal: SIZE.padding,
-    paddingBottom: SIZE.medium_space,
   },
   title: {
     ...fontFamily.fontCampWeight600,
