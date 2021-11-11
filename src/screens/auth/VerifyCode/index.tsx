@@ -1,8 +1,8 @@
-import {AppButton, AppInput, AppText, Header} from '@component';
-import {useNavigation} from '@react-navigation/core';
-import React, {useState} from 'react';
-import {Text, TouchableOpacity, View} from 'react-native';
-import {styles} from './style';
+import { AppButton, AppInput, AppText, Header } from '@component';
+import { useNavigation } from '@react-navigation/core';
+import React, { useEffect, useState } from 'react';
+import { Text, TouchableOpacity, View } from 'react-native';
+import { styles } from './style';
 import {
   CodeField,
   Cursor,
@@ -10,7 +10,7 @@ import {
   useClearByFocusCell,
 } from 'react-native-confirmation-code-field';
 
-interface VerifyCodeProp {}
+interface VerifyCodeProp { }
 
 interface screenNavigationProp {
   navigate: any;
@@ -19,22 +19,32 @@ interface screenNavigationProp {
 
 const VerifyCode = (props: VerifyCodeProp) => {
   const navigation = useNavigation<screenNavigationProp>();
-  console.log('phone', navigation);
+  const [timerCount, setTimer] = useState(25)
 
   const CELL_COUNT = 4;
   const [value, setValue] = useState('');
-  const ref = useBlurOnFulfill({value, cellCount: CELL_COUNT});
+  const ref = useBlurOnFulfill({ value, cellCount: CELL_COUNT });
   const [prop, getCellOnLayoutHandler] = useClearByFocusCell({
     value,
     setValue,
   });
+  useEffect(() => {
+    let interval = setInterval(() => {
+      setTimer(lastTimerCount => {
+        lastTimerCount <= 1 && clearInterval(interval)
+        return lastTimerCount
+      })
+    }, 1000) //each count lasts for a second
+    //cleanup the interval on complete
+    return () => clearInterval(interval)
+  }, []);
 
   return (
     <View style={styles.container}>
       <Header back />
       <View style={styles.body}>
         <AppText style={styles.message}>{'Enter your code'}</AppText>
-        <View style={{marginBottom: 50}}>
+        <View style={{ marginBottom: 50 }}>
           <CodeField
             ref={ref}
             {...prop}
@@ -43,7 +53,7 @@ const VerifyCode = (props: VerifyCodeProp) => {
             cellCount={CELL_COUNT}
             rootStyle={styles.codeFieldRoot}
             keyboardType="number-pad"
-            renderCell={({index, symbol, isFocused}) => (
+            renderCell={({ index, symbol, isFocused }) => (
               <View
                 onLayout={getCellOnLayoutHandler(index)}
                 key={index}
@@ -56,7 +66,7 @@ const VerifyCode = (props: VerifyCodeProp) => {
           />
         </View>
         <AppText style={styles.miniTxt}>
-          {"We've send a code to . You can send another code in 25 seconds. "}
+          {`We've send a code to your phone . You can send another code in ${timerCount} seconds. `}
         </AppText>
         <AppButton title={'Verify'} size={'small'} />
       </View>
@@ -64,4 +74,4 @@ const VerifyCode = (props: VerifyCodeProp) => {
   );
 };
 
-export {VerifyCode};
+export { VerifyCode };

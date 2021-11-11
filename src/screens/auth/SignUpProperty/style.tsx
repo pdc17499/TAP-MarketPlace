@@ -1,5 +1,5 @@
-import {colors, fontFamily, scaleSize, scaleWidth, SIZE} from '@util';
-import {StyleSheet} from 'react-native';
+import { colors, fontFamily, height, scaleHeight, scaleSize, scaleWidth, SIZE } from '@util';
+import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
   container: {
@@ -8,12 +8,13 @@ const styles = StyleSheet.create({
   },
   body: {
     paddingHorizontal: SIZE.padding,
+    flex: 1,
+    height: '100%',
+
   },
   title: {
-    fontSize: scaleSize(18),
+    fontSize: SIZE.medium_size,
     ...fontFamily.fontCampWeight600,
-    marginTop: SIZE.base_space,
-    marginBottom: scaleWidth(15),
     color: colors.textSecondPrimary,
   },
   message: {
@@ -23,29 +24,28 @@ const styles = StyleSheet.create({
     marginBottom: SIZE.base_space + 2,
     color: colors.textPrimary,
   },
-  text: {
-    fontSize: scaleSize(15),
-    ...fontFamily.fontWeight500,
-    lineHeight: scaleWidth(15),
-    marginBottom: scaleWidth(10),
-    color: colors.primary,
+
+  input: {
+    paddingHorizontal: SIZE.padding,
+
+
   },
-  text2: {
-    fontSize: scaleSize(15),
-    ...fontFamily.fontWeight500,
-    lineHeight: scaleWidth(15),
-    color: colors.primary,
-    marginBottom: -5,
-  },
-  input: {},
-  inputAge: {
-    marginBottom: scaleWidth(30),
-    width: scaleWidth(106),
-  },
+
   button: {
-    marginTop: scaleWidth(250),
-    marginBottom: scaleWidth(20),
+    width: '100%',
+    bottom: SIZE.medium_space
   },
+  logo: {
+    width: scaleWidth(45),
+    height: scaleWidth(49),
+    marginTop: scaleWidth(20),
+    marginBottom: scaleWidth(26)
+  },
+  youTxt: {
+    fontSize: SIZE.medium_size,
+    ...fontFamily.fontCampWeight600,
+    color: colors.textPrimary
+  }
 });
 
-export {styles};
+export { styles };

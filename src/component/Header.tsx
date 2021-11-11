@@ -1,12 +1,12 @@
 import React from 'react';
-import {StyleSheet, View, TouchableOpacity} from 'react-native';
-import {AppText} from '@component';
-import {getStatusBarHeight} from 'react-native-iphone-x-helper';
-import {colors, DEVICE, fontFamily, scaleHeight, scaleWidth, SIZE} from '@util';
-import {IconBack} from '@assets';
-import {useNavigation} from '@react-navigation/native';
-import {ifIphoneX} from 'react-native-iphone-x-helper';
-import {HeaderProps} from '@interfaces';
+import { StyleSheet, View, TouchableOpacity } from 'react-native';
+import { AppText } from '@component';
+import { getStatusBarHeight } from 'react-native-iphone-x-helper';
+import { colors, DEVICE, fontFamily, scaleHeight, scaleWidth, SIZE } from '@util';
+import { IconBack } from '@assets';
+import { useNavigation } from '@react-navigation/native';
+import { ifIphoneX } from 'react-native-iphone-x-helper';
+import { HeaderProps } from '@interfaces';
 
 interface screenNavigationProp {
   goBack: any;
@@ -36,7 +36,7 @@ const Header = React.memo((props: HeaderProps) => {
           <TouchableOpacity
             style={styles.buttonLeft}
             onPress={goBack}
-            hitSlop={{top: 20, bottom: 20, left: 20, right: 20}}>
+            hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}>
             <IconBack iconFillColor={iconFillColor} />
           </TouchableOpacity>
         )}
@@ -84,4 +84,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export {Header};
+export { Header };

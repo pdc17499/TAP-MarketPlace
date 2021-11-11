@@ -1,29 +1,32 @@
-import {AppButton, AppInput, AppQA, AppText, Header} from '@component';
-import {useNavigation} from '@react-navigation/core';
-import {scaleHeight} from '@util';
-import {Formik} from 'formik';
-import React, {useState} from 'react';
-import {View, KeyboardAvoidingView, ScrollView} from 'react-native';
-import {styles} from './style';
+import { AppButton, AppInput, AppQA, AppText, Header } from '@component';
+import { useNavigation } from '@react-navigation/core';
+import { scaleHeight } from '@util';
+import { Formik } from 'formik';
+import React, { useState } from 'react';
+import { View, KeyboardAvoidingView, ScrollView } from 'react-native';
+import { styles } from './style';
 import * as yup from 'yup';
-import {TENANT_PROPERTY} from '@mocks';
-import {useDispatch, useSelector} from 'react-redux';
-import {setDataSignup} from '@redux';
-import {LIFE_STYLE} from '@routeName';
+import { TENANT_PROPERTY } from '@mocks';
+import { useDispatch, useSelector } from 'react-redux';
+import { setDataSignup } from '@redux';
+import { LIFE_STYLE } from '@routeName';
 
-interface SignUpPropertyProp {}
+interface SignUpPropertyProp {
+  route: any;
+}
 
 interface screenNavigationProp {
   navigate: any;
 }
 
 const UserInformationGender = (props: SignUpPropertyProp) => {
+  const NAME = props.route.params
   const navigation = useNavigation<screenNavigationProp>();
   const dispatch = useDispatch();
   const list = TENANT_PROPERTY;
   const dataSignUp = useSelector((state: any) => state?.auth?.dataSignup);
   const setData = (data: any) => {
-    dispatch(setDataSignup({data}));
+    dispatch(setDataSignup({ data }));
   };
 
   const formInitialValues = {
@@ -45,10 +48,10 @@ const UserInformationGender = (props: SignUpPropertyProp) => {
       initialValues={formInitialValues}
       validationSchema={validationForm}
       validateOnChange={false}
-      onSubmit={values => {}}>
+      onSubmit={values => { }}>
       {props => (
-        <View style={{flex: 1, paddingBottom: 48}}>
-          <View style={{flex: 1}}>
+        <View style={{ flex: 1, paddingBottom: 48 }}>
+          <View style={{ flex: 1 }}>
             <AppQA
               data={list.gender}
               title={'How would you describe your gender?'}
@@ -92,11 +95,11 @@ const UserInformationGender = (props: SignUpPropertyProp) => {
       <Header back />
       <View style={styles.body}>
         <AppText style={styles.title}>{'About you'}</AppText>
-        <AppText style={styles.message}>{'Hi there, Rachel Green'}</AppText>
+        <AppText style={styles.message}>{`Hi there, ${NAME.name}`}</AppText>
         {RenderForm()}
       </View>
     </View>
   );
 };
 
-export {UserInformationGender};
+export { UserInformationGender };

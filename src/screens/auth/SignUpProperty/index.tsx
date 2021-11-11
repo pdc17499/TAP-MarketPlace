@@ -1,48 +1,43 @@
-import {AppButton, AppInput, AppQA, AppText, Header} from '@component';
-import {useNavigation} from '@react-navigation/core';
-import {scaleHeight} from '@util';
-import {Formik} from 'formik';
-import React, {useState} from 'react';
+import { AppButton, AppInput, AppQA, AppText, Header } from '@component';
+import { useNavigation } from '@react-navigation/core';
+import { Formik } from 'formik';
+import React, { useState } from 'react';
 import {
   View,
   KeyboardAvoidingView,
   _ScrollView,
+  Image,
   ScrollView,
 } from 'react-native';
-import {styles} from './style';
+import { styles } from './style';
 import * as yup from 'yup';
-import {TENANT_PROPERTY} from '@mocks';
-import {USER_INFORMATION_GENDER} from '@routeName';
+import { TENANT_PROPERTY } from '@mocks';
+import { USER_INFORMATION_GENDER } from '@routeName';
+import { logo } from '@assets';
 
-interface SignUpPropertyProp {}
+
+interface SignUpPropertyProp { }
 
 interface screenNavigationProp {
   navigate: any;
+
 }
 
-const SignUpProperty = (props: SignUpPropertyProp) => {
+const SignUpProperty = () => {
   const navigation = useNavigation<screenNavigationProp>();
   const formInitialValues = {
     name: '',
     error: '',
   };
 
-  const [gender, setGender] = useState('');
-  const [showButton, setShowButton] = useState(false);
-
-  const data = TENANT_PROPERTY;
-  const [selectedItem, setSelectedItem] = useState({});
-
-  const onSelect = (item: any, name?: string) => {
-    setSelectedItem(item);
-  };
-
   const validationForm = yup.object().shape({
     name: yup.string().required('This field is required'),
   });
 
-  const handleSubmit = (values: any) => {
-    navigation.navigate(USER_INFORMATION_GENDER);
+  const handleSubmit = (name: string) => {
+    navigation.navigate(USER_INFORMATION_GENDER, { name: name });
+
+
   };
 
   const RenderForm = () => (
@@ -51,19 +46,24 @@ const SignUpProperty = (props: SignUpPropertyProp) => {
         initialValues={formInitialValues}
         validationSchema={validationForm}
         validateOnChange={false}
-        onSubmit={values => handleSubmit(values)}>
+        onSubmit={values => handleSubmit(values.name)}>
         {props => (
-          <View>
-            <View style={{marginBottom: scaleHeight(24)}}>
-              <AppText style={styles.text}>{"What's your name?"}</AppText>
+          <View style={{ height: '100%' }}>
+            <View style={{ flex: 1 }}>
+              <Image source={logo} style={styles.logo} />
+              <AppText style={styles.title}>{"Next, let's get to know"}</AppText>
+              <View style={{ flexDirection: 'row', marginBottom: 50 }}>
+                <AppText style={styles.title}>{"more about "}</AppText>
+                <AppText style={styles.youTxt}>{"you"}</AppText>
+              </View>
               <AppInput
+                label={"What's your name?"}
                 style={styles.input}
                 value={props.values.name}
                 onValueChange={props.handleChange('name')}
                 error={props.errors.error}
               />
             </View>
-
             {props.values.name !== '' ? (
               <AppButton
                 customStyleButton={styles.button}
@@ -76,21 +76,17 @@ const SignUpProperty = (props: SignUpPropertyProp) => {
           </View>
         )}
       </Formik>
-    </KeyboardAvoidingView>
+    </KeyboardAvoidingView >
   );
 
   return (
-    <ScrollView style={styles.container}>
+    <View style={styles.container}>
       <Header back />
-      <View style={styles.body}>
-        <AppText style={styles.title}>{'Sign up'}</AppText>
-        <AppText style={styles.message}>
-          {'Hi, we want to get to know more about you'}
-        </AppText>
+      <View style={styles.body} >
         {RenderForm()}
       </View>
-    </ScrollView>
+    </View>
   );
 };
 
-export {SignUpProperty};
+export { SignUpProperty };

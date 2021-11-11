@@ -8,7 +8,9 @@ const styles = StyleSheet.create({
   },
   body: {
     paddingHorizontal: SIZE.padding,
-    flex: 1
+    flex: 1,
+
+
   },
   title: {
     fontSize: SIZE.big_size,
@@ -25,10 +27,10 @@ const styles = StyleSheet.create({
 
   },
   button: {
-    position: 'absolute',
-    bottom: 0,
-    width: '100%'
-  }
+    width: '100%',
+
+    bottom: SIZE.medium_space
+  },
 
 });
 

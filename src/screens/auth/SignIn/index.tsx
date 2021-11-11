@@ -1,10 +1,10 @@
-import { IconEmail, iconFacebook, iconGoogle, Key, logo } from '@assets';
+import { iconFacebook, iconGoogle, logo } from '@assets';
 import { AppButton, AppInput, AppText } from '@component';
 import { useNavigation } from '@react-navigation/core';
 import { RESETPASSWORD, SIGNUP } from '@routeName';
-import { colors, fontFamily, scaleHeight, validateForm } from '@util';
+import { scaleHeight } from '@util';
 import { Formik } from 'formik';
-import React, { useState } from 'react';
+import React from 'react';
 import { View, Image, KeyboardAvoidingView, TouchableOpacity } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { styles } from './style';

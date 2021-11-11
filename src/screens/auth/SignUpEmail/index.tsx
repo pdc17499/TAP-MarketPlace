@@ -3,7 +3,7 @@ import { useNavigation } from '@react-navigation/core';
 import { scaleHeight } from '@util';
 import { Formik } from 'formik';
 import React from 'react';
-import { View, KeyboardAvoidingView } from 'react-native';
+import { View, KeyboardAvoidingView, ScrollView } from 'react-native';
 import { styles } from './style';
 import * as yup from 'yup';
 import { SIGNUP_PROPERTY, VERIFY_ACCOUNT } from '@routeName';
@@ -37,7 +37,6 @@ const SignUpEmail = (props: SignUpEmailProp) => {
     confirm_password: yup
       .string()
       .oneOf([yup.ref('password'), null], 'Confirm password must match')
-
   });
 
   const RenderEmailForm = () => (
@@ -49,9 +48,12 @@ const SignUpEmail = (props: SignUpEmailProp) => {
         onSubmit={values => { navigation.navigate(VERIFY_ACCOUNT) }}
       >
         {props => (
-          <View style={styles.formInPut} >
-            <View style={{ marginBottom: scaleHeight(24), flex: 1 }}>
-
+          <View style={{ height: '100%' }}>
+            <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
+              <AppText
+                style={styles.title}>
+                {'Sign up'}
+              </AppText>
               <AppInput
                 label={'Email'}
                 placeholder={'Enter your email'}
@@ -82,7 +84,7 @@ const SignUpEmail = (props: SignUpEmailProp) => {
                 onValueChange={props.handleChange('confirm_password')}
                 error={props.errors.confirm_password}
               ></AppInput>
-            </View>
+            </ScrollView>
             <AppButton customStyleButton={styles.button} title={"Continue "} size={'small'} iconRight={'arNext'} onPress={props.handleSubmit} />
           </View>
         )}
@@ -93,11 +95,7 @@ const SignUpEmail = (props: SignUpEmailProp) => {
   return (
     <View style={styles.container}>
       <Header back />
-      <View style={styles.body}>
-        <AppText
-          style={styles.title}>
-          {'Sign up'}
-        </AppText>
+      <View style={styles.body} >
         {RenderEmailForm()}
       </View>
     </View>

@@ -1,12 +1,12 @@
-import {IconQuestion} from '@assets';
-import {AppButton, AppText, Header, AppPhoneNumber} from '@component';
-import {useNavigation} from '@react-navigation/core';
-import {VERIFY_CODE} from '@routeName';
-import {scaleWidth} from '@util';
-import React, {useState} from 'react';
-import {Alert, Pressable, TouchableOpacity, View} from 'react-native';
-import {styles} from './style';
-import {VerifyAccountProps} from '@interfaces';
+import { IconQuestion } from '@assets';
+import { AppButton, AppText, Header, AppPhoneNumber } from '@component';
+import { useNavigation } from '@react-navigation/core';
+import { VERIFY_CODE } from '@routeName';
+import { scaleWidth } from '@util';
+import React, { useState } from 'react';
+import { Alert, Pressable, TouchableOpacity, View } from 'react-native';
+import { styles } from './style';
+import { VerifyAccountProps } from '@interfaces';
 
 interface screenNavigationProp {
   navigate: any;
@@ -48,7 +48,7 @@ const VerifyAccount = (props: VerifyAccountProps) => {
           </AppText>
         </Pressable>
 
-        <View style={{height: scaleWidth(170)}}>
+        <View style={{ height: scaleWidth(170) }}>
           {isShowRules ? (
             <View>
               <AppText style={styles.miniTxt}>
@@ -74,14 +74,12 @@ const VerifyAccount = (props: VerifyAccountProps) => {
           title={'Skip for now'}
           typeButton={'underline'}
           customStyleTitle={styles.skipTxt}
-          // onPress={moveToVerifyCode}
+        // onPress={moveToVerifyCode}
         />
-        {/* <View style={styles.skip}>
-          <AppText style={styles.skipTxt}>{'Skip for now'}</AppText>
-        </View> */}
+
       </View>
     </View>
   );
 };
 
-export {VerifyAccount};
+export { VerifyAccount };
