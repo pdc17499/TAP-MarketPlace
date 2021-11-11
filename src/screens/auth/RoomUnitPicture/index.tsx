@@ -39,6 +39,8 @@ const RoomUnitPicture = () => {
       multiple: true,
       cropping: isPhoto,
       mediaType: mediaType,
+      compressImageQuality: 0.6,
+      compressVideoPreset: 0.6,
     }).then((images: any) => {
       // images.forEach((image: ImageOrVideo) => {
       //   if (image.size > FILE_SIZE.MAX_IMAGE) {
@@ -54,6 +56,8 @@ const RoomUnitPicture = () => {
     ImagePicker.openCamera({
       cropping: mediaType === 'photo',
       mediaType,
+      compressImageQuality: 0.6,
+      compressVideoPreset: 0.6,
     }).then((image: any) => {
       const nFiles: any = [...files];
       nFiles.push(image);

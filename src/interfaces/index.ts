@@ -42,7 +42,7 @@ export interface IAppInput {
   numberOfLines?: number;
   error?: string;
   showEye?: boolean;
-  onValueChange?: (e: any, name?: string) => void;
+  onValueChange?: (value: any, name?: string) => void;
   keyboardType?: any;
   editable?: boolean;
   iconLeft?: 'map' | 'key' | 'email' | 'dolar' | 'floor_size' | 'other';

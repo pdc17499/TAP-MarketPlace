@@ -11,6 +11,7 @@ import {VerifyAccount} from './auth/VerifyAccount';
 import {VerifyCode} from './auth/VerifyCode';
 import {RoomUnitPicture} from './auth/RoomUnitPicture';
 import {UserInformationGender} from './auth/UserInformationGender';
+import {UserInformationCountry} from './auth/UserInformationCountry';
 import {LifeStyle} from './auth/LifeStyle';
 import {LifeStyleStep} from './auth/LifeStyleStep';
 
@@ -27,6 +28,7 @@ export {
   VerifyCode,
   RoomUnitPicture,
   UserInformationGender,
+  UserInformationCountry,
   LifeStyle,
   LifeStyleStep,
 };

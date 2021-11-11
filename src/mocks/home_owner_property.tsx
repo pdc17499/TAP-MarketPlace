@@ -311,4 +311,72 @@ export const ROOM_UNIT_HOWNER = {
       value: 'Vegeterian',
     },
   ],
+  occupation: [
+    {
+      value: 1,
+      label: 'Teacher',
+    },
+    {
+      value: 2,
+      label: 'Doctor',
+    },
+    {
+      value: 3,
+      label: 'Programer',
+    },
+    {
+      value: 4,
+      label: 'Student',
+    },
+    {
+      value: 5,
+      label: 'Shipper',
+    },
+    {
+      value: 6,
+      label: 'Singer',
+    },
+    {
+      value: 7,
+      label: 'Model',
+    },
+    {
+      value: 8,
+      label: 'Lawyer',
+    },
+  ],
+  ethnicity: [
+    {
+      value: 1,
+      label: 'Asia',
+    },
+    {
+      value: 2,
+      label: 'Africa',
+    },
+    {
+      value: 3,
+      label: 'Europe',
+    },
+    {
+      value: 4,
+      label: 'China',
+    },
+    {
+      value: 5,
+      label: 'North America',
+    },
+    {
+      value: 6,
+      label: 'South America',
+    },
+    {
+      value: 7,
+      label: 'Oceania',
+    },
+    {
+      value: 8,
+      label: 'Antarctica',
+    },
+  ],
 };

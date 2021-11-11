@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+import {NavigationContainer} from '@react-navigation/native';
+import {createStackNavigator} from '@react-navigation/stack';
 import {
   CHOOSE_ROLE,
   ROOM_UNIT_HOMEOWNER,
@@ -16,6 +16,7 @@ import {
   USER_INFORMATION_GENDER,
   LIFE_STYLE,
   LIFE_STYLE_STEP,
+  USER_INFORMATION_COUNTRY,
 } from './routeName';
 import {
   ChooseRole,
@@ -32,8 +33,9 @@ import {
   UserInformationGender,
   LifeStyle,
   LifeStyleStep,
+  UserInformationCountry,
 } from '../screens';
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
 
 const Stack = createStackNavigator();
 const screenOptions = {
@@ -45,7 +47,7 @@ const UnAuthenStack = () => {
   return (
     <Stack.Navigator
       screenOptions={screenOptions}
-      initialRouteName={VERIFY_ACCOUNT}>
+      initialRouteName={USER_INFORMATION_GENDER}>
       <Stack.Screen name={CHOOSE_ROLE} component={ChooseRole} />
       <Stack.Screen name={ROOM_UNIT_HOMEOWNER} component={RoomUnitHomeowner} />
       <Stack.Screen name={ROOM_UNIT_PICTURE} component={RoomUnitPicture} />
@@ -60,6 +62,10 @@ const UnAuthenStack = () => {
       <Stack.Screen
         name={USER_INFORMATION_GENDER}
         component={UserInformationGender}
+      />
+      <Stack.Screen
+        name={USER_INFORMATION_COUNTRY}
+        component={UserInformationCountry}
       />
       <Stack.Screen name={LIFE_STYLE} component={LifeStyle} />
       <Stack.Screen name={LIFE_STYLE_STEP} component={LifeStyleStep} />
@@ -76,7 +82,7 @@ const NavigationApp = React.forwardRef((props: any, ref: any) => {
     (state: any) => state?.auth?.showIntroScreen,
   );
   let token = useSelector((state: any) => state?.auth?.token);
-  console.log({ token });
+  console.log({token});
 
   const renderScreenSigned = () => {
     return <Stack.Screen name={SIGNIN} component={SignIn} />;

@@ -1,5 +1,13 @@
-import { colors, fontFamily, height, scaleHeight, scaleSize, scaleWidth, SIZE } from '@util';
-import { StyleSheet } from 'react-native';
+import {
+  colors,
+  fontFamily,
+  height,
+  scaleHeight,
+  scaleSize,
+  scaleWidth,
+  SIZE,
+} from '@util';
+import {StyleSheet} from 'react-native';
 
 const styles = StyleSheet.create({
   container: {
@@ -10,7 +18,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: SIZE.padding,
     flex: 1,
     height: '100%',
-
   },
   title: {
     fontSize: SIZE.medium_size,
@@ -27,25 +34,23 @@ const styles = StyleSheet.create({
 
   input: {
     paddingHorizontal: SIZE.padding,
-
-
   },
 
   button: {
     width: '100%',
-    bottom: SIZE.medium_space
+    bottom: SIZE.medium_space,
   },
   logo: {
     width: scaleWidth(45),
     height: scaleWidth(49),
     marginTop: scaleWidth(20),
-    marginBottom: scaleWidth(26)
+    marginBottom: scaleWidth(26),
   },
   youTxt: {
     fontSize: SIZE.medium_size,
     ...fontFamily.fontCampWeight600,
-    color: colors.textPrimary
-  }
+    color: colors.textPrimary,
+  },
 });
 
-export { styles };
+export {styles};

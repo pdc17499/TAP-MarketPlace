@@ -1,24 +1,24 @@
-import {AppButton, AppInput, AppQA, AppText, Header} from '@component';
+import {AppButton, AppPicker, AppText, Header} from '@component';
 import {useNavigation} from '@react-navigation/core';
-import {scaleHeight, validateForm} from '@util';
+import {validateForm, YEARS} from '@util';
 import {Formik} from 'formik';
-import React, {useState} from 'react';
+import React from 'react';
 import {View, ScrollView} from 'react-native';
 import {styles} from './style';
 import * as yup from 'yup';
-import {TENANT_PROPERTY} from '@mocks';
+import {ROOM_UNIT_HOWNER} from '@mocks';
 import {useDispatch, useSelector} from 'react-redux';
 import {setDataSignup} from '@redux';
-import {LIFE_STYLE, USER_INFORMATION_COUNTRY} from '@routeName';
-import {DataSignupProps} from '@interfaces';
+import {LIFE_STYLE} from '@routeName';
+import {DataSignupProps, mockProps} from '@interfaces';
 interface screenNavigationProp {
   navigate: any;
 }
 
-const UserInformationGender = () => {
+const UserInformationCountry = () => {
   const navigation = useNavigation<screenNavigationProp>();
   const dispatch = useDispatch();
-  const list = TENANT_PROPERTY;
+  const list = ROOM_UNIT_HOWNER;
   const dataSignUp: DataSignupProps = useSelector(
     (state: any) => state?.auth?.dataSignup,
   );
@@ -27,17 +27,27 @@ const UserInformationGender = () => {
   };
 
   const formInitialValues = {
-    gender: dataSignUp?.gender?.id,
-    age_group: dataSignUp?.age_group?.id,
+    country: dataSignUp?.country?.value,
+    occupation: dataSignUp?.occupation?.value,
+    ethnicity: dataSignUp?.ethnicity?.value,
   };
 
   const validationForm = yup.object().shape({
-    gender: validateForm().common.selectAtLeast,
-    age_group: validateForm().common.selectAtLeast,
+    country: validateForm().common.selectAtLeast,
+    occupation: validateForm().common.selectAtLeast,
+    ethnicity: validateForm().common.selectAtLeast,
   });
 
+  const onChangeText = (item: mockProps, name?: string) => {
+    if (name) {
+      const nData: any = {...dataSignUp};
+      nData[name] = item;
+      setData(nData);
+    }
+  };
+
   const onContinue = () => {
-    navigation.navigate(USER_INFORMATION_COUNTRY);
+    navigation.navigate(LIFE_STYLE);
   };
 
   const onSkip = (props: any) => {
@@ -46,7 +56,7 @@ const UserInformationGender = () => {
     nData.age_group = {};
     setData(nData);
     props.setErrors({});
-    navigation.navigate(USER_INFORMATION_COUNTRY);
+    navigation.navigate(LIFE_STYLE);
   };
 
   const RenderForm = () => (
@@ -56,28 +66,33 @@ const UserInformationGender = () => {
       validateOnChange={false}
       onSubmit={onContinue}>
       {(props: any) => (
-        <View style={{flex: 1, paddingBottom: 48}}>
+        <>
           <View style={{flex: 1}}>
-            <AppQA
-              data={list.gender}
-              title={'How would you describe your gender?'}
-              value={dataSignUp}
-              setValue={setData}
-              name={'gender'}
-              typeList={'row'}
-              typeTitle={'base'}
-              error={props.errors.gender}
+            <AppPicker
+              value={dataSignUp?.country}
+              name={'country'}
+              label={'Where do you come from?'}
+              onValueChange={onChangeText}
+              items={YEARS()}
+              error={props.errors.country}
             />
 
-            <AppQA
-              data={list.group_age}
-              title={'What is your age group?'}
-              value={dataSignUp}
-              setValue={setData}
-              name={'age_group'}
-              typeList={'even'}
-              typeTitle={'base'}
-              error={props.errors.age_group}
+            <AppPicker
+              value={dataSignUp?.occupation}
+              name={'occupation'}
+              label={'What is your occupation?'}
+              onValueChange={onChangeText}
+              items={list.occupation}
+              error={props.errors.occupation}
+            />
+
+            <AppPicker
+              value={dataSignUp?.ethnicity}
+              name={'ethnicity'}
+              label={'How do you describe your ethnicity?'}
+              onValueChange={onChangeText}
+              items={list.ethnicity}
+              error={props.errors.ethnicity}
             />
           </View>
           <AppButton
@@ -88,12 +103,12 @@ const UserInformationGender = () => {
             onPress={props.handleSubmit}
           />
           <AppButton
-            customStyleButton={styles.button}
+            customStyleButton={styles.skip}
             title={'Skip'}
             typeButton={'underline'}
             onPress={() => onSkip(props)}
           />
-        </View>
+        </>
       )}
     </Formik>
   );
@@ -113,4 +128,4 @@ const UserInformationGender = () => {
   );
 };
 
-export {UserInformationGender};
+export {UserInformationCountry};

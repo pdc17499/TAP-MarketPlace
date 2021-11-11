@@ -1,6 +1,6 @@
 import {AppButton, AppText} from '@component';
 import {AppQAProps, mockProps} from '@interfaces';
-import {colors, DEVICE, fontFamily, scaleWidth, SIZE} from '@util';
+import {colors, DEVICE, fontFamily, scaleSize, scaleWidth, SIZE} from '@util';
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
 
@@ -144,6 +144,7 @@ const styles = StyleSheet.create({
   error: {
     marginTop: SIZE.base_space,
     color: colors.red,
+    fontSize: scaleSize(15),
   },
 });
 
