@@ -22,4 +22,14 @@ const FILE_SIZE = {
   MAX_IMAGE: 1048576,
 };
 
-export {DEVICE, SLIDER, FILE_SIZE};
+const DEFAULT_COUNTRY = {
+  callingCode: ['65'],
+  cca2: 'SG',
+  currency: ['SGD'],
+  flag: 'flag-sg',
+  name: 'Singapore',
+  region: 'Asia',
+  subregion: 'South-Eastern Asia',
+};
+
+export {DEVICE, SLIDER, FILE_SIZE, DEFAULT_COUNTRY};

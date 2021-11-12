@@ -4,6 +4,7 @@ import React from 'react';
 import {View} from 'react-native';
 import {styles} from './style';
 import {LIFE_STYLE_STEP, SIGNUP} from '@routeName';
+import {colors} from '@util';
 
 interface screenNavigationProp {
   navigate: any;
@@ -22,7 +23,7 @@ const LifeStyle = (props: any) => {
 
   return (
     <View style={styles.container}>
-      <Header back />
+      <Header back customContainer={{backgroundColor: colors.bgSreen}} />
       <View style={styles.body}>
         <AppText style={styles.title}>{'About you'}</AppText>
         <AppText style={styles.message}>{'Lifestyle & Preferences'}</AppText>

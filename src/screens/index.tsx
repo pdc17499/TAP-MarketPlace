@@ -14,6 +14,8 @@ import { UserInformationGender } from './auth/UserInformationGender';
 import { UserInformationCountry } from './auth/UserInformationCountry';
 import { LifeStyle } from './auth/LifeStyle';
 import { LifeStyleStep } from './auth/LifeStyleStep';
+
+//Authenticate
 import { Home } from './home_owner/Home';
 
 
@@ -25,7 +27,7 @@ export {
   ResetPassword,
   SignUp,
   SignUpEmail,
-  SignUpProperty,
+  UserInformationName,
   VerifyAccount,
   VerifyCode,
   RoomUnitPicture,

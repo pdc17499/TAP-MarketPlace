@@ -1,6 +1,6 @@
 import {AppButton, AppInput, AppQA, AppText, Header} from '@component';
 import {useNavigation} from '@react-navigation/core';
-import {scaleHeight, validateForm} from '@util';
+import {scaleHeight, SIZE, validateForm} from '@util';
 import {Formik} from 'formik';
 import React, {useState} from 'react';
 import {View, ScrollView} from 'react-native';
@@ -27,8 +27,9 @@ const UserInformationGender = () => {
   };
 
   const formInitialValues = {
-    gender: dataSignUp?.gender?.id,
-    age_group: dataSignUp?.age_group?.id,
+    gender: dataSignUp?.gender?.value,
+    age_group: dataSignUp?.age_group?.value,
+    staying_with_guests: dataSignUp?.staying_with_guests?.id,
   };
 
   const validationForm = yup.object().shape({
@@ -49,14 +50,17 @@ const UserInformationGender = () => {
     navigation.navigate(USER_INFORMATION_COUNTRY);
   };
 
+  console.log({dataSignUp});
+
   const RenderForm = () => (
     <Formik
       initialValues={formInitialValues}
       validationSchema={validationForm}
       validateOnChange={false}
+      enableReinitialize
       onSubmit={onContinue}>
       {(props: any) => (
-        <View style={{flex: 1, paddingBottom: 48}}>
+        <View style={{flex: 1, paddingBottom: SIZE.medium_space}}>
           <View style={{flex: 1}}>
             <AppQA
               data={list.gender}
@@ -87,12 +91,14 @@ const UserInformationGender = () => {
             iconRight={'arNext'}
             onPress={props.handleSubmit}
           />
-          <AppButton
-            customStyleButton={styles.button}
-            title={'Skip'}
-            typeButton={'underline'}
-            onPress={() => onSkip(props)}
-          />
+          {props.values.staying_with_guests === 1 && (
+            <AppButton
+              customStyleButton={styles.button}
+              title={'Skip'}
+              typeButton={'underline'}
+              onPress={() => onSkip(props)}
+            />
+          )}
         </View>
       )}
     </Formik>

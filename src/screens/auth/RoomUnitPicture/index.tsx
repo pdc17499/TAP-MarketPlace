@@ -18,7 +18,7 @@ import {useActionSheet} from '@expo/react-native-action-sheet';
 import Video from 'react-native-video';
 import {bg_room_unit_picture} from '@assets';
 import {NavigationUtils} from '@navigation';
-import {SIGNUP_PROPERTY} from '@routeName';
+import {USER_INFORMATION_NAME} from '@routeName';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 
 const RoomUnitPicture = () => {
@@ -111,7 +111,7 @@ const RoomUnitPicture = () => {
   };
 
   const onDone = () => {
-    NavigationUtils.navigate(SIGNUP_PROPERTY);
+    NavigationUtils.navigate(USER_INFORMATION_NAME);
   };
 
   const addFile = (mediaType: any) => {

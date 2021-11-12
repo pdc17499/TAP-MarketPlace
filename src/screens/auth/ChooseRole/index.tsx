@@ -1,11 +1,13 @@
 import {list_place, rent_place} from '@assets';
 import {AppButton, AppText, Header} from '@component';
+import {DataSignupProps} from '@interfaces';
 import {useNavigation} from '@react-navigation/core';
+import {setDataSignup} from '@redux';
 import {ROOM_UNIT_HOMEOWNER} from '@routeName';
-import {colors, fontFamily, scaleWidth, SIZE} from '@util';
-import React, {useState} from 'react';
-import {View, TouchableOpacity, Image} from 'react-native';
-import {useDispatch} from 'react-redux';
+import {fontFamily, SIZE} from '@util';
+import React from 'react';
+import {View} from 'react-native';
+import {useDispatch, useSelector} from 'react-redux';
 import {styles} from './style';
 
 interface screenNavigationProp {
@@ -14,8 +16,17 @@ interface screenNavigationProp {
 
 const ChooseRole = (props: any) => {
   const navigation = useNavigation<screenNavigationProp>();
-  const dispath = useDispatch();
-  const [role, setRole] = useState(0);
+  const dispatch = useDispatch();
+  const dataSignUp: DataSignupProps = useSelector(
+    (state: any) => state?.auth?.dataSignup,
+  );
+  const setData = (value: any) => {
+    const nData: any = {...dataSignUp};
+    nData['role_user'] = value;
+    dispatch(setDataSignup({data: nData}));
+  };
+
+  const role = dataSignUp?.role_user || '';
 
   const onNext = () => {
     navigation.navigate(ROOM_UNIT_HOMEOWNER);
@@ -43,8 +54,8 @@ const ChooseRole = (props: any) => {
               image={list_place}
               imageStyle={styles.imageStyle}
               customStyleButton={styles.buttonLeft}
-              isActive={role === 1 || role === 2}
-              onPress={() => setRole(1)}
+              isActive={role === 'Homeowner' || role === 'Agent'}
+              onPress={() => setData('Homeowner')}
             />
             <AppButton
               title={'Rent a place'}
@@ -52,11 +63,11 @@ const ChooseRole = (props: any) => {
               image={rent_place}
               imageStyle={styles.imageStyle}
               customStyleButton={styles.buttonRight}
-              isActive={role === 3}
-              onPress={() => setRole(3)}
+              isActive={role === 'Tenant'}
+              onPress={() => setData('Tenant')}
             />
           </View>
-          {role === 1 || role === 2 ? (
+          {role === 'Homeowner' || role === 'Agent' ? (
             <>
               <AppText style={styles.title}>{'I’m a ...'}</AppText>
               <View style={styles.row}>
@@ -64,15 +75,15 @@ const ChooseRole = (props: any) => {
                   title={'Agent'}
                   typeButton={'linear'}
                   containerStyle={styles.btnAgent}
-                  isActive={role === 2}
-                  onPress={() => setRole(2)}
+                  isActive={role === 'Agent'}
+                  onPress={() => setData('Agent')}
                 />
                 <AppButton
                   title={'Homeowner'}
                   typeButton={'linear'}
                   containerStyle={styles.btnHomeOwner}
-                  isActive={role === 1}
-                  onPress={() => setRole(1)}
+                  isActive={role === 'Homeowner'}
+                  onPress={() => setData('Homeowner')}
                 />
               </View>
             </>
@@ -80,12 +91,14 @@ const ChooseRole = (props: any) => {
             <View />
           )}
         </View>
-        <AppButton
-          title={'Continue'}
-          customStyleButton={{marginBottom: SIZE.medium_space}}
-          iconRight={'arNext'}
-          onPress={onNext}
-        />
+        {dataSignUp?.role_user !== '' && (
+          <AppButton
+            title={'Continue'}
+            customStyleButton={{marginBottom: SIZE.medium_space}}
+            iconRight={'arNext'}
+            onPress={onNext}
+          />
+        )}
       </View>
     </View>
   );

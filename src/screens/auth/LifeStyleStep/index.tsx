@@ -7,6 +7,7 @@ import {View} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {DietChoice} from './step/DietChoices';
 import {Pets} from './step/Pets';
+import {Religion} from './step/Religion';
 import {Smoking} from './step/Smoking';
 import {YourPlace} from './step/YourPlace';
 import {styles} from './style';
@@ -16,13 +17,12 @@ interface screenNavigationProp {
 }
 
 const LifeStyleStep = (props: any) => {
-  const navigation = useNavigation<screenNavigationProp>();
-  const dispatch = useDispatch();
   const refSwiper = useRef() as MutableRefObject<RefAppSwiper>;
   const yourPlaceRef = useRef<any>();
   const petsRef = useRef<any>();
   const smokingRef = useRef<any>();
   const dietRef = useRef<any>();
+  const religionRef = useRef<any>();
   const onNext = () => {
     refSwiper.current.onNextButton();
   };
@@ -46,6 +46,7 @@ const LifeStyleStep = (props: any) => {
         <Pets onNext={onNext} ref={petsRef} />
         <Smoking onNext={onNext} ref={smokingRef} />
         <DietChoice onNext={onNext} ref={dietRef} />
+        <Religion onNext={onNext} ref={religionRef} />
       </AppSwiper>
     </View>
   );

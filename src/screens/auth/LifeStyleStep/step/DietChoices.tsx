@@ -11,15 +11,12 @@ import {useDispatch, useSelector} from 'react-redux';
 
 const DietChoice = forwardRef((props: RoomStepProps, ref) => {
   const navigation: any = useNavigation();
+  const {onNext} = props;
   const dispatch = useDispatch();
   const list = ROOM_UNIT_HOWNER;
   const dataSignUp = useSelector((state: any) => state?.auth?.dataSignup);
   const setData = (data: any) => {
     dispatch(setDataSignup({data}));
-  };
-
-  const onPress = () => {
-    navigation.navigate(SIGNUP);
   };
 
   useImperativeHandle(ref, () => ({
@@ -42,10 +39,11 @@ const DietChoice = forwardRef((props: RoomStepProps, ref) => {
         typeList={'column'}
         name={'diet_choice'}
         customStyleTitle={{textAlign: 'center'}}
+        isMultiChoice
       />
       <AppButton
-        title={'Continue'}
-        onPress={onPress}
+        title={'Next'}
+        onPress={onNext}
         iconRight={'arNext'}
         customStyleButton={{backgroundColor: colors.bgSreen}}
         customStyleTitle={{color: colors.primary}}

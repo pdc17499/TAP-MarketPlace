@@ -1,9 +1,10 @@
 import {background, CaretRight, logo} from '@assets';
 import {AppButton, AppText} from '@component';
 import {useNavigation} from '@react-navigation/core';
+import {resetDataSignup} from '@redux';
 import {CHOOSE_ROLE, SIGNIN} from '@routeName';
 import {colors, fontFamily, scaleWidth} from '@util';
-import React from 'react';
+import React, {useEffect} from 'react';
 import {View, Image, TouchableOpacity} from 'react-native';
 import {useDispatch} from 'react-redux';
 import {styles} from './style';
@@ -17,6 +18,11 @@ interface screenNavigationProp {
 const Welcome = React.memo((props: WelcomeProp) => {
   const navigation = useNavigation<screenNavigationProp>();
   const dispath = useDispatch();
+
+  useEffect(() => {
+    // dispath(resetDataSignup());
+  }, []);
+
   const moveToSignIn = () => {
     navigation.navigate(SIGNIN);
   };

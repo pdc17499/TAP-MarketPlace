@@ -49,6 +49,24 @@ export const ROOM_UNIT_HOWNER = {
       value: '36 months',
     },
   ],
+  lease_your_place_hdb: [
+    {
+      id: 1,
+      value: '6 months',
+    },
+    {
+      id: 2,
+      value: '9 months',
+    },
+    {
+      id: 3,
+      value: '12 months',
+    },
+    {
+      id: 4,
+      value: '36 months',
+    },
+  ],
   staying_width_guests: [
     {
       id: 1,
@@ -377,6 +395,52 @@ export const ROOM_UNIT_HOWNER = {
     {
       value: 8,
       label: 'Antarctica',
+    },
+  ],
+  religions: [
+    {
+      value: 1,
+      label: 'Christianity',
+    },
+    {
+      value: 2,
+      label: 'Islam',
+    },
+    {
+      value: 3,
+      label: 'Secular/Nonreligious/Agnostic/Atheist',
+    },
+    {
+      value: 4,
+      label: 'Buddhism',
+    },
+    {
+      value: 5,
+      label: 'Chinese traditional religion',
+    },
+    {
+      value: 6,
+      label: 'Ethnic religions',
+    },
+    {
+      value: 7,
+      label: 'African traditional religions',
+    },
+    {
+      value: 8,
+      label: 'Sikhism',
+    },
+    {
+      value: 9,
+      label: 'Spiritism',
+    },
+    {
+      value: 10,
+      label: 'Judaism',
+    },
+    {
+      value: 11,
+      label: 'Baháʼí',
     },
   ],
 };

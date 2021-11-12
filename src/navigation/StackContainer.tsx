@@ -9,7 +9,7 @@ import {
   SIGNIN,
   SIGNUP,
   SIGNUP_EMAIL,
-  SIGNUP_PROPERTY,
+  USER_INFORMATION_NAME,
   VERIFY_ACCOUNT,
   VERIFY_CODE,
   ROOM_UNIT_PICTURE,
@@ -27,7 +27,7 @@ import {
   ResetPassword,
   SignUp,
   SignUpEmail,
-  SignUpProperty,
+  UserInformationName,
   VerifyAccount,
   VerifyCode,
   RoomUnitPicture,
@@ -47,9 +47,7 @@ const screenOptions = {
 // unauthenticate stack screens
 const UnAuthenStack = () => {
   return (
-    <Stack.Navigator
-      screenOptions={screenOptions}
-      initialRouteName={WELCOME}>
+    <Stack.Navigator screenOptions={screenOptions} initialRouteName={WELCOME}>
       <Stack.Screen name={CHOOSE_ROLE} component={ChooseRole} />
       <Stack.Screen name={ROOM_UNIT_HOMEOWNER} component={RoomUnitHomeowner} />
       <Stack.Screen name={ROOM_UNIT_PICTURE} component={RoomUnitPicture} />
@@ -58,7 +56,10 @@ const UnAuthenStack = () => {
       <Stack.Screen name={RESETPASSWORD} component={ResetPassword} />
       <Stack.Screen name={SIGNUP} component={SignUp} />
       <Stack.Screen name={SIGNUP_EMAIL} component={SignUpEmail} />
-      <Stack.Screen name={SIGNUP_PROPERTY} component={SignUpProperty} />
+      <Stack.Screen
+        name={USER_INFORMATION_NAME}
+        component={UserInformationName}
+      />
       <Stack.Screen name={VERIFY_ACCOUNT} component={VerifyAccount} />
       <Stack.Screen name={VERIFY_CODE} component={VerifyCode} />
 

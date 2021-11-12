@@ -70,7 +70,7 @@ const StepRoomDetailFirst = (props: RoomStepProps) => {
               <AppText style={styles.titleHeading}>{'Room details'}</AppText>
               <AppQA
                 data={list.room_type}
-                title={'Room type'}
+                title={'I want to rent out'}
                 value={dataSignUp}
                 setValue={setData}
                 typeList={'even'}

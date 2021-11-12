@@ -1,5 +1,5 @@
-import { colors, fontFamily, scaleHeight, scaleWidth, SIZE } from '@util';
-import { StyleSheet } from 'react-native';
+import {colors, fontFamily, scaleHeight, scaleWidth, SIZE} from '@util';
+import {StyleSheet} from 'react-native';
 
 const styles = StyleSheet.create({
   container: {
@@ -12,21 +12,21 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: SIZE.big_size,
-    marginBottom: scaleWidth(30),
-    ...fontFamily.fontCampWeight600
+    ...fontFamily.fontCampWeight600,
+    marginTop: SIZE.padding,
   },
   text: {
     ...fontFamily.fontWeight500,
     marginTop: 20,
     marginBottom: 10,
   },
-
   button: {
-
     marginTop: scaleWidth(100),
-    marginBottom: scaleWidth(200)
+    marginBottom: scaleWidth(200),
   },
-
+  customStyleLabel: {
+    marginTop: SIZE.padding,
+  },
 });
 
-export { styles };
+export {styles};
