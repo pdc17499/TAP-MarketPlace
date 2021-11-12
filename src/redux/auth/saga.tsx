@@ -1,5 +1,5 @@
 import { put, takeLatest } from 'redux-saga/effects';
-import { saveDataUser, removeToken } from './action';
+import { saveDataUser, removeToken, logoutApp } from './action';
 import {
   LOGIN,
   SIGNUP_CLIENT,
@@ -10,14 +10,14 @@ import {
 import {
   GlobalService,
   signUpClient,
-  logOut,
   verifyEmail,
   sendVerifyEmail,
-
   loginApi,
+  logOutApi,
 } from '@services';
 // import {VERTIFIEMAIL, VERIFYCODE} from '@routeName';
 import { showMessage } from 'react-native-flash-message';
+
 
 
 export interface ResponseGenerator {
@@ -59,11 +59,13 @@ export function* signUpClientSaga(action: any) {
   }
 }
 
-export function* logout() {
+export function* logoutSaga() {
+  console.log('h2');
+
   try {
     GlobalService.showLoading();
-    const result: ResponseGenerator = yield logOut();
-    yield put(removeToken());
+    const result: ResponseGenerator = yield logOutApi();
+    yield put(logoutApp());
   } catch (error) {
   } finally {
     GlobalService.hideLoading();
@@ -97,7 +99,7 @@ export function* sendVerifyEmailSaga() {
 export function* authSaga() {
   yield takeLatest(LOGIN, loginSaga);
   yield takeLatest(SIGNUP_CLIENT, signUpClientSaga);
-  yield takeLatest(LOGOUT, logout);
+  yield takeLatest(LOGOUT, logoutSaga);
   yield takeLatest(VERIFY_EMAIL, verifyEmailSaga);
   yield takeLatest(SEND_VERIFY_EMAIL, sendVerifyEmailSaga);
 }

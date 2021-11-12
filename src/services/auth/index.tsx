@@ -17,7 +17,7 @@ export const signUpClient: any = async (data: any) => {
   return response;
 };
 
-export const logOut: any = async () => {
+export const logOutApi: any = async () => {
   const response = await api.get(LOGOUT);
   return response;
 };

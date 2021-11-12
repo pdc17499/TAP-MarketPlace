@@ -10,6 +10,7 @@ import { useDispatch } from 'react-redux';
 import { styles } from './style';
 import * as yup from 'yup';
 import NavigationApp from 'src/navigation/StackContainer';
+import { logoutApp } from '@redux';
 
 
 interface HomeProp { }
@@ -19,12 +20,18 @@ interface screenNavigationProp {
 }
 
 const Home = React.memo((props: HomeProp) => {
+    const dispath = useDispatch();
+    const logOut = () => {
+        dispath(logoutApp())
+
+    }
 
     return (
         <View style={styles.container}>
 
             <AppText style={styles.title}>{'Home Screen'}</AppText>
 
+            <AppButton title={'Log out'} size={'small'} onPress={logOut} />
 
         </View>
     );

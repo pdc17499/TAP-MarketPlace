@@ -17,6 +17,10 @@ export const loginApp = (payload: any) => ({
   payload,
 });
 
+export const logoutApp = () => ({
+  type: LOGOUT,
+});
+
 export const hideIntroScreen = (payload: any) => ({
   type: HIDE_INTRO_SCREEN,
   payload,
@@ -32,9 +36,7 @@ export const signUpClient = (payload: any) => ({
   payload,
 });
 
-export const logoutApp = () => ({
-  type: LOGOUT,
-});
+
 
 export const removeToken = () => ({
   type: REMOVE_TOKEN,
