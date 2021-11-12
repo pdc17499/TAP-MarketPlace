@@ -1,14 +1,16 @@
 import {
   SAVE_DATA_USER,
   HIDE_INTRO_SCREEN,
-  REMOVE_TOKEN,
   UPDATE_USER_INFOR,
   SET_DATA_SIGNUP,
   LOGIN,
-  LOGOUT
+  LOGOUT,
+  VERIFY_EMAIL,
+  RESET_DATA_SIGNUP,
 } from './type';
-import {INITIAL_STATE_AUTH} from './state';
-import {INITIAL_STATE_DATA_SIGN_UP, RESET_DATA_SIGNUP} from '@redux';
+import { INITIAL_STATE_AUTH } from './state';
+import { INITIAL_STATE_DATA_SIGN_UP } from '@redux';
+
 
 export default function dataSave(state = INITIAL_STATE_AUTH, action: any) {
   switch (action.type) {
@@ -45,6 +47,7 @@ export default function dataSave(state = INITIAL_STATE_AUTH, action: any) {
         ...state,
         dataSignup: INITIAL_STATE_DATA_SIGN_UP,
       };
+
     default:
       return state;
   }

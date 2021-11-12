@@ -1,19 +1,19 @@
-import {AppButton, AppInput, AppText, Header} from '@component';
-import {useNavigation} from '@react-navigation/core';
-import {scaleHeight, SIZE, validateForm} from '@util';
-import {Formik} from 'formik';
+import { AppButton, AppInput, AppText, Header } from '@component';
+import { useNavigation } from '@react-navigation/core';
+import { scaleHeight, SIZE, validateForm } from '@util';
+import { Formik } from 'formik';
 import React from 'react';
-import {View, ScrollView} from 'react-native';
-import {styles} from './style';
+import { View, ScrollView } from 'react-native';
+import { styles } from './style';
 import * as yup from 'yup';
-import {VERIFY_ACCOUNT} from '@routeName';
-import {useDispatch, useSelector} from 'react-redux';
-import {setDataSignup, signUp} from '@redux';
-import {DataSignupProps, mockProps} from '@interfaces';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import {ImageOrVideo} from 'react-native-image-crop-picker';
+import { VERIFY_ACCOUNT } from '@routeName';
+import { useDispatch, useSelector } from 'react-redux';
+import { setDataSignup, signUp } from '@redux';
+import { DataSignupProps, mockProps } from '@interfaces';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { ImageOrVideo } from 'react-native-image-crop-picker';
 
-interface SignUpEmailProp {}
+interface SignUpEmailProp { }
 
 interface screenNavigationProp {
   navigate: any;
@@ -26,7 +26,7 @@ const SignUpEmail = (props: SignUpEmailProp) => {
     (state: any) => state?.auth?.dataSignup,
   );
   const setData = (data: any) => {
-    dispatch(setDataSignup({data}));
+    dispatch(setDataSignup({ data }));
   };
 
   const formInitialValues = {
@@ -43,7 +43,7 @@ const SignUpEmail = (props: SignUpEmailProp) => {
 
   const onChangeValue = (item: any, name?: string) => {
     if (name) {
-      const nData: any = {...dataSignUp};
+      const nData: any = { ...dataSignUp };
       nData[name] = item;
       setData(nData);
     }
@@ -129,22 +129,22 @@ const SignUpEmail = (props: SignUpEmailProp) => {
       },
     };
 
-    dispatch(signUp({body}));
+    dispatch(signUp({ body }));
     // navigation.navigate(VERIFY_ACCOUNT);
   };
 
   const RenderEmailForm = () => (
-    <KeyboardAwareScrollView style={{flex: 1, paddingHorizontal: SIZE.padding}}>
+
+    <KeyboardAwareScrollView style={{ flex: 1, paddingHorizontal: SIZE.padding }} >
       <Formik
         enableReinitialize
         initialValues={formInitialValues}
         validationSchema={validationEmail}
         validateOnChange={false}
-        enableReinitialize
         onSubmit={hanldeSubmit}>
         {props => (
           <>
-            <View style={{flex: 1}}>
+            <View style={{ flex: 1 }}>
               <AppText style={styles.title}>{'Sign up'}</AppText>
               <AppInput
                 label={'Email'}
@@ -196,7 +196,8 @@ const SignUpEmail = (props: SignUpEmailProp) => {
         )}
       </Formik>
     </KeyboardAwareScrollView>
-  );
+  )
+
 
   return (
     <View style={styles.container}>
@@ -206,4 +207,4 @@ const SignUpEmail = (props: SignUpEmailProp) => {
   );
 };
 
-export {SignUpEmail};
+export { SignUpEmail };

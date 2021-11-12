@@ -18,6 +18,7 @@ import {
   LIFE_STYLE_STEP,
   USER_INFORMATION_COUNTRY,
   HOME,
+  UPDATE_NEW_PASSWORD,
 } from './routeName';
 import {
   ChooseRole,
@@ -36,6 +37,7 @@ import {
   LifeStyleStep,
   UserInformationCountry,
   Home,
+  UpdateNewPassword
 } from '../screens';
 import { useSelector } from 'react-redux';
 
@@ -62,7 +64,7 @@ const UnAuthenStack = () => {
       />
       <Stack.Screen name={VERIFY_ACCOUNT} component={VerifyAccount} />
       <Stack.Screen name={VERIFY_CODE} component={VerifyCode} />
-
+      <Stack.Screen name={UPDATE_NEW_PASSWORD} component={UpdateNewPassword} />
       <Stack.Screen
         name={USER_INFORMATION_GENDER}
         component={UserInformationGender}

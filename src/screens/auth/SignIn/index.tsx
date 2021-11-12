@@ -1,7 +1,7 @@
 import { iconFacebook, iconGoogle, logo } from '@assets';
 import { AppButton, AppInput, AppText } from '@component';
 import { useNavigation } from '@react-navigation/core';
-import { HOME, RESETPASSWORD, SIGNUP } from '@routeName';
+import { CHOOSE_ROLE, HOME, RESETPASSWORD, SIGNUP } from '@routeName';
 import { scaleHeight } from '@util';
 import { Formik } from 'formik';
 import React from 'react';
@@ -49,7 +49,7 @@ const SignIn = React.memo((props: SignInProp) => {
   }
 
   const moveToSignUp = () => {
-    navigation.navigate(SIGNUP)
+    navigation.navigate(CHOOSE_ROLE)
   }
 
   const RenderSignInForm = () => (

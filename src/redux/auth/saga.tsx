@@ -5,21 +5,18 @@ import {
   LOGOUT,
   VERIFY_EMAIL,
   SEND_VERIFY_EMAIL,
-  SIGNUP,
+
 } from './type';
 import {
   GlobalService,
-  signUp,
-  logOut,
-  verifyEmail,
+
   sendVerifyEmail,
   loginApi,
   logOutApi,
 } from '@services';
 // import {VERTIFIEMAIL, VERIFYCODE} from '@routeName';
 import { showMessage } from 'react-native-flash-message';
-
-
+import { SIGNUP } from '@routeName';
 
 export interface ResponseGenerator {
   result?: any;
@@ -39,11 +36,13 @@ export function* loginSaga(action: any) {
   }
 }
 
+
 export function* signUpSaga(action: any) {
+
   try {
     GlobalService.showLoading();
-    const {body} = action?.payload;
-    console.log({body});
+    const { body } = action?.payload;
+    console.log({ body });
     // const result: ResponseGenerator = yield signUp(body);
     // yield put(saveDataRedux(result));
     // NavigationUtils.navigate(VERTIFIEMAIL);
@@ -54,7 +53,6 @@ export function* signUpSaga(action: any) {
 }
 
 export function* logoutSaga() {
-  console.log('h2');
 
   try {
     GlobalService.showLoading();
@@ -65,23 +63,10 @@ export function* logoutSaga() {
     GlobalService.hideLoading();
   }
 }
-
-export function* verifyEmailSaga() {
+export function* sendVerifyEmailSaga(action: any) {
   try {
-    GlobalService.showLoading();
-    const result: ResponseGenerator = yield verifyEmail();
-    if (result) {
-      // NavigationUtils.navigate(VERIFYCODE);
-    }
-    // yield put(updateUserInfor(result));
-  } catch (error) {
-  } finally {
-    GlobalService.hideLoading();
-  }
-}
-export function* sendVerifyEmailSaga() {
-  try {
-    const result: ResponseGenerator = yield sendVerifyEmail();
+    const result: ResponseGenerator = yield sendVerifyEmail(action.payload);
+    console.log('res', result);
     const { message } = result?.data;
     showMessage({
       message: message,
@@ -94,6 +79,5 @@ export function* authSaga() {
   yield takeLatest(LOGIN, loginSaga);
   yield takeLatest(SIGNUP, signUpSaga);
   yield takeLatest(LOGOUT, logoutSaga);
-  yield takeLatest(VERIFY_EMAIL, verifyEmailSaga);
   yield takeLatest(SEND_VERIFY_EMAIL, sendVerifyEmailSaga);
 }

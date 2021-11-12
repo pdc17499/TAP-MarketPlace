@@ -7,59 +7,66 @@ import { View } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { styles } from './style';
 import * as yup from 'yup';
-import { UPDATE_NEW_PASSWORD } from '@routeName';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-import { sendVerifyEmail } from '@redux';
 
 
-interface ResetPasswordProp { }
+interface UpdateNewPasswordProp { }
 interface screenNavigationProp {
   navigate: any;
 }
 
-const ResetPassword = (props: ResetPasswordProp) => {
+const UpdateNewPassword = (props: UpdateNewPasswordProp) => {
   const navigation = useNavigation<screenNavigationProp>();
   const dispath = useDispatch();
 
   const formInitialValues = {
-    email: '',
+    new_password: '',
+    confirm_password: '',
     error: '',
   };
 
   const validationResetPassword = yup.object().shape({
-    email: yup
+    new_password: yup
       .string()
       .required('This field is required')
-      .email('Email is not valid'),
+      .min(6, 'Password must be at least 6 characters')
+      .max(32, 'Password may not be greater than 32 characters'),
+    confirm_password: yup
+      .string()
+      .oneOf([yup.ref('new_password'), null], 'Confirm password must match')
   });
 
-  const sendLinkReset = (email: string) => {
-
-    dispath(sendVerifyEmail({ user: { email: email } }))
-    navigation.navigate(UPDATE_NEW_PASSWORD)
-
-  }
-
-  const RenderResetForm = () => (
+  const RenderForm = () => (
     <KeyboardAwareScrollView >
       <Formik
         initialValues={formInitialValues}
         validationSchema={validationResetPassword}
         validateOnChange={false}
-        onSubmit={values => { sendLinkReset(values.email) }}
+        onSubmit={values => { }}
       >
         {props => (
           <View>
             <View style={{ marginBottom: scaleHeight(24) }}>
               <AppInput
-                placeholder={'Email'}
-                iconLeft={'email'}
-                value={props.values.email}
-                onValueChange={props.handleChange('email')}
-                error={props.errors.email}
+                secureTextEntry={true}
+                showEye={true}
+                label={'New password'}
+                iconLeft={'key'}
+                value={props.values.new_password}
+                onValueChange={props.handleChange('new_password')}
+                error={props.errors.new_password}
+              />
+              <AppInput
+                secureTextEntry={true}
+                showEye={true}
+                label={'Confirm new password'}
+                iconLeft={'key'}
+                value={props.values.confirm_password}
+                onValueChange={props.handleChange('confirm_password')}
+                error={props.errors.confirm_password}
               />
             </View>
-            <AppButton title={"Send reset link"} size={'small'} iconRight={'email'} onPress={props.handleSubmit} />
+            <AppButton title={"Reset"} size={'small'} iconRight={'tick'} onPress={props.handleSubmit} />
           </View>
         )}
       </Formik>
@@ -70,22 +77,14 @@ const ResetPassword = (props: ResetPasswordProp) => {
     <View style={styles.container}>
       <Header back />
       <View style={styles.body}>
-
         <AppText
           style={styles.title}>
           {'Reset password'}
         </AppText>
-
-        <AppText
-          style={styles.miniTxt}>
-          {"We'll send the reset password link to your email."}
-        </AppText>
-
-        {RenderResetForm()}
-
+        {RenderForm()}
       </View>
     </View>
   );
 };
 
-export { ResetPassword };
+export { UpdateNewPassword };

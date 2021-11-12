@@ -6,7 +6,7 @@ import { SignIn } from './auth/SignIn';
 import { ResetPassword } from './auth/ResetPassword';
 import { SignUp } from './auth/SignUp';
 import { SignUpEmail } from './auth/SignUpEmail';
-import { SignUpProperty } from './auth/SignUpProperty';
+import { UserInformationName } from './auth/UserInformationName';
 import { VerifyAccount } from './auth/VerifyAccount';
 import { VerifyCode } from './auth/VerifyCode';
 import { RoomUnitPicture } from './auth/RoomUnitPicture';
@@ -17,6 +17,8 @@ import { LifeStyleStep } from './auth/LifeStyleStep';
 
 //Authenticate
 import { Home } from './home_owner/Home';
+import { UpdateNewPassword } from './auth/UpdateNewPassword';
+
 
 
 export {
@@ -35,5 +37,6 @@ export {
   UserInformationCountry,
   LifeStyle,
   LifeStyleStep,
-  Home
+  Home,
+  UpdateNewPassword
 };

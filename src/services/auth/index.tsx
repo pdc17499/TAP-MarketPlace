@@ -22,12 +22,7 @@ export const logOutApi: any = async () => {
   return response;
 };
 
-export const verifyEmail: any = async () => {
-  const response = await api.get(VERIFY_EMAIL);
-  return response;
-};
-
-export const sendVerifyEmail: any = async () => {
-  const response = await api.get(SEND_VERIFY_EMAIL);
+export const sendVerifyEmail: any = async (data: any) => {
+  const response = await api.post(SEND_VERIFY_EMAIL, data);
   return response;
 };

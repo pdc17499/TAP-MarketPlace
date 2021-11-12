@@ -42,13 +42,12 @@ export const removeToken = () => ({
   type: REMOVE_TOKEN,
 });
 
-export const verifyEmail = () => ({
-  type: VERIFY_EMAIL,
+export const sendVerifyEmail = (payload: any) => ({
+  type: SEND_VERIFY_EMAIL,
+  payload,
 });
 
-export const sendVerifyEmail = () => ({
-  type: SEND_VERIFY_EMAIL,
-});
+
 
 export const updateUserInfor = (payload: any) => ({
   type: UPDATE_USER_INFOR,
