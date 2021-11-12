@@ -4,7 +4,8 @@ import {
   REMOVE_TOKEN,
   UPDATE_USER_INFOR,
   SET_DATA_SIGNUP,
-  LOGIN
+  LOGIN,
+  LOGOUT
 } from './type';
 import { INITIAL_STATE_AUTH } from './state';
 
@@ -22,11 +23,11 @@ export default function dataSave(state = INITIAL_STATE_AUTH, action: any) {
         ...state,
         showIntroScreen: action.payload,
       };
-    case REMOVE_TOKEN:
+    case LOGOUT:
       return {
         ...state,
-        user: {},
-        token: '',
+        user: null,
+        token: null,
       };
 
     case UPDATE_USER_INFOR:

@@ -10,7 +10,7 @@ import { useDispatch } from 'react-redux';
 import { styles } from './style';
 import * as yup from 'yup';
 import { loginApp } from '@redux';
-import { values } from 'lodash';
+
 
 interface SignInProp { }
 
@@ -23,9 +23,7 @@ const SignIn = React.memo((props: SignInProp) => {
   const dispath = useDispatch();
 
   const signIn = (email: string, password: string) => {
-
     dispath(loginApp({ email: email, password: password }))
-
   }
 
   const formInitialValues = {
