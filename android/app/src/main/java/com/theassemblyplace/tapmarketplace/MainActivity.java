@@ -1,4 +1,4 @@
-package com.adamo.tap;
+package com.theassemblyplace.tapmarketplace;
 
 import com.facebook.react.ReactActivity;
 

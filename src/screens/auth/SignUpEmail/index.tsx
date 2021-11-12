@@ -73,64 +73,60 @@ const SignUpEmail = (props: SignUpEmailProp) => {
   };
 
   const hanldeSubmit = () => {
-    const body = {
-      idType: 'Homeowner',
-      userInfor: {
-        email: dataSignUp.email,
-        password: dataSignUp.password,
-        name: dataSignUp.user_name,
-        contact: '0399378822',
-        gender: dataSignUp?.gender?.value,
-        ageGroup: dataSignUp?.age_group?.id,
-        nationality: dataSignUp?.country?.name,
-        occupation: dataSignUp?.occupation?.label,
-        ethnicity: dataSignUp?.ethnicity?.label,
-        lifestyle: {
-          Friendliness: getList(dataSignUp?.your_place),
-          Pets: dataSignUp?.have_pet?.value,
-          Smoking: dataSignUp?.smoke?.value,
-          DietRestriction: getList(dataSignUp?.diet_choice),
-          Occupation: 'a',
-          Religion: dataSignUp?.your_religion?.value,
-          Race: 0,
-        },
-      },
-      roomDesc: {
-        RentalAddress: dataSignUp?.location.title,
-        PropertyType: dataSignUp?.kind_place?.value,
-        RoomDetails: {
-          RoomType: dataSignUp?.room_type?.value,
-          BedroomNumber: dataSignUp?.bedroom_number?.value,
-          BathroomNumber: dataSignUp?.bathroom_number?.value,
-          AttachedBathroom: dataSignUp?.attached_room?.id === 1,
-          FloorSize: {
-            Min: dataSignUp?.floor_size_min,
-            Max: dataSignUp?.floor_size_max,
-          },
-          RoomFurnishing: dataSignUp?.room_furnishing?.value,
-          FloorLevel: dataSignUp?.floor_level?.value,
-          allowCook: dataSignUp?.attached_room?.id === 1,
-          builtYear: dataSignUp?.built_year,
-          keyWords: getList(dataSignUp?.key_your_place),
-        },
-        LeasePeriod: {
-          type: false,
-          Min: 9,
-          Max: 12,
-        },
-        PicturesVideo: getUrlFiles(),
-        RentalPrice: {
-          type: dataSignUp?.rental_price?.value,
-          Min: dataSignUp?.min_range_price,
-          Max: dataSignUp?.max_range_price,
-          Price: dataSignUp?.negotiable_price,
-        },
-        PriceFlexibility: dataSignUp?.fixed_price,
-      },
-    };
+    // const body = {
+    //   idType: 'Homeowner',
+    //   userInfor: {
+    //     email: dataSignUp.email,
+    //     password: dataSignUp.password,
+    //     name: dataSignUp.user_name,
+    //     gender: dataSignUp?.gender?.value,
+    //     ageGroup: dataSignUp?.age_group?.id,
+    //     nationality: dataSignUp?.country?.name,
+    //     occupation: dataSignUp?.occupation?.label,
+    //     ethnicity: dataSignUp?.ethnicity?.label,
+    //     lifestyle: {
+    //       Friendliness: getList(dataSignUp?.your_place),
+    //       Pets: dataSignUp?.have_pet?.value,
+    //       Smoking: dataSignUp?.smoke?.value,
+    //       DietRestriction: getList(dataSignUp?.diet_choice),
+    //       Religion: dataSignUp?.your_religion?.value,
+    //     },
+    //   },
+    //   roomDesc: {
+    //     RentalAddress: dataSignUp?.location.title,
+    //     PropertyType: dataSignUp?.kind_place?.value,
+    //     RoomDetails: {
+    //       RoomType: dataSignUp?.room_type?.value,
+    //       BedroomNumber: dataSignUp?.bedroom_number?.value,
+    //       BathroomNumber: dataSignUp?.bathroom_number?.value,
+    //       AttachedBathroom: dataSignUp?.attached_room?.id === 1,
+    //       FloorSize: {
+    //         Min: dataSignUp?.floor_size_min,
+    //         Max: dataSignUp?.floor_size_max,
+    //       },
+    //       RoomFurnishing: dataSignUp?.room_furnishing?.value,
+    //       FloorLevel: dataSignUp?.floor_level?.value,
+    //       allowCook: dataSignUp?.attached_room?.id === 1,
+    //       builtYear: dataSignUp?.built_year,
+    //       keyWords: getList(dataSignUp?.key_your_place),
+    //     },
+    //     LeasePeriod: {
+    //       type: dataSignUp?.staying_with_guests?.id === 1,
+    //       Min: 9,
+    //       Max: 12,
+    //     },
+    //     PicturesVideo: getUrlFiles(),
+    //     RentalPrice: {
+    //       type: dataSignUp?.rental_price?.value,
+    //       Min: dataSignUp?.min_range_price,
+    //       Max: dataSignUp?.max_range_price,
+    //       Price: dataSignUp?.negotiable_price,
+    //     },
+    //   },
+    // };
 
-    dispatch(signUp({ body }));
-    // navigation.navigate(VERIFY_ACCOUNT);
+    // dispatch(signUp({body}));
+    navigation.navigate(VERIFY_ACCOUNT);
   };
 
   const RenderEmailForm = () => (
