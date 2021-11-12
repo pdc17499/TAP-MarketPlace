@@ -37,8 +37,8 @@ const styles = StyleSheet.create({
   },
 
   button: {
-    width: '100%',
-    bottom: SIZE.medium_space,
+    // width: '100%',
+    marginTop: SIZE.big_space * 4,
   },
   logo: {
     width: scaleWidth(45),

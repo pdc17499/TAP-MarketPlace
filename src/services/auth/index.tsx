@@ -3,7 +3,7 @@ import {
   LOGIN_CLIENT,
   LOGOUT,
   SEND_VERIFY_EMAIL,
-  SIGNUP_CLIENT,
+  SIGNUP,
   VERIFY_EMAIL,
 } from './types';
 
@@ -12,8 +12,8 @@ export const loginClient: any = async (data: any) => {
   return response;
 };
 
-export const signUpClient: any = async (data: any) => {
-  const response = await api.post(SIGNUP_CLIENT, data);
+export const signUp: any = async (data: any) => {
+  const response = await api.post(SIGNUP, data);
   return response;
 };
 

@@ -5,11 +5,11 @@ export type AuthState = {
   loading: boolean;
   user: any;
   showIntroScreen: boolean;
-  typeUser: 1 | 2 | 3;
+  typeUser: 'Homeowner' | 'Tenant' | 'Agent';
   dataSignup: DataSignupProps;
 };
 
-const INITIAL_STATE_DATA_SIGN_UP: DataSignupProps = {
+export const INITIAL_STATE_DATA_SIGN_UP: DataSignupProps = {
   location: {
     lat: -1,
     long: -1,
@@ -34,12 +34,20 @@ const INITIAL_STATE_DATA_SIGN_UP: DataSignupProps = {
   allow_cooking: {},
   built_year: moment().format('YYYY').toString(),
   key_your_place: [],
-  role_user: 0,
+  role_user: '',
   list_photo: [],
   user_name: '',
   gender: {},
   age_group: {},
-  country: {},
+  country: {
+    callingCode: ['65'],
+    cca2: 'SG',
+    currency: ['SGD'],
+    flag: 'flag-sg',
+    name: 'Singapore',
+    region: 'Asia',
+    subregion: 'South-Eastern Asia',
+  },
   occupation: {},
   ethnicity: {},
   your_place: [],
@@ -56,6 +64,6 @@ export const INITIAL_STATE_AUTH: AuthState = {
   loading: false,
   user: null,
   showIntroScreen: true,
-  typeUser: 1,
+  typeUser: 'Homeowner',
   dataSignup: INITIAL_STATE_DATA_SIGN_UP,
 };

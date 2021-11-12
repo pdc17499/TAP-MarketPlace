@@ -1,6 +1,6 @@
 import moment from 'moment';
 
-const BASE_URL = 'https://mental-health-api.adamo.tech/api';
+const BASE_URL = 'https://tap-api.adamo.tech/';
 
 export const getBaseURL = () => {
   return BASE_URL;

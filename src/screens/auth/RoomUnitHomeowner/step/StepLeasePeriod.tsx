@@ -1,5 +1,5 @@
 import {AppButton, AppQA} from '@component';
-import {RoomStepProps} from '@interfaces';
+import {DataSignupProps, RoomStepProps} from '@interfaces';
 import {ROOM_UNIT_HOWNER} from '@mocks';
 import {setDataSignup} from '@redux';
 import {fontFamily, scaleWidth, SIZE, validateForm} from '@util';
@@ -13,7 +13,9 @@ const StepLeasePeriod = (props: RoomStepProps) => {
   const {onNext} = props;
   const dispatch = useDispatch();
   const list = ROOM_UNIT_HOWNER;
-  const dataSignUp = useSelector((state: any) => state?.auth?.dataSignup);
+  const dataSignUp: DataSignupProps = useSelector(
+    (state: any) => state?.auth?.dataSignup,
+  );
   const setData = (data: any) => {
     dispatch(setDataSignup({data}));
   };
@@ -21,6 +23,7 @@ const StepLeasePeriod = (props: RoomStepProps) => {
   const formInitialValues = {
     lease_your_place: dataSignUp?.lease_your_place?.id,
     staying_with_guests: dataSignUp?.staying_with_guests?.id,
+    kind_place: dataSignUp?.kind_place?.value,
   };
 
   const validationSchema = yup.object().shape({
@@ -40,7 +43,11 @@ const StepLeasePeriod = (props: RoomStepProps) => {
           <>
             <View style={{flex: 1}}>
               <AppQA
-                data={list.lease_your_place}
+                data={
+                  propsFormik.values.kind_place === 'HDB'
+                    ? list.lease_your_place_hdb
+                    : list.lease_your_place
+                }
                 title={'How long will you want to lease your place?'}
                 value={dataSignUp}
                 setValue={setData}

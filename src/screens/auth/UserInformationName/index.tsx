@@ -2,7 +2,7 @@ import {AppButton, AppInput, AppText, Header} from '@component';
 import {useNavigation} from '@react-navigation/core';
 import {Formik} from 'formik';
 import React from 'react';
-import {View, KeyboardAvoidingView, _ScrollView, Image} from 'react-native';
+import {View, _ScrollView, Image} from 'react-native';
 import {styles} from './style';
 import * as yup from 'yup';
 import {USER_INFORMATION_GENDER} from '@routeName';
@@ -11,12 +11,13 @@ import {useDispatch, useSelector} from 'react-redux';
 import {setDataSignup} from '@redux';
 import {DataSignupProps} from '@interfaces';
 import {validateForm} from '@util';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 interface screenNavigationProp {
   navigate: any;
 }
 
-const SignUpProperty = () => {
+const UserInformationName = () => {
   const navigation = useNavigation<screenNavigationProp>();
   const dispatch = useDispatch();
   const dataSignUp: DataSignupProps = useSelector(
@@ -46,7 +47,7 @@ const SignUpProperty = () => {
   };
 
   const RenderForm = () => (
-    <KeyboardAvoidingView>
+    <KeyboardAwareScrollView>
       <Formik
         initialValues={formInitialValues}
         validationSchema={validationForm}
@@ -54,7 +55,7 @@ const SignUpProperty = () => {
         enableReinitialize
         onSubmit={handleSubmit}>
         {props => (
-          <View style={{height: '100%'}}>
+          <>
             <View style={{flex: 1}}>
               <Image source={logo} style={styles.logo} />
               <AppText style={styles.title}>
@@ -82,10 +83,10 @@ const SignUpProperty = () => {
                 onPress={props.handleSubmit}
               />
             ) : null}
-          </View>
+          </>
         )}
       </Formik>
-    </KeyboardAvoidingView>
+    </KeyboardAwareScrollView>
   );
 
   return (
@@ -96,4 +97,4 @@ const SignUpProperty = () => {
   );
 };
 
-export {SignUpProperty};
+export {UserInformationName};

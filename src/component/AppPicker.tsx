@@ -1,22 +1,11 @@
 import {AppText} from '@component';
 import {DownIcon} from '@assets';
 import {colors, fontFamily, scaleSize, scaleWidth, SIZE} from '@util';
-import React from 'react';
-import {StyleSheet, View, Animated} from 'react-native';
+import React, {useState} from 'react';
+import {StyleSheet, View, Animated, Pressable} from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
-
-interface IAppPicker {
-  label?: string;
-  // value?: any;
-  onValueChange: (value: any, name?: string) => void;
-  items?: any;
-  style?: any;
-  placeholder?: any;
-  value?: any;
-  error?: string;
-  styleError?: any;
-  name?: string;
-}
+import CountryPicker from 'react-native-country-picker-modal';
+import {IAppPicker} from '@interfaces';
 
 export const AppPicker: React.FC<IAppPicker> = React.memo((props: any) => {
   const {
@@ -28,34 +17,62 @@ export const AppPicker: React.FC<IAppPicker> = React.memo((props: any) => {
     error,
     styleError,
     name,
+    typePicker,
   } = props;
   const value = props.value || '';
+  const [visible, setVisible] = useState(false);
+
+  const onSelectFlag = (country: any) => {
+    // setCountryCode(country?.cca2);
+    onValueChange(country, name);
+    console.log({country});
+  };
 
   return (
     <View style={styles.container}>
       {label && <AppText style={styles.label}>{label}</AppText>}
       <View style={[styles.picker, style]}>
-        <RNPickerSelect
-          onValueChange={item => onValueChange(item, name)}
-          useNativeAndroidPickerStyle={false}
-          placeholder={placeholder}
-          value={value}
-          items={items}
-          pickerProps={{
-            style: {
-              height: '100%',
-              backgroundColor: 'transparent',
-              color: 'transparent',
-            },
-          }}
-          style={{
-            inputAndroid: styles.inputAndroid,
-            inputIOS: styles.inputIOS,
-            iconContainer: styles.iconContainer,
-            placeholder: styles.placeholder,
-          }}
-          Icon={() => <DownIcon style={{top: 4}} />}
-        />
+        {typePicker === 'coutry' ? (
+          <View style={styles.country}>
+            <CountryPicker
+              theme={{
+                fontSize: SIZE.base_size,
+                ...fontFamily.fontWeight400,
+              }}
+              visible={visible}
+              withCallingCode={false}
+              withCallingCodeButton={false}
+              countryCode={value || 'SG'}
+              withFlagButton={false}
+              onSelect={onSelectFlag}
+              withFilter={true}
+              withCountryNameButton
+            />
+            <DownIcon />
+          </View>
+        ) : (
+          <RNPickerSelect
+            onValueChange={item => onValueChange(item, name)}
+            useNativeAndroidPickerStyle={false}
+            placeholder={placeholder}
+            value={value}
+            items={items}
+            pickerProps={{
+              style: {
+                height: '100%',
+                backgroundColor: 'transparent',
+                color: 'transparent',
+              },
+            }}
+            style={{
+              inputAndroid: styles.inputAndroid,
+              inputIOS: styles.inputIOS,
+              iconContainer: styles.iconContainer,
+              placeholder: styles.placeholder,
+            }}
+            Icon={() => <DownIcon style={{top: 4}} />}
+          />
+        )}
       </View>
       {!!error && <AppText style={[styles.error, styleError]}>{error}</AppText>}
     </View>
@@ -113,5 +130,14 @@ const styles = StyleSheet.create({
     ...fontFamily.fontWeight400,
     color: colors.textSecondPrimary,
     fontSize: SIZE.base_size,
+  },
+  country: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    backgroundColor: colors.bgInput,
+    borderRadius: 8,
+    paddingHorizontal: SIZE.base_space,
+    minHeight: SIZE.input_height,
   },
 });

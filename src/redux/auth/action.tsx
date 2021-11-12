@@ -2,13 +2,14 @@ import {
   SAVE_DATA_REDUX,
   LOGIN_CLIENT,
   HIDE_INTRO_SCREEN,
-  SIGNUP_CLIENT,
+  SIGNUP,
   LOGOUT,
   REMOVE_TOKEN,
   VERIFY_EMAIL,
   SEND_VERIFY_EMAIL,
   UPDATE_USER_INFOR,
   SET_DATA_SIGNUP,
+  RESET_DATA_SIGNUP,
 } from './type';
 
 export const loginClientApp = (payload: any) => ({
@@ -26,8 +27,8 @@ export const saveDataRedux = (payload: any) => ({
   payload,
 });
 
-export const signUpClient = (payload: any) => ({
-  type: SIGNUP_CLIENT,
+export const signUp = (payload: any) => ({
+  type: SIGNUP,
   payload,
 });
 
@@ -55,4 +56,8 @@ export const updateUserInfor = (payload: any) => ({
 export const setDataSignup = (payload: any) => ({
   type: SET_DATA_SIGNUP,
   payload,
+});
+
+export const resetDataSignup = () => ({
+  type: RESET_DATA_SIGNUP,
 });

@@ -6,6 +6,7 @@ import {
   SET_DATA_SIGNUP,
 } from './type';
 import {INITIAL_STATE_AUTH} from './state';
+import {INITIAL_STATE_DATA_SIGN_UP, RESET_DATA_SIGNUP} from '@redux';
 
 export default function dataSave(state = INITIAL_STATE_AUTH, action: any) {
   switch (action.type) {
@@ -36,6 +37,11 @@ export default function dataSave(state = INITIAL_STATE_AUTH, action: any) {
       return {
         ...state,
         dataSignup: action?.payload?.data,
+      };
+    case RESET_DATA_SIGNUP:
+      return {
+        ...state,
+        dataSignup: INITIAL_STATE_DATA_SIGN_UP,
       };
     default:
       return state;

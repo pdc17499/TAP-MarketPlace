@@ -2,15 +2,15 @@ import {put, takeLatest} from 'redux-saga/effects';
 import {saveDataRedux, removeToken} from './action';
 import {
   LOGIN_CLIENT,
-  SIGNUP_CLIENT,
   LOGOUT,
   VERIFY_EMAIL,
   SEND_VERIFY_EMAIL,
+  SIGNUP,
 } from './type';
 import {
   loginClient,
   GlobalService,
-  signUpClient,
+  signUp,
   logOut,
   verifyEmail,
   sendVerifyEmail,
@@ -41,20 +41,13 @@ export function* loginClientSaga(action: any) {
   }
 }
 
-export function* signUpClientSaga(action: any) {
+export function* signUpSaga(action: any) {
   try {
     GlobalService.showLoading();
-    const {confirmpassword, contryCode, email, fullname, password, phone} =
-      action?.payload;
-    const body = {
-      full_name: fullname,
-      email: email,
-      password: password,
-      password_confirmation: confirmpassword,
-      phone: `${contryCode} ${phone}`,
-    };
-    const result: ResponseGenerator = yield signUpClient(body);
-    yield put(saveDataRedux(result));
+    const {body} = action?.payload;
+    console.log({body});
+    // const result: ResponseGenerator = yield signUp(body);
+    // yield put(saveDataRedux(result));
     // NavigationUtils.navigate(VERTIFIEMAIL);
   } catch (error) {
   } finally {
@@ -99,7 +92,7 @@ export function* sendVerifyEmailSaga() {
 
 export function* authSaga() {
   yield takeLatest(LOGIN_CLIENT, loginClientSaga);
-  yield takeLatest(SIGNUP_CLIENT, signUpClientSaga);
+  yield takeLatest(SIGNUP, signUpSaga);
   yield takeLatest(LOGOUT, logout);
   yield takeLatest(VERIFY_EMAIL, verifyEmailSaga);
   yield takeLatest(SEND_VERIFY_EMAIL, sendVerifyEmailSaga);

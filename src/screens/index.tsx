@@ -6,7 +6,7 @@ import {SignIn} from './auth/SignIn';
 import {ResetPassword} from './auth/ResetPassword';
 import {SignUp} from './auth/SignUp';
 import {SignUpEmail} from './auth/SignUpEmail';
-import {SignUpProperty} from './auth/SignUpProperty';
+import {UserInformationName} from './auth/UserInformationName';
 import {VerifyAccount} from './auth/VerifyAccount';
 import {VerifyCode} from './auth/VerifyCode';
 import {RoomUnitPicture} from './auth/RoomUnitPicture';
@@ -23,7 +23,7 @@ export {
   ResetPassword,
   SignUp,
   SignUpEmail,
-  SignUpProperty,
+  UserInformationName,
   VerifyAccount,
   VerifyCode,
   RoomUnitPicture,

@@ -38,6 +38,7 @@ export interface IAppInput {
   containerStyle?: ViewStyle | ViewStyle[];
   style?: ViewStyle | ViewStyle[];
   inputStyle?: TextStyle | TextStyle[];
+  customStyleLabel?: TextStyle;
   multiline?: boolean;
   numberOfLines?: number;
   error?: string;
@@ -80,9 +81,13 @@ export interface mockProps {
   id?: number;
   value?: string;
 }
+export interface pickerProps {
+  label?: string;
+  value?: any;
+}
 
 export interface DataSignupProps {
-  role_user: 0 | 1 | 2 | 3;
+  role_user: string;
   location: {
     lat: number;
     long: number;
@@ -112,8 +117,8 @@ export interface DataSignupProps {
   gender: mockProps;
   age_group: mockProps;
   country: any;
-  occupation: any;
-  ethnicity: any;
+  occupation: pickerProps;
+  ethnicity: pickerProps;
   your_place: Array<mockProps>;
   have_pet: mockProps;
   smoke: mockProps;
@@ -149,4 +154,17 @@ export interface VerifyAccountProps {
   countryCode: string;
   onChangeValue: (item: string) => void;
   setCountryCode?: (item: string) => void;
+}
+export interface IAppPicker {
+  label?: string;
+  // value?: any;
+  onValueChange: (value: any, name?: string) => void;
+  items?: any;
+  style?: any;
+  placeholder?: any;
+  value?: any;
+  error?: string;
+  styleError?: any;
+  name?: string;
+  typePicker?: 'base' | 'coutry';
 }

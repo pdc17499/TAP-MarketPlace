@@ -37,6 +37,7 @@ export const AppInput = (props: IAppInput) => {
     autoFocus,
     typeInput,
     delimiter,
+    customStyleLabel,
   } = props;
   const [isFocused, setIsFocused] = React.useState(false);
   const [hidePasssWord, setHidePassWord] = React.useState(true);
@@ -99,7 +100,9 @@ export const AppInput = (props: IAppInput) => {
 
   return (
     <View style={containerStyle}>
-      {label && <AppText style={styles.label}>{label}</AppText>}
+      {label && (
+        <AppText style={[styles.label, customStyleLabel]}>{label}</AppText>
+      )}
       <View style={viewStyle}>
         {iconLeft && <View style={styles.iconLeft}>{renderIconLeft()}</View>}
         {typeInput === 'price' || typeInput === 'phone' ? (
@@ -168,7 +171,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: SIZE.base_space,
   },
   label: {
-    color: colors.textPrimary,
+    color: colors.primary,
     ...fontFamily.fontWeight500,
     marginTop: SIZE.base_space,
     marginBottom: 10,
@@ -190,5 +193,7 @@ const styles = StyleSheet.create({
   error: {
     marginTop: 5,
     color: colors.red,
+    fontSize: scaleSize(15),
+    lineHeight: scaleSize(17),
   },
 });
