@@ -1,40 +1,37 @@
-import {put, takeLatest} from 'redux-saga/effects';
-import {saveDataRedux, removeToken} from './action';
+import { put, takeLatest } from 'redux-saga/effects';
+import { saveDataUser, removeToken } from './action';
 import {
-  LOGIN_CLIENT,
+  LOGIN,
   SIGNUP_CLIENT,
   LOGOUT,
   VERIFY_EMAIL,
   SEND_VERIFY_EMAIL,
 } from './type';
 import {
-  loginClient,
   GlobalService,
   signUpClient,
   logOut,
   verifyEmail,
   sendVerifyEmail,
+
+  loginApi,
 } from '@services';
-import {NavigationUtils} from '@navigation';
 // import {VERTIFIEMAIL, VERIFYCODE} from '@routeName';
-import {showMessage} from 'react-native-flash-message';
+import { showMessage } from 'react-native-flash-message';
+
 
 export interface ResponseGenerator {
   result?: any;
   data?: any;
 }
 
-export function* loginClientSaga(action: any) {
+export function* loginSaga(action: any) {
+  console.log('num2');
   try {
     GlobalService.showLoading();
-    console.log('action', action);
-    const result: ResponseGenerator = yield loginClient(action.payload);
-    if (result?.data?.user_info.email_verified_at) {
-      yield put(saveDataRedux(result));
-    } else {
-      yield put(saveDataRedux(result));
-      // NavigationUtils.navigate(VERTIFIEMAIL);
-    }
+    const result: ResponseGenerator = yield loginApi(action.payload);
+    yield put(saveDataUser(result));
+
   } catch (error) {
   } finally {
     GlobalService.hideLoading();
@@ -44,7 +41,7 @@ export function* loginClientSaga(action: any) {
 export function* signUpClientSaga(action: any) {
   try {
     GlobalService.showLoading();
-    const {confirmpassword, contryCode, email, fullname, password, phone} =
+    const { confirmpassword, contryCode, email, fullname, password, phone } =
       action?.payload;
     const body = {
       full_name: fullname,
@@ -54,7 +51,7 @@ export function* signUpClientSaga(action: any) {
       phone: `${contryCode} ${phone}`,
     };
     const result: ResponseGenerator = yield signUpClient(body);
-    yield put(saveDataRedux(result));
+    yield put(saveDataUser(result));
     // NavigationUtils.navigate(VERTIFIEMAIL);
   } catch (error) {
   } finally {
@@ -89,16 +86,16 @@ export function* verifyEmailSaga() {
 export function* sendVerifyEmailSaga() {
   try {
     const result: ResponseGenerator = yield sendVerifyEmail();
-    const {message} = result?.data;
+    const { message } = result?.data;
     showMessage({
       message: message,
       type: 'success',
     });
-  } catch (error) {}
+  } catch (error) { }
 }
 
 export function* authSaga() {
-  yield takeLatest(LOGIN_CLIENT, loginClientSaga);
+  yield takeLatest(LOGIN, loginSaga);
   yield takeLatest(SIGNUP_CLIENT, signUpClientSaga);
   yield takeLatest(LOGOUT, logout);
   yield takeLatest(VERIFY_EMAIL, verifyEmailSaga);

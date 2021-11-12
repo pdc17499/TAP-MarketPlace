@@ -1,9 +1,10 @@
-import {DataSignupProps} from '@interfaces';
+import { DataSignupProps, Token, UserInfo } from '@interfaces';
 import moment from 'moment';
 
 export type AuthState = {
   loading: boolean;
   user: any;
+  token: any;
   showIntroScreen: boolean;
   typeUser: 1 | 2 | 3;
   dataSignup: DataSignupProps;
@@ -55,6 +56,7 @@ const INITIAL_STATE_DATA_SIGN_UP: DataSignupProps = {
 export const INITIAL_STATE_AUTH: AuthState = {
   loading: false,
   user: null,
+  token: null,
   showIntroScreen: true,
   typeUser: 1,
   dataSignup: INITIAL_STATE_DATA_SIGN_UP,

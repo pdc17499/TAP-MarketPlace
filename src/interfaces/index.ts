@@ -124,21 +124,37 @@ export interface DataSignupProps {
   confirm_password: string;
 }
 
-export interface AppQAProps {
-  data: Array<mockProps>;
-  title: string;
-  subTitle?: string;
-  typeTitle?: 'base' | 'strong';
-  value: any;
-  setValue: any;
-  typeList?: 'column' | 'wrap' | 'even' | 'row';
-  isMultiChoice?: boolean;
-  children?: ReactElement;
-  customStyleTitle?: TextStyle;
-  customStyleViewButton?: ViewStyle;
+export interface UserInfo {
+  address: string;
+  ageGroup: number;
+  contact: string;
+  createdAt: string;
+  dob: string;
+  email: string;
+  ethnicity: string;
+  facebook_account: string;
+  gender: 'male' | 'female' | 'other';
+  id: number;
+  image: string;
+  is_representative: boolean;
+  lifestyle: any;
   name: string;
-  isFlex?: boolean;
-  error?: string;
+  nationality: string;
+  occupation: string;
+  password: string;
+  rental_account: string;
+  updatedAt: string;
+}
+
+export interface Token {
+  access: {
+    expires: string;
+    token: string;
+  };
+  refresh: {
+    expires: string;
+    token: string;
+  };
 }
 
 export interface RoomStepProps {

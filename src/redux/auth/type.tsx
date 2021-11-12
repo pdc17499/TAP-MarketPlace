@@ -1,5 +1,6 @@
-export const LOGIN_CLIENT = 'LOGIN_CLIENT';
-export const SAVE_DATA_REDUX = 'SAVE_DATA_REDUX';
+export const LOGIN = 'LOGIN';
+export const LOGIN_SAGA = 'LOGIN_SAGA';
+export const SAVE_DATA_USER = 'SAVE_DATA_USER';
 export const HIDE_INTRO_SCREEN = 'HIDE_INTRO_SCREEN';
 export const SIGNUP_CLIENT = 'SIGNUP_CLIENT';
 export const LOGOUT = 'LOGOUT';

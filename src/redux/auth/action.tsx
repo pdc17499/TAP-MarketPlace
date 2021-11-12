@@ -1,6 +1,6 @@
 import {
-  SAVE_DATA_REDUX,
-  LOGIN_CLIENT,
+  SAVE_DATA_USER,
+  LOGIN,
   HIDE_INTRO_SCREEN,
   SIGNUP_CLIENT,
   LOGOUT,
@@ -9,10 +9,11 @@ import {
   SEND_VERIFY_EMAIL,
   UPDATE_USER_INFOR,
   SET_DATA_SIGNUP,
+
 } from './type';
 
-export const loginClientApp = (payload: any) => ({
-  type: LOGIN_CLIENT,
+export const loginApp = (payload: any) => ({
+  type: LOGIN,
   payload,
 });
 
@@ -21,8 +22,8 @@ export const hideIntroScreen = (payload: any) => ({
   payload,
 });
 
-export const saveDataRedux = (payload: any) => ({
-  type: SAVE_DATA_REDUX,
+export const saveDataUser = (payload: any) => ({
+  type: SAVE_DATA_USER,
   payload,
 });
 

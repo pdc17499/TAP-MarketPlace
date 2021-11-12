@@ -1,19 +1,21 @@
 import {
-  SAVE_DATA_REDUX,
+  SAVE_DATA_USER,
   HIDE_INTRO_SCREEN,
   REMOVE_TOKEN,
   UPDATE_USER_INFOR,
   SET_DATA_SIGNUP,
+  LOGIN
 } from './type';
-import {INITIAL_STATE_AUTH} from './state';
+import { INITIAL_STATE_AUTH } from './state';
+
 
 export default function dataSave(state = INITIAL_STATE_AUTH, action: any) {
   switch (action.type) {
-    case SAVE_DATA_REDUX:
+    case SAVE_DATA_USER:
       return {
         ...state,
-        user: action?.payload?.data?.user_info,
-        token: action?.payload?.data?.token,
+        user: action?.payload?.user,
+        token: action?.payload?.tokens,
       };
     case HIDE_INTRO_SCREEN:
       return {
@@ -36,6 +38,11 @@ export default function dataSave(state = INITIAL_STATE_AUTH, action: any) {
       return {
         ...state,
         dataSignup: action?.payload?.data,
+      };
+    case LOGIN:
+      return {
+        ...state,
+        dataSignIn: action?.payload?.data,
       };
     default:
       return state;

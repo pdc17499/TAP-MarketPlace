@@ -1,7 +1,7 @@
 import { iconFacebook, iconGoogle, logo } from '@assets';
 import { AppButton, AppInput, AppText } from '@component';
 import { useNavigation } from '@react-navigation/core';
-import { RESETPASSWORD, SIGNUP } from '@routeName';
+import { HOME, RESETPASSWORD, SIGNUP } from '@routeName';
 import { scaleHeight } from '@util';
 import { Formik } from 'formik';
 import React from 'react';
@@ -9,6 +9,8 @@ import { View, Image, KeyboardAvoidingView, TouchableOpacity } from 'react-nativ
 import { useDispatch } from 'react-redux';
 import { styles } from './style';
 import * as yup from 'yup';
+import { loginApp } from '@redux';
+import { values } from 'lodash';
 
 interface SignInProp { }
 
@@ -19,6 +21,12 @@ interface screenNavigationProp {
 const SignIn = React.memo((props: SignInProp) => {
   const navigation = useNavigation<screenNavigationProp>();
   const dispath = useDispatch();
+
+  const signIn = (email: string, password: string) => {
+
+    dispath(loginApp({ email: email, password: password }))
+
+  }
 
   const formInitialValues = {
     email: '',
@@ -49,12 +57,11 @@ const SignIn = React.memo((props: SignInProp) => {
   const RenderSignInForm = () => (
     <KeyboardAvoidingView>
       <Formik
+        enableReinitialize
         initialValues={formInitialValues}
         validationSchema={validationSign}
         validateOnChange={false}
-        onSubmit={values => {
-          console.log('email', values.email);
-        }}>
+        onSubmit={values => { signIn(values.email, values.password) }}>
         {props => (
           <View>
             <View style={{ marginBottom: scaleHeight(16) }}>

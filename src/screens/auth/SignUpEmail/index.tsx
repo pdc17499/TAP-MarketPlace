@@ -42,6 +42,7 @@ const SignUpEmail = (props: SignUpEmailProp) => {
   const RenderEmailForm = () => (
     <KeyboardAvoidingView style={{ flex: 1, paddingHorizontal: SIZE.padding }} >
       <Formik
+        enableReinitialize
         initialValues={formInitialValues}
         validationSchema={validationEmail}
         validateOnChange={false}

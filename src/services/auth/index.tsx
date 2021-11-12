@@ -1,14 +1,14 @@
 import api from '../api';
 import {
-  LOGIN_CLIENT,
+  LOGIN,
   LOGOUT,
   SEND_VERIFY_EMAIL,
   SIGNUP_CLIENT,
   VERIFY_EMAIL,
 } from './types';
 
-export const loginClient: any = async (data: any) => {
-  const response = await api.post(LOGIN_CLIENT, data);
+export const loginApi: any = async (data: any) => {
+  const response = await api.post(LOGIN, data);
   return response;
 };
 
