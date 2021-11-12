@@ -1,19 +1,30 @@
 import {AppButton, AppQA} from '@component';
-import {RoomStepProps} from '@interfaces';
+import {DataSignupProps, RoomStepProps} from '@interfaces';
 import {ROOM_UNIT_HOWNER} from '@mocks';
 import {setDataSignup} from '@redux';
 import {fontFamily, scaleWidth, SIZE} from '@util';
-import React from 'react';
+import React, {forwardRef, useImperativeHandle} from 'react';
 import {View, StyleSheet} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 
-const Smoking = (props: RoomStepProps) => {
+const Smoking = forwardRef((props: RoomStepProps, ref) => {
   const {onNext} = props;
   const dispatch = useDispatch();
   const list = ROOM_UNIT_HOWNER;
   const dataSignUp = useSelector((state: any) => state?.auth?.dataSignup);
   const setData = (data: any) => {
     dispatch(setDataSignup({data}));
+    onNext();
+  };
+
+  useImperativeHandle(ref, () => ({
+    onSkip,
+  }));
+
+  const onSkip = () => {
+    const nData: DataSignupProps = {...dataSignUp};
+    nData.smoke = {};
+    setData(nData);
   };
 
   return (
@@ -27,10 +38,9 @@ const Smoking = (props: RoomStepProps) => {
         name={'smoke'}
         customStyleTitle={{textAlign: 'center'}}
       />
-      <AppButton title={'Continue'} onPress={onNext} iconRight={'arNext'} />
     </View>
   );
-};
+});
 
 export {Smoking};
 

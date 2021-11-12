@@ -1,46 +1,52 @@
-import { AppButton, AppInput, AppQA, AppText, Header } from '@component';
-import { useNavigation } from '@react-navigation/core';
-import { scaleHeight } from '@util';
-import { Formik } from 'formik';
-import React, { useState } from 'react';
-import { View, KeyboardAvoidingView, ScrollView } from 'react-native';
-import { styles } from './style';
+import {AppButton, AppInput, AppQA, AppText, Header} from '@component';
+import {useNavigation} from '@react-navigation/core';
+import {scaleHeight, validateForm} from '@util';
+import {Formik} from 'formik';
+import React, {useState} from 'react';
+import {View, ScrollView} from 'react-native';
+import {styles} from './style';
 import * as yup from 'yup';
-import { TENANT_PROPERTY } from '@mocks';
-import { useDispatch, useSelector } from 'react-redux';
-import { setDataSignup } from '@redux';
-import { LIFE_STYLE } from '@routeName';
-
-interface SignUpPropertyProp {
-  route: any;
-}
-
+import {TENANT_PROPERTY} from '@mocks';
+import {useDispatch, useSelector} from 'react-redux';
+import {setDataSignup} from '@redux';
+import {LIFE_STYLE, USER_INFORMATION_COUNTRY} from '@routeName';
+import {DataSignupProps} from '@interfaces';
 interface screenNavigationProp {
   navigate: any;
 }
 
-const UserInformationGender = (props: SignUpPropertyProp) => {
-  const NAME = props.route.params
+const UserInformationGender = () => {
   const navigation = useNavigation<screenNavigationProp>();
   const dispatch = useDispatch();
   const list = TENANT_PROPERTY;
-  const dataSignUp = useSelector((state: any) => state?.auth?.dataSignup);
+  const dataSignUp: DataSignupProps = useSelector(
+    (state: any) => state?.auth?.dataSignup,
+  );
   const setData = (data: any) => {
-    dispatch(setDataSignup({ data }));
+    dispatch(setDataSignup({data}));
   };
 
   const formInitialValues = {
-    gender: '',
-    age_group: '',
-    error: '',
+    gender: dataSignUp?.gender?.id,
+    age_group: dataSignUp?.age_group?.id,
   };
 
   const validationForm = yup.object().shape({
-    name: yup.string().required('This field is required'),
+    gender: validateForm().common.selectAtLeast,
+    age_group: validateForm().common.selectAtLeast,
   });
 
   const onContinue = () => {
-    navigation.navigate(LIFE_STYLE);
+    navigation.navigate(USER_INFORMATION_COUNTRY);
+  };
+
+  const onSkip = (props: any) => {
+    const nData: DataSignupProps = {...dataSignUp};
+    nData.gender = {};
+    nData.age_group = {};
+    setData(nData);
+    props.setErrors({});
+    navigation.navigate(USER_INFORMATION_COUNTRY);
   };
 
   const RenderForm = () => (
@@ -48,10 +54,10 @@ const UserInformationGender = (props: SignUpPropertyProp) => {
       initialValues={formInitialValues}
       validationSchema={validationForm}
       validateOnChange={false}
-      onSubmit={values => { }}>
-      {props => (
-        <View style={{ flex: 1, paddingBottom: 48 }}>
-          <View style={{ flex: 1 }}>
+      onSubmit={onContinue}>
+      {(props: any) => (
+        <View style={{flex: 1, paddingBottom: 48}}>
+          <View style={{flex: 1}}>
             <AppQA
               data={list.gender}
               title={'How would you describe your gender?'}
@@ -60,6 +66,7 @@ const UserInformationGender = (props: SignUpPropertyProp) => {
               name={'gender'}
               typeList={'row'}
               typeTitle={'base'}
+              error={props.errors.gender}
             />
 
             <AppQA
@@ -70,6 +77,7 @@ const UserInformationGender = (props: SignUpPropertyProp) => {
               name={'age_group'}
               typeList={'even'}
               typeTitle={'base'}
+              error={props.errors.age_group}
             />
           </View>
           <AppButton
@@ -77,13 +85,13 @@ const UserInformationGender = (props: SignUpPropertyProp) => {
             title={'Continue'}
             size={'small'}
             iconRight={'arNext'}
-            onPress={onContinue}
+            onPress={props.handleSubmit}
           />
           <AppButton
             customStyleButton={styles.button}
             title={'Skip'}
             typeButton={'underline'}
-            onPress={onContinue}
+            onPress={() => onSkip(props)}
           />
         </View>
       )}
@@ -93,13 +101,16 @@ const UserInformationGender = (props: SignUpPropertyProp) => {
   return (
     <View style={styles.container}>
       <Header back />
-      <View style={styles.body}>
+      <ScrollView style={styles.body} showsVerticalScrollIndicator={false}>
         <AppText style={styles.title}>{'About you'}</AppText>
-        <AppText style={styles.message}>{`Hi there, ${NAME.name}`}</AppText>
+        <AppText
+          style={
+            styles.message
+          }>{`Hi there, ${dataSignUp?.user_name}`}</AppText>
         {RenderForm()}
-      </View>
+      </ScrollView>
     </View>
   );
 };
 
-export { UserInformationGender };
+export {UserInformationGender};

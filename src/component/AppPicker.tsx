@@ -32,9 +32,9 @@ export const AppPicker: React.FC<IAppPicker> = React.memo((props: any) => {
   const value = props.value || '';
 
   return (
-    <>
-      {label && <Animated.Text style={[styles.label]}>{label}</Animated.Text>}
-      <View style={[styles.container, style]}>
+    <View style={styles.container}>
+      {label && <AppText style={styles.label}>{label}</AppText>}
+      <View style={[styles.picker, style]}>
         <RNPickerSelect
           onValueChange={item => onValueChange(item, name)}
           useNativeAndroidPickerStyle={false}
@@ -58,18 +58,22 @@ export const AppPicker: React.FC<IAppPicker> = React.memo((props: any) => {
         />
       </View>
       {!!error && <AppText style={[styles.error, styleError]}>{error}</AppText>}
-    </>
+    </View>
   );
 });
 
 const styles = StyleSheet.create({
   container: {
-    minHeight: SIZE.input_height,
     marginTop: SIZE.medium_space,
+  },
+  picker: {
+    minHeight: SIZE.input_height,
     justifyContent: 'center',
   },
   label: {
-    ...fontFamily.fontWeight400,
+    color: colors.primary,
+    fontSize: scaleSize(15),
+    marginBottom: SIZE.base_space,
   },
   error: {
     marginTop: 5,

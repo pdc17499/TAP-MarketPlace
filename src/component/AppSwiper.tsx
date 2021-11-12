@@ -2,13 +2,7 @@ import {Header} from '@component';
 import {AppSwiperProps, RefAppSwiper} from '@interfaces';
 import {useNavigation} from '@react-navigation/core';
 import {colors, fontFamily, scaleWidth, SIZE} from '@util';
-import React, {
-  forwardRef,
-  Ref,
-  useImperativeHandle,
-  useRef,
-  useState,
-} from 'react';
+import React, {forwardRef, Ref, useImperativeHandle, useRef} from 'react';
 import {Animated, StyleSheet, View} from 'react-native';
 import Swiper from 'react-native-swiper';
 
@@ -18,6 +12,7 @@ const AppSwiper = forwardRef(
     const {children, showPagination} = props;
     const refSwiper = useRef<any>();
     const currentIndex = useRef<number>(0);
+    const {onSkip} = props;
 
     useImperativeHandle(ref, () => ({
       onNextButton,
@@ -35,24 +30,44 @@ const AppSwiper = forwardRef(
       }
     };
 
-    const customPaginationStyle = showPagination
-      ? styles.paginationStyle
-      : styles.hidePagination;
+    const handleSkip = () => {
+      if (onSkip) onSkip(currentIndex.current);
+      onNextButton();
+    };
 
     const onIndexChanged = (index: any) => {
       console.log({index});
       currentIndex.current = index;
     };
 
+    const customPaginationStyle =
+      showPagination === 'right-header'
+        ? styles.paginationStyle
+        : showPagination === 'center-top'
+        ? styles.paginationCenterTop
+        : styles.hidePagination;
+
+    const activeDotColor =
+      showPagination === 'center-top' ? colors.primary : colors.orange;
+
+    const paddingTop =
+      showPagination === 'center-top' ? SIZE.big_space + SIZE.padding : 0;
+
     return (
       <>
-        <Header back onPressBack={onPrevButton} />
+        <Header
+          back
+          onPressBack={onPrevButton}
+          iconRight={showPagination === 'center-top' ? 'skip' : 'hide'}
+          onPressRight={handleSkip}
+        />
         <Swiper
           ref={refSwiper}
+          style={{paddingTop: paddingTop}}
           onIndexChanged={onIndexChanged}
           removeClippedSubviews={false}
           paginationStyle={customPaginationStyle}
-          activeDotColor={colors.orange}
+          activeDotColor={activeDotColor}
           activeDotStyle={styles.activeDotStyle}
           scrollEnabled={false}>
           {children}
@@ -78,6 +93,12 @@ const styles = StyleSheet.create({
     bottom: 'auto',
     right: SIZE.padding,
     justifyContent: 'flex-end',
+  },
+  paginationCenterTop: {
+    position: 'absolute',
+    top: SIZE.big_space,
+    bottom: 'auto',
+    justifyContent: 'center',
   },
   hidePagination: {
     display: 'none',

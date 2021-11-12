@@ -1,9 +1,9 @@
-import {AppButton, AppInput, AppQA, AppText, Header} from '@component';
+import {AppButton, AppText, Header} from '@component';
 import {useNavigation} from '@react-navigation/core';
 import React from 'react';
 import {View} from 'react-native';
 import {styles} from './style';
-import {LIFE_STYLE_STEP} from '@routeName';
+import {LIFE_STYLE_STEP, SIGNUP} from '@routeName';
 
 interface screenNavigationProp {
   navigate: any;
@@ -14,6 +14,10 @@ const LifeStyle = (props: any) => {
 
   const onStart = () => {
     navigation.navigate(LIFE_STYLE_STEP);
+  };
+
+  const onSkip = () => {
+    navigation.navigate(SIGNUP);
   };
 
   return (
@@ -39,7 +43,7 @@ const LifeStyle = (props: any) => {
           iconRight={'arNext'}
           onPress={onStart}
         />
-        <AppButton title={'Skip'} typeButton={'underline'} onPress={onStart} />
+        <AppButton title={'Skip'} typeButton={'underline'} onPress={onSkip} />
       </View>
     </View>
   );

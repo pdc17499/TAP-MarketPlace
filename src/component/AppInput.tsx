@@ -1,7 +1,7 @@
-import { AppText } from '@component';
+import {AppText} from '@component';
 import React from 'react';
-import { StyleSheet, TextInput, View, TouchableOpacity } from 'react-native';
-import { colors, fontFamily, DEVICE, scaleWidth, SIZE } from '@util';
+import {StyleSheet, TextInput, View, TouchableOpacity} from 'react-native';
+import {colors, fontFamily, DEVICE, scaleWidth, SIZE, scaleSize} from '@util';
 import {
   EyeIconClose,
   EyeIconOpen,
@@ -12,7 +12,7 @@ import {
   IconDola,
   IconFloorSize,
 } from '@assets';
-import { IAppInput } from '@interfaces';
+import {IAppInput} from '@interfaces';
 import CurrencyInput from 'react-native-currency-input';
 
 export const AppInput = (props: IAppInput) => {
@@ -53,7 +53,7 @@ export const AppInput = (props: IAppInput) => {
 
   const viewStyle: any = [
     styles.inputWrap,
-    { borderColor: isFocused ? colors.secondPrimary : colors.bgInput },
+    {borderColor: isFocused ? colors.secondPrimary : colors.bgInput},
     style,
   ];
 
@@ -61,9 +61,9 @@ export const AppInput = (props: IAppInput) => {
     styles.input,
     inputStyle,
     DEVICE.isIos &&
-    multiline && {
-      paddingTop: scaleWidth(16),
-    },
+      multiline && {
+        paddingTop: scaleWidth(16),
+      },
   ];
 
   const renderIconLeft = () => {
@@ -168,10 +168,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: SIZE.base_space,
   },
   label: {
-    color: colors.textSecondPrimary,
-    ...fontFamily.fontWeight600,
+    color: colors.textPrimary,
+    ...fontFamily.fontWeight500,
     marginTop: SIZE.base_space,
     marginBottom: 10,
+    fontSize: scaleSize(15),
   },
   iconLeft: {
     marginRight: SIZE.base_space,
@@ -184,7 +185,6 @@ const styles = StyleSheet.create({
     height: '100%',
     color: colors.textPrimary,
     fontSize: SIZE.base_size,
-    lineHeight: SIZE.base_size + 4,
     ...fontFamily.fontWeight500,
   },
   error: {
