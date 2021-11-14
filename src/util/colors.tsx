@@ -14,7 +14,6 @@ const colors = {
   facebook: '#287AE3',
   google: '#EFEFEF',
   borderTextFacebook: '#5A9DF4',
-
 };
 
-export { colors };
+export {colors};

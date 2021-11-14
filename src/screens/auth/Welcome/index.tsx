@@ -20,7 +20,7 @@ const Welcome = React.memo((props: WelcomeProp) => {
   const dispath = useDispatch();
 
   useEffect(() => {
-    dispath(resetDataSignup());
+    // dispath(resetDataSignup());
   }, []);
 
   const moveToSignIn = () => {

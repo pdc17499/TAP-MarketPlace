@@ -21,7 +21,7 @@ import {NavigationUtils} from '@navigation';
 import {USER_INFORMATION_NAME} from '@routeName';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 
-const RoomUnitPicture = () => {
+const RoomUnitGallery = () => {
   const dispatch = useDispatch();
   const dataSignUp = useSelector((state: any) => state?.auth?.dataSignup);
   const setData = (data: any) => {
@@ -233,7 +233,7 @@ const RoomUnitPicture = () => {
   );
 };
 
-export {RoomUnitPicture};
+export {RoomUnitGallery};
 
 const styles = StyleSheet.create({
   viewSubtitle: {

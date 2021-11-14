@@ -21,13 +21,13 @@ const StepLeasePeriod = (props: RoomStepProps) => {
   };
 
   const formInitialValues = {
-    lease_your_place: dataSignUp?.lease_your_place?.id,
+    lease_your_place: dataSignUp?.lease_your_place,
     staying_with_guests: dataSignUp?.staying_with_guests?.id,
     kind_place: dataSignUp?.kind_place?.value,
   };
 
   const validationSchema = yup.object().shape({
-    lease_your_place: validateForm().common.selectAtLeast,
+    lease_your_place: validateForm().common.atLeastOneArray,
     staying_with_guests: validateForm().common.selectAtLeast,
   });
 
@@ -54,6 +54,7 @@ const StepLeasePeriod = (props: RoomStepProps) => {
                 typeList={'even'}
                 name={'lease_your_place'}
                 error={propsFormik.errors.lease_your_place}
+                isMultiChoice
               />
               <AppQA
                 data={list.staying_width_guests}

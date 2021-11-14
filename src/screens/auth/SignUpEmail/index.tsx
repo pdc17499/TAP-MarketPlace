@@ -1,19 +1,19 @@
-import { AppButton, AppInput, AppText, Header } from '@component';
-import { useNavigation } from '@react-navigation/core';
-import { scaleHeight, SIZE, validateForm } from '@util';
-import { Formik } from 'formik';
+import {AppButton, AppInput, AppText, Header} from '@component';
+import {useNavigation} from '@react-navigation/core';
+import {scaleHeight, SIZE, validateForm} from '@util';
+import {Formik} from 'formik';
 import React from 'react';
-import { View, ScrollView } from 'react-native';
-import { styles } from './style';
+import {View, ScrollView} from 'react-native';
+import {styles} from './style';
 import * as yup from 'yup';
-import { VERIFY_ACCOUNT } from '@routeName';
-import { useDispatch, useSelector } from 'react-redux';
-import { setDataSignup, signUp } from '@redux';
-import { DataSignupProps, mockProps } from '@interfaces';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { ImageOrVideo } from 'react-native-image-crop-picker';
+import {VERIFY_ACCOUNT} from '@routeName';
+import {useDispatch, useSelector} from 'react-redux';
+import {setDataSignup, signUp} from '@redux';
+import {DataSignupProps, mockProps} from '@interfaces';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import {ImageOrVideo} from 'react-native-image-crop-picker';
 
-interface SignUpEmailProp { }
+interface SignUpEmailProp {}
 
 interface screenNavigationProp {
   navigate: any;
@@ -26,7 +26,7 @@ const SignUpEmail = (props: SignUpEmailProp) => {
     (state: any) => state?.auth?.dataSignup,
   );
   const setData = (data: any) => {
-    dispatch(setDataSignup({ data }));
+    dispatch(setDataSignup({data}));
   };
 
   const formInitialValues = {
@@ -43,7 +43,7 @@ const SignUpEmail = (props: SignUpEmailProp) => {
 
   const onChangeValue = (item: any, name?: string) => {
     if (name) {
-      const nData: any = { ...dataSignUp };
+      const nData: any = {...dataSignUp};
       nData[name] = item;
       setData(nData);
     }
@@ -73,65 +73,63 @@ const SignUpEmail = (props: SignUpEmailProp) => {
   };
 
   const hanldeSubmit = () => {
-    // const body = {
-    //   idType: 'Homeowner',
-    //   userInfor: {
-    //     email: dataSignUp.email,
-    //     password: dataSignUp.password,
-    //     name: dataSignUp.user_name,
-    //     gender: dataSignUp?.gender?.value,
-    //     ageGroup: dataSignUp?.age_group?.id,
-    //     nationality: dataSignUp?.country?.name,
-    //     occupation: dataSignUp?.occupation?.label,
-    //     ethnicity: dataSignUp?.ethnicity?.label,
-    //     lifestyle: {
-    //       Friendliness: getList(dataSignUp?.your_place),
-    //       Pets: dataSignUp?.have_pet?.value,
-    //       Smoking: dataSignUp?.smoke?.value,
-    //       DietRestriction: getList(dataSignUp?.diet_choice),
-    //       Religion: dataSignUp?.your_religion?.value,
-    //     },
-    //   },
-    //   roomDesc: {
-    //     RentalAddress: dataSignUp?.location.title,
-    //     PropertyType: dataSignUp?.kind_place?.value,
-    //     RoomDetails: {
-    //       RoomType: dataSignUp?.room_type?.value,
-    //       BedroomNumber: dataSignUp?.bedroom_number?.value,
-    //       BathroomNumber: dataSignUp?.bathroom_number?.value,
-    //       AttachedBathroom: dataSignUp?.attached_room?.id === 1,
-    //       FloorSize: {
-    //         Min: dataSignUp?.floor_size_min,
-    //         Max: dataSignUp?.floor_size_max,
-    //       },
-    //       RoomFurnishing: dataSignUp?.room_furnishing?.value,
-    //       FloorLevel: dataSignUp?.floor_level?.value,
-    //       allowCook: dataSignUp?.attached_room?.id === 1,
-    //       builtYear: dataSignUp?.built_year,
-    //       keyWords: getList(dataSignUp?.key_your_place),
-    //     },
-    //     LeasePeriod: {
-    //       type: dataSignUp?.staying_with_guests?.id === 1,
-    //       Min: 9,
-    //       Max: 12,
-    //     },
-    //     PicturesVideo: getUrlFiles(),
-    //     RentalPrice: {
-    //       type: dataSignUp?.rental_price?.value,
-    //       Min: dataSignUp?.min_range_price,
-    //       Max: dataSignUp?.max_range_price,
-    //       Price: dataSignUp?.negotiable_price,
-    //     },
-    //   },
-    // };
+    const body = {
+      idType: 'Homeowner',
+      userInfor: {
+        email: 'test1@adamodigital.com',
+        password: dataSignUp.password,
+        name: 'test1',
+        gender: dataSignUp?.gender?.value,
+        ageGroup: dataSignUp?.age_group?.id,
+        nationality: dataSignUp?.country?.name,
+        occupation: dataSignUp?.occupation?.label,
+        ethnicity: dataSignUp?.ethnicity?.label,
+        lifestyle: {
+          Friendliness: getList(dataSignUp?.your_place),
+          Pets: dataSignUp?.have_pet?.value,
+          Smoking: dataSignUp?.smoke?.value,
+          DietRestriction: getList(dataSignUp?.diet_choice),
+          Religion: dataSignUp?.your_religion?.value,
+        },
+      },
+      roomDesc: {
+        RentalAddress: dataSignUp?.location.title,
+        PropertyType: dataSignUp?.kind_place?.value,
+        RoomDetails: {
+          RoomType: dataSignUp?.room_type?.value,
+          BedroomNumber: dataSignUp?.bedroom_number?.value,
+          BathroomNumber: dataSignUp?.bathroom_number?.value,
+          AttachedBathroom: dataSignUp?.attached_room?.id === 1,
+          FloorSize: {
+            Min: dataSignUp?.floor_size_min,
+            Max: dataSignUp?.floor_size_max,
+          },
+          RoomFurnishing: dataSignUp?.room_furnishing?.value,
+          FloorLevel: dataSignUp?.floor_level?.value,
+          allowCook: dataSignUp?.attached_room?.id === 1,
+          builtYear: dataSignUp?.built_year,
+          keyWords: getList(dataSignUp?.key_your_place),
+        },
+        LeasePeriod: {
+          type: dataSignUp?.staying_with_guests?.id === 1,
+          value: getList(dataSignUp?.lease_your_place),
+        },
+        PicturesVideo: getUrlFiles(),
+        RentalPrice: {
+          type: dataSignUp?.rental_price?.value,
+          Min: dataSignUp?.min_range_price,
+          Max: dataSignUp?.max_range_price,
+          Price: parseInt(dataSignUp?.negotiable_price || 0),
+        },
+      },
+    };
 
-    // dispatch(signUp({body}));
-    navigation.navigate(VERIFY_ACCOUNT);
+    dispatch(signUp({body}));
+    // navigation.navigate(VERIFY_ACCOUNT);
   };
 
   const RenderEmailForm = () => (
-
-    <KeyboardAwareScrollView style={{ flex: 1, paddingHorizontal: SIZE.padding }} >
+    <KeyboardAwareScrollView style={{flex: 1, paddingHorizontal: SIZE.padding}}>
       <Formik
         enableReinitialize
         initialValues={formInitialValues}
@@ -140,7 +138,7 @@ const SignUpEmail = (props: SignUpEmailProp) => {
         onSubmit={hanldeSubmit}>
         {props => (
           <>
-            <View style={{ flex: 1 }}>
+            <View style={{flex: 1}}>
               <AppText style={styles.title}>{'Sign up'}</AppText>
               <AppInput
                 label={'Email'}
@@ -192,8 +190,7 @@ const SignUpEmail = (props: SignUpEmailProp) => {
         )}
       </Formik>
     </KeyboardAwareScrollView>
-  )
-
+  );
 
   return (
     <View style={styles.container}>
@@ -203,4 +200,4 @@ const SignUpEmail = (props: SignUpEmailProp) => {
   );
 };
 
-export { SignUpEmail };
+export {SignUpEmail};
