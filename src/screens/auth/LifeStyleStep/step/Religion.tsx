@@ -10,6 +10,7 @@ import React, {forwardRef, useImperativeHandle} from 'react';
 import {View, StyleSheet} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import * as yup from 'yup';
+import HighlightText from '@sanar/react-native-highlight-text';
 
 const Religion = forwardRef((props: RoomStepProps, ref) => {
   const dispatch = useDispatch();
@@ -64,6 +65,12 @@ const Religion = forwardRef((props: RoomStepProps, ref) => {
           console.log({props});
           return (
             <>
+              <HighlightText
+                style={styles.mixTitle}
+                highlightStyle={{color: colors.primary}}
+                searchWords={['Religion']}
+                textToHighlight={'What is your Religion ?'}
+              />
               <AppPicker
                 value={props.values.your_religion}
                 name={'your_religion'}
@@ -101,5 +108,13 @@ const styles = StyleSheet.create({
     marginBottom: SIZE.padding,
     marginTop: SIZE.base_space / 2,
     maxWidth: scaleWidth(240),
+  },
+  mixTitle: {
+    ...fontFamily.fontCampWeight600,
+    fontSize: SIZE.medium_size,
+    lineHeight: SIZE.medium_size * 1.3,
+    color: colors.textThirdPrimary,
+    textAlign: 'center',
+    marginTop: SIZE.base_space,
   },
 });

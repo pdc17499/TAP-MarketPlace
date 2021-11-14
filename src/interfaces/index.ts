@@ -52,6 +52,7 @@ export interface IAppInput {
   autoFocus?: boolean;
   typeInput?: 'default' | 'price' | 'phone' | 'password';
   delimiter?: string;
+  onPressRightIcon?: () => void;
 }
 
 export interface AppSwiperProps {
@@ -99,7 +100,7 @@ export interface DataSignupProps {
   fixed_price: string;
   min_range_price: number;
   max_range_price: number;
-  lease_your_place: mockProps;
+  lease_your_place: Array<mockProps>;
   staying_with_guests: mockProps;
   room_type: mockProps;
   bedroom_number: mockProps;
@@ -127,6 +128,24 @@ export interface DataSignupProps {
   email: string;
   password: string;
   confirm_password: string;
+}
+
+export interface AppQAProps {
+  data: Array<mockProps>;
+  title: string;
+  subTitle?: string;
+  titleHighlight?: Array<string>;
+  value: any;
+  setValue: any;
+  typeList?: 'column' | 'row' | 'wrap' | 'even';
+  isMultiChoice?: boolean;
+  children?: ReactElement;
+  customStyleTitle?: TextStyle;
+  customStyleViewButton?: ViewStyle;
+  name: string;
+  isFlex?: boolean;
+  error?: string;
+  typeTitle?: 'base' | 'center-mix' | 'other';
 }
 
 export interface UserInfo {

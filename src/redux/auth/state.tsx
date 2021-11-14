@@ -1,4 +1,4 @@
-import { DataSignupProps, Token, UserInfo } from '@interfaces';
+import {DataSignupProps, Token, UserInfo} from '@interfaces';
 import moment from 'moment';
 
 export type AuthState = {
@@ -22,7 +22,7 @@ export const INITIAL_STATE_DATA_SIGN_UP: DataSignupProps = {
   fixed_price: '',
   min_range_price: 4000,
   max_range_price: 25000,
-  lease_your_place: {},
+  lease_your_place: [],
   staying_with_guests: {},
   room_type: {},
   bedroom_number: {},

@@ -36,7 +36,8 @@ const Smoking = forwardRef((props: RoomStepProps, ref) => {
         setValue={setData}
         typeList={'row'}
         name={'smoke'}
-        customStyleTitle={{textAlign: 'center'}}
+        titleHighlight={['Smoke']}
+        typeTitle={'center-mix'}
       />
     </View>
   );

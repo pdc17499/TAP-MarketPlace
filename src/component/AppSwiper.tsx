@@ -48,7 +48,7 @@ const AppSwiper = forwardRef(
         : styles.hidePagination;
 
     const activeDotColor =
-      showPagination === 'center-top' ? colors.primary : colors.orange;
+      showPagination === 'center-top' ? '#2A6B58' : colors.orange;
 
     const paddingTop =
       showPagination === 'center-top' ? SIZE.big_space + SIZE.padding : 0;
@@ -60,10 +60,11 @@ const AppSwiper = forwardRef(
           onPressBack={onPrevButton}
           iconRight={showPagination === 'center-top' ? 'skip' : 'hide'}
           onPressRight={handleSkip}
+          customContainer={styles.customContainerHeader}
         />
         <Swiper
           ref={refSwiper}
-          style={{paddingTop: paddingTop}}
+          style={[styles.customContainerHeader, {paddingTop: paddingTop}]}
           onIndexChanged={onIndexChanged}
           removeClippedSubviews={false}
           paginationStyle={customPaginationStyle}
@@ -82,6 +83,9 @@ const styles = StyleSheet.create({
     ...fontFamily.fontCampWeight600,
     fontSize: SIZE.base_size,
     color: colors.textPrimary,
+  },
+  customContainerHeader: {
+    backgroundColor: colors.bgSreen,
   },
   wrapper: {
     flex: 1,

@@ -6,13 +6,17 @@ interface AppTextProps {
   children: any;
   style?: any;
   onPress?: any;
+  numberOfLines?: number;
 }
 
 const AppText = React.memo((props: AppTextProps) => {
-  const {children, style, onPress} = props;
+  const {children, style, onPress, numberOfLines} = props;
   return (
     <>
-      <Text style={[styles.txtStyle, style]} onPress={onPress}>
+      <Text
+        style={[styles.txtStyle, style]}
+        onPress={onPress}
+        numberOfLines={numberOfLines}>
         {children}
       </Text>
     </>

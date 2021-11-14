@@ -1,6 +1,12 @@
 import {AppText} from '@component';
 import React from 'react';
-import {StyleSheet, TextInput, View, TouchableOpacity} from 'react-native';
+import {
+  StyleSheet,
+  TextInput,
+  View,
+  TouchableOpacity,
+  Pressable,
+} from 'react-native';
 import {colors, fontFamily, DEVICE, scaleWidth, SIZE, scaleSize} from '@util';
 import {
   EyeIconClose,
@@ -38,6 +44,7 @@ export const AppInput = (props: IAppInput) => {
     typeInput,
     delimiter,
     customStyleLabel,
+    onPressRightIcon,
   } = props;
   const [isFocused, setIsFocused] = React.useState(false);
   const [hidePasssWord, setHidePassWord] = React.useState(true);
@@ -153,7 +160,11 @@ export const AppInput = (props: IAppInput) => {
             {hidePasssWord ? <EyeIconOpen /> : <EyeIconClose />}
           </TouchableOpacity>
         )}
-        {iconRight && <View style={styles.iconRight}>{renderIconRight()}</View>}
+        {iconRight && (
+          <Pressable onPress={onPressRightIcon} style={styles.iconRight}>
+            {renderIconRight()}
+          </Pressable>
+        )}
       </View>
       {!!error && <AppText style={styles.error}>{error}</AppText>}
     </View>

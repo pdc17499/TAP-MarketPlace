@@ -38,8 +38,9 @@ const DietChoice = forwardRef((props: RoomStepProps, ref) => {
         setValue={setData}
         typeList={'column'}
         name={'diet_choice'}
-        customStyleTitle={{textAlign: 'center'}}
         isMultiChoice
+        titleHighlight={['Diet choices']}
+        typeTitle={'center-mix'}
       />
       <AppButton
         title={'Next'}

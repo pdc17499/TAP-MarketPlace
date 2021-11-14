@@ -31,12 +31,12 @@ const YourPlace = forwardRef((props: RoomStepProps, ref) => {
     <View style={styles.container}>
       <AppQA
         data={list.your_place}
-        title={'Is your place?'}
+        title={'Is your place'}
         value={dataSignUp}
         setValue={setData}
         typeList={'column'}
+        typeTitle={'center-mix'}
         name={'your_place'}
-        customStyleTitle={{textAlign: 'center'}}
         isMultiChoice
       />
       <AppButton

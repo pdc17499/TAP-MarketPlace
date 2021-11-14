@@ -3,7 +3,8 @@ import {AppButton, AppText, Header} from '@component';
 import {DataSignupProps} from '@interfaces';
 import {useNavigation} from '@react-navigation/core';
 import {setDataSignup} from '@redux';
-import {ROOM_UNIT_HOMEOWNER} from '@routeName';
+import {ROOM_UNIT_ADDRESS} from '@routeName';
+// import {ROOM_UNIT_HOMEOWNER} from '@routeName';
 import {fontFamily, SIZE} from '@util';
 import React from 'react';
 import {View} from 'react-native';
@@ -29,7 +30,7 @@ const ChooseRole = (props: any) => {
   const role = dataSignUp?.role_user || '';
 
   const onNext = () => {
-    navigation.navigate(ROOM_UNIT_HOMEOWNER);
+    navigation.navigate(ROOM_UNIT_ADDRESS);
   };
 
   return (

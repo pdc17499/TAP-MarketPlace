@@ -31,12 +31,13 @@ const Pets = forwardRef((props: RoomStepProps, ref) => {
     <View style={styles.container}>
       <AppQA
         data={list.have_pets}
-        title={'Do you have Pets?'}
+        title={'Do you have Pets ?'}
+        titleHighlight={['Pets']}
         value={dataSignUp}
         setValue={setData}
         typeList={'row'}
         name={'have_pet'}
-        customStyleTitle={{textAlign: 'center'}}
+        typeTitle={'center-mix'}
       />
     </View>
   );
