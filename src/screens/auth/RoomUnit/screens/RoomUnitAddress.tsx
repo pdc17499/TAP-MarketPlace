@@ -41,10 +41,9 @@ const ListLocations = ({location, onSelectLocation}: ListLocationProps) => {
     getLocation();
   }, [location]);
 
-  console.log({listLocation});
-
   const getMyLocation = async () => {
     const response: any = await getPlaceLocation();
+    console.log({response});
     if (response && response?.data?.results) {
       const location = response?.data?.results[0];
       onSelectLocation(location);
