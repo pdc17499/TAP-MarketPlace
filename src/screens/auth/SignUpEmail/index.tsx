@@ -1,9 +1,9 @@
 import {AppButton, AppInput, AppText, Header} from '@component';
 import {useNavigation} from '@react-navigation/core';
-import {scaleHeight, SIZE, validateForm} from '@util';
+import {SIZE, validateForm} from '@util';
 import {Formik} from 'formik';
 import React from 'react';
-import {View, ScrollView} from 'react-native';
+import {View} from 'react-native';
 import {styles} from './style';
 import * as yup from 'yup';
 import {VERIFY_ACCOUNT} from '@routeName';
@@ -20,7 +20,6 @@ interface screenNavigationProp {
 }
 
 const SignUpEmail = (props: SignUpEmailProp) => {
-  const navigation = useNavigation<screenNavigationProp>();
   const dispatch = useDispatch();
   const dataSignUp: DataSignupProps = useSelector(
     (state: any) => state?.auth?.dataSignup,
@@ -74,11 +73,11 @@ const SignUpEmail = (props: SignUpEmailProp) => {
 
   const hanldeSubmit = () => {
     const body = {
-      idType: 'Homeowner',
+      idType: dataSignUp?.role_user,
       userInfor: {
-        email: 'test1@adamodigital.com',
+        email: dataSignUp.email,
         password: dataSignUp.password,
-        name: 'test1',
+        name: dataSignUp.user_name,
         gender: dataSignUp?.gender?.value,
         ageGroup: dataSignUp?.age_group?.id,
         nationality: dataSignUp?.country?.name,
@@ -119,7 +118,7 @@ const SignUpEmail = (props: SignUpEmailProp) => {
           type: dataSignUp?.rental_price?.value,
           Min: dataSignUp?.min_range_price,
           Max: dataSignUp?.max_range_price,
-          Price: parseInt(dataSignUp?.negotiable_price || 0),
+          Price: parseInt(dataSignUp?.negotiable_price || '0'),
         },
       },
     };

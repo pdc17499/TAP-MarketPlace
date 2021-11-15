@@ -38,7 +38,7 @@ const RoomUnitPrice = () => {
   };
 
   const validationSchema = yup.object().shape({
-    rental_price: validateForm().common.reuqire,
+    rental_price: validateForm().common.selectAtLeast,
     negotiable_price: yup.string().when('rental_price', {
       is: '1',
       then: validateForm().common.reuqire,
