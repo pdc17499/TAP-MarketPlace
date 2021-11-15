@@ -103,7 +103,7 @@ const AppQA = React.memo((props: AppQAProps) => {
                 ) > -1
               : item.value == selected?.value;
           return (
-            <View key={item.id} style={styleViewButton}>
+            <View key={item.value} style={styleViewButton}>
               <AppButton
                 onPress={() => onChangeValue(item, isActive)}
                 isActive={isActive}

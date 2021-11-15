@@ -1,11 +1,11 @@
-import { AppText } from '@component';
-import { DownIcon } from '@assets';
-import { colors, DEVICE, fontFamily, scaleSize, scaleWidth, SIZE } from '@util';
-import React, { useRef, useState } from 'react';
-import { StyleSheet, View, Animated, Pressable } from 'react-native';
+import {AppText} from '@component';
+import {DownIcon} from '@assets';
+import {colors, DEVICE, fontFamily, scaleSize, scaleWidth, SIZE} from '@util';
+import React, {useRef, useState} from 'react';
+import {StyleSheet, View, Animated, Pressable} from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
 import CountryPicker from 'react-native-country-picker-modal';
-import { IAppPicker } from '@interfaces';
+import {IAppPicker} from '@interfaces';
 
 export const AppPicker: React.FC<IAppPicker> = React.memo((props: any) => {
   const {
@@ -22,34 +22,38 @@ export const AppPicker: React.FC<IAppPicker> = React.memo((props: any) => {
     disable,
   } = props;
   const value = props.value || '';
+  const [isOpenPicker, setIsOpenPicker] = useState(false);
 
   const onSelectFlag = (country: any) => {
     onValueChange(country, name);
-    console.log({ country });
+    console.log({country});
   };
 
-  console.log('value', value);
+  const onOpenPickerSelect = (isOpen: boolean) => setIsOpenPicker(isOpen);
 
-
-  const modalCountryProps = disable ? { visible: !disable } : {};
+  const modalCountryProps = disable ? {visible: !disable} : {};
   const isLinear = stylePicker === 'linear';
   const DownIconPicker = () => {
-    if (isLinear) return null
-    else return <DownIcon />
-  }
-  // !isLinear && <DownIcon />;
-  const contryPickerStyle = [styles.country, isLinear && styles.linearPicker];
-  const inputAndroidStyle = isLinear
-    ? styles.inputAndroidLinear
-    : styles.inputAndroid;
-  const inputIOSStyle = isLinear ? styles.inputIOSLinear : styles.inputIOS;
+    if (isLinear) return null;
+    else return <DownIcon />;
+  };
+
+  const colorLabel = {
+    color: isOpenPicker ? colors.primary : colors.secondPrimary,
+  };
+  const styles = isLinear
+    ? {
+        ...stylesBase,
+        ...stylesLinear,
+      }
+    : stylesBase;
 
   return (
     <View style={styles.container}>
-      {label && <AppText style={styles.label}>{label}</AppText>}
+      {label && <AppText style={[styles.label, colorLabel]}>{label}</AppText>}
       <View style={[styles.picker, style]}>
         {typePicker === 'country' ? (
-          <View style={contryPickerStyle}>
+          <View style={styles.country}>
             <CountryPicker
               theme={styles.themePickerCountry}
               withCallingCode={false}
@@ -60,7 +64,10 @@ export const AppPicker: React.FC<IAppPicker> = React.memo((props: any) => {
               withFilter={true}
               withCountryNameButton
               modalProps={modalCountryProps}
+              onOpen={() => onOpenPickerSelect(true)}
+              onClose={() => onOpenPickerSelect(false)}
             />
+
             {DownIconPicker()}
           </View>
         ) : (
@@ -69,19 +76,21 @@ export const AppPicker: React.FC<IAppPicker> = React.memo((props: any) => {
               disabled={disable}
               onValueChange={item => onValueChange(item, name)}
               useNativeAndroidPickerStyle={false}
-              placeholder={placeholder}
+              placeholder={placeholder || {label: 'None', value: 'None'}}
               value={value}
               items={items}
               pickerProps={{
                 style: styles.pickerProps,
               }}
               style={{
-                inputAndroid: inputAndroidStyle,
-                inputIOS: inputIOSStyle,
+                inputAndroid: styles.inputAndroid,
+                inputIOS: styles.inputIOS,
                 iconContainer: styles.iconContainer,
                 placeholder: styles.placeholder,
               }}
               Icon={() => DEVICE.isIos && DownIconPicker()}
+              onOpen={() => onOpenPickerSelect(true)}
+              onClose={() => onOpenPickerSelect(false)}
             />
             {DEVICE.isAndroid && (
               <View style={styles.customIcon}>{DownIconPicker()}</View>
@@ -94,7 +103,7 @@ export const AppPicker: React.FC<IAppPicker> = React.memo((props: any) => {
   );
 });
 
-const styles = StyleSheet.create({
+const stylesBase = StyleSheet.create({
   container: {
     marginTop: SIZE.base_space,
   },
@@ -185,38 +194,61 @@ const styles = StyleSheet.create({
     paddingHorizontal: SIZE.base_space,
     minHeight: SIZE.input_height,
   },
-  linearPicker: {
+});
+
+const stylesLinear = StyleSheet.create({
+  container: {
+    marginTop: SIZE.padding,
+  },
+  picker: {
+    // minHeight: SIZE.input_height,
+    justifyContent: 'center',
+  },
+  label: {
+    color: colors.secondPrimary,
+    fontSize: scaleSize(14.5),
+    marginBottom: SIZE.base_space / 2,
+    ...fontFamily.fontCampWeight500,
+  },
+  country: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    minHeight: 'auto',
     backgroundColor: colors.white,
-    borderBottomColor: colors.borderPrimary,
+    borderBottomColor: colors.borderProfileList,
     borderBottomWidth: 1,
     borderRadius: 0,
+    paddingBottom: SIZE.padding,
     // marginTop: 10
   },
-  inputAndroidLinear: {
-    ...fontFamily.fontWeight400,
-    fontSize: SIZE.base_size,
+  inputAndroid: {
+    ...fontFamily.fontWeight500,
+    fontSize: SIZE.base_size + 1,
     color: colors.textPrimary,
     position: 'absolute',
     top: 2,
     width: '100%',
     margin: 0,
-    height: SIZE.input_height,
-    paddingLeft: SIZE.base_space,
+    height: 'auto',
+    paddingLeft: 0,
     backgroundColor: colors.white,
-    borderBottomColor: colors.borderPrimary,
+    borderBottomColor: colors.borderProfileList,
     borderBottomWidth: 1,
     borderRadius: 0,
+    paddingBottom: SIZE.padding,
   },
-  inputIOSLinear: {
-    ...fontFamily.fontWeight400,
-    height: SIZE.input_height,
+  inputIOS: {
+    ...fontFamily.fontWeight500,
+    height: 'auto',
     color: colors.textPrimary,
     width: '100%',
-    fontSize: SIZE.base_size,
-    paddingLeft: SIZE.base_space,
+    fontSize: SIZE.base_size + 1,
+    paddingLeft: 0,
     backgroundColor: colors.white,
-    borderBottomColor: colors.borderPrimary,
+    borderBottomColor: colors.borderProfileList,
     borderBottomWidth: 1,
     borderRadius: 0,
+    paddingBottom: SIZE.padding,
   },
 });

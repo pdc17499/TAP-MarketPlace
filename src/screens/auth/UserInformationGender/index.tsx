@@ -29,7 +29,7 @@ const UserInformationGender = () => {
   const formInitialValues = {
     gender: dataSignUp?.gender?.value,
     age_group: dataSignUp?.age_group?.value,
-    staying_with_guests: dataSignUp?.staying_with_guests?.id,
+    staying_with_guests: dataSignUp?.staying_with_guests?.value,
   };
 
   const validationForm = yup.object().shape({
@@ -91,7 +91,7 @@ const UserInformationGender = () => {
             iconRight={'arNext'}
             onPress={props.handleSubmit}
           />
-          {props.values.staying_with_guests === 1 && (
+          {props.values.staying_with_guests === 'Yes' && (
             <AppButton
               customStyleButton={styles.button}
               title={'Skip'}

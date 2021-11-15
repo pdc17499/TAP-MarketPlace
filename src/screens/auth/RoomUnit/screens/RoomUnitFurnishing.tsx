@@ -25,9 +25,9 @@ const RoomUnitFurnishing = () => {
   };
 
   const formInitialValues = {
-    room_furnishing: dataSignUp?.room_furnishing?.id,
-    floor_level: dataSignUp?.floor_level?.id,
-    allow_cooking: dataSignUp?.allow_cooking?.id,
+    room_furnishing: dataSignUp?.room_furnishing?.value,
+    floor_level: dataSignUp?.floor_level?.value,
+    allow_cooking: dataSignUp?.allow_cooking?.value,
   };
 
   const validationSchema = yup.object().shape({

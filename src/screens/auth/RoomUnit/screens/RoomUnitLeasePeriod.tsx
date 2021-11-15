@@ -28,7 +28,7 @@ const RoomUnitLeasePeriod = () => {
 
   const formInitialValues = {
     lease_your_place: dataSignUp?.lease_your_place,
-    staying_with_guests: dataSignUp?.staying_with_guests?.id,
+    staying_with_guests: dataSignUp?.staying_with_guests?.value,
     kind_place: dataSignUp?.kind_place?.value,
   };
 
