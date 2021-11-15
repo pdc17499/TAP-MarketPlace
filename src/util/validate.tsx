@@ -6,12 +6,9 @@ export const validateForm = () => {
       reuqire: yup.string().required('This field is required'),
       selectAtLeast: yup.string().required('You must select 1 option'),
       atLeastOnePicker: yup
-        .object()
-        .shape({
-          value: yup.string().required('You must select 1 option'),
-          label: yup.string(),
-        })
-        .nullable(),
+        .number()
+        .typeError('You must select 1 option')
+        .required('You must select 1 option'),
       atLeastOneArray: yup
         .array()
         .min(1, 'You must select 1 option')

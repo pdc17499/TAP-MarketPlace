@@ -5,7 +5,7 @@ export async function getListLocation(text: string = '') {
   try {
     const searchURL =
       'https://maps.googleapis.com/maps/api/place/textsearch/json?';
-    const API_KEY = 'AIzaSyC-Och0tCHZLWEe5ALdE6p036YVSFHCDhc';
+    const API_KEY = 'AIzaSyDs_vnhA0i_hYvKfCHdbYO5S5aOkBNt4PE';
     const URL = `${searchURL}query=${text}&key=${API_KEY}`;
     return await axios.get(URL, {});
   } catch (err) {
@@ -18,9 +18,9 @@ export async function getListLocationAroundYou(text: string = '') {
     const location: any = await getUserLocation();
     const searchURL =
       'https://maps.googleapis.com/maps/api/place/textsearch/json?';
-    const API_KEY = 'AIzaSyC-Och0tCHZLWEe5ALdE6p036YVSFHCDhc';
+    const API_KEY = 'AIzaSyDs_vnhA0i_hYvKfCHdbYO5S5aOkBNt4PE';
     const RADIUS = '10000';
-    const URL = `${searchURL}query=${text}&location=${location.latitude},${location.longitude}&radius=${RADIUS}&key=${API_KEY}`;
+    const URL = `${searchURL}query=${text}&location=${location.lathigitude},${location.longitude}&radius=${RADIUS}&key=${API_KEY}`;
     console.log(URL);
     return await axios.get(URL, {});
   } catch (err) {
@@ -35,7 +35,7 @@ export async function getPlaceLocation() {
     console.log(text);
     const searchURL =
       'https://maps.googleapis.com/maps/api/place/textsearch/json?';
-    const API_KEY = 'AIzaSyC-Och0tCHZLWEe5ALdE6p036YVSFHCDhc';
+    const API_KEY = 'AIzaSyDs_vnhA0i_hYvKfCHdbYO5S5aOkBNt4PE';
     const RADIUS = '10000';
     const URL = `${searchURL}query=${text}&location=${location.latitude},${location.longitude}&radius=${RADIUS}&key=${API_KEY}`;
     console.log(URL);

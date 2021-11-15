@@ -2,10 +2,12 @@ import {AppButton, AppQA} from '@component';
 import {DataSignupProps, RoomStepProps} from '@interfaces';
 import {ROOM_UNIT_HOWNER} from '@mocks';
 import {setDataSignup} from '@redux';
-import {colors, fontFamily, scaleWidth, SIZE} from '@util';
+import {colors, fontFamily, scaleWidth, SIZE, validateForm} from '@util';
+import {Formik} from 'formik';
 import React, {forwardRef, useImperativeHandle} from 'react';
 import {View, StyleSheet} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
+import * as yup from 'yup';
 
 const YourPlace = forwardRef((props: RoomStepProps, ref) => {
   const {onNext} = props;
@@ -15,6 +17,14 @@ const YourPlace = forwardRef((props: RoomStepProps, ref) => {
   const setData = (data: any) => {
     dispatch(setDataSignup({data}));
   };
+
+  const formInitialValues = {
+    your_place: dataSignUp?.your_place,
+  };
+
+  const validationForm = yup.object().shape({
+    your_place: validateForm().common.atLeastOneArray,
+  });
 
   useImperativeHandle(ref, () => ({
     onSkip,
@@ -29,23 +39,35 @@ const YourPlace = forwardRef((props: RoomStepProps, ref) => {
 
   return (
     <View style={styles.container}>
-      <AppQA
-        data={list.your_place}
-        title={'Is your place'}
-        value={dataSignUp}
-        setValue={setData}
-        typeList={'column'}
-        typeTitle={'center-mix'}
-        name={'your_place'}
-        isMultiChoice
-      />
-      <AppButton
-        title={'Next'}
-        onPress={onNext}
-        iconRight={'arNext'}
-        customStyleButton={{backgroundColor: colors.bgSreen}}
-        customStyleTitle={{color: colors.primary}}
-      />
+      <Formik
+        initialValues={formInitialValues}
+        validationSchema={validationForm}
+        validateOnChange={false}
+        enableReinitialize
+        onSubmit={onNext}>
+        {(propsFormik: any) => (
+          <>
+            <AppQA
+              data={list.your_place}
+              title={'Is your place'}
+              value={dataSignUp}
+              setValue={setData}
+              typeList={'column'}
+              typeTitle={'center-mix'}
+              name={'your_place'}
+              isMultiChoice
+              error={propsFormik.errors.your_place}
+            />
+            <AppButton
+              title={'Next'}
+              onPress={propsFormik.handleSubmit}
+              iconRight={'arNext'}
+              customStyleButton={{backgroundColor: colors.bgSreen}}
+              customStyleTitle={{color: colors.primary}}
+            />
+          </>
+        )}
+      </Formik>
     </View>
   );
 });

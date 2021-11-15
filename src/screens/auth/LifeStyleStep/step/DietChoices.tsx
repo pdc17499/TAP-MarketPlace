@@ -3,14 +3,14 @@ import {DataSignupProps, RoomStepProps} from '@interfaces';
 import {ROOM_UNIT_HOWNER} from '@mocks';
 import {useNavigation} from '@react-navigation/core';
 import {setDataSignup} from '@redux';
-import {SIGNUP} from '@routeName';
-import {colors, fontFamily, scaleWidth, SIZE} from '@util';
+import {colors, fontFamily, scaleWidth, SIZE, validateForm} from '@util';
+import {Formik} from 'formik';
 import React, {forwardRef, useImperativeHandle} from 'react';
 import {View, StyleSheet, ScrollView} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
+import * as yup from 'yup';
 
 const DietChoice = forwardRef((props: RoomStepProps, ref) => {
-  const navigation: any = useNavigation();
   const {onNext} = props;
   const dispatch = useDispatch();
   const list = ROOM_UNIT_HOWNER;
@@ -18,6 +18,14 @@ const DietChoice = forwardRef((props: RoomStepProps, ref) => {
   const setData = (data: any) => {
     dispatch(setDataSignup({data}));
   };
+
+  const formInitialValues = {
+    diet_choice: dataSignUp?.diet_choice,
+  };
+
+  const validationForm = yup.object().shape({
+    diet_choice: validateForm().common.atLeastOneArray,
+  });
 
   useImperativeHandle(ref, () => ({
     onSkip,
@@ -31,24 +39,39 @@ const DietChoice = forwardRef((props: RoomStepProps, ref) => {
 
   return (
     <ScrollView style={styles.container}>
-      <AppQA
-        data={list.diet_choices}
-        title={'Your Diet choices ?'}
-        value={dataSignUp}
-        setValue={setData}
-        typeList={'column'}
-        name={'diet_choice'}
-        isMultiChoice
-        titleHighlight={['Diet choices']}
-        typeTitle={'center-mix'}
-      />
-      <AppButton
-        title={'Next'}
-        onPress={onNext}
-        iconRight={'arNext'}
-        customStyleButton={{backgroundColor: colors.bgSreen}}
-        customStyleTitle={{color: colors.primary}}
-      />
+      <Formik
+        initialValues={formInitialValues}
+        validationSchema={validationForm}
+        validateOnChange={false}
+        enableReinitialize
+        onSubmit={onNext}>
+        {(propsFormik: any) => (
+          <>
+            <AppQA
+              data={list.diet_choices}
+              title={'Your Diet choices ?'}
+              value={dataSignUp}
+              setValue={setData}
+              typeList={'column'}
+              name={'diet_choice'}
+              isMultiChoice
+              titleHighlight={['Diet choices']}
+              typeTitle={'center-mix'}
+              error={propsFormik.errors.diet_choice}
+            />
+            <AppButton
+              title={'Next'}
+              onPress={propsFormik.handleSubmit}
+              iconRight={'arNext'}
+              customStyleButton={{
+                backgroundColor: colors.bgSreen,
+                paddingBottom: SIZE.big_space,
+              }}
+              customStyleTitle={{color: colors.primary}}
+            />
+          </>
+        )}
+      </Formik>
     </ScrollView>
   );
 });
@@ -59,7 +82,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: SIZE.padding,
-    paddingBottom: SIZE.medium_space,
   },
   title: {
     ...fontFamily.fontCampWeight600,

@@ -28,7 +28,7 @@ const Religion = forwardRef((props: RoomStepProps, ref) => {
   };
 
   const validationForm = yup.object().shape({
-    //  your_religion: validateForm().common.selectAtLeast,
+    your_religion: validateForm().common.atLeastOnePicker,
   });
 
   useImperativeHandle(ref, () => ({

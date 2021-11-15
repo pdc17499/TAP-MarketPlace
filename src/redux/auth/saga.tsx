@@ -1,17 +1,17 @@
 import {put, takeLatest} from 'redux-saga/effects';
-import {saveDataUser, removeToken, logoutApp} from './action';
-import {LOGIN, LOGOUT, VERIFY_EMAIL, SEND_VERIFY_EMAIL} from './type';
+import {saveDataUser, logoutApp} from './action';
+import {LOGIN, LOGOUT, SEND_VERIFY_EMAIL} from './type';
 import {
   GlobalService,
   sendVerifyEmail,
   loginApi,
   logOutApi,
-  signUp,
   signUpApi,
 } from '@services';
 // import {VERTIFIEMAIL, VERIFYCODE} from '@routeName';
 import {showMessage} from 'react-native-flash-message';
-import {SIGNUP} from '@routeName';
+import {SIGNUP, VERIFY_ACCOUNT} from '@routeName';
+import {NavigationUtils} from '@navigation';
 
 export interface ResponseGenerator {
   result?: any;
@@ -19,7 +19,6 @@ export interface ResponseGenerator {
 }
 
 export function* loginSaga(action: any) {
-  console.log('num2');
   try {
     GlobalService.showLoading();
     const result: ResponseGenerator = yield loginApi(action.payload);
@@ -36,8 +35,11 @@ export function* signUpSaga(action: any) {
     const {body} = action?.payload;
     const result: ResponseGenerator = yield signUpApi(body);
     console.log({result});
+    if (result) {
+      yield put(saveDataUser(result));
+      NavigationUtils.navigate(VERIFY_ACCOUNT);
+    }
     // yield put(saveDataRedux(result));
-    // NavigationUtils.navigate(VERTIFIEMAIL);
   } catch (error) {
   } finally {
     GlobalService.hideLoading();
