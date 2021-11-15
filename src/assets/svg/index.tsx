@@ -1,4 +1,4 @@
-import {colors} from '@util';
+import { colors } from '@util';
 import React from 'react';
 import Svg, {
   Path,
@@ -373,4 +373,104 @@ export const IconMapPin = (props: iconProps) => (
       strokeLinejoin="round"
     />
   </Svg>
+)
+
+export const IconHouseLine = (props: iconProps) => (
+  <Svg
+    width={20}
+    height={20}
+    fill="none"
+    {...props}
+  >
+    <Path
+      d="M16.875 16.875V9.027a.625.625 0 00-.205-.463l-6.25-5.682a.625.625 0 00-.84 0L3.33 8.564a.625.625 0 00-.205.463v7.848M1.25 16.875h17.5"
+      stroke="#4A4B51"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </Svg>
 );
+
+export const IconUser = (props: iconProps) => (
+  <Svg
+    width={20}
+    height={20}
+    fill="none"
+    {...props}
+  >
+    <Path
+      d="M10 12.5a5 5 0 100-10 5 5 0 000 10z"
+      stroke="#4A4B51"
+      strokeWidth={1.5}
+      strokeMiterlimit={10}
+    />
+    <Path
+      d="M2.42 16.874a8.752 8.752 0 0115.159 0"
+      stroke="#4A4B51"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </Svg>
+);
+
+
+export const IconThumbsUp = (props: iconProps) => (
+  <Svg
+    width={20}
+    height={20}
+    fill="none"
+    {...props}
+  >
+    <Path
+      d="M4.27 8.125v8.125M4.27 8.125l3.125-6.25a2.5 2.5 0 012.5 2.5V6.25h4.834a1.25 1.25 0 011.24 1.405l-.938 7.5a1.25 1.25 0 01-1.24 1.095H4.27"
+      stroke="#4A4B51"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </Svg>
+);
+
+export const IconSetting = (props: iconProps) => (
+  <Svg
+    width={20}
+    height={20}
+    fill="none"
+    {...props}
+  >
+    <Path
+      d="M10.245 7.512a2.5 2.5 0 10-.491 4.976 2.5 2.5 0 00.491-4.976v0zM16.265 10a6.03 6.03 0 01-.06.812l1.766 1.385a.422.422 0 01.096.537l-1.67 2.891a.422.422 0 01-.514.18l-1.754-.707a.629.629 0 00-.593.068 6.425 6.425 0 01-.841.49.623.623 0 00-.345.475L12.088 18a.433.433 0 01-.418.358H8.33a.434.434 0 01-.418-.346l-.262-1.868a.628.628 0 00-.352-.477 6.069 6.069 0 01-.838-.491.623.623 0 00-.59-.067l-1.754.706a.422.422 0 01-.513-.18l-1.67-2.89a.422.422 0 01.095-.537l1.492-1.172a.627.627 0 00.235-.55 5.324 5.324 0 010-.97.625.625 0 00-.237-.545L2.025 7.8a.422.422 0 01-.093-.534l1.671-2.891a.422.422 0 01.513-.18l1.754.707a.63.63 0 00.593-.068c.268-.185.549-.348.841-.49a.623.623 0 00.345-.474l.263-1.871a.433.433 0 01.417-.358h3.341a.434.434 0 01.418.346l.262 1.868a.628.628 0 00.352.477c.292.141.572.306.838.491a.625.625 0 00.59.067l1.754-.706a.422.422 0 01.513.18l1.67 2.89a.422.422 0 01-.095.537L16.48 8.963a.627.627 0 00-.237.55c.013.162.022.324.022.487z"
+      stroke="#4A4B51"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </Svg>
+);
+
+export const IconShieldCheck = (props: iconProps) => (
+  <Svg
+    width={20}
+    height={20}
+    fill="none"
+    {...props}
+  >
+    <Path
+      d="M3.125 8.958V4.375a.625.625 0 01.625-.625h12.5a.625.625 0 01.625.625v4.583c0 6.564-5.57 8.739-6.683 9.107a.59.59 0 01-.384 0c-1.112-.368-6.683-2.543-6.683-9.107z"
+      stroke="#2A6B58"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <Path
+      d="M13.438 8.125L8.854 12.5l-2.291-2.188"
+      stroke="#2A6B58"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </Svg>
+);
+

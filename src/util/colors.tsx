@@ -4,6 +4,7 @@ const colors = {
   textPrimary: '#191718',
   textSecondPrimary: '#AAAAAA',
   textThirdPrimary: '#808190',
+  textFouthPrimary: '#4A4B51',
   borderPrimary: '#D8D8D8',
   orange: '#DE9236',
   bgInput: '#F4F4F4',
@@ -14,6 +15,7 @@ const colors = {
   facebook: '#287AE3',
   google: '#EFEFEF',
   borderTextFacebook: '#5A9DF4',
+  borderProfileList: '#ECECEC'
 };
 
-export {colors};
+export { colors };

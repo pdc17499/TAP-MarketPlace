@@ -1,9 +1,9 @@
 import * as React from 'react';
-import {NavigationContainer} from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
-import {HOME} from './routeName';
-import {Home} from '../screens';
-import {useSelector} from 'react-redux';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { HOME, PROFILE } from './routeName';
+import { Home, Profile } from '../screens';
+import { useSelector } from 'react-redux';
 import UnAuthenStack from './UnAuthenStack';
 
 const Stack = createStackNavigator();
@@ -13,8 +13,10 @@ const screenOptions = {
 
 const AuthenStack = () => {
   return (
-    <Stack.Navigator screenOptions={screenOptions} initialRouteName={HOME}>
+    <Stack.Navigator screenOptions={screenOptions} initialRouteName={PROFILE}>
       <Stack.Screen name={HOME} component={Home} />
+      <Stack.Screen name={PROFILE} component={Profile} />
+
     </Stack.Navigator>
   );
 };
@@ -22,7 +24,7 @@ const AuthenStack = () => {
 //main stack app
 const NavigationApp = React.forwardRef((props: any, ref: any) => {
   let token = useSelector((state: any) => state?.auth?.token);
-  console.log({token});
+  console.log({ token });
 
   const renderStackApp = () => {
     if (!token) {

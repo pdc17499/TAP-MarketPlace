@@ -29,3 +29,5 @@ export const LIFE_STYLE_STEP = 'LIFE_STYLE_STEP';
 
 // AUTHENTICATE
 export const HOME = 'HOME';
+export const PROFILE = 'PROFILE';
+
