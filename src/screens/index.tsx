@@ -24,8 +24,8 @@ import {
 } from './auth/RoomUnit';
 
 //Authenticate
-import { Home } from './home_owner/Home';
-import { Profile } from './home_owner/Profile';
+import { Home } from './homeowner/Home';
+import { Profile } from './homeowner/Profile';
 
 import { UpdateNewPassword } from './auth/UpdateNewPassword';
 

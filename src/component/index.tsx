@@ -10,5 +10,5 @@ export * from './AppPicker';
 // export * from './AppDatePicker';
 export * from './GlobalUI';
 // export * from './AppDropdownPicker';
-export * from './ListProfile';
+
 

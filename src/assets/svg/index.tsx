@@ -472,5 +472,22 @@ export const IconShieldCheck = (props: iconProps) => (
       strokeLinejoin="round"
     />
   </Svg>
+)
+
+export const IconLogOut = (props: iconProps) => (
+  <Svg
+    width={20}
+    height={20}
+    fill="none"
+    {...props}
+  >
+    <Path
+      d="M13.595 6.719L16.875 10l-3.28 3.281M8.125 10h8.748M8.125 16.875H3.75a.625.625 0 01-.625-.625V3.75a.625.625 0 01.625-.625h4.375"
+      stroke="#AAA"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </Svg>
 );
 
