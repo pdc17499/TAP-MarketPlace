@@ -78,7 +78,7 @@ const UserInformationCountry = () => {
                 name={'country'}
                 label={'Where do you come from?'}
                 onValueChange={onChangeText}
-                typePicker={'coutry'}
+                typePicker={'country'}
                 error={props.errors.country}
               />
 

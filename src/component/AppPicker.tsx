@@ -1,7 +1,7 @@
 import {AppText} from '@component';
 import {DownIcon} from '@assets';
-import {colors, fontFamily, scaleSize, scaleWidth, SIZE} from '@util';
-import React, {useState} from 'react';
+import {colors, DEVICE, fontFamily, scaleSize, scaleWidth, SIZE} from '@util';
+import React, {useRef, useState} from 'react';
 import {StyleSheet, View, Animated, Pressable} from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
 import CountryPicker from 'react-native-country-picker-modal';
@@ -18,28 +18,32 @@ export const AppPicker: React.FC<IAppPicker> = React.memo((props: any) => {
     styleError,
     name,
     typePicker,
+    disable,
   } = props;
   const value = props.value || '';
-  const [visible, setVisible] = useState(false);
 
   const onSelectFlag = (country: any) => {
-    // setCountryCode(country?.cca2);
     onValueChange(country, name);
     console.log({country});
   };
+
+  const modalCountryProps = disable ? {visible: !disable} : {};
+  const isLinear = typePicker === 'linear';
+  const DownIconPicker = () => !isLinear && <DownIcon />;
+  const contryPickerStyle = [styles.country, isLinear && styles.linearPicker];
+  const inputAndroidStyle = isLinear
+    ? styles.inputAndroidLinear
+    : styles.inputAndroid;
+  const inputIOSStyle = isLinear ? styles.inputIOSLinear : styles.inputIOS;
 
   return (
     <View style={styles.container}>
       {label && <AppText style={styles.label}>{label}</AppText>}
       <View style={[styles.picker, style]}>
-        {typePicker === 'coutry' ? (
-          <View style={styles.country}>
+        {typePicker === 'country' ? (
+          <View style={contryPickerStyle}>
             <CountryPicker
-              theme={{
-                fontSize: SIZE.base_size,
-                ...fontFamily.fontWeight400,
-              }}
-              visible={visible}
+              theme={styles.themePickerCountry}
               withCallingCode={false}
               withCallingCodeButton={false}
               countryCode={value || 'SG'}
@@ -47,31 +51,34 @@ export const AppPicker: React.FC<IAppPicker> = React.memo((props: any) => {
               onSelect={onSelectFlag}
               withFilter={true}
               withCountryNameButton
+              modalProps={modalCountryProps}
             />
-            <DownIcon />
+            {DownIconPicker()}
           </View>
         ) : (
-          <RNPickerSelect
-            onValueChange={item => onValueChange(item, name)}
-            useNativeAndroidPickerStyle={false}
-            placeholder={placeholder}
-            value={value}
-            items={items}
-            pickerProps={{
-              style: {
-                height: '100%',
-                backgroundColor: 'transparent',
-                color: 'transparent',
-              },
-            }}
-            style={{
-              inputAndroid: styles.inputAndroid,
-              inputIOS: styles.inputIOS,
-              iconContainer: styles.iconContainer,
-              placeholder: styles.placeholder,
-            }}
-            Icon={() => <DownIcon style={{top: 4}} />}
-          />
+          <>
+            <RNPickerSelect
+              disabled={disable}
+              onValueChange={item => onValueChange(item, name)}
+              useNativeAndroidPickerStyle={false}
+              placeholder={placeholder}
+              value={value}
+              items={items}
+              pickerProps={{
+                style: styles.pickerProps,
+              }}
+              style={{
+                inputAndroid: inputAndroidStyle,
+                inputIOS: inputIOSStyle,
+                iconContainer: styles.iconContainer,
+                placeholder: styles.placeholder,
+              }}
+              Icon={() => DEVICE.isIos && DownIconPicker()}
+            />
+            {DEVICE.isAndroid && (
+              <View style={styles.customIcon}>{DownIconPicker()}</View>
+            )}
+          </>
         )}
       </View>
       {!!error && <AppText style={[styles.error, styleError]}>{error}</AppText>}
@@ -81,7 +88,26 @@ export const AppPicker: React.FC<IAppPicker> = React.memo((props: any) => {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: SIZE.medium_space,
+    marginTop: SIZE.base_space,
+  },
+  pickerProps: {
+    backgroundColor: 'transparent',
+    color: 'transparent',
+  },
+  themePickerCountry: {
+    fontSize: SIZE.base_size,
+    ...fontFamily.fontWeight400,
+  },
+  customIcon: {
+    backgroundColor: colors.bgInput,
+    zIndex: 1,
+    position: 'absolute',
+    top: SIZE.input_height / 2 - 3,
+    right: 10,
+    width: 20,
+    height: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   picker: {
     minHeight: SIZE.input_height,
@@ -122,7 +148,7 @@ const styles = StyleSheet.create({
   iconContainer: {
     position: 'absolute',
     top: scaleWidth(20),
-    right: 8,
+    right: 0,
     justifyContent: 'center',
     marginRight: scaleWidth(10),
   },
@@ -139,5 +165,38 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     paddingHorizontal: SIZE.base_space,
     minHeight: SIZE.input_height,
+  },
+  linearPicker: {
+    backgroundColor: colors.white,
+    borderBottomColor: colors.borderPrimary,
+    borderBottomWidth: 1,
+    borderRadius: 0,
+  },
+  inputAndroidLinear: {
+    ...fontFamily.fontWeight400,
+    fontSize: SIZE.base_size,
+    color: colors.textPrimary,
+    position: 'absolute',
+    top: 2,
+    width: '100%',
+    margin: 0,
+    height: SIZE.input_height,
+    paddingLeft: SIZE.base_space,
+    backgroundColor: colors.white,
+    borderBottomColor: colors.borderPrimary,
+    borderBottomWidth: 1,
+    borderRadius: 0,
+  },
+  inputIOSLinear: {
+    ...fontFamily.fontWeight400,
+    height: SIZE.input_height,
+    color: colors.textPrimary,
+    width: '100%',
+    fontSize: SIZE.base_size,
+    paddingLeft: SIZE.base_space,
+    backgroundColor: colors.white,
+    borderBottomColor: colors.borderPrimary,
+    borderBottomWidth: 1,
+    borderRadius: 0,
   },
 });

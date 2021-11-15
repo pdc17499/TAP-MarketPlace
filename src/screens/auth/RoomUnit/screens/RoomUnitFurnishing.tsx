@@ -134,7 +134,6 @@ const styles = StyleSheet.create({
     ...fontFamily.fontCampWeight600,
     fontSize: SIZE.medium_size,
     lineHeight: SIZE.medium_size * 1.3,
-    marginBottom: SIZE.padding - SIZE.base_space,
     marginTop: SIZE.padding,
   },
   optional: {

@@ -201,5 +201,6 @@ export interface IAppPicker {
   error?: string;
   styleError?: any;
   name?: string;
-  typePicker?: 'base' | 'coutry';
+  typePicker?: 'base' | 'linear' | 'country';
+  disable?: boolean
 }
