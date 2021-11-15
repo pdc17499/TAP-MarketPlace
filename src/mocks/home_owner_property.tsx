@@ -239,34 +239,36 @@ export const ROOM_UNIT_HOWNER = {
   ],
   gender: [
     {
-      id: 1,
-      value: 'Male',
+
+      value: 'male',
+      label: 'male'
     },
     {
-      id: 2,
-      value: 'Female',
+      value: 'female',
+      label: 'female'
     },
     {
-      id: 3,
-      value: 'Other',
+      value: 'other',
+      label: 'other'
     },
   ],
   group_age: [
     {
-      id: 1,
-      value: '18 - 28',
+      value: 1,
+      label: '18 - 28',
     },
     {
-      id: 2,
-      value: '29 - 40',
+      value: 2,
+      label: '29 - 40',
     },
     {
-      id: 3,
-      value: '41 - 55',
+      value: 3,
+      label: '41 - 55',
     },
     {
-      id: 4,
-      value: 'Over 55',
+      value: 4,
+      label: 'Over 55',
+
     },
   ],
   your_place: [
@@ -331,69 +333,73 @@ export const ROOM_UNIT_HOWNER = {
   ],
   occupation: [
     {
-      value: 1,
+      value: 'Teacher',
       label: 'Teacher',
     },
     {
-      value: 2,
+      value: 'Doctor',
       label: 'Doctor',
     },
     {
-      value: 3,
+      value: 'Programer',
       label: 'Programer',
     },
     {
-      value: 4,
+      value: 'Student',
       label: 'Student',
     },
     {
-      value: 5,
+      value: 'Shipper',
       label: 'Shipper',
     },
     {
-      value: 6,
+      value: 'Singer',
       label: 'Singer',
     },
     {
-      value: 7,
+      value: 'Model',
       label: 'Model',
     },
     {
-      value: 8,
+      value: 'Lawyer',
       label: 'Lawyer',
     },
   ],
   ethnicity: [
     {
-      value: 1,
+      value: 'Shang',
+      label: 'Shang',
+    },
+    {
+      value: 'Asia',
       label: 'Asia',
     },
     {
-      value: 2,
+      value: 'Africa',
       label: 'Africa',
     },
     {
-      value: 3,
+      value: 'Europe',
       label: 'Europe',
     },
     {
-      value: 4,
+      value: 'China',
       label: 'China',
     },
     {
-      value: 5,
+      value: 'North America',
       label: 'North America',
     },
     {
-      value: 6,
+      value: 'South America',
       label: 'South America',
     },
     {
-      value: 7,
+      value: 'Oceania',
       label: 'Oceania',
     },
     {
-      value: 8,
+      value: 'Antarctica',
       label: 'Antarctica',
     },
   ],

@@ -1,11 +1,11 @@
-import {AppText} from '@component';
-import {DownIcon} from '@assets';
-import {colors, DEVICE, fontFamily, scaleSize, scaleWidth, SIZE} from '@util';
-import React, {useRef, useState} from 'react';
-import {StyleSheet, View, Animated, Pressable} from 'react-native';
+import { AppText } from '@component';
+import { DownIcon } from '@assets';
+import { colors, DEVICE, fontFamily, scaleSize, scaleWidth, SIZE } from '@util';
+import React, { useRef, useState } from 'react';
+import { StyleSheet, View, Animated, Pressable } from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
 import CountryPicker from 'react-native-country-picker-modal';
-import {IAppPicker} from '@interfaces';
+import { IAppPicker } from '@interfaces';
 
 export const AppPicker: React.FC<IAppPicker> = React.memo((props: any) => {
   const {
@@ -18,18 +18,26 @@ export const AppPicker: React.FC<IAppPicker> = React.memo((props: any) => {
     styleError,
     name,
     typePicker,
+    stylePicker,
     disable,
   } = props;
   const value = props.value || '';
 
   const onSelectFlag = (country: any) => {
     onValueChange(country, name);
-    console.log({country});
+    console.log({ country });
   };
 
-  const modalCountryProps = disable ? {visible: !disable} : {};
-  const isLinear = typePicker === 'linear';
-  const DownIconPicker = () => !isLinear && <DownIcon />;
+  console.log('value', value);
+
+
+  const modalCountryProps = disable ? { visible: !disable } : {};
+  const isLinear = stylePicker === 'linear';
+  const DownIconPicker = () => {
+    if (isLinear) return null
+    else return <DownIcon />
+  }
+  // !isLinear && <DownIcon />;
   const contryPickerStyle = [styles.country, isLinear && styles.linearPicker];
   const inputAndroidStyle = isLinear
     ? styles.inputAndroidLinear
@@ -109,6 +117,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  customIcon2: {
+    backgroundColor: colors.white,
+    zIndex: 1,
+    position: 'absolute',
+    top: SIZE.input_height / 2 - 3,
+    right: 10,
+    width: 20,
+    height: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   picker: {
     minHeight: SIZE.input_height,
     justifyContent: 'center',
@@ -171,6 +190,7 @@ const styles = StyleSheet.create({
     borderBottomColor: colors.borderPrimary,
     borderBottomWidth: 1,
     borderRadius: 0,
+    // marginTop: 10
   },
   inputAndroidLinear: {
     ...fontFamily.fontWeight400,

@@ -50,7 +50,7 @@ export interface IAppInput {
   iconRight?: 'clear' | 'other';
   name?: string;
   autoFocus?: boolean;
-  typeInput?: 'default' | 'price' | 'phone' | 'password';
+  typeInput?: 'default' | 'price' | 'phone' | 'password' | 'linear';
   delimiter?: string;
   onPressRightIcon?: () => void;
 }
@@ -149,6 +149,7 @@ export interface AppQAProps {
 }
 
 export interface UserInfo {
+  country: string;
   address: string;
   ageGroup: number;
   contact: string;
@@ -202,5 +203,6 @@ export interface IAppPicker {
   styleError?: any;
   name?: string;
   typePicker?: 'base' | 'linear' | 'country';
-  disable?: boolean
+  disable?: boolean;
+  stylePicker?: 'base' | 'linear';
 }

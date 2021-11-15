@@ -41,8 +41,9 @@ const styles = StyleSheet.create({
     fontSize: scaleSize(15),
     color: colors.textFouthPrimary,
     marginLeft: scaleWidth(20),
-    width: '82%'
+    flex: 1
   },
+
   borderBottom: {
     height: 1,
     borderBottomColor: colors.borderProfileList,
@@ -50,12 +51,12 @@ const styles = StyleSheet.create({
     marginTop: scaleWidth(25)
 
   },
-  verify: {
+  titleBold: {
     ...fontFamily.fontWeight500,
     fontSize: scaleSize(15),
-    color: colors.textPrimary,
+    color: colors.primary,
     marginLeft: scaleWidth(20),
-    width: '86%'
+    flex: 1
   },
 
   item: {

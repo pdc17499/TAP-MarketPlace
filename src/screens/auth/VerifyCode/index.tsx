@@ -24,7 +24,7 @@ const VerifyCode = (props: VerifyCodeProp) => {
   const COUNTRY_CODE = props.route.params.coutryCode
   console.log('hi', PHONE);
   const navigation = useNavigation<screenNavigationProp>();
-  const [timerCount, setTimer] = useState(5)
+  const [timerCount, setTimer] = useState(25)
 
   const CELL_COUNT = 4;
   const [value, setValue] = useState('');
