@@ -172,7 +172,6 @@ export interface UserInfo {
   rental_account: string;
   updatedAt: string;
   date_of_birth: string;
-  religion: string;
 }
 
 export interface Token {

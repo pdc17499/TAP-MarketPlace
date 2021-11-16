@@ -173,15 +173,15 @@ const BasicInfomation = ((props: BasicInfomationProp) => {
                 stylePicker={'linear'}
               />
             </View>
-            {showButton
-              ? <AppButton
-                customStyleButton={styles.button}
-                title={'Save change'}
-                size={'small'}
-                iconRight={'tick'}
-                onPress={props.handleSubmit}
-              />
-              : null}
+
+            <AppButton
+              customStyleButton={styles.button}
+              title={'Save change'}
+              size={'small'}
+              iconRight={'tick'}
+              onPress={props.handleSubmit}
+            />
+
           </>
         )}
       </Formik>

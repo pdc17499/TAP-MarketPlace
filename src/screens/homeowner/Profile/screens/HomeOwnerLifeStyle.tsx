@@ -33,18 +33,18 @@ const HomeOwnerLifeStyle = ((props: HomeOwnerLifeStyleProp) => {
   const [showButton, setShowButton] = useState(false)
 
   useEffect(() => {
+    // console.log('show', showButton);
     setUsers(dataUser)
+    console.log('dulieu', dataUser);
   }, [dataUser])
 
 
   const formInitialValues = {
-    name: users?.name,
-    country: users?.country,
-    occupation: users?.occupation,
-    ethnicity: users?.ethnicity,
-    gender: users?.gender,
-    ageGroup: users?.ageGroup,
-    religion: users?.religion,
+    place: users?.lifestyle.place,
+    pet: users?.lifestyle?.Pets,
+    smoking: users?.lifestyle?.Smoking,
+    diet: users?.lifestyle?.DietRestriction,
+    religion: users?.lifestyle?.religion,
   };
 
   const validationForm = yup.object().shape({
@@ -143,8 +143,8 @@ const HomeOwnerLifeStyle = ((props: HomeOwnerLifeStyleProp) => {
                 size={'small'}
                 iconRight={'tick'}
                 onPress={props.handleSubmit}
-              />
-              : null}
+              /> : null
+            }
 
           </>
         )}
