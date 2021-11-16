@@ -8,7 +8,8 @@ import {
   PROFILE,
   ROOM_DETAIL,
   YOUR_LISTING,
-HOME_OWNER_LIFE_STYLE,
+  HOME_OWNER_LIFE_STYLE,
+  ROOM_DETAIL_LOCATION,
 } from './routeName';
 import {
   Home,
@@ -17,7 +18,8 @@ import {
   ChangePassword,
   YourListing,
   RoomDetail,
-HomeOwnerLifeStyle,
+  HomeOwnerLifeStyle,
+  RoomDetailLocation,
 } from '../screens';
 import {useSelector} from 'react-redux';
 import UnAuthenStack from './UnAuthenStack';
@@ -34,9 +36,16 @@ const AuthenStack = () => {
       <Stack.Screen name={PROFILE} component={Profile} />
       <Stack.Screen name={BASIC_INFORMATION} component={BasicInfomation} />
       <Stack.Screen name={CHANGE_PASSWORD} component={ChangePassword} />
-      <Stack.Screen name={HOME_OWNER_LIFE_STYLE} component={HomeOwnerLifeStyle} />
+      <Stack.Screen
+        name={HOME_OWNER_LIFE_STYLE}
+        component={HomeOwnerLifeStyle}
+      />
       <Stack.Screen name={YOUR_LISTING} component={YourListing} />
       <Stack.Screen name={ROOM_DETAIL} component={RoomDetail} />
+      <Stack.Screen
+        name={ROOM_DETAIL_LOCATION}
+        component={RoomDetailLocation}
+      />
     </Stack.Navigator>
   );
 };

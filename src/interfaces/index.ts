@@ -8,6 +8,7 @@ export interface screenNavigationProp {
 
 export interface ButtonProps {
   title?: string;
+  label?: string;
   containerStyle?: ViewStyle;
   customStyleButton?: ViewStyle | ViewStyle[];
   customStyleTitle?: any;
@@ -15,7 +16,7 @@ export interface ButtonProps {
   disabled?: boolean;
   image?: any;
   size?: 'base' | 'small';
-  typeButton?: 'linear' | 'full' | 'underline';
+  typeButton?: 'linear' | 'full' | 'underline' | 'link';
   isActive?: boolean;
   iconRight?:
     | 'right'

@@ -61,8 +61,8 @@ const AppSlider = React.memo((props: AppSliderProps) => {
         markerStyle={styles.markerStyle}
       />
       <View style={styles.bottomView}>
-        <AppText style={styles.textBottom}>{`${min_default}`}</AppText>
-        <AppText style={styles.textBottom}>{`${max_default}`}</AppText>
+        <AppText style={styles.textBottom} isPrice>{`${min_default}`}</AppText>
+        <AppText style={styles.textBottom} isPrice>{`${max_default}`}</AppText>
       </View>
     </>
   );
