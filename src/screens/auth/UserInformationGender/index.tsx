@@ -1,16 +1,16 @@
-import {AppButton, AppInput, AppQA, AppText, Header} from '@component';
-import {useNavigation} from '@react-navigation/core';
-import {scaleHeight, SIZE, validateForm} from '@util';
-import {Formik} from 'formik';
-import React, {useState} from 'react';
-import {View, ScrollView} from 'react-native';
-import {styles} from './style';
+import { AppButton, AppInput, AppQA, AppText, Header } from '@component';
+import { useNavigation } from '@react-navigation/core';
+import { scaleHeight, SIZE, validateForm } from '@util';
+import { Formik } from 'formik';
+import React, { useState } from 'react';
+import { View, ScrollView } from 'react-native';
+import { styles } from './style';
 import * as yup from 'yup';
-import {TENANT_PROPERTY} from '@mocks';
-import {useDispatch, useSelector} from 'react-redux';
-import {setDataSignup} from '@redux';
-import {LIFE_STYLE, USER_INFORMATION_COUNTRY} from '@routeName';
-import {DataSignupProps} from '@interfaces';
+import { TENANT_PROPERTY } from '@mocks';
+import { useDispatch, useSelector } from 'react-redux';
+import { setDataSignup } from '@redux';
+import { LIFE_STYLE, USER_INFORMATION_COUNTRY } from '@routeName';
+import { DataSignupProps } from '@interfaces';
 interface screenNavigationProp {
   navigate: any;
 }
@@ -23,12 +23,12 @@ const UserInformationGender = () => {
     (state: any) => state?.auth?.dataSignup,
   );
   const setData = (data: any) => {
-    dispatch(setDataSignup({data}));
+    dispatch(setDataSignup({ data }));
   };
 
   const formInitialValues = {
     gender: dataSignUp?.gender?.value,
-    age_group: dataSignUp?.age_group?.value,
+    age_group: dataSignUp?.age_group?.id,
     staying_with_guests: dataSignUp?.staying_with_guests?.value,
   };
 
@@ -42,7 +42,7 @@ const UserInformationGender = () => {
   };
 
   const onSkip = (props: any) => {
-    const nData: DataSignupProps = {...dataSignUp};
+    const nData: DataSignupProps = { ...dataSignUp };
     nData.gender = {};
     nData.age_group = {};
     setData(nData);
@@ -50,7 +50,7 @@ const UserInformationGender = () => {
     navigation.navigate(USER_INFORMATION_COUNTRY);
   };
 
-  console.log({dataSignUp});
+  console.log({ dataSignUp });
 
   const RenderForm = () => (
     <Formik
@@ -60,8 +60,8 @@ const UserInformationGender = () => {
       enableReinitialize
       onSubmit={onContinue}>
       {(props: any) => (
-        <View style={{flex: 1, paddingBottom: SIZE.medium_space}}>
-          <View style={{flex: 1}}>
+        <View style={{ flex: 1, paddingBottom: SIZE.medium_space }}>
+          <View style={{ flex: 1 }}>
             <AppQA
               data={list.gender}
               title={'How would you describe your gender?'}
@@ -119,4 +119,4 @@ const UserInformationGender = () => {
   );
 };
 
-export {UserInformationGender};
+export { UserInformationGender };

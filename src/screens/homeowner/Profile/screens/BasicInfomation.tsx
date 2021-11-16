@@ -1,8 +1,8 @@
-import {AppButton, AppInput, AppPicker, AppText, Header} from '@component';
-import React from 'react';
-import {View, StyleSheet} from 'react-native';
-import {useDispatch} from 'react-redux';
-import {useSelector} from 'react-redux';
+import { AppButton, AppInput, AppPicker, AppText, Header } from '@component';
+import React, { useEffect, useState } from 'react';
+import { View, StyleSheet, Pressable } from 'react-native';
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import {
   colors,
   fontFamily,
@@ -12,32 +12,41 @@ import {
   validateForm,
 } from '@util';
 import * as yup from 'yup';
-import {Formik} from 'formik';
-import {ROOM_UNIT_HOWNER} from '@mocks';
-import {UserInfo} from '@interfaces';
-import {saveDataUser} from '@redux';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import { Formik } from 'formik';
+import { ROOM_UNIT_HOWNER } from '@mocks';
+import { UserInfo } from '@interfaces';
+import { saveDataUser } from '@redux';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import DateTimePicker from '@react-native-community/datetimepicker';
+import moment from 'moment';
 
-interface BasicInfomationProp {}
+interface BasicInfomationProp { }
 
 interface screenNavigationProp {
   navigate: any;
 }
 
-const BasicInfomation = () => {
+const BasicInfomation = ((props: BasicInfomationProp) => {
   const dispatch = useDispatch();
   const list = ROOM_UNIT_HOWNER;
   const dataUser: UserInfo = useSelector((state: any) => state?.auth?.user);
+  const [users, setUsers] = useState<UserInfo>()
+  const [showDate, setShowDate] = useState(false);
+  const [dateOfBirth, setDateOfBirth] = useState('');
+  const [showButton, setShowButton] = useState(false)
 
-  console.log('dataa', dataUser);
+  useEffect(() => {
+    setUsers(dataUser)
+    console.log('userrrr', users?.country);
+  }, [dataUser])
 
   const formInitialValues = {
-    name: dataUser?.name,
-    country: dataUser?.country,
-    occupation: dataUser?.occupation,
-    ethnicity: dataUser?.ethnicity,
-    gender: dataUser?.gender,
-    ageGroup: dataUser?.ageGroup,
+    name: users?.name,
+    country: users?.country?.cca2,
+    occupation: users?.occupation,
+    ethnicity: users?.ethnicity,
+    gender: users?.gender,
+    ageGroup: users?.ageGroup,
   };
 
   const validationForm = yup.object().shape({
@@ -51,17 +60,32 @@ const BasicInfomation = () => {
 
   const onChangeText = (item: any, name?: string) => {
     if (name) {
-      const nData: any = {...dataUser};
+      const nData: any = { ...dataUser };
       nData[name] = item;
       setData(nData);
     }
+    setShowButton(true)
   };
 
   const setData = (data: any) => {
-    dispatch(saveDataUser(data));
+    // dispatch(saveDataUser(data));
   };
 
-  const onSubmit = () => {};
+  const showDatepicker = () => {
+    setShowDate(true);
+  }
+
+  const onChangDate = (event: any, selectedDate: any) => {
+
+    const changeDate = selectedDate || dateOfBirth;
+
+    const birthday = moment(changeDate).format('DD/MM/YYYY');
+    setShowDate(false);
+    // setShow(Platform.OS === 'ios');
+    setDateOfBirth(birthday);
+  }
+
+  const onSubmit = () => { };
 
   const RenderForm = () => (
     <KeyboardAwareScrollView showsVerticalScrollIndicator={false}>
@@ -97,15 +121,30 @@ const BasicInfomation = () => {
                 error={props.errors.gender}
                 stylePicker={'linear'}
               />
-              <AppPicker
-                value={props.values.ageGroup}
-                name={'ageGroup'}
-                label={'Age group'}
-                onValueChange={onChangeText}
-                items={list.group_age}
-                error={props.errors.ageGroup}
-                stylePicker={'linear'}
-              />
+              <View>
+                <AppPicker
+                  value={props.values.ageGroup}
+                  name={'ageGroup'}
+                  label={'Age group'}
+                  onValueChange={onChangeText}
+                  items={list.group_age}
+                  error={props.errors.ageGroup}
+                  stylePicker={'linear'}
+                />
+                <Pressable onPress={() => showDatepicker()} style={styles.birthday}>
+                  <AppText style={styles.birthdayTxt}>{dateOfBirth === '' ? 'Update you date of birth' : dateOfBirth}</AppText>
+                </Pressable>
+                {showDate && (
+                  <DateTimePicker
+                    testID="dateTimePicker"
+                    value={moment().toDate()}
+                    mode={'date'}
+                    is24Hour={true}
+                    display="default"
+                    onChange={onChangDate}
+                  />
+                )}
+              </View>
               <AppPicker
                 value={props.values.country}
                 name={'country'}
@@ -134,13 +173,15 @@ const BasicInfomation = () => {
                 stylePicker={'linear'}
               />
             </View>
-            <AppButton
-              customStyleButton={styles.button}
-              title={'Save change'}
-              size={'small'}
-              iconRight={'tick'}
-              onPress={props.handleSubmit}
-            />
+            {showButton
+              ? <AppButton
+                customStyleButton={styles.button}
+                title={'Save change'}
+                size={'small'}
+                iconRight={'tick'}
+                onPress={props.handleSubmit}
+              />
+              : null}
           </>
         )}
       </Formik>
@@ -156,7 +197,7 @@ const BasicInfomation = () => {
       </View>
     </View>
   );
-};
+});
 
 const styles = StyleSheet.create({
   container: {
@@ -215,6 +256,17 @@ const styles = StyleSheet.create({
     paddingHorizontal: 13,
     minHeight: SIZE.input_height,
   },
+  birthday: {
+    zIndex: 1000,
+    // backgroundColor: 'red',
+    position: 'absolute',
+    bottom: 5,
+  },
+  birthdayTxt: {
+    fontSize: scaleSize(14),
+    color: colors.textSecondPrimary,
+  },
+
 });
 
-export {BasicInfomation};
+export { BasicInfomation };

@@ -1,16 +1,16 @@
-import {AppButton, AppPicker, AppText, Header} from '@component';
-import {useNavigation} from '@react-navigation/core';
-import {DEFAULT_COUNTRY, validateForm} from '@util';
-import {Formik} from 'formik';
-import React, {useState} from 'react';
-import {View, ScrollView} from 'react-native';
-import {styles} from './style';
+import { AppButton, AppPicker, AppText, Header } from '@component';
+import { useNavigation } from '@react-navigation/core';
+import { DEFAULT_COUNTRY, validateForm } from '@util';
+import { Formik } from 'formik';
+import React, { useState } from 'react';
+import { View, ScrollView } from 'react-native';
+import { styles } from './style';
 import * as yup from 'yup';
-import {ROOM_UNIT_HOWNER} from '@mocks';
-import {useDispatch, useSelector} from 'react-redux';
-import {setDataSignup} from '@redux';
-import {LIFE_STYLE} from '@routeName';
-import {DataSignupProps} from '@interfaces';
+import { ROOM_UNIT_HOWNER } from '@mocks';
+import { useDispatch, useSelector } from 'react-redux';
+import { setDataSignup } from '@redux';
+import { LIFE_STYLE } from '@routeName';
+import { DataSignupProps } from '@interfaces';
 interface screenNavigationProp {
   navigate: any;
 }
@@ -23,7 +23,7 @@ const UserInformationCountry = () => {
     (state: any) => state?.auth?.dataSignup,
   );
   const setData = (data: any) => {
-    dispatch(setDataSignup({data}));
+    dispatch(setDataSignup({ data }));
   };
 
   const formInitialValues = {
@@ -35,14 +35,14 @@ const UserInformationCountry = () => {
 
   const validationForm = yup.object().shape({
     country: validateForm().common.selectAtLeast,
-    occupation: validateForm().common.atLeastOnePicker,
-    ethnicity: validateForm().common.atLeastOnePicker,
+    occupation: validateForm().common.selectAtLeast,
+    ethnicity: validateForm().common.selectAtLeast,
   });
 
   const onChangeText = (item: any, name?: string) => {
     if (name) {
-      console.log({item});
-      const nData: any = {...dataSignUp};
+      console.log({ item });
+      const nData: any = { ...dataSignUp };
       nData[name] = item;
       setData(nData);
     }
@@ -53,7 +53,7 @@ const UserInformationCountry = () => {
   };
 
   const onSkip = (props: any) => {
-    const nData: DataSignupProps = {...dataSignUp};
+    const nData: DataSignupProps = { ...dataSignUp };
     nData.country = DEFAULT_COUNTRY;
     nData.occupation = {};
     nData.ethnicity = {};
@@ -71,7 +71,7 @@ const UserInformationCountry = () => {
       onSubmit={onContinue}>
       {(props: any) => (
         <>
-          <View style={{flex: 1}}>
+          <View style={{ flex: 1 }}>
             <AppPicker
               value={props.values.country}
               name={'country'}
@@ -134,4 +134,4 @@ const UserInformationCountry = () => {
   );
 };
 
-export {UserInformationCountry};
+export { UserInformationCountry };

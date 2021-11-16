@@ -240,16 +240,16 @@ export const ROOM_UNIT_HOWNER = {
   gender: [
     {
 
-      value: 'male',
-      label: 'male'
+      value: 'Male',
+      label: 'Male'
     },
     {
-      value: 'female',
-      label: 'female'
+      value: 'Female',
+      label: 'Female'
     },
     {
-      value: 'other',
-      label: 'other'
+      value: 'Other',
+      label: 'Other'
     },
   ],
   group_age: [
@@ -273,61 +273,61 @@ export const ROOM_UNIT_HOWNER = {
   ],
   your_place: [
     {
-      id: 1,
+      label: 'LGBT friendly',
       value: 'LGBT friendly',
     },
     {
-      id: 2,
+      label: 'Diversity friendly',
       value: 'Diversity friendly',
     },
   ],
   have_pets: [
     {
-      id: 1,
+      label: 'Yes',
       value: 'Yes',
     },
     {
-      id: 2,
+      label: 'No',
       value: 'No',
     },
     {
-      id: 3,
+      label: 'May have',
       value: 'May have',
     },
   ],
   smoking: [
     {
-      id: 1,
+      label: 'Non-smoker',
       value: 'Non-smoker',
     },
     {
-      id: 2,
+      label: 'Social',
       value: 'Social',
     },
     {
-      id: 3,
+      label: 'Heavy',
       value: 'Heavy',
     },
   ],
   diet_choices: [
     {
-      id: 1,
+      label: 'Gluten free',
       value: 'Gluten free',
     },
     {
-      id: 2,
+      label: 'Halal',
       value: 'Halal',
     },
     {
-      id: 3,
+      label: 'Lactose free',
       value: 'Lactose free',
     },
     {
-      id: 4,
+      label: 'Nuts free',
       value: 'Nuts free',
     },
     {
-      id: 5,
+      label: 'Vegeterian',
       value: 'Vegeterian',
     },
   ],
@@ -405,47 +405,47 @@ export const ROOM_UNIT_HOWNER = {
   ],
   religions: [
     {
-      value: 1,
+      value: 'Christianity',
       label: 'Christianity',
     },
     {
-      value: 2,
+      value: 'Islam',
       label: 'Islam',
     },
     {
-      value: 3,
+      value: 'Secular/Nonreligious/Agnostic/Atheist',
       label: 'Secular/Nonreligious/Agnostic/Atheist',
     },
     {
-      value: 4,
+      value: 'Buddhism',
       label: 'Buddhism',
     },
     {
-      value: 5,
+      value: 'Chinese traditional religion',
       label: 'Chinese traditional religion',
     },
     {
-      value: 6,
+      value: 'Ethnic religions',
       label: 'Ethnic religions',
     },
     {
-      value: 7,
+      value: 'African traditional religions',
       label: 'African traditional religions',
     },
     {
-      value: 8,
+      value: 'Sikhism',
       label: 'Sikhism',
     },
     {
-      value: 9,
+      value: 'Spiritism',
       label: 'Spiritism',
     },
     {
-      value: 10,
+      value: 'Judaism',
       label: 'Judaism',
     },
     {
-      value: 11,
+      value: 'Baháʼí',
       label: 'Baháʼí',
     },
   ],

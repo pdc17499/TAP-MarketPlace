@@ -1,14 +1,14 @@
-import {AppButton, AppPicker, AppQA} from '@component';
-import {DataSignupProps, RoomStepProps} from '@interfaces';
-import {ROOM_UNIT_HOWNER} from '@mocks';
-import {useNavigation} from '@react-navigation/core';
-import {setDataSignup} from '@redux';
-import {SIGNUP} from '@routeName';
-import {colors, fontFamily, scaleWidth, SIZE, validateForm} from '@util';
-import {Formik} from 'formik';
-import React, {forwardRef, useImperativeHandle} from 'react';
-import {View, StyleSheet} from 'react-native';
-import {useDispatch, useSelector} from 'react-redux';
+import { AppButton, AppPicker, AppQA } from '@component';
+import { DataSignupProps, RoomStepProps } from '@interfaces';
+import { ROOM_UNIT_HOWNER } from '@mocks';
+import { useNavigation } from '@react-navigation/core';
+import { setDataSignup } from '@redux';
+import { SIGNUP } from '@routeName';
+import { colors, fontFamily, scaleWidth, SIZE, validateForm } from '@util';
+import { Formik } from 'formik';
+import React, { forwardRef, useImperativeHandle } from 'react';
+import { View, StyleSheet } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
 import * as yup from 'yup';
 import HighlightText from '@sanar/react-native-highlight-text';
 
@@ -20,7 +20,7 @@ const Religion = forwardRef((props: RoomStepProps, ref) => {
     (state: any) => state?.auth?.dataSignup,
   );
   const setData = (data: any) => {
-    dispatch(setDataSignup({data}));
+    dispatch(setDataSignup({ data }));
   };
 
   const formInitialValues = {
@@ -28,7 +28,7 @@ const Religion = forwardRef((props: RoomStepProps, ref) => {
   };
 
   const validationForm = yup.object().shape({
-    your_religion: validateForm().common.atLeastOnePicker,
+    your_religion: validateForm().common.selectAtLeast,
   });
 
   useImperativeHandle(ref, () => ({
@@ -36,14 +36,14 @@ const Religion = forwardRef((props: RoomStepProps, ref) => {
   }));
 
   const onSkip = () => {
-    const nData: DataSignupProps = {...dataSignUp};
+    const nData: DataSignupProps = { ...dataSignUp };
     nData.your_place = [];
     setData(nData);
   };
 
   const onChangeText = (item: any, name?: string) => {
     if (name) {
-      const nData: any = {...dataSignUp};
+      const nData: any = { ...dataSignUp };
       nData[name] = item;
       setData(nData);
     }
@@ -62,12 +62,12 @@ const Religion = forwardRef((props: RoomStepProps, ref) => {
         enableReinitialize
         onSubmit={onNext}>
         {(props: any) => {
-          console.log({props});
+          console.log({ props });
           return (
             <>
               <HighlightText
                 style={styles.mixTitle}
-                highlightStyle={{color: colors.primary}}
+                highlightStyle={{ color: colors.primary }}
                 searchWords={['Religion']}
                 textToHighlight={'What is your Religion ?'}
               />
@@ -79,7 +79,7 @@ const Religion = forwardRef((props: RoomStepProps, ref) => {
                 error={props.errors.your_religion}
               />
               <AppButton
-                containerStyle={{marginTop: SIZE.big_space * 5}}
+                containerStyle={{ marginTop: SIZE.big_space * 5 }}
                 title={'Next step'}
                 onPress={props.handleSubmit}
                 iconRight={'arNext'}
@@ -92,7 +92,7 @@ const Religion = forwardRef((props: RoomStepProps, ref) => {
   );
 });
 
-export {Religion};
+export { Religion };
 
 const styles = StyleSheet.create({
   container: {

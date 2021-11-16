@@ -128,6 +128,8 @@ export interface DataSignupProps {
   email: string;
   password: string;
   confirm_password: string;
+  avatar: string;
+  phone: string;
 }
 
 export interface AppQAProps {
@@ -149,7 +151,7 @@ export interface AppQAProps {
 }
 
 export interface UserInfo {
-  country: string;
+  country: any;
   address: string;
   ageGroup: number;
   contact: string;
@@ -169,6 +171,8 @@ export interface UserInfo {
   password: string;
   rental_account: string;
   updatedAt: string;
+  date_of_birth: string;
+  religion: string;
 }
 
 export interface Token {

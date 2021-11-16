@@ -25,7 +25,7 @@ import {
 
 //Authenticate
 import { Home } from './homeowner/Home';
-import { Profile, BasicInfomation, ChangePassword } from './homeowner/Profile';
+import { Profile, BasicInfomation, ChangePassword, HomeOwnerLifeStyle } from './homeowner/Profile';
 
 import { UpdateNewPassword } from './auth/UpdateNewPassword';
 
@@ -56,5 +56,6 @@ export {
   UpdateNewPassword,
   Profile,
   BasicInfomation,
-  ChangePassword
+  ChangePassword,
+  HomeOwnerLifeStyle
 };

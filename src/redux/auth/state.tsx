@@ -1,4 +1,4 @@
-import {DataSignupProps, Token, UserInfo} from '@interfaces';
+import { DataSignupProps, Token, UserInfo } from '@interfaces';
 import moment from 'moment';
 
 export type AuthState = {
@@ -59,6 +59,8 @@ export const INITIAL_STATE_DATA_SIGN_UP: DataSignupProps = {
   email: '',
   password: '',
   confirm_password: '',
+  avatar: '',
+  phone: '',
 };
 
 export const INITIAL_STATE_AUTH: AuthState = {

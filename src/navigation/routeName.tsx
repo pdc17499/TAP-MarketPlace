@@ -32,6 +32,9 @@ export const HOME = 'HOME';
 export const PROFILE = 'PROFILE';
 export const BASIC_INFORMATION = 'HOME_PROFILE';
 export const CHANGE_PASSWORD = 'CHANGE_PASSWORD';
+export const HOME_OWNER_LIFE_STYLE = 'HOME_OWNER_LIFE_STYLE';
+
+
 
 
 
