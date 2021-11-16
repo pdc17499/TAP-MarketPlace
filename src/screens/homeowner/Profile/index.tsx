@@ -1,5 +1,7 @@
 import { Profile } from "./Profile";
 import { BasicInfomation } from "./BasicInfomation";
+import { ChangePassword } from "./ChangePassword";
 
 
-export { Profile, BasicInfomation }
+
+export { Profile, BasicInfomation, ChangePassword }

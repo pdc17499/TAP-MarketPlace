@@ -31,5 +31,7 @@ export const LIFE_STYLE_STEP = 'LIFE_STYLE_STEP';
 export const HOME = 'HOME';
 export const PROFILE = 'PROFILE';
 export const BASIC_INFORMATION = 'HOME_PROFILE';
+export const CHANGE_PASSWORD = 'CHANGE_PASSWORD';
+
 
 
