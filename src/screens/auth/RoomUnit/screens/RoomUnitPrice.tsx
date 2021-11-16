@@ -1,7 +1,7 @@
-import React from 'react';
-import {View, StyleSheet, KeyboardAvoidingView} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {View, StyleSheet, KeyboardAvoidingView, ScrollView} from 'react-native';
 import {AppButton, AppInput, AppQA, AppSlider, Header} from '@component';
-import {RoomStepProps} from '@interfaces';
+import {DataSignupProps, RoomStepProps} from '@interfaces';
 import {ROOM_UNIT_HOWNER} from '@mocks';
 import {
   colors,
@@ -26,9 +26,14 @@ const RoomUnitPrice = () => {
   const navigation = useNavigation<screenNavigationProp>();
   const dispatch = useDispatch();
   const list = ROOM_UNIT_HOWNER;
-  const dataSignUp = useSelector((state: any) => state?.auth?.dataSignup);
+  const signup = useSelector((state: any) => state?.auth?.dataSignup);
+  const [dataSignUp, setStateSignup] = useState<DataSignupProps>();
+  useEffect(() => {
+    setDataSignup(signup);
+  }, [signup]);
+
   const setData = (data: any) => {
-    dispatch(setDataSignup({data}));
+    setStateSignup(data);
   };
 
   const formInitialValues = {
@@ -40,16 +45,17 @@ const RoomUnitPrice = () => {
   const validationSchema = yup.object().shape({
     rental_price: validateForm().common.selectAtLeast,
     negotiable_price: yup.string().when('rental_price', {
-      is: '1',
+      is: 'Negotiable',
       then: validateForm().common.reuqire,
     }),
     fixed_price: yup.string().when('rental_price', {
-      is: '2',
+      is: 'Fixed price',
       then: validateForm().common.reuqire,
     }),
   });
 
   const onNext = () => {
+    dispatch(setDataSignup({data: dataSignUp}));
     navigation.navigate(ROOM_UNIT_LEASE_PERIOD);
   };
 
@@ -57,14 +63,14 @@ const RoomUnitPrice = () => {
     const nData: any = {...dataSignUp};
     nData['min_range_price'] = values[0];
     nData['max_range_price'] = values[1];
-    setData(nData);
+    setStateSignup(nData);
   };
 
   const onChangeValue = (item: any, name?: string) => {
     if (name) {
       const nData: any = {...dataSignUp};
       nData[name] = item;
-      setData(nData);
+      setStateSignup(nData);
     }
   };
 
@@ -90,8 +96,9 @@ const RoomUnitPrice = () => {
     return (
       <AppSlider
         onValuesChangeFinish={onValuesChangeFinish}
-        min_range_value={dataSignUp.min_range_price}
-        max_range_value={dataSignUp.max_range_price}
+        min_range_value={dataSignUp?.min_range_price}
+        max_range_value={dataSignUp?.max_range_price}
+        iconLeft={'dolar'}
       />
     );
   };
@@ -108,16 +115,16 @@ const RoomUnitPrice = () => {
   return (
     <>
       <Header back />
-      <View style={styles.container}>
-        <KeyboardAvoidingView style={{flex: 1}}>
-          <Formik
-            initialValues={formInitialValues}
-            validationSchema={validationSchema}
-            validateOnChange={false}
-            enableReinitialize
-            onSubmit={onNext}>
-            {(propsFormik: any) => (
-              <>
+      <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+        <Formik
+          initialValues={formInitialValues}
+          validationSchema={validationSchema}
+          validateOnChange={false}
+          enableReinitialize
+          onSubmit={onNext}>
+          {(propsFormik: any) => (
+            <>
+              <View style={{flex: 1}}>
                 <AppQA
                   isFlex
                   data={list.rental_price}
@@ -129,17 +136,17 @@ const RoomUnitPrice = () => {
                   children={renderChildren(propsFormik)}
                   error={propsFormik.errors.rental_price}
                 />
-                <AppButton
-                  title={'Continue'}
-                  onPress={propsFormik.handleSubmit}
-                  containerStyle={styles.customStyleButton}
-                  iconRight={'arNext'}
-                />
-              </>
-            )}
-          </Formik>
-        </KeyboardAvoidingView>
-      </View>
+              </View>
+              <AppButton
+                title={'Continue'}
+                onPress={propsFormik.handleSubmit}
+                containerStyle={styles.customStyleButton}
+                iconRight={'arNext'}
+              />
+            </>
+          )}
+        </Formik>
+      </ScrollView>
     </>
   );
 };

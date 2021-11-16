@@ -42,15 +42,15 @@ const RoomUnitTypeRoom = () => {
   const validationSchema = yup.object().shape({
     room_type: validateForm().common.selectAtLeast,
     bedroom_number: yup.string().when('room_type', {
-      is: '1',
+      is: 'Entire Home',
       then: validateForm().common.selectAtLeast,
     }),
     bathroom_number: yup.string().when('room_type', {
-      is: '1',
+      is: 'Entire Home',
       then: validateForm().common.selectAtLeast,
     }),
     attached_bathroom: yup.string().when('room_type', {
-      is: '2',
+      is: 'Room',
       then: validateForm().common.selectAtLeast,
     }),
   });
@@ -86,6 +86,7 @@ const RoomUnitTypeRoom = () => {
                 setValue={setData}
                 typeList={'even'}
                 name={'room_type'}
+                error={propsFormik.errors.room_type}
               />
               {!_.isEmpty(dataSignUp.room_type) && (
                 <>
@@ -132,6 +133,7 @@ const RoomUnitTypeRoom = () => {
                     max_range_value={dataSignUp?.floor_size_max}
                     min_range={SLIDER.MIN_FLOOR_SIZE}
                     max_range={SLIDER.MAX_FLOOR_SIZE}
+                    iconLeft={'floor_size'}
                   />
                 </>
               )}
