@@ -9,6 +9,7 @@ import {
   CaretRight,
   IconAddPhotos,
   IconAddVideos,
+  IconPlus,
   IconResetMail,
   IconTick,
 } from '@assets';
@@ -63,6 +64,7 @@ const AppButton = React.memo((props: ButtonProps) => {
     styles.txtButton,
     typeButton === 'linear' && titleLinear,
     typeButton === 'underline' ? styles.titleUnderline : {},
+    size === 'small' && {...fontFamily.fontWeight600},
     customStyleTitle,
   ];
 
@@ -82,6 +84,8 @@ const AppButton = React.memo((props: ButtonProps) => {
         return <IconAddVideos />;
       case 'tick':
         return <IconTick />;
+      case 'plus':
+        return <IconPlus />;
     }
 
     return null;

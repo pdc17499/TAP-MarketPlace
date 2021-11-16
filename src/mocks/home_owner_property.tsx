@@ -1,19 +1,19 @@
 export const ROOM_UNIT_HOWNER = {
   kind_place: [
     {
-      id: 1,
+      label: 'Condo',
       value: 'Condo',
     },
     {
-      id: 2,
+      label: 'HDB',
       value: 'HDB',
     },
     {
-      id: 3,
+      label: 'Landed',
       value: 'Landed',
     },
     {
-      id: 4,
+      label: 'Shophouse',
       value: 'Shophouse',
     },
   ],
@@ -33,47 +33,47 @@ export const ROOM_UNIT_HOWNER = {
   ],
   lease_your_place: [
     {
-      id: 1,
+      label: '3 months',
       value: '3 months',
     },
     {
-      id: 2,
+      label: '9 months',
       value: '9 months',
     },
     {
-      id: 3,
+      label: '12 months',
       value: '12 months',
     },
     {
-      id: 4,
+      label: '36 months',
       value: '36 months',
     },
   ],
   lease_your_place_hdb: [
     {
-      id: 1,
+      label: '6 months',
       value: '6 months',
     },
     {
-      id: 2,
+      label: '9 months',
       value: '9 months',
     },
     {
-      id: 3,
+      label: '12 months',
       value: '12 months',
     },
     {
-      id: 4,
+      label: '36 months',
       value: '36 months',
     },
   ],
   staying_width_guests: [
     {
-      id: 1,
+      label: 'Yes',
       value: 'Yes',
     },
     {
-      id: 2,
+      label: 'No',
       value: 'No',
     },
   ],
@@ -268,7 +268,6 @@ export const ROOM_UNIT_HOWNER = {
     {
       value: 4,
       label: 'Over 55',
-
     },
   ],
   your_place: [

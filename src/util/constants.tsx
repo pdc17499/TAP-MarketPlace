@@ -32,4 +32,8 @@ const DEFAULT_COUNTRY = {
   subregion: 'South-Eastern Asia',
 };
 
-export {DEVICE, SLIDER, FILE_SIZE, DEFAULT_COUNTRY};
+const STYLE = {
+  hitSlop: {top: 20, bottom: 20, left: 20, right: 20},
+};
+
+export {DEVICE, SLIDER, FILE_SIZE, DEFAULT_COUNTRY, STYLE};

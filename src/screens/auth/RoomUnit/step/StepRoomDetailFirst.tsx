@@ -121,6 +121,7 @@ const StepRoomDetailFirst = (props: RoomStepProps) => {
                     max_range_value={dataSignUp?.floor_size_max}
                     min_range={SLIDER.MIN_FLOOR_SIZE}
                     max_range={SLIDER.MAX_FLOOR_SIZE}
+                    iconLeft={'floor_size'}
                   />
                 </>
               )}

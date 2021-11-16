@@ -75,6 +75,7 @@ const StepPrice = (props: RoomStepProps) => {
         onValuesChangeFinish={onValuesChangeFinish}
         min_range_value={dataSignUp.min_range_price}
         max_range_value={dataSignUp.max_range_price}
+        iconLeft={'dolar'}
       />
     );
   };

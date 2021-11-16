@@ -1,8 +1,8 @@
-import { AppButton, AppInput, AppPicker, AppText, Header } from '@component';
-import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, Pressable } from 'react-native';
-import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux';
+import {AppButton, AppInput, AppPicker, AppText, Header} from '@component';
+import React, {useEffect, useState} from 'react';
+import {View, StyleSheet, Pressable} from 'react-native';
+import {useDispatch} from 'react-redux';
+import {useSelector} from 'react-redux';
 import {
   colors,
   fontFamily,
@@ -12,33 +12,34 @@ import {
   validateForm,
 } from '@util';
 import * as yup from 'yup';
-import { Formik } from 'formik';
-import { ROOM_UNIT_HOWNER } from '@mocks';
-import { UserInfo } from '@interfaces';
-import { saveDataUser } from '@redux';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import {Formik} from 'formik';
+import {ROOM_UNIT_HOWNER} from '@mocks';
+import {UserInfo} from '@interfaces';
+import {saveDataUser} from '@redux';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import moment from 'moment';
 
-interface BasicInfomationProp { }
+interface BasicInfomationProp {}
 
 interface screenNavigationProp {
   navigate: any;
 }
 
-const BasicInfomation = ((props: BasicInfomationProp) => {
+const BasicInfomation = (props: BasicInfomationProp) => {
   const dispatch = useDispatch();
   const list = ROOM_UNIT_HOWNER;
+  const [users, setUsers] = useState<UserInfo>();
   const dataUser: UserInfo = useSelector((state: any) => state?.auth?.user);
-  const [users, setUsers] = useState<UserInfo>()
   const [showDate, setShowDate] = useState(false);
   const [dateOfBirth, setDateOfBirth] = useState('');
-  const [showButton, setShowButton] = useState(false)
+  const [showButton, setShowButton] = useState(false);
 
   useEffect(() => {
-    setUsers(dataUser)
-    console.log('userrrr', users?.country);
-  }, [dataUser])
+    setUsers(dataUser);
+  }, [dataUser]);
+
+  console.log('dataa', dataUser);
 
   const formInitialValues = {
     name: users?.name,
@@ -60,32 +61,31 @@ const BasicInfomation = ((props: BasicInfomationProp) => {
 
   const onChangeText = (item: any, name?: string) => {
     if (name) {
-      const nData: any = { ...dataUser };
+      const nData: any = {...dataUser};
       nData[name] = item;
       setData(nData);
     }
-    setShowButton(true)
+    setShowButton(true);
   };
 
   const setData = (data: any) => {
-    // dispatch(saveDataUser(data));
+    // dispatch(saveDataUser(users));
   };
 
   const showDatepicker = () => {
     setShowDate(true);
-  }
+  };
 
   const onChangDate = (event: any, selectedDate: any) => {
-
     const changeDate = selectedDate || dateOfBirth;
 
     const birthday = moment(changeDate).format('DD/MM/YYYY');
     setShowDate(false);
     // setShow(Platform.OS === 'ios');
     setDateOfBirth(birthday);
-  }
+  };
 
-  const onSubmit = () => { };
+  const onSubmit = () => {};
 
   const RenderForm = () => (
     <KeyboardAwareScrollView showsVerticalScrollIndicator={false}>
@@ -131,8 +131,14 @@ const BasicInfomation = ((props: BasicInfomationProp) => {
                   error={props.errors.ageGroup}
                   stylePicker={'linear'}
                 />
-                <Pressable onPress={() => showDatepicker()} style={styles.birthday}>
-                  <AppText style={styles.birthdayTxt}>{dateOfBirth === '' ? 'Update you date of birth' : dateOfBirth}</AppText>
+                {/* <Pressable
+                  onPress={() => showDatepicker()}
+                  style={styles.birthday}>
+                  <AppText style={styles.birthdayTxt}>
+                    {dateOfBirth === ''
+                      ? 'Update you date of birth'
+                      : dateOfBirth}
+                  </AppText>
                 </Pressable>
                 {showDate && (
                   <DateTimePicker
@@ -140,10 +146,10 @@ const BasicInfomation = ((props: BasicInfomationProp) => {
                     value={moment().toDate()}
                     mode={'date'}
                     is24Hour={true}
-                    display="default"
+                    display=""
                     onChange={onChangDate}
                   />
-                )}
+                )} */}
               </View>
               <AppPicker
                 value={props.values.country}
@@ -181,7 +187,6 @@ const BasicInfomation = ((props: BasicInfomationProp) => {
               iconRight={'tick'}
               onPress={props.handleSubmit}
             />
-
           </>
         )}
       </Formik>
@@ -197,7 +202,7 @@ const BasicInfomation = ((props: BasicInfomationProp) => {
       </View>
     </View>
   );
-});
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -266,7 +271,6 @@ const styles = StyleSheet.create({
     fontSize: scaleSize(14),
     color: colors.textSecondPrimary,
   },
-
 });
 
-export { BasicInfomation };
+export {BasicInfomation};

@@ -7,6 +7,6 @@ export * from './AppQA';
 export * from './AppSlider';
 export * from './AppPhoneNumber';
 export * from './AppPicker';
-// export * from './AppDatePicker';
+export * from './AppModal';
 export * from './GlobalUI';
 // export * from './AppDropdownPicker';

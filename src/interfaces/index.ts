@@ -25,7 +25,8 @@ export interface ButtonProps {
     | 'addPhoto'
     | 'addVideo'
     | 'tick'
-    | 'other';
+    | 'other'
+    | 'plus';
   imageStyle?: ImageStyle;
 }
 
@@ -208,4 +209,25 @@ export interface IAppPicker {
   typePicker?: 'base' | 'linear' | 'country';
   disable?: boolean;
   stylePicker?: 'base' | 'linear';
+}
+
+export interface ListingRoomProps {
+  id: number;
+  type: string;
+  title: string;
+  image: any;
+  location: string;
+  active: boolean;
+}
+
+export interface AppModalProps {
+  label?: string;
+  title?: string;
+  containerStyle?: ViewStyle;
+  customStyleButton?: ViewStyle | ViewStyle[];
+  customStyleContainer?: ViewStyle | ViewStyle[];
+  customStyleTitle?: any;
+  children?: JSX.Element;
+  customTitle?: JSX.Element;
+  onPressDone?: () => void;
 }

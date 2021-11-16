@@ -10,10 +10,13 @@ interface AppSliderProps {
   max_range_value: number;
   min_range?: number;
   max_range?: number;
+  iconLeft?: 'dolar' | 'floor_size';
+  sliderLength?: number;
 }
 
 const AppSlider = React.memo((props: AppSliderProps) => {
-  const {onValuesChangeFinish, min_range, max_range} = props;
+  const {onValuesChangeFinish, min_range, max_range, iconLeft, sliderLength} =
+    props;
   const min_range_value = props.min_range_value || 0;
   const max_range_value = props.max_range_value || 0;
   const min_default = min_range || SLIDER.MIN_PRICE;
@@ -26,7 +29,7 @@ const AppSlider = React.memo((props: AppSliderProps) => {
           label={'Min'}
           value={min_range_value.toString()}
           name={'min_range_value'}
-          iconLeft={'dolar'}
+          iconLeft={iconLeft}
           editable={false}
           containerStyle={{flex: 1}}
           inputStyle={{fontSize: SIZE.base_size + 2}}
@@ -37,7 +40,7 @@ const AppSlider = React.memo((props: AppSliderProps) => {
           label={'Max'}
           value={max_range_value.toString()}
           name={'max_range_value'}
-          iconLeft={'dolar'}
+          iconLeft={iconLeft}
           editable={false}
           containerStyle={{flex: 1}}
           inputStyle={{fontSize: SIZE.base_size + 2}}
@@ -46,8 +49,8 @@ const AppSlider = React.memo((props: AppSliderProps) => {
       </View>
       <MultiSlider
         values={[min_range_value, max_range_value]}
-        sliderLength={DEVICE.width - 2 * SIZE.padding}
-        onValuesChangeFinish={onValuesChangeFinish}
+        sliderLength={sliderLength || DEVICE.width - 2 * SIZE.padding}
+        onValuesChange={onValuesChangeFinish}
         min={min_default}
         max={max_default}
         allowOverlap={false}

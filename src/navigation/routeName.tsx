@@ -36,5 +36,6 @@ export const HOME_OWNER_LIFE_STYLE = 'HOME_OWNER_LIFE_STYLE';
 
 
 
-
-
+// ListingRoom
+export const YOUR_LISTING = 'YOUR_LISTING';
+export const ROOM_DETAIL = 'ROOM_DETAIL';
