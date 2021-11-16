@@ -59,21 +59,6 @@ export const AppInput = (props: IAppInput) => {
     setHidePassWord(!hidePasssWord);
   };
 
-  const viewStyle: any = [
-    styles.inputWrap,
-    {borderColor: isFocused ? colors.secondPrimary : colors.bgInput},
-    style,
-  ];
-
-  const ipStyle: any = [
-    styles.input,
-    inputStyle,
-    DEVICE.isIos &&
-      multiline && {
-        paddingTop: scaleWidth(16),
-      },
-  ];
-
   const renderIconLeft = () => {
     switch (iconLeft) {
       case 'map':
@@ -104,6 +89,26 @@ export const AppInput = (props: IAppInput) => {
     const nText = text || '';
     if (onValueChange) onValueChange(nText, name);
   };
+
+  const styles =
+    typeInput !== 'linear' || isFocused
+      ? stylesBase
+      : {...stylesBase, ...stylesLinear};
+
+  const viewStyle: any = [
+    styles.inputWrap,
+    {borderColor: isFocused ? colors.secondPrimary : colors.bgInput},
+    style,
+  ];
+
+  const ipStyle: any = [
+    styles.input,
+    inputStyle,
+    DEVICE.isIos &&
+      multiline && {
+        paddingTop: scaleWidth(16),
+      },
+  ];
 
   return (
     <View style={containerStyle}>
@@ -171,7 +176,7 @@ export const AppInput = (props: IAppInput) => {
   );
 };
 
-const styles = StyleSheet.create({
+const stylesBase = StyleSheet.create({
   inputWrap: {
     minHeight: SIZE.input_height,
     borderRadius: 8,
@@ -206,5 +211,33 @@ const styles = StyleSheet.create({
     color: colors.red,
     fontSize: scaleSize(15),
     lineHeight: scaleSize(17),
+  },
+});
+
+const stylesLinear = StyleSheet.create({
+  inputWrap: {
+    minHeight: 'auto',
+    backgroundColor: colors.white,
+    alignItems: 'flex-start',
+    borderBottomColor: colors.borderProfileList,
+    borderBottomWidth: 1,
+    borderRadius: 0,
+  },
+  label: {
+    color: colors.secondPrimary,
+    ...fontFamily.fontWeight500,
+    marginTop: SIZE.base_space,
+    marginBottom: 0,
+    fontSize: scaleSize(14.5),
+  },
+  input: {
+    flex: 1,
+    height: '100%',
+    color: colors.textPrimary,
+    fontSize: SIZE.base_size + 1,
+    ...fontFamily.fontWeight500,
+    paddingBottom: SIZE.padding,
+    paddingTop: SIZE.base_space / 2,
+    width: '100%',
   },
 });

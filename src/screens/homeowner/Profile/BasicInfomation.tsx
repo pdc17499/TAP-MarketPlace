@@ -1,33 +1,35 @@
-import { AppButton, AppInput, AppPicker, AppText, Header } from '@component';
+import {AppButton, AppInput, AppPicker, AppText, Header} from '@component';
 import React from 'react';
-import { View, Image, FlatList, Pressable, StyleSheet } from 'react-native';
-import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux'
-import { IconHouseLine, IconUser, IconThumbsUp, IconSetting, CaretRight, IconShieldCheck, IconLogOut, null_avatar } from '@assets';
-import { colors, fontFamily, scaleSize, scaleWidth, SIZE, validateForm } from '@util';
+import {View, StyleSheet} from 'react-native';
+import {useDispatch} from 'react-redux';
+import {useSelector} from 'react-redux';
+import {
+  colors,
+  fontFamily,
+  scaleSize,
+  scaleWidth,
+  SIZE,
+  validateForm,
+} from '@util';
 import * as yup from 'yup';
-import { Formik } from 'formik';
-import { ROOM_UNIT_HOWNER } from '@mocks';
-import { DataSignupProps, UserInfo } from '@interfaces';
-import { saveDataUser, setDataSignup } from '@redux';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import {Formik} from 'formik';
+import {ROOM_UNIT_HOWNER} from '@mocks';
+import {UserInfo} from '@interfaces';
+import {saveDataUser} from '@redux';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
-interface BasicInfomationProp { }
+interface BasicInfomationProp {}
 
 interface screenNavigationProp {
   navigate: any;
 }
 
-const BasicInfomation = React.memo((props: BasicInfomationProp) => {
-
+const BasicInfomation = () => {
   const dispatch = useDispatch();
-  const list = ROOM_UNIT_HOWNER
-  const dataUser: UserInfo = useSelector(
-    (state: any) => state?.auth?.user,
-  );
+  const list = ROOM_UNIT_HOWNER;
+  const dataUser: UserInfo = useSelector((state: any) => state?.auth?.user);
 
   console.log('dataa', dataUser);
-
 
   const formInitialValues = {
     name: dataUser?.name,
@@ -48,21 +50,18 @@ const BasicInfomation = React.memo((props: BasicInfomationProp) => {
   });
 
   const onChangeText = (item: any, name?: string) => {
-    console.log('value', item);
-    if (item) {
-      console.log({ item });
-      const nData: any = { ...dataUser };
+    if (name) {
+      const nData: any = {...dataUser};
       nData[name] = item;
       setData(nData);
     }
   };
 
   const setData = (data: any) => {
-    // dispatch(saveDataUser(data));
+    dispatch(saveDataUser(data));
   };
 
-  const onSubmit = () => {
-  };
+  const onSubmit = () => {};
 
   const RenderForm = () => (
     <KeyboardAwareScrollView showsVerticalScrollIndicator={false}>
@@ -74,12 +73,20 @@ const BasicInfomation = React.memo((props: BasicInfomationProp) => {
         onSubmit={onSubmit}>
         {(props: any) => (
           <>
-            <View style={{ flex: 1, borderTopWidth: 1, borderTopColor: colors.borderProfileList, paddingTop: 10 }}>
+            <View
+              style={{
+                flex: 1,
+                borderTopWidth: 1,
+                borderTopColor: colors.borderProfileList,
+                paddingTop: 10,
+              }}>
               <AppInput
                 label={'Your name'}
-                value={props.errors.name}
-                onValueChange={props.handleChange('name')}
+                value={props.values.name}
+                onValueChange={onChangeText}
                 error={props.errors.name}
+                typeInput={'linear'}
+                name={'name'}
               />
               <AppPicker
                 value={props.values.gender}
@@ -90,7 +97,6 @@ const BasicInfomation = React.memo((props: BasicInfomationProp) => {
                 error={props.errors.gender}
                 stylePicker={'linear'}
               />
-
               <AppPicker
                 value={props.values.ageGroup}
                 name={'ageGroup'}
@@ -100,7 +106,6 @@ const BasicInfomation = React.memo((props: BasicInfomationProp) => {
                 error={props.errors.ageGroup}
                 stylePicker={'linear'}
               />
-
               <AppPicker
                 value={props.values.country}
                 name={'country'}
@@ -110,7 +115,6 @@ const BasicInfomation = React.memo((props: BasicInfomationProp) => {
                 error={props.errors.country}
                 stylePicker={'linear'}
               />
-
               <AppPicker
                 value={props.values.occupation}
                 name={'occupation'}
@@ -120,7 +124,6 @@ const BasicInfomation = React.memo((props: BasicInfomationProp) => {
                 error={props.errors.occupation}
                 stylePicker={'linear'}
               />
-
               <AppPicker
                 value={props.values.ethnicity}
                 name={'ethnicity'}
@@ -144,22 +147,16 @@ const BasicInfomation = React.memo((props: BasicInfomationProp) => {
     </KeyboardAwareScrollView>
   );
 
-
-
   return (
     <View style={styles.container}>
-      <Header back></Header>
+      <Header back />
       <View style={styles.body}>
         <AppText style={styles.title}>{'Basic Infomation'}</AppText>
         {RenderForm()}
       </View>
-
-
-
     </View>
   );
-});
-
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -212,13 +209,12 @@ const styles = StyleSheet.create({
   code: {
     flexDirection: 'row',
     alignItems: 'center',
-    // width: scaleWidth(86),
     justifyContent: 'space-between',
     backgroundColor: colors.bgInput,
     borderRadius: 8,
     paddingHorizontal: 13,
     minHeight: SIZE.input_height,
   },
-})
+});
 
-export { BasicInfomation };
+export {BasicInfomation};

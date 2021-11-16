@@ -33,10 +33,10 @@ const RoomUnitTypeRoom = () => {
   };
 
   const formInitialValues = {
-    room_type: dataSignUp?.room_type?.id,
-    bedroom_number: dataSignUp?.bedroom_number?.id,
-    bathroom_number: dataSignUp?.bathroom_number?.id,
-    attached_bathroom: dataSignUp?.attached_bathroom?.id,
+    room_type: dataSignUp?.room_type?.value,
+    bedroom_number: dataSignUp?.bedroom_number?.value,
+    bathroom_number: dataSignUp?.bathroom_number?.value,
+    attached_bathroom: dataSignUp?.attached_bathroom?.value,
   };
 
   const validationSchema = yup.object().shape({
@@ -89,7 +89,7 @@ const RoomUnitTypeRoom = () => {
               />
               {!_.isEmpty(dataSignUp.room_type) && (
                 <>
-                  {dataSignUp?.room_type?.id == 1 ? (
+                  {dataSignUp?.room_type?.value == 'Entire Home' ? (
                     <>
                       <AppQA
                         data={list.bedroom_number}

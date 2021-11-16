@@ -32,7 +32,7 @@ const RoomUnitPrice = () => {
   };
 
   const formInitialValues = {
-    rental_price: dataSignUp?.rental_price?.id,
+    rental_price: dataSignUp?.rental_price?.value,
     negotiable_price: dataSignUp?.negotiable_price,
     fixed_price: dataSignUp?.fixed_price,
   };
@@ -68,8 +68,8 @@ const RoomUnitPrice = () => {
     }
   };
 
-  const renderFixedPrice = (id: number, propsFormik: any) => {
-    const name = id === 1 ? 'negotiable_price' : 'fixed_price';
+  const renderFixedPrice = (value: string, propsFormik: any) => {
+    const name = value === 'Negotiable' ? 'negotiable_price' : 'fixed_price';
     return (
       <AppInput
         value={dataSignUp[name]}
@@ -97,10 +97,10 @@ const RoomUnitPrice = () => {
   };
 
   const renderChildren = (props: any) => {
-    const id = dataSignUp?.rental_price?.id;
-    if (id === 1 || id === 2) {
-      return renderFixedPrice(id, props);
-    } else if (id === 3) {
+    const value = dataSignUp?.rental_price?.value;
+    if (value === 'Negotiable' || value === 'Fixed price') {
+      return renderFixedPrice(value, props);
+    } else if (value === 'Price range') {
       return renderPriceRange();
     }
   };

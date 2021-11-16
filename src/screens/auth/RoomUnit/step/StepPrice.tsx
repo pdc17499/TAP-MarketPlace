@@ -19,7 +19,7 @@ const StepPrice = (props: RoomStepProps) => {
   };
 
   const formInitialValues = {
-    rental_price: dataSignUp?.rental_price?.id,
+    rental_price: dataSignUp?.rental_price?.value,
     negotiable_price: dataSignUp?.negotiable_price,
     fixed_price: dataSignUp?.fixed_price,
   };
