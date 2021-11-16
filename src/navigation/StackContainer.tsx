@@ -6,6 +6,7 @@ import {
   CHANGE_PASSWORD,
   HOME,
   PROFILE,
+  ROOM_DETAIL,
   YOUR_LISTING,
 } from './routeName';
 import {
@@ -14,6 +15,7 @@ import {
   BasicInfomation,
   ChangePassword,
   YourListing,
+  RoomDetail,
 } from '../screens';
 import {useSelector} from 'react-redux';
 import UnAuthenStack from './UnAuthenStack';
@@ -31,6 +33,7 @@ const AuthenStack = () => {
       <Stack.Screen name={BASIC_INFORMATION} component={BasicInfomation} />
       <Stack.Screen name={CHANGE_PASSWORD} component={ChangePassword} />
       <Stack.Screen name={YOUR_LISTING} component={YourListing} />
+      <Stack.Screen name={ROOM_DETAIL} component={RoomDetail} />
     </Stack.Navigator>
   );
 };
@@ -41,7 +44,7 @@ const NavigationApp = React.forwardRef((props: any, ref: any) => {
   console.log({token});
 
   const renderStackApp = () => {
-    if (token) {
+    if (!token) {
       return <UnAuthenStack />;
     } else {
       return <AuthenStack />;

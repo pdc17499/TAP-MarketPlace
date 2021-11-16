@@ -19,6 +19,8 @@ import {
 import {colors, fontFamily, scaleSize, scaleWidth, SIZE, STYLE} from '@util';
 import {SceneMap, TabView} from 'react-native-tab-view';
 import {ListingRoomProps} from '@interfaces';
+import {useNavigation} from '@react-navigation/core';
+import {ROOM_DETAIL} from '@routeName';
 
 const DATA = [
   {
@@ -81,7 +83,12 @@ interface itemProps {
 
 const Route = React.memo(({props}: any) => {
   const key = props;
-  console.log(props);
+  const navigation: any = useNavigation();
+
+  const onRoomDetail = () => {
+    navigation.navigate(ROOM_DETAIL);
+  };
+
   const renderItem = ({item, section}: itemProps) => {
     const {active} = item;
     const hide =
@@ -92,6 +99,7 @@ const Route = React.memo(({props}: any) => {
 
     return (
       <Pressable
+        onPress={onRoomDetail}
         style={{
           marginBottom: SIZE.medium_space,
           opacity: active ? 1 : 0.5,

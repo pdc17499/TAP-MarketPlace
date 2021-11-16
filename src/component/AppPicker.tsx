@@ -201,7 +201,6 @@ const stylesLinear = StyleSheet.create({
     marginTop: SIZE.padding,
   },
   picker: {
-    // minHeight: SIZE.input_height,
     justifyContent: 'center',
   },
   label: {
@@ -232,7 +231,7 @@ const stylesLinear = StyleSheet.create({
     margin: 0,
     height: 'auto',
     paddingLeft: 0,
-    backgroundColor: colors.white,
+    backgroundColor: 'transparent',
     borderBottomColor: colors.borderProfileList,
     borderBottomWidth: 1,
     borderRadius: 0,
@@ -245,7 +244,7 @@ const stylesLinear = StyleSheet.create({
     width: '100%',
     fontSize: SIZE.base_size + 1,
     paddingLeft: 0,
-    backgroundColor: colors.white,
+    backgroundColor: 'transparent',
     borderBottomColor: colors.borderProfileList,
     borderBottomWidth: 1,
     borderRadius: 0,

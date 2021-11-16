@@ -35,3 +35,4 @@ export const CHANGE_PASSWORD = 'CHANGE_PASSWORD';
 
 // ListingRoom
 export const YOUR_LISTING = 'YOUR_LISTING';
+export const ROOM_DETAIL = 'ROOM_DETAIL';

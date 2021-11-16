@@ -27,7 +27,7 @@ import {
 import {Home} from './homeowner/Home';
 import {Profile, BasicInfomation, ChangePassword} from './homeowner/Profile';
 import {UpdateNewPassword} from './auth/UpdateNewPassword';
-import {YourListing} from './homeowner/Room';
+import {YourListing, RoomDetail} from './homeowner/Room';
 
 export {
   ChooseRole,
@@ -59,4 +59,5 @@ export {
   ChangePassword,
   // Room
   YourListing,
+  RoomDetail,
 };

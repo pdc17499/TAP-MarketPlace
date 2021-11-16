@@ -216,3 +216,15 @@ export interface ListingRoomProps {
   location: string;
   active: boolean;
 }
+
+export interface AppModalProps {
+  label?: string;
+  title?: string;
+  containerStyle?: ViewStyle;
+  customStyleButton?: ViewStyle | ViewStyle[];
+  customStyleContainer?: ViewStyle | ViewStyle[];
+  customStyleTitle?: any;
+  children?: JSX.Element;
+  customTitle?: JSX.Element;
+  onPressDone?: () => void;
+}
