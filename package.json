@@ -55,6 +55,7 @@
     "react-native-status-bar-height": "^2.6.0",
     "react-native-svg": "^12.1.1",
     "react-native-swiper": "^1.6.0",
+    "react-native-switch": "^2.0.0",
     "react-native-tab-view": "^3.1.1",
     "react-native-video": "^5.2.0",
     "react-redux": "^7.2.5",

@@ -17,7 +17,7 @@ import {
   CaretRight,
   IconShieldCheck,
   IconLogOut,
-  null_avatar,
+  avatar_default,
 } from '@assets';
 import ImagePicker, {ImageOrVideo} from 'react-native-image-crop-picker';
 import {NavigationUtils} from '@navigation';
@@ -115,7 +115,7 @@ const Profile = (props: ProfileProp) => {
       <Header />
       <Pressable onPress={() => openGallery(callback())}>
         <Image
-          source={filePath ? {uri: filePath} : null_avatar}
+          source={filePath ? {uri: filePath} : avatar_default}
           style={styles.avatar}></Image>
       </Pressable>
       <View style={styles.infomation}>

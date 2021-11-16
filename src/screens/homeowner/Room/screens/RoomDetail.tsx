@@ -15,7 +15,12 @@ import {
   useWindowDimensions,
   ScrollView,
 } from 'react-native';
-import {IconDola, IconTabActive, room_sample} from '@assets';
+import {
+  IconDola,
+  IconEyeCloseFullFill,
+  IconTabActive,
+  room_sample,
+} from '@assets';
 import {
   colors,
   DEVICE,
@@ -31,6 +36,7 @@ import {useNavigation} from '@react-navigation/core';
 import {Formik} from 'formik';
 import {ROOM_UNIT_HOWNER} from '@mocks';
 import * as yup from 'yup';
+import {Switch} from 'react-native-switch';
 
 const Route = ({props}: any) => {
   const key = props;
@@ -106,7 +112,8 @@ const Route = ({props}: any) => {
   };
 
   return (
-    <ScrollView style={{flex: 1}}>
+    <ScrollView style={{flex: 1}} showsVerticalScrollIndicator={false}>
+      <View style={styles.line} />
       <Formik
         initialValues={formInitialValues}
         validationSchema={validationForm}
@@ -160,9 +167,15 @@ const Route = ({props}: any) => {
                 error={props.errors.staying_with_guests}
                 stylePicker={'linear'}
               />
+              {/* <View style={styles.line} />
+              <View>
+                <AppText>{'Active/Inactive property'}</AppText>
+                <IconEyeCloseFullFill />
+              </View>
+              <View style={styles.line} /> */}
             </View>
             <AppButton
-              // customStyleButton={styles.button}
+              containerStyle={styles.button}
               title={'Save change'}
               size={'small'}
               iconRight={'tick'}
@@ -217,7 +230,6 @@ const RoomDetail = () => {
             );
           })}
         </View>
-        <View style={styles.line} />
       </>
     );
   };
@@ -241,6 +253,7 @@ const RoomDetail = () => {
 
 const styles = StyleSheet.create({
   button: {
+    paddingTop: SIZE.base_space,
     paddingBottom: SIZE.medium_space,
   },
   main: {
@@ -311,8 +324,8 @@ const styles = StyleSheet.create({
   },
   line: {
     height: 1,
-    backgroundColor: colors.borderPrimary,
-    marginBottom: SIZE.base_space,
+    backgroundColor: colors.borderProfileList,
+    // marginBottom: SIZE.base_space,
   },
 });
 

@@ -61,9 +61,9 @@ const BasicInfomation = (props: BasicInfomationProp) => {
 
   const onChangeText = (item: any, name?: string) => {
     if (name) {
-      const nData: any = {...dataUser};
+      const nData: any = {...users};
       nData[name] = item;
-      setData(nData);
+      setUsers(nData);
     }
     setShowButton(true);
   };

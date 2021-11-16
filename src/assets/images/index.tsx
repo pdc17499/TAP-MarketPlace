@@ -5,7 +5,7 @@ const iconFacebook = require('./icon_facebook.png');
 const rent_place = require('./rent_place.png');
 const list_place = require('./list_place.png');
 const bg_room_unit_picture = require('./bg_room_unit_picture.png');
-const null_avatar = require('./NullAvatar.png');
+const avatar_default = require('./avatar_default.png');
 const room_sample = require('./room_sample.png');
 
 export {
@@ -16,6 +16,6 @@ export {
   rent_place,
   list_place,
   bg_room_unit_picture,
-  null_avatar,
+  avatar_default,
   room_sample,
 };

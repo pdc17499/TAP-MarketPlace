@@ -275,6 +275,7 @@ const styles = StyleSheet.create({
   },
   locationView: {
     flexDirection: 'row',
+    alignItems: 'center',
     marginTop: SIZE.base_space / 2,
   },
   location: {
