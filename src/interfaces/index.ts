@@ -25,7 +25,8 @@ export interface ButtonProps {
     | 'addPhoto'
     | 'addVideo'
     | 'tick'
-    | 'other';
+    | 'other'
+    | 'plus';
   imageStyle?: ImageStyle;
 }
 
@@ -205,4 +206,13 @@ export interface IAppPicker {
   typePicker?: 'base' | 'linear' | 'country';
   disable?: boolean;
   stylePicker?: 'base' | 'linear';
+}
+
+export interface ListingRoomProps {
+  id: number;
+  type: string;
+  title: string;
+  image: any;
+  location: string;
+  active: boolean;
 }

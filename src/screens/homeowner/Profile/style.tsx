@@ -1,5 +1,12 @@
-import { colors, fontFamily, scaleHeight, scaleSize, scaleWidth, SIZE } from '@util';
-import { StyleSheet } from 'react-native';
+import {
+  colors,
+  fontFamily,
+  scaleHeight,
+  scaleSize,
+  scaleWidth,
+  SIZE,
+} from '@util';
+import {StyleSheet} from 'react-native';
 
 const styles = StyleSheet.create({
   container: {
@@ -8,19 +15,19 @@ const styles = StyleSheet.create({
   },
   body: {
     paddingHorizontal: scaleWidth(24),
-    flex: 1
+    flex: 1,
   },
 
   avatar: {
     width: scaleWidth(70),
     height: scaleWidth(70),
     borderRadius: 16,
-    alignSelf: 'center'
+    alignSelf: 'center',
   },
   name: {
     ...fontFamily.fontCampWeight600,
     fontSize: scaleSize(20),
-    marginBottom: scaleWidth(12)
+    marginBottom: scaleWidth(12),
   },
   email: {
     ...fontFamily.fontWeight400,
@@ -29,7 +36,7 @@ const styles = StyleSheet.create({
   },
   infomation: {
     alignItems: 'center',
-    marginVertical: scaleWidth(24)
+    marginVertical: scaleWidth(24),
   },
   txtStyle: {
     ...fontFamily.fontWeight400,
@@ -41,22 +48,21 @@ const styles = StyleSheet.create({
     fontSize: scaleSize(15),
     color: colors.textFouthPrimary,
     marginLeft: scaleWidth(20),
-    flex: 1
+    flex: 1,
   },
 
   borderBottom: {
     height: 1,
     borderBottomColor: colors.borderProfileList,
     borderBottomWidth: 1,
-    marginTop: scaleWidth(25)
-
+    marginTop: scaleWidth(25),
   },
   titleBold: {
     ...fontFamily.fontWeight500,
     fontSize: scaleSize(15),
     color: colors.primary,
     marginLeft: scaleWidth(20),
-    flex: 1
+    flex: 1,
   },
 
   item: {
@@ -65,11 +71,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderBottomWidth: 1,
     borderBottomColor: colors.borderProfileList,
-    paddingVertical: scaleWidth(20)
+    paddingVertical: scaleWidth(20),
   },
   borderTopList: {
     height: 1,
-    backgroundColor: colors.borderProfileList
+    backgroundColor: colors.borderProfileList,
   },
   logOutTxt: {
     ...fontFamily.fontWeight500,
@@ -77,10 +83,11 @@ const styles = StyleSheet.create({
     color: colors.textSecondPrimary,
   },
   logOut: {
-    flexDirection: 'row', alignSelf: 'center', marginTop: SIZE.big_space,
-    marginBottom: SIZE.medium_space
-  }
-}
-);
+    flexDirection: 'row',
+    alignSelf: 'center',
+    marginTop: SIZE.big_space,
+    marginBottom: SIZE.medium_space,
+  },
+});
 
-export { styles };
+export {styles};

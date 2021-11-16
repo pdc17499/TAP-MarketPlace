@@ -33,5 +33,5 @@ export const PROFILE = 'PROFILE';
 export const BASIC_INFORMATION = 'HOME_PROFILE';
 export const CHANGE_PASSWORD = 'CHANGE_PASSWORD';
 
-
-
+// ListingRoom
+export const YOUR_LISTING = 'YOUR_LISTING';

@@ -1,5 +1,5 @@
 import {AppButton, AppInput, AppPicker, AppText, Header} from '@component';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, StyleSheet} from 'react-native';
 import {useDispatch} from 'react-redux';
 import {useSelector} from 'react-redux';
@@ -27,17 +27,22 @@ interface screenNavigationProp {
 const BasicInfomation = () => {
   const dispatch = useDispatch();
   const list = ROOM_UNIT_HOWNER;
+  const [users, setUsers] = useState<UserInfo>();
   const dataUser: UserInfo = useSelector((state: any) => state?.auth?.user);
+
+  useEffect(() => {
+    setUsers(dataUser);
+  }, [dataUser]);
 
   console.log('dataa', dataUser);
 
   const formInitialValues = {
-    name: dataUser?.name,
-    country: dataUser?.country,
-    occupation: dataUser?.occupation,
-    ethnicity: dataUser?.ethnicity,
-    gender: dataUser?.gender,
-    ageGroup: dataUser?.ageGroup,
+    name: users?.name,
+    country: users?.country,
+    occupation: users?.occupation,
+    ethnicity: users?.ethnicity,
+    gender: users?.gender,
+    ageGroup: users?.ageGroup,
   };
 
   const validationForm = yup.object().shape({
@@ -58,7 +63,7 @@ const BasicInfomation = () => {
   };
 
   const setData = (data: any) => {
-    dispatch(saveDataUser(data));
+    // dispatch(saveDataUser(users));
   };
 
   const onSubmit = () => {};
