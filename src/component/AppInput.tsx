@@ -126,9 +126,9 @@ export const AppInput = (props: IAppInput) => {
             separator=""
             precision={0}
             minValue={0}
-            onChangeText={formattedValue => {
-              console.log(formattedValue); // R$ +2.310,46
-            }}
+            // onChangeText={formattedValue => {
+            //   console.log(formattedValue); // R$ +2.310,46
+            // }}
             editable={editable}
             placeholder={placeholder}
             placeholderTextColor={colors.textThirdPrimary}

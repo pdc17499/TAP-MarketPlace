@@ -1,5 +1,5 @@
 import {AppButton, AppQA, AppSlider, AppText, Header} from '@component';
-import {RoomStepProps} from '@interfaces';
+import {DataSignupProps, RoomStepProps} from '@interfaces';
 import {ROOM_UNIT_HOWNER} from '@mocks';
 import {setDataSignup} from '@redux';
 import {
@@ -27,7 +27,9 @@ const RoomUnitTypeRoom = () => {
   const navigation = useNavigation<screenNavigationProp>();
   const dispatch = useDispatch();
   const list = ROOM_UNIT_HOWNER;
-  const dataSignUp = useSelector((state: any) => state?.auth?.dataSignup);
+  const dataSignUp: DataSignupProps = useSelector(
+    (state: any) => state?.auth?.dataSignup,
+  );
   const setData = (data: any) => {
     dispatch(setDataSignup({data}));
   };
@@ -77,7 +79,7 @@ const RoomUnitTypeRoom = () => {
           enableReinitialize
           onSubmit={onNext}>
           {(propsFormik: any) => (
-            <>
+            <View style={{flex: 1, paddingHorizontal: SIZE.padding}}>
               <AppText style={styles.titleHeading}>{'Room details'}</AppText>
               <AppQA
                 data={list.room_type}
@@ -143,7 +145,7 @@ const RoomUnitTypeRoom = () => {
                 containerStyle={styles.customStyleButton}
                 iconRight={'arNext'}
               />
-            </>
+            </View>
           )}
         </Formik>
       </ScrollView>
@@ -156,7 +158,6 @@ export {RoomUnitTypeRoom};
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: SIZE.padding,
     backgroundColor: colors.white,
   },
   titleHeading: {

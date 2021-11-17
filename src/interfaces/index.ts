@@ -110,7 +110,7 @@ export interface DataSignupProps {
   bathroom_number: mockProps;
   floor_size_min: number;
   floor_size_max: number;
-  attached_room: mockProps;
+  attached_bathroom: mockProps;
   room_furnishing: mockProps;
   floor_level: mockProps;
   allow_cooking: mockProps;

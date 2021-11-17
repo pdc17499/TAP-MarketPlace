@@ -5,6 +5,7 @@ import {DataSignupProps, RoomStepProps} from '@interfaces';
 import {ROOM_UNIT_HOWNER} from '@mocks';
 import {
   colors,
+  DEVICE,
   fontFamily,
   scaleSize,
   scaleWidth,
@@ -17,6 +18,7 @@ import * as yup from 'yup';
 import {Formik} from 'formik';
 import {useNavigation} from '@react-navigation/native';
 import {ROOM_UNIT_LEASE_PERIOD} from '@routeName';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 interface screenNavigationProp {
   navigate: any;
@@ -26,14 +28,10 @@ const RoomUnitPrice = () => {
   const navigation = useNavigation<screenNavigationProp>();
   const dispatch = useDispatch();
   const list = ROOM_UNIT_HOWNER;
-  const signup = useSelector((state: any) => state?.auth?.dataSignup);
-  const [dataSignUp, setStateSignup] = useState<DataSignupProps>();
-  useEffect(() => {
-    setDataSignup(signup);
-  }, [signup]);
+  const dataSignUp = useSelector((state: any) => state?.auth?.dataSignup);
 
   const setData = (data: any) => {
-    setStateSignup(data);
+    dispatch(setDataSignup({data}));
   };
 
   const formInitialValues = {
@@ -54,8 +52,9 @@ const RoomUnitPrice = () => {
     }),
   });
 
+  console.log({dataSignUp});
+
   const onNext = () => {
-    dispatch(setDataSignup({data: dataSignUp}));
     navigation.navigate(ROOM_UNIT_LEASE_PERIOD);
   };
 
@@ -63,14 +62,14 @@ const RoomUnitPrice = () => {
     const nData: any = {...dataSignUp};
     nData['min_range_price'] = values[0];
     nData['max_range_price'] = values[1];
-    setStateSignup(nData);
+    setData(nData);
   };
 
   const onChangeValue = (item: any, name?: string) => {
     if (name) {
       const nData: any = {...dataSignUp};
       nData[name] = item;
-      setStateSignup(nData);
+      setData(nData);
     }
   };
 
@@ -78,7 +77,7 @@ const RoomUnitPrice = () => {
     const name = value === 'Negotiable' ? 'negotiable_price' : 'fixed_price';
     return (
       <AppInput
-        value={dataSignUp[name]}
+        value={dataSignUp?.[name]}
         name={name}
         iconLeft={'dolar'}
         onValueChange={onChangeValue}
@@ -96,8 +95,8 @@ const RoomUnitPrice = () => {
     return (
       <AppSlider
         onValuesChangeFinish={onValuesChangeFinish}
-        min_range_value={dataSignUp?.min_range_price}
-        max_range_value={dataSignUp?.max_range_price}
+        min_range_value={dataSignUp?.min_range_price || 0}
+        max_range_value={dataSignUp?.max_range_price || 0}
         iconLeft={'dolar'}
       />
     );
@@ -115,7 +114,9 @@ const RoomUnitPrice = () => {
   return (
     <>
       <Header back />
-      <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+      <KeyboardAwareScrollView
+        style={styles.container}
+        showsVerticalScrollIndicator={false}>
         <Formik
           initialValues={formInitialValues}
           validationSchema={validationSchema}
@@ -124,7 +125,11 @@ const RoomUnitPrice = () => {
           onSubmit={onNext}>
           {(propsFormik: any) => (
             <>
-              <View style={{flex: 1}}>
+              <View
+                style={{
+                  flex: 1,
+                  paddingHorizontal: SIZE.padding,
+                }}>
                 <AppQA
                   isFlex
                   data={list.rental_price}
@@ -146,7 +151,7 @@ const RoomUnitPrice = () => {
             </>
           )}
         </Formik>
-      </ScrollView>
+      </KeyboardAwareScrollView>
     </>
   );
 };
@@ -156,7 +161,6 @@ export {RoomUnitPrice};
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: SIZE.padding,
     backgroundColor: colors.white,
   },
   title: {
@@ -168,8 +172,10 @@ const styles = StyleSheet.create({
     maxWidth: scaleWidth(240),
   },
   customStyleButton: {
+    flex: 0,
     paddingTop: SIZE.base_space,
     paddingBottom: SIZE.medium_space,
+    paddingHorizontal: SIZE.padding,
   },
   inputStyle: {
     marginTop: SIZE.base_space,
