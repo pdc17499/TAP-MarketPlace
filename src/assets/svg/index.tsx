@@ -1,4 +1,4 @@
-import {colors} from '@util';
+import { colors } from '@util';
 import React from 'react';
 import Svg, {
   Path,
@@ -537,6 +537,51 @@ export const IconDelete = (props: iconProps) => (
     <Path
       d="M17.557 4.358a92.78 92.78 0 00-4.033-.308v-.008l-.183-1.084c-.125-.767-.309-1.917-2.259-1.917H8.9c-1.942 0-2.125 1.1-2.258 1.909l-.175 1.066c-.775.05-1.55.1-2.325.175l-1.7.167a.626.626 0 00-.567.684.62.62 0 00.683.558l1.7-.167c4.367-.433 8.767-.266 13.184.175h.066a.631.631 0 00.625-.566.639.639 0 00-.575-.684zM16.024 6.784a1.054 1.054 0 00-.758-.325H4.733A1.04 1.04 0 003.69 7.566l.517 8.55c.091 1.267.208 2.85 3.116 2.85h5.35c2.909 0 3.026-1.575 3.117-2.85l.517-8.542a1.08 1.08 0 00-.284-.792zm-4.641 8.008H8.608a.63.63 0 01-.625-.625.63.63 0 01.625-.625h2.775a.63.63 0 01.625.625.63.63 0 01-.625.625zm.7-3.333H7.916a.63.63 0 01-.625-.625.63.63 0 01.625-.625h4.167a.63.63 0 01.625.625.63.63 0 01-.625.625z"
       fill="#AAA"
+    />
+  </Svg>
+);
+
+export const IconCheckedBox = (props: iconProps) => (
+  <Svg
+    width={32}
+    height={32}
+    fill="none"
+    {...props}
+  >
+    <Rect
+      x={0.5}
+      y={0.5}
+      width={31}
+      height={31}
+      rx={7.5}
+      fill="#DE9236"
+      stroke="#D8D8D8"
+    />
+    <Path
+      d="M24.25 10.75l-10.5 10.5L8.5 16"
+      stroke="#fff"
+      strokeWidth={2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </Svg>
+);
+
+export const IconUncheckedBox = (props: iconProps) => (
+  <Svg
+    width={32}
+    height={32}
+    fill="none"
+    {...props}
+  >
+    <Rect
+      x={0.5}
+      y={0.5}
+      width={31}
+      height={31}
+      rx={7.5}
+      fill="#F4F4F4"
+      stroke="#D8D8D8"
     />
   </Svg>
 );
