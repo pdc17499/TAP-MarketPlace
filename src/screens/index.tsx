@@ -21,6 +21,7 @@ import {
   RoomUnitPlaceOffer,
   RoomUnitPrice,
   RoomUnitTypeRoom,
+  ListLocations,
 } from './auth/RoomUnit';
 
 //Authenticate
@@ -32,7 +33,7 @@ import {
   HomeOwnerLifeStyle,
 } from './homeowner/Profile';
 import {UpdateNewPassword} from './auth/UpdateNewPassword';
-import {YourListing, RoomDetail} from './homeowner/Room';
+import {YourListing, RoomDetail, RoomDetailLocation} from './homeowner/Room';
 
 export {
   ChooseRole,
@@ -44,6 +45,7 @@ export {
   RoomUnitPlaceOffer,
   RoomUnitPrice,
   RoomUnitTypeRoom,
+  ListLocations,
   Welcome,
   SignIn,
   ResetPassword,
@@ -63,8 +65,8 @@ export {
   BasicInfomation,
   ChangePassword,
   HomeOwnerLifeStyle,
-  ChangePassword,
   // Room
   YourListing,
   RoomDetail,
+  RoomDetailLocation,
 };

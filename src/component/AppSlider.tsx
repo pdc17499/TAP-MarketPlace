@@ -32,8 +32,12 @@ const AppSlider = React.memo((props: AppSliderProps) => {
           iconLeft={iconLeft}
           editable={false}
           containerStyle={{flex: 1}}
-          inputStyle={{fontSize: SIZE.base_size + 2}}
+          inputStyle={{
+            fontSize: SIZE.base_size + 2,
+            lineHeight: SIZE.base_size + 4,
+          }}
           typeInput={'price'}
+          customStyleLabel={{color: colors.textSecondPrimary}}
         />
         <View style={styles.line} />
         <AppInput
@@ -43,8 +47,12 @@ const AppSlider = React.memo((props: AppSliderProps) => {
           iconLeft={iconLeft}
           editable={false}
           containerStyle={{flex: 1}}
-          inputStyle={{fontSize: SIZE.base_size + 2}}
+          inputStyle={{
+            fontSize: SIZE.base_size + 2,
+            lineHeight: SIZE.base_size,
+          }}
           typeInput={'price'}
+          customStyleLabel={{color: colors.textSecondPrimary}}
         />
       </View>
       <MultiSlider
@@ -61,8 +69,8 @@ const AppSlider = React.memo((props: AppSliderProps) => {
         markerStyle={styles.markerStyle}
       />
       <View style={styles.bottomView}>
-        <AppText style={styles.textBottom}>{`${min_default}`}</AppText>
-        <AppText style={styles.textBottom}>{`${max_default}`}</AppText>
+        <AppText style={styles.textBottom} isPrice>{`${min_default}`}</AppText>
+        <AppText style={styles.textBottom} isPrice>{`${max_default}`}</AppText>
       </View>
     </>
   );
@@ -72,7 +80,8 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     alignItems: 'flex-end',
-    marginBottom: SIZE.base_space / 2,
+    marginBottom: SIZE.base_space,
+    marginTop: SIZE.base_space / 2,
   },
   line: {
     height: 1.5,
@@ -86,7 +95,14 @@ const styles = StyleSheet.create({
     height: 6,
     backgroundColor: colors.borderPrimary,
   },
-  markerStyle: {borderColor: colors.primary, borderWidth: 2},
+  markerStyle: {
+    borderColor: colors.primary,
+    borderWidth: 2,
+    backgroundColor: colors.white,
+    width: 28,
+    height: 28,
+    borderRadius: 14,
+  },
   bottomView: {
     flexDirection: 'row',
     justifyContent: 'space-between',

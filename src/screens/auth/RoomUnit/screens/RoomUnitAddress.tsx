@@ -26,7 +26,10 @@ interface ListLocationProps {
   onSelectLocation: (location: any) => void;
 }
 
-const ListLocations = ({location, onSelectLocation}: ListLocationProps) => {
+export const ListLocations = ({
+  location,
+  onSelectLocation,
+}: ListLocationProps) => {
   const [listLocation, setListLocation] = useState([]);
   useEffect(() => {
     async function getLocation() {
@@ -144,6 +147,7 @@ const RoomUnitAddress = () => {
             onPress={onNext}
             containerStyle={styles.customStyleButton}
             iconRight={'arNext'}
+            size={'small'}
           />
         )}
       </View>

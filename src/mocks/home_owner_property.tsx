@@ -19,15 +19,15 @@ export const ROOM_UNIT_HOWNER = {
   ],
   rental_price: [
     {
-      id: 1,
+      label: 'Negotiable',
       value: 'Negotiable',
     },
     {
-      id: 2,
+      label: 'Fixed price',
       value: 'Fixed price',
     },
     {
-      id: 3,
+      label: 'Price range',
       value: 'Price range',
     },
   ],
@@ -79,11 +79,11 @@ export const ROOM_UNIT_HOWNER = {
   ],
   room_type: [
     {
-      id: 1,
+      label: 'Entire Home',
       value: 'Entire Home',
     },
     {
-      id: 2,
+      label: 'Room',
       value: 'Room',
     },
   ],
@@ -239,17 +239,16 @@ export const ROOM_UNIT_HOWNER = {
   ],
   gender: [
     {
-
       value: 'Male',
-      label: 'Male'
+      label: 'Male',
     },
     {
       value: 'Female',
-      label: 'Female'
+      label: 'Female',
     },
     {
       value: 'Other',
-      label: 'Other'
+      label: 'Other',
     },
   ],
   group_age: [

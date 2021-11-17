@@ -1,7 +1,7 @@
 import React, {useCallback} from 'react';
 import {TouchableOpacity, StyleSheet, View, Image} from 'react-native';
 import {AppText} from './AppText';
-import {colors, fontFamily, scaleWidth, SIZE} from '@util';
+import {colors, fontFamily, scaleSize, SIZE} from '@util';
 import {debounce} from 'lodash';
 import {ButtonProps} from '@interfaces';
 import {
@@ -17,6 +17,7 @@ import {
 const AppButton = React.memo((props: ButtonProps) => {
   const {
     title,
+    label,
     customStyleButton,
     customStyleTitle,
     onPress,
@@ -56,6 +57,7 @@ const AppButton = React.memo((props: ButtonProps) => {
     styles.container,
     typeButton === 'linear' ? bgLinear : {},
     {minHeight: size === 'small' ? SIZE.btn_height_small : SIZE.btn_height},
+    typeButton === 'link' ? styles.bgLink : {},
     typeButton === 'underline' ? styles.bgUnderline : {},
     customStyleButton,
   ];
@@ -63,6 +65,7 @@ const AppButton = React.memo((props: ButtonProps) => {
   const titleStyle = [
     styles.txtButton,
     typeButton === 'linear' && titleLinear,
+    typeButton === 'link' ? styles.titleLink : {},
     typeButton === 'underline' ? styles.titleUnderline : {},
     size === 'small' && {...fontFamily.fontWeight600},
     customStyleTitle,
@@ -93,6 +96,7 @@ const AppButton = React.memo((props: ButtonProps) => {
 
   return (
     <View style={containerStyle}>
+      {label && <AppText style={styles.label}>{label}</AppText>}
       <TouchableOpacity
         style={buttonStyle}
         disabled={disabled}
@@ -108,13 +112,18 @@ const AppButton = React.memo((props: ButtonProps) => {
 
 const styles = StyleSheet.create({
   container: {
-    // flex: 1,
     borderRadius: 8,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: SIZE.base_space,
     backgroundColor: colors.primary,
+  },
+  label: {
+    color: colors.secondPrimary,
+    fontSize: scaleSize(14.5),
+    ...fontFamily.fontCampWeight500,
+    paddingTop: SIZE.padding,
   },
   txtButton: {
     ...fontFamily.fontWeight500,
@@ -128,7 +137,7 @@ const styles = StyleSheet.create({
     marginLeft: SIZE.base_space / 2,
     marginRight: -SIZE.base_space / 2,
   },
-  bgUnderline: {
+  bgLink: {
     backgroundColor: 'transparent',
     minHeight: 'auto',
     alignItems: 'flex-end',
@@ -136,13 +145,30 @@ const styles = StyleSheet.create({
     borderRadius: 0,
     marginTop: SIZE.medium_space - 4,
   },
-  titleUnderline: {
+  titleLink: {
     color: colors.textSecondPrimary,
     ...fontFamily.fontCampWeight500,
     lineHeight: SIZE.base_size * 1.6,
     textDecorationLine: 'underline',
     textDecorationStyle: 'solid',
     textDecorationColor: colors.textSecondPrimary,
+  },
+  bgUnderline: {
+    backgroundColor: 'transparent',
+    minHeight: 'auto',
+    justifyContent: 'flex-start',
+    borderRadius: 0,
+    paddingTop: SIZE.base_space / 2,
+    marginTop: 0,
+    borderBottomColor: colors.borderProfileList,
+    borderBottomWidth: 1,
+  },
+  titleUnderline: {
+    textAlign: 'left',
+    color: colors.textPrimary,
+    fontSize: SIZE.base_size + 1,
+    ...fontFamily.fontCampWeight500,
+    paddingBottom: SIZE.padding,
   },
 });
 
