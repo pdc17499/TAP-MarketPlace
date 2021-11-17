@@ -1,8 +1,8 @@
-import {AppButton, AppInput, AppPicker, AppText, Header} from '@component';
-import React, {useEffect, useState} from 'react';
-import {View, StyleSheet, Pressable} from 'react-native';
-import {useDispatch} from 'react-redux';
-import {useSelector} from 'react-redux';
+import { AppButton, AppInput, AppPicker, AppText, Header } from '@component';
+import React, { useEffect, useState } from 'react';
+import { View, StyleSheet, Pressable } from 'react-native';
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import {
   colors,
   fontFamily,
@@ -12,15 +12,15 @@ import {
   validateForm,
 } from '@util';
 import * as yup from 'yup';
-import {Formik} from 'formik';
-import {ROOM_UNIT_HOWNER} from '@mocks';
-import {UserInfo} from '@interfaces';
-import {saveDataUser} from '@redux';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import { Formik } from 'formik';
+import { ROOM_UNIT_HOWNER } from '@mocks';
+import { UserInfo } from '@interfaces';
+import { saveDataUser } from '@redux';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import moment from 'moment';
 
-interface BasicInfomationProp {}
+interface BasicInfomationProp { }
 
 interface screenNavigationProp {
   navigate: any;
@@ -61,7 +61,9 @@ const BasicInfomation = (props: BasicInfomationProp) => {
 
   const onChangeText = (item: any, name?: string) => {
     if (name) {
-      const nData: any = {...users};
+      console.log('valye', name);
+
+      const nData: any = { ...users };
       nData[name] = item;
       setUsers(nData);
     }
@@ -78,14 +80,13 @@ const BasicInfomation = (props: BasicInfomationProp) => {
 
   const onChangDate = (event: any, selectedDate: any) => {
     const changeDate = selectedDate || dateOfBirth;
-
     const birthday = moment(changeDate).format('DD/MM/YYYY');
     setShowDate(false);
     // setShow(Platform.OS === 'ios');
     setDateOfBirth(birthday);
   };
 
-  const onSubmit = () => {};
+  const onSubmit = () => { };
 
   const RenderForm = () => (
     <KeyboardAwareScrollView showsVerticalScrollIndicator={false}>
@@ -273,4 +274,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export {BasicInfomation};
+export { BasicInfomation };
