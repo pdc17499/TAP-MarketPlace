@@ -1,11 +1,11 @@
-import { AppText } from '@component';
-import { DownIcon } from '@assets';
-import { colors, DEVICE, fontFamily, scaleSize, scaleWidth, SIZE } from '@util';
-import React, { useRef, useState } from 'react';
-import { StyleSheet, View, Animated, Pressable } from 'react-native';
+import {AppText} from '@component';
+import {DownIcon} from '@assets';
+import {colors, DEVICE, fontFamily, scaleSize, scaleWidth, SIZE} from '@util';
+import React, {useRef, useState} from 'react';
+import {StyleSheet, View, Animated, Pressable} from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
 import CountryPicker from 'react-native-country-picker-modal';
-import { IAppPicker } from '@interfaces';
+import {IAppPicker} from '@interfaces';
 
 export const AppPicker: React.FC<IAppPicker> = React.memo((props: any) => {
   const {
@@ -26,12 +26,12 @@ export const AppPicker: React.FC<IAppPicker> = React.memo((props: any) => {
 
   const onSelectFlag = (country: any) => {
     onValueChange(country, name);
-    console.log({ country });
+    console.log({country});
   };
 
   const onOpenPickerSelect = (isOpen: boolean) => setIsOpenPicker(isOpen);
 
-  const modalCountryProps = disable ? { visible: !disable } : {};
+  const modalCountryProps = disable ? {visible: !disable} : {};
   const isLinear = stylePicker === 'linear';
   const DownIconPicker = () => {
     if (isLinear) return null;
@@ -43,9 +43,9 @@ export const AppPicker: React.FC<IAppPicker> = React.memo((props: any) => {
   };
   const styles = isLinear
     ? {
-      ...stylesBase,
-      ...stylesLinear,
-    }
+        ...stylesBase,
+        ...stylesLinear,
+      }
     : stylesBase;
 
   return (
@@ -76,7 +76,7 @@ export const AppPicker: React.FC<IAppPicker> = React.memo((props: any) => {
               disabled={disable}
               onValueChange={item => onValueChange(item, name)}
               useNativeAndroidPickerStyle={false}
-              placeholder={placeholder || { label: 'None', value: 'None' }}
+              placeholder={placeholder || {label: 'None', value: 'None'}}
               value={value}
               items={items}
               pickerProps={{
@@ -92,12 +92,12 @@ export const AppPicker: React.FC<IAppPicker> = React.memo((props: any) => {
               onOpen={() => onOpenPickerSelect(true)}
               onClose={() => onOpenPickerSelect(false)}
             />
-            {DEVICE.isAndroid && (
-              isLinear ? <View style={styles.customIcon2}>{DownIconPicker()}</View>
-                : <View style={styles.customIcon}>{DownIconPicker()}</View>
-
-
-            )}
+            {DEVICE.isAndroid &&
+              (isLinear ? (
+                <View style={styles.customIcon2}>{DownIconPicker()}</View>
+              ) : (
+                <View style={styles.customIcon}>{DownIconPicker()}</View>
+              ))}
           </>
         )}
       </View>
@@ -133,7 +133,7 @@ const stylesBase = StyleSheet.create({
     backgroundColor: colors.white,
     zIndex: 1,
     position: 'absolute',
-    top: SIZE.input_height / 2 - 8,
+    top: SIZE.input_height / 2 - scaleWidth(10),
     right: 10,
     width: 20,
     height: 20,
@@ -209,7 +209,7 @@ const stylesLinear = StyleSheet.create({
   label: {
     color: colors.secondPrimary,
     fontSize: scaleSize(14.5),
-    marginBottom: SIZE.base_space / 2,
+    marginBottom: DEVICE.isIos ? SIZE.base_space / 2 : SIZE.base_space / 4,
     ...fontFamily.fontCampWeight500,
   },
   country: {
@@ -238,7 +238,8 @@ const stylesLinear = StyleSheet.create({
     borderBottomColor: colors.borderProfileList,
     borderBottomWidth: 1,
     borderRadius: 0,
-    paddingBottom: SIZE.padding,
+    paddingBottom: scaleWidth(20),
+    paddingTop: 0,
   },
   inputIOS: {
     ...fontFamily.fontWeight500,
