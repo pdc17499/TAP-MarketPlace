@@ -162,7 +162,7 @@ export const AppInput = (props: IAppInput) => {
 
         {showEye && (
           <TouchableOpacity onPress={onShowPassWord} style={styles.iconRight}>
-            {hidePasssWord ? <EyeIconOpen /> : <EyeIconClose />}
+            {hidePasssWord ? <EyeIconClose /> : <EyeIconOpen />}
           </TouchableOpacity>
         )}
         {iconRight && (

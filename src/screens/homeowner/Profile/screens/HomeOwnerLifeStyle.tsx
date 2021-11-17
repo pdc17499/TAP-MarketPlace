@@ -1,8 +1,18 @@
-import { AppButton, AppInput, AppModal, AppPicker, AppSlider, AppText, Header, ModalCheckedBox, PropertyChoices } from '@component';
-import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, Pressable, ScrollView } from 'react-native';
-import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux';
+import {
+  AppButton,
+  AppInput,
+  AppModal,
+  AppPicker,
+  AppSlider,
+  AppText,
+  Header,
+  ModalCheckedBox,
+  PropertyChoices,
+} from '@component';
+import React, {useEffect, useState} from 'react';
+import {View, StyleSheet, Pressable, ScrollView} from 'react-native';
+import {useDispatch} from 'react-redux';
+import {useSelector} from 'react-redux';
 import {
   colors,
   DEVICE,
@@ -13,32 +23,34 @@ import {
   validateForm,
 } from '@util';
 import * as yup from 'yup';
-import { Formik } from 'formik';
-import { ROOM_UNIT_HOWNER } from '@mocks';
-import { UserInfo } from '@interfaces';
-import { saveDataUser } from '@redux';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import {Formik} from 'formik';
+import {ROOM_UNIT_HOWNER} from '@mocks';
+import {UserInfo} from '@interfaces';
+import {saveDataUser} from '@redux';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import { IconCheckedBox, IconTick, IconUncheckedBox } from '@assets';
-import { values } from 'lodash';
+import {IconCheckedBox, IconTick, IconUncheckedBox} from '@assets';
+import {values} from 'lodash';
 
-interface HomeOwnerLifeStyleProp { }
+interface HomeOwnerLifeStyleProp {}
 
 interface screenNavigationProp {
   navigate: any;
 }
 
-const HomeOwnerLifeStyle = ((props: HomeOwnerLifeStyleProp) => {
+const HomeOwnerLifeStyle = (props: HomeOwnerLifeStyleProp) => {
   const dispatch = useDispatch();
   const list = ROOM_UNIT_HOWNER;
   const dataUser: UserInfo = useSelector((state: any) => state?.auth?.user);
-  const [users, setUsers] = useState<UserInfo>()
-  const [showButton, setShowButton] = useState(false)
+  const [users, setUsers] = useState<UserInfo>();
+  const [showButton, setShowButton] = useState(false);
+
+  console.log({users});
 
   useEffect(() => {
-    setUsers(dataUser)
+    setUsers(dataUser);
     console.log('dulieu', dataUser);
-  }, [dataUser])
+  }, [dataUser]);
 
   const formInitialValues = {
     place: users?.lifestyle?.Friendliness,
@@ -58,18 +70,18 @@ const HomeOwnerLifeStyle = ((props: HomeOwnerLifeStyleProp) => {
 
   const onChangeText = (item: any, name?: string) => {
     if (name) {
-      const nData: any = { ...dataUser };
+      const nData: any = {...dataUser};
       nData[name] = item;
       setData(nData);
     }
-    setShowButton(true)
+    setShowButton(true);
   };
 
   const setData = (data: any) => {
     // dispatch(saveDataUser(data));
   };
 
-  const onSubmit = () => { };
+  const onSubmit = () => {};
 
   const RenderForm = () => (
     <KeyboardAwareScrollView showsVerticalScrollIndicator={false}>
@@ -88,14 +100,15 @@ const HomeOwnerLifeStyle = ((props: HomeOwnerLifeStyleProp) => {
                 borderTopColor: colors.borderProfileList,
                 paddingTop: 10,
               }}>
-
-              <AppModal
+              {/* <AppModal
                 label={'My place is'}
                 // customTitle={<PropertyChoices data={props.values.place} />}
                 customStyleContainer={styles.modal}
               >
                 <ModalCheckedBox data={list.your_place} />
-              </AppModal>
+              </AppModal> */}
+
+              {/* <ModalCheckedBox label={'My place is'} data={list.your_place} /> */}
 
               <AppPicker
                 value={props.values.pet}
@@ -117,37 +130,33 @@ const HomeOwnerLifeStyle = ((props: HomeOwnerLifeStyleProp) => {
                 stylePicker={'linear'}
               />
 
-              <AppModal
+              {/* <AppModal
                 label={'Diet-choices'}
-                // customTitle={<PropertyChoices data={} />}
-                customStyleContainer={styles.modal}
-              >
+                // customTitle={<PropertyChoices data={props.values.diet} />}
+                customStyleContainer={styles.modal}>
                 <ModalCheckedBox data={list.diet_choices} />
               </AppModal>
 
               <AppModal
                 label={'Religion'}
                 customTitle={<AppText>{'Religions'}</AppText>}
-                customStyleContainer={styles.modal}
-              >
+                customStyleContainer={styles.modal}>
                 <ModalCheckedBox data={list.religions} />
-              </AppModal>
-
-
+              </AppModal> */}
             </View>
-            {showButton
-              ? <AppButton
+            {showButton ? (
+              <AppButton
                 customStyleButton={styles.button}
                 title={'Save change'}
                 size={'small'}
                 iconRight={'tick'}
                 onPress={props.handleSubmit}
-              /> : null
-            }
+              />
+            ) : null}
           </>
         )}
       </Formik>
-    </KeyboardAwareScrollView >
+    </KeyboardAwareScrollView>
   );
 
   return (
@@ -159,7 +168,7 @@ const HomeOwnerLifeStyle = ((props: HomeOwnerLifeStyleProp) => {
       </View>
     </View>
   );
-});
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -224,13 +233,11 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 5,
   },
-  modal: {
-
-  },
+  modal: {},
   modalTxt: {
     marginRight: scaleWidth(15),
-    alignSelf: 'center'
-  }
+    alignSelf: 'center',
+  },
 });
 
-export { HomeOwnerLifeStyle };
+export {HomeOwnerLifeStyle};

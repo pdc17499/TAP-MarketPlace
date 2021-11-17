@@ -76,7 +76,7 @@ export const AppPicker: React.FC<IAppPicker> = React.memo((props: any) => {
               disabled={disable}
               onValueChange={item => onValueChange(item, name)}
               useNativeAndroidPickerStyle={false}
-              placeholder={placeholder || {label: 'None', value: 'None'}}
+              placeholder={placeholder || {label: 'N/A', value: 'N/A'}}
               value={value}
               items={items}
               pickerProps={{

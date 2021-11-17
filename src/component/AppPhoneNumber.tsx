@@ -1,48 +1,48 @@
 import CountryPicker from 'react-native-country-picker-modal';
-import React, { useState, useEffect } from 'react';
-import { Pressable, StyleSheet, TouchableOpacity, View } from 'react-native';
-import { AppInput, AppText } from '@component';
-import { colors, fontFamily, scaleWidth, SIZE } from '@util';
-import { DownIcon, IconShieldCheck } from '@assets';
+import React, {useState, useEffect} from 'react';
+import {Pressable, StyleSheet, TouchableOpacity, View} from 'react-native';
+import {AppInput, AppText} from '@component';
+import {colors, fontFamily, scaleWidth, SIZE} from '@util';
+import {DownIcon, IconShieldCheck} from '@assets';
 interface IAppPhoneNumber {
   label?: string;
   value?: string;
-  onChangePhone: (text: string) => void;
+  onChangePhone: (text: string, name?: string) => void;
   onChangeFlag: (text: string) => void;
   error?: string;
   type?: 'default' | 'inline';
+  name?: string;
 }
 
 export const AppPhoneNumber = React.memo((props: IAppPhoneNumber) => {
-  const { label, value, onChangePhone, onChangeFlag, error, type } = props;
+  const {label, value, onChangePhone, onChangeFlag, error, type} = props;
   const [countryCode, setCountryCode]: any = useState('SG');
   const [visible, setVisible] = useState(false);
-  const [isInLine, setIsInLine] = useState(false)
+  const [isInLine, setIsInLine] = useState(false);
 
   useEffect(() => {
     onChangeFlag('65');
-    if (type === 'inline') setIsInLine(true)
-
+    if (type === 'inline') setIsInLine(true);
   }, []);
 
   const onSelectFlag = (country: any) => {
     setCountryCode(country?.cca2);
     onChangeFlag(country?.callingCode[0] || '65');
-    setVisible(false)
+    setVisible(false);
   };
 
   const showModal = () => {
-    setVisible(true)
+    setVisible(true);
   };
 
   return (
     <>
-      {isInLine
-        ? <Pressable style={styles.inlineType} onPress={() => setIsInLine(false)}>
-          <AppText >{'None'}</AppText>
-          {/* <IconShieldCheck /> */}
+      {isInLine ? (
+        <Pressable style={styles.inlineType} onPress={() => setIsInLine(false)}>
+          <AppText>{'N/A'}</AppText>
         </Pressable>
-        : <View style={styles.container}>
+      ) : (
+        <View style={styles.container}>
           <TouchableOpacity style={styles.code} onPress={showModal}>
             <CountryPicker
               theme={{
@@ -61,7 +61,7 @@ export const AppPhoneNumber = React.memo((props: IAppPhoneNumber) => {
           </TouchableOpacity>
           <View style={styles.input}>
             <AppInput
-              typeInput={"phone"}
+              typeInput={'phone'}
               delimiter={' - '}
               label={label}
               style={styles.inputPhone}
@@ -70,7 +70,8 @@ export const AppPhoneNumber = React.memo((props: IAppPhoneNumber) => {
               onValueChange={onChangePhone}
             />
           </View>
-        </View>}
+        </View>
+      )}
 
       {!!error && <AppText style={styles.error}>{error}</AppText>}
     </>
@@ -98,13 +99,14 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     backgroundColor: colors.bgInput,
     borderRadius: 8,
-    paddingHorizontal: 13
+    paddingHorizontal: 13,
   },
   error: {
     marginTop: 4,
     color: colors.red,
   },
   inlineType: {
-    flexDirection: 'row', marginTop: SIZE.base_space,
-  }
+    flexDirection: 'row',
+    marginTop: SIZE.base_space,
+  },
 });
