@@ -585,3 +585,69 @@ export const IconUncheckedBox = (props: iconProps) => (
     />
   </Svg>
 );
+
+export const IconDeleteUser = (props: iconProps) => (
+  <Svg
+    width={20}
+    height={20}
+    fill="none"
+    {...props}
+  >
+    <Path
+      d="M8.603 9.847c2.324 0 4.208-1.945 4.208-4.344 0-2.4-1.884-4.345-4.208-4.345-2.325 0-4.209 1.946-4.209 4.345 0 2.4 1.884 4.344 4.209 4.344z"
+      stroke="#4A4B51"
+      strokeWidth={1.5}
+      strokeMiterlimit={10}
+    />
+    <Path
+      d="M2.15 13.902a7.967 7.967 0 012.857-2.968 7.58 7.58 0 013.902-1.087 7.58 7.58 0 013.902 1.087"
+      stroke="#4A4B51"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <Path
+      d="M15.336 19.043c1.976 0 3.577-1.653 3.577-3.692 0-2.04-1.601-3.693-3.577-3.693-1.975 0-3.577 1.653-3.577 3.693 0 2.039 1.602 3.692 3.577 3.692z"
+      stroke="#4A4B51"
+      strokeWidth={1.5}
+      strokeMiterlimit={10}
+    />
+    <Path
+      d="M16.529 14.12l-2.385 2.461M16.529 16.581l-2.385-2.461"
+      stroke="#4A4B51"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </Svg>
+);
+
+
+export const IconChangePassword = (props: iconProps) => (
+  <Svg
+    width={20}
+    height={20}
+    fill="none"
+    {...props}
+  >
+    <Path
+      d="M7.279 9.596a5.62 5.62 0 113.125 3.126h0L9.375 13.75H7.5v1.875H5.625V17.5H2.5v-3.125L7.28 9.596h0z"
+      stroke="#073729"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <Path
+      opacity={0.5}
+      d="M14.063 6.25a.312.312 0 100-.625.312.312 0 000 .625z"
+      stroke="#073729"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <Path
+      d="M14.063 6.875a.937.937 0 100-1.875.937.937 0 000 1.875z"
+      fill="#073729"
+    />
+  </Svg>
+);

@@ -1,14 +1,14 @@
-import {AppButton, AppText, Header} from '@component';
-import React, {useState} from 'react';
-import {View, Image, FlatList, Pressable} from 'react-native';
-import {useDispatch} from 'react-redux';
-import {styles} from './style';
+import { AppButton, AppText, Header } from '@component';
+import React, { useState } from 'react';
+import { View, Image, FlatList, Pressable } from 'react-native';
+import { useDispatch } from 'react-redux';
+import { styles } from './style';
 import {
   INITIAL_STATE_AUTH,
   INITIAL_STATE_DATA_SIGN_UP,
   logoutApp,
 } from '@redux';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import {
   IconHouseLine,
   IconUser,
@@ -19,17 +19,18 @@ import {
   IconLogOut,
   avatar_default,
 } from '@assets';
-import ImagePicker, {ImageOrVideo} from 'react-native-image-crop-picker';
-import {NavigationUtils} from '@navigation';
+import ImagePicker, { ImageOrVideo } from 'react-native-image-crop-picker';
+import { NavigationUtils } from '@navigation';
 import {
+  ACCOUNT_SETTING,
   BASIC_INFORMATION,
   HOME_OWNER_LIFE_STYLE,
   YOUR_LISTING,
 } from '@routeName';
-import {useNavigation} from '@react-navigation/native';
-import {Screen} from 'react-native-screens';
+import { useNavigation } from '@react-navigation/native';
+import { Screen } from 'react-native-screens';
 
-interface ProfileProp {}
+interface ProfileProp { }
 
 interface screenNavigationProp {
   navigate: any;
@@ -63,6 +64,7 @@ const Profile = (props: ProfileProp) => {
       id: 4,
       title: 'Account Setting',
       icon: <IconSetting />,
+      screen: ACCOUNT_SETTING
     },
     {
       id: 5,
@@ -98,7 +100,7 @@ const Profile = (props: ProfileProp) => {
     }
   };
 
-  const renderItem = ({item}: any) => (
+  const renderItem = ({ item }: any) => (
     <Pressable onPress={() => moveToDetail(item)}>
       <View style={styles.item}>
         {item.icon}
@@ -115,7 +117,7 @@ const Profile = (props: ProfileProp) => {
       <Header />
       <Pressable onPress={() => openGallery(callback())}>
         <Image
-          source={filePath ? {uri: filePath} : avatar_default}
+          source={filePath ? { uri: filePath } : avatar_default}
           style={styles.avatar}></Image>
       </Pressable>
       <View style={styles.infomation}>
@@ -157,7 +159,7 @@ const Profile = (props: ProfileProp) => {
   );
 };
 
-export {Profile};
+export { Profile };
 function callback(): (arg0: ImageOrVideo) => void {
   throw new Error('Function not implemented.');
 }

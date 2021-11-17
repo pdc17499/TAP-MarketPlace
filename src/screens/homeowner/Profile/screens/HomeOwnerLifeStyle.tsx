@@ -91,7 +91,7 @@ const HomeOwnerLifeStyle = ((props: HomeOwnerLifeStyleProp) => {
 
               <AppModal
                 label={'My place is'}
-                customTitle={<PropertyChoices data={props.values.place} />}
+                // customTitle={<PropertyChoices data={props.values.place} />}
                 customStyleContainer={styles.modal}
               >
                 <ModalCheckedBox data={list.your_place} />
@@ -119,7 +119,7 @@ const HomeOwnerLifeStyle = ((props: HomeOwnerLifeStyleProp) => {
 
               <AppModal
                 label={'Diet-choices'}
-                // customTitle={<PropertyChoices data={props.values.diet} />}
+                // customTitle={<PropertyChoices data={} />}
                 customStyleContainer={styles.modal}
               >
                 <ModalCheckedBox data={list.diet_choices} />
