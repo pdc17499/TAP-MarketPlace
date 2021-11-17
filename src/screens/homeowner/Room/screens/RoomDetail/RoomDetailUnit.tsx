@@ -5,6 +5,7 @@ import {
   AppSlider,
   AppText,
   Header,
+  ModalCheckedBox,
 } from '@component';
 import React, {useState} from 'react';
 import {View, Image, Pressable, StyleSheet, ScrollView} from 'react-native';
@@ -27,6 +28,7 @@ import * as yup from 'yup';
 import Carousel from 'react-native-snap-carousel';
 import Modal from 'react-native-modal';
 import Video from 'react-native-video';
+import {pickerProps} from '@interfaces';
 
 const state = {
   activeIndex: 0,
@@ -75,6 +77,8 @@ const RoomDetailUnit = ({props}: any) => {
       'https://file-examples-com.github.io/uploads/2017/04/file_example_MP4_1280_10MG.mp4',
       'https://file-examples-com.github.io/uploads/2017/10/file_example_PNG_1MB.png',
       'https://file-examples-com.github.io/uploads/2017/10/file_example_PNG_1MB.png',
+      'https://file-examples-com.github.io/uploads/2017/10/file_example_PNG_1MB.png',
+      'https://file-examples-com.github.io/uploads/2017/10/file_example_PNG_1MB.png',
     ],
   });
   const [visible, setVisible] = useState(false);
@@ -112,7 +116,7 @@ const RoomDetailUnit = ({props}: any) => {
     // room_active: validateForm().common.atLeastOnePicker,
   });
 
-  const onChangeText = (value: any, name?: string) => {
+  const onChangeValue = (value: any, name?: string) => {
     const nRoom: any = {...room};
     if (name) {
       nRoom[name] = value;
@@ -161,7 +165,7 @@ const RoomDetailUnit = ({props}: any) => {
         value={props.values[name]}
         name={name}
         label={label}
-        onValueChange={onChangeText}
+        onValueChange={onChangeValue}
         items={name === 'built_year' ? YEARS() : list[name]}
         error={props.errors[name]}
         stylePicker={'linear'}
@@ -213,6 +217,13 @@ const RoomDetailUnit = ({props}: any) => {
                       ) : (
                         <Image source={{uri: item}} style={styleFile} />
                       )}
+                      {index === 4 && (
+                        <View style={styles.shadowGallery}>
+                          <AppText style={styles.textMoreFile}>
+                            {`+${length - index - 1}`}
+                          </AppText>
+                        </View>
+                      )}
                     </View>
                   );
                 }
@@ -235,7 +246,7 @@ const RoomDetailUnit = ({props}: any) => {
             <Carousel
               layout={'default'}
               data={gallery}
-              renderItem={_renderItem}
+              renderItem={_renderFile}
               sliderWidth={DEVICE.width}
               itemWidth={DEVICE.width - SIZE.padding}
               contentContainerCustomStyle={{
@@ -251,7 +262,7 @@ const RoomDetailUnit = ({props}: any) => {
 
   var typesVideo = ['mp4'];
 
-  const _renderItem = ({item, index}: any) => {
+  const _renderFile = ({item, index}: any) => {
     console.log({item});
     const isVideo = checkVideo(item);
 
@@ -270,6 +281,29 @@ const RoomDetailUnit = ({props}: any) => {
         )}
       </View>
     );
+  };
+
+  const renderAmenities = (amenities: Array<string>) => {
+    if (amenities?.length > 0) {
+      return (
+        <>
+          {amenities.map((item: string) => {
+            const index = list.amenities.findIndex(
+              (itm: pickerProps) => item === itm.value,
+            );
+
+            return (
+              <View style={styles.itemAmenity}>
+                {index !== -1 && list.amenities[index].icon}
+                <AppText>{`    ${item}`}</AppText>
+              </View>
+            );
+          })}
+        </>
+      );
+    }
+
+    return <View />;
   };
 
   return (
@@ -312,6 +346,14 @@ const RoomDetailUnit = ({props}: any) => {
                 {renderAppPicker(props, 'floor_level', 'Floor level')}
                 {renderAppPicker(props, 'allow_cooking', 'Allow cooking')}
                 {renderAppPicker(props, 'built_year', 'Built year')}
+                <ModalCheckedBox
+                  label={'Amenities'}
+                  data={list.amenities}
+                  name={'amenities'}
+                  selected={props.values.amenities}
+                  onPressDone={onChangeValue}
+                  viewContent={renderAmenities(props.values.amenities)}
+                />
                 {renderGallery(props.values.gallery)}
               </View>
             </>
@@ -337,7 +379,7 @@ const styles = StyleSheet.create({
     bottom: SIZE.medium_space,
   },
   contentContainerStyle: {
-    paddingBottom: 100,
+    paddingBottom: scaleWidth(90),
   },
   line: {
     height: 1,
@@ -380,6 +422,23 @@ const styles = StyleSheet.create({
     resizeMode: 'cover',
     borderRadius: 4,
   },
+  shadowGallery: {
+    width: scaleWidth(70),
+    height: scaleWidth(70),
+    borderRadius: scaleWidth(8),
+    backgroundColor: 'rgba(0,0,0,0.6)',
+    position: 'absolute',
+    right: 0,
+    bottom: 0,
+    zIndex: 9999,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  textMoreFile: {
+    ...fontFamily.fontCampWeight600,
+    fontSize: scaleSize(18),
+    color: colors.white,
+  },
   smallImage: {
     width: scaleWidth(70),
     height: scaleWidth(70),
@@ -396,12 +455,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  fullScreen: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    bottom: 0,
-    right: 0,
+  itemAmenity: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: SIZE.padding / 2,
   },
 });
 

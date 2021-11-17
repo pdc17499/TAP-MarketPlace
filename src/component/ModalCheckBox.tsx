@@ -1,62 +1,86 @@
-import { IconCheckedBox, IconUncheckedBox } from "@assets";
-import { isTaggedTemplateExpression } from "@babel/types";
-import { AppText } from "@component";
-import { scaleWidth } from "@util";
-import React, { useState } from "react";
-import { Pressable, ScrollView, StyleSheet, View } from "react-native";
+import {IconCheckedBox, IconUncheckedBox} from '@assets';
+import {AppModal, AppText} from '@component';
+import {scaleWidth} from '@util';
+import React, {useEffect, useState} from 'react';
+import {Pressable, ScrollView, StyleSheet, View} from 'react-native';
 
 interface ModalCheckedBoxProps {
-  data: any
+  data: any;
+  label?: string;
+  selected: Array<string>;
+  name: string;
+  onPressDone?: (list: Array<string>, name: string) => void;
+  viewContent?: any;
+  title?: string;
 }
 
 export const ModalCheckedBox = (props: ModalCheckedBoxProps) => {
-  const {
-    data
-  } = props;
+  const {data, label, selected, onPressDone, name, viewContent, title} = props;
+  const [selectedItem, setSelectedItem] = useState<Array<string>>([]);
 
-  const [selectedItem, setSelectedItem] = useState([])
+  useEffect(() => {
+    setSelectedItem(selected);
+  }, [selected]);
 
-  const checkBox = (item: any) => {
-    const num = selectedItem.push(item)
-    console.log('select', selectedItem)
-    setSelectedItem([...selectedItem])
-  }
+  const onCheck = (isSelected: boolean, item: any) => {
+    if (isSelected) {
+      const nSelectedItem = selectedItem.filter(
+        (itm: string) => item.value !== itm,
+      );
+      setSelectedItem(nSelectedItem);
+    } else {
+      selectedItem.push(item.value);
+      setSelectedItem([...selectedItem]);
+    }
+  };
 
-  const unCheckBox = (index: number) => {
-    selectedItem.splice(index, 1)
-    setSelectedItem([...selectedItem])
-  }
+  const onDone = () => {
+    if (onPressDone) onPressDone(selectedItem, name);
+  };
 
   return (
-    <View style={{ width: scaleWidth(250) }}>
-      {data.map((item: any) => {
-        const index = selectedItem.findIndex((e: any) => e.value === item.value)
-        console.log('index', index);
+    <AppModal
+      label={label}
+      onPressDone={onDone}
+      customTitle={viewContent}
+      title={title}>
+      <ScrollView
+        style={styles.scrollView}
+        showsVerticalScrollIndicator={false}>
+        <Pressable>
+          {data?.length > 0 &&
+            data.map((item: any, index: number) => {
+              const isSelected =
+                selectedItem.findIndex((e: string) => e === item.value) !== -1;
 
-        return (
-          <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: scaleWidth(15), }}>
-            <AppText style={styles.modalTxt}>{item.value}</AppText>
-            {
-              index !== -1
-                ? <Pressable onPress={() => unCheckBox(index)}>
-                  <IconCheckedBox />
-                </Pressable>
-                : <Pressable onPress={() => checkBox(item)}>
-                  <IconUncheckedBox />
-                </Pressable>
-            }
-          </View>
-        )
-      }
-      )}
-    </View>
-  )
-}
+              return (
+                <View style={styles.item} key={item.value}>
+                  <AppText style={styles.modalTxt}>{item.value}</AppText>
+                  <Pressable onPress={() => onCheck(isSelected, item)}>
+                    {isSelected ? <IconCheckedBox /> : <IconUncheckedBox />}
+                  </Pressable>
+                </View>
+              );
+            })}
+        </Pressable>
+      </ScrollView>
+    </AppModal>
+  );
+};
 
 const styles = StyleSheet.create({
   modalTxt: {
     marginRight: scaleWidth(15),
-    alignSelf: 'center'
-  }
-})
-
+    alignSelf: 'center',
+  },
+  item: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: scaleWidth(15),
+  },
+  scrollView: {
+    width: scaleWidth(250),
+    maxHeight: scaleWidth(350),
+  },
+});

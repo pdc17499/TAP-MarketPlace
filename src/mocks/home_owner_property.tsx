@@ -1,3 +1,19 @@
+import {
+  IconAirConditioning,
+  IconBalcony,
+  IconBathTub,
+  IconBBQPit,
+  IconDedicatedWorkspace,
+  IconGym,
+  IconKitchen,
+  IconParkingLot,
+  IconPool,
+  IconTV,
+  IconWashingMachine,
+  IconWifi,
+} from '../assets';
+import React from 'react';
+
 export const ROOM_UNIT_HOWNER = {
   kind_place: [
     {
@@ -191,50 +207,62 @@ export const ROOM_UNIT_HOWNER = {
     {
       label: 'Wifi',
       value: 'Wifi',
+      icon: <IconWifi />,
     },
     {
       label: 'Air Conditioning',
       value: 'Air Conditioning',
+      icon: <IconAirConditioning />,
     },
     {
       label: 'TV',
       value: 'TV',
+      icon: <IconTV />,
     },
     {
       label: 'Dedicated workspace',
       value: 'Dedicated workspace',
+      icon: <IconDedicatedWorkspace />,
     },
     {
       label: 'Kitchen',
       value: 'Kitchen',
+      icon: <IconKitchen />,
     },
     {
       label: 'Bath tub',
       value: 'Bath tub',
+      icon: <IconBathTub />,
     },
     {
       label: 'Washing machine',
       value: 'Washing machine',
+      icon: <IconWashingMachine />,
     },
     {
       label: 'Balcony',
       value: 'Balcony',
+      icon: <IconBalcony />,
     },
     {
       label: 'Pool',
       value: 'Pool',
+      icon: <IconPool />,
     },
     {
       label: 'Gym',
       value: 'Gym',
+      icon: <IconGym />,
     },
     {
       label: 'BBQ pit',
       value: 'BBQ pit',
+      icon: <IconBBQPit />,
     },
     {
-      label: 'Diversity friendly',
-      value: 'Diversity friendly',
+      label: 'Parking lot',
+      value: 'Parking lot',
+      icon: <IconParkingLot />,
     },
   ],
   gender: [

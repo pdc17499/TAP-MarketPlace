@@ -35,18 +35,27 @@ const AppModal = React.memo((props: AppModalProps) => {
 
   const containerStyle = [styles.container, customStyleContainer];
   const buttonStyle = [styles.button, customStyleButton];
-  const titleStyle = [styles.txtButton, customStyleTitle];
+  const titleStyle = [
+    styles.txtButton,
+    {color: !title ? colors.textSecondPrimary : colors.textPrimary},
+    customStyleTitle,
+  ];
 
   return (
     <View style={containerStyle}>
-      {label && <AppText style={styles.label}>{label}</AppText>}
-      <Pressable style={buttonStyle} onPress={openModal}>
-        {customTitle}
-        {title && <AppText style={titleStyle}>{title}</AppText>}
+      <Pressable onPress={openModal}>
+        {label && <AppText style={styles.label}>{label}</AppText>}
+        <View style={buttonStyle}>
+          {customTitle ? (
+            customTitle
+          ) : (
+            <AppText style={titleStyle}>{title || 'N/A'}</AppText>
+          )}
+        </View>
       </Pressable>
       <Modal
         isVisible={visible}
-        backdropOpacity={0.2}
+        backdropOpacity={0.3}
         animationOutTiming={400}
         animationInTiming={400}>
         <Pressable style={styles.modal} onPress={closeModal}>

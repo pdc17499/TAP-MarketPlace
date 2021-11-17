@@ -87,6 +87,7 @@ export interface mockProps {
 export interface pickerProps {
   label?: string;
   value?: any;
+  icon?: any;
 }
 
 export interface DataSignupProps {

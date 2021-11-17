@@ -2,7 +2,7 @@ import {AppInput, AppText} from '@component';
 import MultiSlider from '@ptomasroos/react-native-multi-slider';
 import {colors, DEVICE, fontFamily, SIZE, SLIDER} from '@util';
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {Pressable, StyleSheet, Text, View} from 'react-native';
 
 interface AppSliderProps {
   onValuesChangeFinish: (values: any) => void;
@@ -23,7 +23,7 @@ const AppSlider = React.memo((props: AppSliderProps) => {
   const max_default = max_range || SLIDER.MAX_PRICE;
 
   return (
-    <>
+    <Pressable>
       <View style={styles.container}>
         <AppInput
           label={'Min'}
@@ -34,7 +34,7 @@ const AppSlider = React.memo((props: AppSliderProps) => {
           containerStyle={{flex: 1}}
           inputStyle={{
             fontSize: SIZE.base_size + 2,
-            lineHeight: SIZE.base_size + 4,
+            paddingTop: DEVICE.isIos ? 2 : SIZE.base_space - 3,
           }}
           typeInput={'price'}
           customStyleLabel={{color: colors.textSecondPrimary}}
@@ -49,7 +49,7 @@ const AppSlider = React.memo((props: AppSliderProps) => {
           containerStyle={{flex: 1}}
           inputStyle={{
             fontSize: SIZE.base_size + 2,
-            lineHeight: SIZE.base_size,
+            paddingTop: DEVICE.isIos ? 2 : SIZE.base_space - 3,
           }}
           typeInput={'price'}
           customStyleLabel={{color: colors.textSecondPrimary}}
@@ -72,7 +72,7 @@ const AppSlider = React.memo((props: AppSliderProps) => {
         <AppText style={styles.textBottom} isPrice>{`${min_default}`}</AppText>
         <AppText style={styles.textBottom} isPrice>{`${max_default}`}</AppText>
       </View>
-    </>
+    </Pressable>
   );
 });
 

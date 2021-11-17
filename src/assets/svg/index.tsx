@@ -1,4 +1,4 @@
-import { colors } from '@util';
+import {colors} from '@util';
 import React from 'react';
 import Svg, {
   Path,
@@ -542,12 +542,7 @@ export const IconDelete = (props: iconProps) => (
 );
 
 export const IconCheckedBox = (props: iconProps) => (
-  <Svg
-    width={32}
-    height={32}
-    fill="none"
-    {...props}
-  >
+  <Svg width={26} height={26} viewBox="0 0 32 32" fill="none" {...props}>
     <Rect
       x={0.5}
       y={0.5}
@@ -568,12 +563,7 @@ export const IconCheckedBox = (props: iconProps) => (
 );
 
 export const IconUncheckedBox = (props: iconProps) => (
-  <Svg
-    width={32}
-    height={32}
-    fill="none"
-    {...props}
-  >
+  <Svg width={26} height={26} viewBox="0 0 32 32" fill="none" {...props}>
     <Rect
       x={0.5}
       y={0.5}
@@ -591,6 +581,237 @@ export const IconEdit = (props: iconProps) => (
     <Path
       d="M17.5 18.334h-15a.63.63 0 01-.625-.625.63.63 0 01.625-.625h15a.63.63 0 01.625.625.63.63 0 01-.625.625zM15.85 2.9c-1.617-1.616-3.2-1.658-4.858 0L9.983 3.91a.347.347 0 00-.083.333 6.774 6.774 0 004.608 4.608.334.334 0 00.342-.083l1-1.008c.825-.817 1.225-1.609 1.225-2.409.008-.825-.392-1.625-1.225-2.45zM13.008 9.609a9.248 9.248 0 01-.7-.367 7.339 7.339 0 01-.533-.35 5.022 5.022 0 01-.467-.358 1.016 1.016 0 01-.141-.125 7.047 7.047 0 01-.859-.867c-.025-.017-.066-.075-.125-.15-.083-.1-.225-.267-.35-.458a4.576 4.576 0 01-.325-.492c-.133-.225-.25-.45-.366-.683-.153-.328-.584-.426-.84-.17l-4.685 4.686a1.003 1.003 0 00-.234.459l-.45 3.191c-.083.567.075 1.1.425 1.459.3.291.717.45 1.167.45.1 0 .2-.009.3-.025l3.2-.45a.927.927 0 00.458-.234l4.694-4.694c.25-.25.157-.681-.169-.822z"
       fill="#AAA"
+    />
+  </Svg>
+);
+
+export const IconWifi = (props: iconProps) => (
+  <Svg width={24} height={24} fill="none" {...props}>
+    <Path
+      d="M8.711 15.568a4.76 4.76 0 016.576 0M5.53 12.386a9.258 9.258 0 0112.94 0M2.35 9.204a13.751 13.751 0 0119.299 0"
+      stroke="#191718"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <Path
+      d="M12 19.875a1.125 1.125 0 100-2.25 1.125 1.125 0 000 2.25z"
+      fill="#191718"
+    />
+  </Svg>
+);
+
+export const IconAirConditioning = (props: iconProps) => (
+  <Svg width={24} height={24} fill="none" {...props}>
+    <Path
+      d="M22 4.35v7.4H2v-7.4a.6.6 0 01.6-.6h18.8a.6.6 0 01.6.6v0zM18 7.75h1"
+      stroke="#191718"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <Path
+      d="M2.007 11.191c0 1.613.123 2.737 1.005 3.717.98 1.088 2.4 1.159 3.87 1.159M17.118 16.067c1.612 0 2.737-.124 3.716-1.006 1.089-.98 1.16-2.4 1.16-3.87M9.5 15.25s0 4.784-3.5 4.784M14.5 15.25s0 4.784 3.5 4.784M12 15.25v4.784"
+      stroke="#191718"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </Svg>
+);
+
+export const IconTV = (props: iconProps) => (
+  <Svg width={24} height={24} fill="none" {...props}>
+    <Path
+      d="M4.5 18h15a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5h-15A1.5 1.5 0 003 6v10.5A1.5 1.5 0 004.5 18zM15 21H9"
+      stroke="#191718"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </Svg>
+);
+
+export const IconDedicatedWorkspace = (props: iconProps) => (
+  <Svg width={24} height={24} fill="none" {...props}>
+    <Path
+      d="M2.528 17.096V9.284A1.202 1.202 0 013.73 8.082h10.818a1.202 1.202 0 011.201 1.202v7.812M1.326 17.096h15.625v1.202A1.202 1.202 0 0115.75 19.5H2.53a1.202 1.202 0 01-1.203-1.202v-1.202zM10.34 10.486H7.938M19.055 19.5l4.039-7.506-7.345-7.507"
+      stroke="#191718"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <Path
+      d="M9.626 4.1l4.11 4.109 3.287-5.753L15.38.812 9.626 4.099zM20.527 19.5H9.842M11.897 19.5v-1.644"
+      stroke="#191718"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </Svg>
+);
+
+export const IconKitchen = (props: iconProps) => (
+  <Svg width={24} height={24} fill="none" {...props}>
+    <Path
+      d="M9 1.5v3M12 1.5v3M15 1.5v3M4.5 7.5h15a.75.75 0 01.75.75v9A2.25 2.25 0 0118 19.5H6a2.25 2.25 0 01-2.25-2.25v-9a.75.75 0 01.75-.75zM23.25 9l-3 2.25M.75 9l3 2.25"
+      stroke="#191718"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </Svg>
+);
+
+export const IconBathTub = (props: iconProps) => (
+  <Svg width={24} height={24} fill="none" {...props}>
+    <Path
+      d="M11.678 6.107a3.857 3.857 0 10-7.714 0M12.16 6.107c-1.33 0-2.41 1.295-2.41 2.893h4.821c0-1.598-1.079-2.893-2.41-2.893z"
+      stroke="#191718"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+    />
+    <Path d="M3.964 6.107v10.607" stroke="#191718" strokeWidth={1.5} />
+    <Path
+      d="M8.786 20.572c-2.663 0-4.822-1.727-4.822-3.858M15.536 20.572c2.663 0 4.821-1.758 4.821-3.927v-1.86M3 13.821h18.321"
+      stroke="#191718"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+    />
+    <Path d="M8.786 20.572H16.5" stroke="#191718" strokeWidth={1.5} />
+    <Path
+      d="M8.786 22.5v-1.928h6.75V22.5"
+      stroke="#191718"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+    />
+  </Svg>
+);
+
+export const IconWashingMachine = (props: iconProps) => (
+  <Svg width={24} height={24} fill="none" {...props}>
+    <Path
+      d="M19 2H5a1 1 0 00-1 1v18a1 1 0 001 1h14a1 1 0 001-1V3a1 1 0 00-1-1z"
+      stroke="#191718"
+      strokeWidth={1.5}
+    />
+    <Path
+      d="M4 7.75h16"
+      stroke="#191718"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <Path
+      d="M14 6a1 1 0 100-2 1 1 0 000 2zM17 6a1 1 0 100-2 1 1 0 000 2z"
+      fill="#191718"
+    />
+    <Path
+      d="M12 18.5a3.5 3.5 0 100-7 3.5 3.5 0 000 7z"
+      stroke="#191718"
+      strokeWidth={1.5}
+    />
+  </Svg>
+);
+
+export const IconBalcony = (props: iconProps) => (
+  <Svg width={24} height={24} fill="none" {...props}>
+    <Path
+      d="M19.5 15.75V9.707a.686.686 0 00-.22-.5.774.774 0 00-.53-.207H5.25a.774.774 0 00-.53.207.687.687 0 00-.22.5v6.043M19.684 21.752H4.316a.75.75 0 01-.722-.543L3 16.502h18l-.595 4.707a.75.75 0 01-.72.543z"
+      stroke="#191718"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <Path
+      d="M4.5 13.5V9.75a7.5 7.5 0 0115 0v3.75"
+      stroke="#191718"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <Path
+      stroke="#191718"
+      strokeWidth={1.5}
+      d="M6 16.5V21M9.75 16.5V21M14.25 16.5V21M12 3v13.5M18 16.5V21"
+    />
+  </Svg>
+);
+
+export const IconPool = (props: iconProps) => (
+  <Svg width={24} height={24} fill="none" {...props}>
+    <Path
+      d="M3 16.425A5.642 5.642 0 006.921 18c3.92 0 4.704-2.25 8.625-2.25 1.803 0 3.45.825 4.704 1.65M3 19.65c.862 1.1 2.196 2.1 3.921 2.1 3.92 0 4.704-3 8.625-3 1.803 0 3.45 1.1 4.704 2.2"
+      stroke="#191718"
+      strokeWidth={1.5}
+      strokeMiterlimit={10}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <Path
+      d="M7.5 7.5v9.75M13.5 7.5V15M7.5 7.5C7.5 5.015 9.179 3 11.25 3M13.5 7.5A4.5 4.5 0 0118 3M8.25 7.5h4.5M8.25 12.75h4.5"
+      stroke="#191718"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+    />
+  </Svg>
+);
+
+export const IconGym = (props: iconProps) => (
+  <Svg width={24} height={24} fill="none" {...props}>
+    <Path
+      d="M17.18 18c2.4 0 3-1.35 3-3V9c0-1.65-.6-3-3-3s-3 1.35-3 3v6c0 1.65.6 3 3 3zM6.82 18c-2.4 0-3-1.35-3-3V9c0-1.65.6-3 3-3s3 1.35 3 3v6c0 1.65-.6 3-3 3zM9.82 12h4.36M22.5 14.5v-5M1.5 14.5v-5"
+      stroke="#191718"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </Svg>
+);
+
+export const IconBBQPit = (props: iconProps) => (
+  <Svg width={24} height={24} fill="none" {...props}>
+    <Path
+      d="M8.5 14.5L5 22M8 6s1-1.061 1-2c0-1.333-1-2-1-2M12 6s1-1.061 1-2c0-1.333-1-2-1-2M16 6s1-1.061 1-2c0-1.333-1-2-1-2"
+      stroke="#191718"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <Path
+      d="M16.5 17.5h-9"
+      stroke="#191718"
+      strokeWidth={1.5}
+      strokeLinejoin="round"
+    />
+    <Path
+      d="M15.5 14.5l2.1 4.5M18.5 22a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"
+      stroke="#191718"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <Path
+      d="M12 15a7 7 0 006.975-6.4.563.563 0 00-.575-.6H5.6a.563.563 0 00-.575.6A7 7 0 0012 15v0z"
+      stroke="#191718"
+      strokeWidth={1.5}
+    />
+  </Svg>
+);
+
+export const IconParkingLot = (props: iconProps) => (
+  <Svg width={24} height={24} fill="none" {...props}>
+    <Path
+      d="M10 15.5v-2.8 2.8zm0-2.8h2.857c.714 0 2.143 0 2.143-2.1s-1.429-2.1-2.143-2.1H10v4.2z"
+      stroke="#191718"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <Path
+      d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"
+      stroke="#191718"
+      strokeWidth={1.5}
     />
   </Svg>
 );
