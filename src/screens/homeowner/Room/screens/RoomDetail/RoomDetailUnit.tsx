@@ -7,22 +7,8 @@ import {
   Header,
 } from '@component';
 import React, {useState} from 'react';
-import {
-  View,
-  Image,
-  Pressable,
-  StyleSheet,
-  useWindowDimensions,
-  ScrollView,
-} from 'react-native';
-import {
-  IconDelete,
-  IconDola,
-  IconEyeCloseFullFill,
-  IconEyeOpenFullFill,
-  IconTabActive,
-  room_sample,
-} from '@assets';
+import {View, Image, Pressable, StyleSheet, ScrollView} from 'react-native';
+import {IconBack, IconClear, IconDola, IconEdit, room_sample} from '@assets';
 import {
   colors,
   DEVICE,
@@ -30,48 +16,100 @@ import {
   scaleSize,
   scaleWidth,
   SIZE,
+  SLIDER,
   STYLE,
-  validateForm,
+  YEARS,
 } from '@util';
-import {SceneMap, TabView} from 'react-native-tab-view';
 import {useNavigation} from '@react-navigation/core';
 import {Formik} from 'formik';
 import {ROOM_UNIT_HOWNER} from '@mocks';
 import * as yup from 'yup';
-import {Switch} from '@libs';
+import Carousel from 'react-native-snap-carousel';
+import Modal from 'react-native-modal';
+import Video from 'react-native-video';
 
-const Route = ({props}: any) => {
+const state = {
+  activeIndex: 0,
+  carouselItems: [
+    {
+      title: 'Item 1',
+      text: 'Text 1',
+    },
+    {
+      title: 'Item 2',
+      text: 'Text 2',
+    },
+    {
+      title: 'Item 3',
+      text: 'Text 3',
+    },
+    {
+      title: 'Item 4',
+      text: 'Text 4',
+    },
+    {
+      title: 'Item 5',
+      text: 'Text 5',
+    },
+  ],
+};
+
+const RoomDetailUnit = ({props}: any) => {
   const key = props;
   const navigation: any = useNavigation();
   const [room, setRoom] = useState({
-    location: '',
-    kind_place: 'Condo',
-    lease_period: '3 months',
-    min_range_price: 10000,
-    max_range_price: 20000,
-    staying_with_guests: 'Yes',
-    room_active: false,
+    room_type: 'Entire Home',
+    bedroom_number: '2',
+    bathroom_number: '3',
+    room_furnishing: 'Partially Furnished',
+    floor_size_min: 5000,
+    floor_size_max: 5500,
+    floor_level: 'Low',
+    built_year: '2020',
+    allow_cooking: 'Yes',
+    amenities: ['Wifi', 'TV'],
+    gallery: [
+      'https://file-examples-com.github.io/uploads/2017/10/file_example_PNG_1MB.png',
+      'https://file-examples-com.github.io/uploads/2017/10/file_example_PNG_1MB.png',
+      'https://file-examples-com.github.io/uploads/2017/10/file_example_PNG_1MB.png',
+      'https://file-examples-com.github.io/uploads/2017/04/file_example_MP4_1280_10MG.mp4',
+      'https://file-examples-com.github.io/uploads/2017/10/file_example_PNG_1MB.png',
+      'https://file-examples-com.github.io/uploads/2017/10/file_example_PNG_1MB.png',
+    ],
   });
+  const [visible, setVisible] = useState(false);
 
-  const list = ROOM_UNIT_HOWNER;
+  const openModal = () => {
+    setVisible(true);
+  };
+
+  const closeModal = () => {
+    setVisible(false);
+  };
+
+  const list: any = ROOM_UNIT_HOWNER;
 
   const formInitialValues = {
-    location: room.location,
-    kind_place: room.kind_place,
-    lease_period: room.lease_period,
-    min_range_price: room.min_range_price,
-    max_range_price: room.max_range_price,
-    staying_with_guests: room.staying_with_guests,
-    room_active: room.room_active,
+    room_type: room.room_type,
+    bedroom_number: room.bedroom_number,
+    bathroom_number: room.bathroom_number,
+    room_furnishing: room.room_furnishing,
+    floor_size_min: room.floor_size_min,
+    floor_size_max: room.floor_size_max,
+    floor_level: room.floor_level,
+    built_year: room.built_year,
+    allow_cooking: room.allow_cooking,
+    amenities: room.amenities,
+    gallery: room.gallery,
   };
 
   const validationForm = yup.object().shape({
-    name: yup.string(),
-    country: validateForm().common.selectAtLeast,
-    occupation: validateForm().common.atLeastOnePicker,
-    ethnicity: validateForm().common.atLeastOnePicker,
-    gender: validateForm().common.atLeastOnePicker,
-    ageGroup: validateForm().common.atLeastOnePicker,
+    // location: yup.string(),
+    // kind_place: validateForm().common.selectAtLeast,
+    // lease_period: validateForm().common.atLeastOnePicker,
+    // ethnicity: validateForm().common.atLeastOnePicker,
+    // staying_with_guests: validateForm().common.atLeastOnePicker,
+    // room_active: validateForm().common.atLeastOnePicker,
   });
 
   const onChangeText = (value: any, name?: string) => {
@@ -88,299 +126,283 @@ const Route = ({props}: any) => {
   const onValuesChangeFinish = (values: any) => {
     console.log({values});
     const nRoom: any = {...room};
-    nRoom['min_range_price'] = values[0];
-    nRoom['max_range_price'] = values[1];
+    nRoom['floor_size_min'] = values[0];
+    nRoom['floor_size_max'] = values[1];
     setRoom(nRoom);
   };
 
-  const renderPriceTitle = (values: any) => {
+  const renderFloorSizeContent = (values: any) => {
     return (
-      <View style={{flexDirection: 'row', alignItems: 'flex-start'}}>
+      <View style={{flexDirection: 'row', alignItems: 'center'}}>
         <IconDola width={10} height={15} iconFillColor={colors.secondPrimary} />
         <AppText
+          isPrice
           style={{
             fontSize: SIZE.base_space + 1,
             ...fontFamily.fontWeight500,
-          }}>{` ${values.min_range_price}`}</AppText>
-        <AppText>{` - `}</AppText>
+            marginLeft: 4,
+          }}>{`${values.floor_size_min}`}</AppText>
+        <AppText>{`  -  `}</AppText>
         <IconDola width={10} height={15} iconFillColor={colors.secondPrimary} />
         <AppText
+          isPrice
           style={{
             fontSize: SIZE.base_space + 1,
+            marginLeft: 4,
             ...fontFamily.fontWeight500,
-          }}>{` ${values.max_range_price} `}</AppText>
+          }}>{`${values.floor_size_max} `}</AppText>
       </View>
     );
   };
 
-  return (
-    <ScrollView style={{flex: 1}} showsVerticalScrollIndicator={false}>
-      <View style={styles.line} />
-      <Formik
-        initialValues={formInitialValues}
-        validationSchema={validationForm}
-        validateOnChange={false}
-        enableReinitialize
-        onSubmit={onSubmit}>
-        {(props: any) => (
-          <>
-            <View>
-              <AppPicker
-                value={props.values.kind_place}
-                name={'kind_place'}
-                label={'Property type'}
-                onValueChange={onChangeText}
-                items={list.kind_place}
-                error={props.errors.kind_place}
-                stylePicker={'linear'}
-              />
-              <AppPicker
-                value={props.values.lease_period}
-                name={'lease_period'}
-                label={'Lease period'}
-                onValueChange={onChangeText}
-                items={
-                  props.values.kind_place === 'HDB'
-                    ? list.lease_your_place_hdb
-                    : list.lease_your_place
-                }
-                error={props.errors.lease_period}
-                stylePicker={'linear'}
-              />
-              <AppModal
-                label={'Rental price'}
-                customTitle={renderPriceTitle(props.values)}>
-                <>
-                  <AppSlider
-                    onValuesChangeFinish={onValuesChangeFinish}
-                    min_range_value={props.values.min_range_price}
-                    max_range_value={props.values.max_range_price}
-                    iconLeft={'dolar'}
-                    sliderLength={DEVICE.width - SIZE.padding * 3}
-                  />
-                </>
-              </AppModal>
-              <AppPicker
-                value={props.values.staying_with_guests}
-                name={'staying_with_guests'}
-                label={'Stay with guests'}
-                onValueChange={onChangeText}
-                items={list.staying_width_guests}
-                error={props.errors.staying_with_guests}
-                stylePicker={'linear'}
-              />
-              <View
-                style={{
-                  flexDirection: 'row',
-                  paddingVertical: SIZE.padding,
-                  alignItems: 'center',
-                }}>
-                <AppText
-                  style={{
-                    flex: 1,
-                    ...fontFamily.fontWeight600,
-                    color: '#65666D',
-                  }}>
-                  {'Active/Inactive property'}
-                </AppText>
-                {!props.values.room_active ? (
-                  <IconEyeCloseFullFill />
-                ) : (
-                  <IconEyeOpenFullFill />
-                )}
+  const renderAppPicker = (props: any, name: string, label: string) => {
+    return (
+      <AppPicker
+        value={props.values[name]}
+        name={name}
+        label={label}
+        onValueChange={onChangeText}
+        items={name === 'built_year' ? YEARS() : list[name]}
+        error={props.errors[name]}
+        stylePicker={'linear'}
+      />
+    );
+  };
 
-                <View style={{marginLeft: 10, marginRight: 3}}>
-                  <Switch
-                    value={props.values.room_active}
-                    onValueChange={(val: boolean) =>
-                      onChangeText(val, 'room_active')
-                    }
-                    activeText={''}
-                    inActiveText={''}
-                    circleSize={30}
-                    circleBorderWidth={3}
-                    backgroundActive={'#2A6B58'}
-                    backgroundInactive={'#D8D8D8'}
-                    circleActiveColor={'#FAFAFA'}
-                    circleInActiveColor={'#FAFAFA'}
-                    circleActiveBorderColor={'#2A6B58'}
-                    circleInactiveBorderColor={'#D8D8D8'}
-                    style={{marginLeft: 8}}
-                  />
-                </View>
-              </View>
-              <View style={styles.line} />
-              <Pressable
-                style={{
-                  flexDirection: 'row',
-                  paddingVertical: SIZE.padding,
-                  alignItems: 'center',
-                }}>
-                <IconDelete />
-                <AppText
-                  style={{
-                    flex: 1,
-                    ...fontFamily.fontWeight600,
-                    color: colors.textSecondPrimary,
-                    marginLeft: 10,
-                  }}>
-                  {'Delete property'}
-                </AppText>
-              </Pressable>
-            </View>
-            <AppButton
-              containerStyle={styles.button}
-              title={'Save change'}
-              size={'small'}
-              iconRight={'tick'}
-              onPress={props.handleSubmit}
-            />
-          </>
-        )}
-      </Formik>
-    </ScrollView>
-  );
-};
-
-const RoomDetail = () => {
-  const [index, setIndex] = React.useState(0);
-  const [routes] = React.useState([
-    {key: 'general', title: 'General'},
-    {key: 'detail', title: 'Room/Unit Details'},
-  ]);
-  const layout = useWindowDimensions();
-
-  const renderScene = ({route}: any) => {
-    switch (route.key) {
-      case 'general':
-        return <Route props={'general'} />;
-      case 'detail':
-        return <Route props={'detail'} />;
-      default:
-        return null;
+  const checkVideo = (item: any) => {
+    if (item === 10) {
+      return false;
+    } else {
+      var parts = item.split('.');
+      var extension = parts[parts.length - 1];
+      return typesVideo.indexOf(extension) !== -1;
     }
   };
 
-  const renderTabBar = (props: any) => {
-    const {navigationState, jumpTo} = props;
-    const {routes, index} = navigationState;
+  const renderGallery = (gallery: Array<any>) => {
+    const length = gallery?.length || 0;
+    const styleList = length > 4 ? styles.row : styles.rowNotBetween;
+    const styleFile =
+      length > 4 ? styles.smallImage : styles.smallImageWidthSpace;
 
     return (
-      <>
-        <View style={styles.tabContainer}>
-          {routes.map((item: any, idx: number) => {
-            const {title, key} = item;
-            const isActive = index === idx;
-            const tabTitle = isActive ? styles.tabTitleActive : styles.tabTitle;
-            return (
-              <Pressable
-                hitSlop={STYLE.hitSlop}
-                key={key}
-                onPress={() => jumpTo(key)}
-                style={styles.tabView}>
-                <AppText style={tabTitle}>{title}</AppText>
-                {isActive && <IconTabActive />}
-              </Pressable>
-            );
-          })}
+      <View style={{paddingTop: SIZE.padding, marginBottom: 50}}>
+        <View style={styles.row}>
+          <AppText style={styles.label}>{'Gallery'}</AppText>
+          <Pressable style={styles.buttonEdit}>
+            <IconEdit />
+          </Pressable>
         </View>
-      </>
+        {length > 0 && (
+          <Pressable onPress={openModal}>
+            <Image source={{uri: gallery[0]}} style={styles.firstImage} />
+            <View style={styleList}>
+              {gallery.map((item: any, index: number) => {
+                const isVideo = checkVideo(item);
+                if (index > 0 && index < 5) {
+                  return (
+                    <View key={index.toString()}>
+                      {isVideo ? (
+                        <Video
+                          source={{uri: item}}
+                          style={styleFile}
+                          resizeMode={'cover'}
+                          // controls
+                          // paused
+                        />
+                      ) : (
+                        <Image source={{uri: item}} style={styleFile} />
+                      )}
+                    </View>
+                  );
+                }
+
+                return null;
+              })}
+            </View>
+          </Pressable>
+        )}
+
+        <Modal
+          isVisible={visible}
+          backdropOpacity={1}
+          animationOutTiming={400}
+          animationInTiming={400}>
+          <Pressable hitSlop={STYLE.hitSlop} onPress={closeModal}>
+            <IconClear iconFillColor={colors.white} width={25} height={25} />
+          </Pressable>
+          <View style={styles.modal}>
+            <Carousel
+              layout={'default'}
+              data={gallery}
+              renderItem={_renderItem}
+              sliderWidth={DEVICE.width}
+              itemWidth={DEVICE.width - SIZE.padding}
+              contentContainerCustomStyle={{
+                alignItems: 'center',
+                marginTop: -40,
+              }}
+            />
+          </View>
+        </Modal>
+      </View>
+    );
+  };
+
+  var typesVideo = ['mp4'];
+
+  const _renderItem = ({item, index}: any) => {
+    console.log({item});
+    const isVideo = checkVideo(item);
+
+    return (
+      <View key={index.toString()}>
+        {isVideo ? (
+          <Video
+            source={{uri: item}}
+            style={styles.gallery}
+            resizeMode={'contain'}
+            // controls
+            // paused
+          />
+        ) : (
+          <Image source={{uri: item}} style={styles.gallery} />
+        )}
+      </View>
     );
   };
 
   return (
-    <View style={styles.container}>
-      <Header back customContainer={styles.customContainer} />
-      <View style={styles.main}>
-        <Image source={room_sample} style={styles.bgRoom} />
-        <TabView
-          navigationState={{index, routes}}
-          renderScene={renderScene}
-          onIndexChange={setIndex}
-          initialLayout={{width: layout.width}}
-          renderTabBar={renderTabBar}
-        />
-      </View>
-    </View>
+    <>
+      <ScrollView
+        style={{flex: 1}}
+        contentContainerStyle={styles.contentContainerStyle}
+        showsVerticalScrollIndicator={false}>
+        <View style={styles.line} />
+        <Formik
+          initialValues={formInitialValues}
+          validationSchema={validationForm}
+          validateOnChange={false}
+          enableReinitialize
+          onSubmit={onSubmit}>
+          {(props: any) => (
+            <>
+              <View>
+                {renderAppPicker(props, 'room_type', 'Rental type')}
+                {renderAppPicker(props, 'bedroom_number', 'Number of Bedrooms')}
+                {renderAppPicker(
+                  props,
+                  'bathroom_number',
+                  'Number of Bathrooms',
+                )}
+                <AppModal
+                  label={'Floor size'}
+                  customTitle={renderFloorSizeContent(props.values)}>
+                  <AppSlider
+                    onValuesChangeFinish={onValuesChangeFinish}
+                    min_range_value={props.values.floor_size_min}
+                    max_range_value={props.values.floor_size_max}
+                    min_range={SLIDER.MIN_FLOOR_SIZE}
+                    max_range={SLIDER.MAX_FLOOR_SIZE}
+                    iconLeft={'dolar'}
+                    sliderLength={DEVICE.width - SIZE.padding * 3}
+                  />
+                </AppModal>
+                {renderAppPicker(props, 'room_furnishing', 'Room furnishing')}
+                {renderAppPicker(props, 'floor_level', 'Floor level')}
+                {renderAppPicker(props, 'allow_cooking', 'Allow cooking')}
+                {renderAppPicker(props, 'built_year', 'Built year')}
+                {renderGallery(props.values.gallery)}
+              </View>
+            </>
+          )}
+        </Formik>
+      </ScrollView>
+      <AppButton
+        containerStyle={styles.button}
+        title={'Save change'}
+        size={'small'}
+        iconRight={'tick'}
+        onPress={props.handleSubmit}
+      />
+    </>
   );
 };
 
 const styles = StyleSheet.create({
   button: {
-    paddingTop: SIZE.base_space,
-    paddingBottom: SIZE.medium_space,
-  },
-  main: {
-    flex: 1,
-    paddingHorizontal: SIZE.padding,
-  },
-  container: {
-    flex: 1,
-    backgroundColor: colors.bgSreen,
-  },
-  customContainer: {
-    backgroundColor: colors.bgSreen,
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    bottom: SIZE.medium_space,
   },
   contentContainerStyle: {
-    paddingBottom: SIZE.big_space + SIZE.padding,
-  },
-  tabContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-evenly',
-  },
-  tabView: {
-    paddingVertical: scaleWidth(35),
-    alignItems: 'center',
-  },
-  tabTitle: {
-    ...fontFamily.fontCampWeight500,
-    color: colors.textSecondPrimary,
-    marginBottom: 6,
-  },
-  tabTitleActive: {
-    ...fontFamily.fontCampWeight600,
-    color: colors.textPrimary,
-    marginBottom: 6,
-  },
-  bgRoom: {
-    width: '100%',
-    height: scaleWidth(137),
-    borderRadius: 8,
-    resizeMode: 'cover',
-  },
-  roomTitle: {
-    ...fontFamily.fontCampWeight500,
-    fontSize: scaleSize(18),
-  },
-  locationView: {
-    flexDirection: 'row',
-    marginTop: SIZE.base_space / 2,
-  },
-  location: {
-    color: '#65666D',
-    ...fontFamily.fontWeight500,
-    marginLeft: SIZE.base_space / 2,
-  },
-  subViewInactive: {
-    position: 'absolute',
-    left: 8,
-    top: 8,
-    backgroundColor: colors.white,
-    padding: 6,
-    borderRadius: SIZE.base_space / 2,
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  textInactive: {
-    ...fontFamily.fontCampWeight500,
-    color: colors.textSecondPrimary,
-    marginLeft: SIZE.base_space / 2,
+    paddingBottom: 100,
   },
   line: {
     height: 1,
     backgroundColor: colors.borderProfileList,
-    // marginBottom: SIZE.base_space,
+  },
+  row: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  rowNotBetween: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  buttonEdit: {
+    width: 36,
+    height: 36,
+    borderRadius: 8,
+    backgroundColor: colors.bgInput,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  label: {
+    color: colors.secondPrimary,
+    fontSize: scaleSize(14.5),
+    marginBottom: SIZE.base_space / 2,
+    ...fontFamily.fontCampWeight500,
+  },
+  firstImage: {
+    width: '100%',
+    height: scaleWidth(210),
+    resizeMode: 'cover',
+    borderRadius: 8,
+    marginTop: SIZE.padding,
+    marginBottom: SIZE.base_space,
+  },
+  gallery: {
+    width: DEVICE.width - SIZE.padding,
+    height: scaleWidth(230),
+    resizeMode: 'cover',
+    borderRadius: 4,
+  },
+  smallImage: {
+    width: scaleWidth(70),
+    height: scaleWidth(70),
+    borderRadius: scaleWidth(8),
+  },
+  smallImageWidthSpace: {
+    width: scaleWidth(70),
+    height: scaleWidth(70),
+    borderRadius: scaleWidth(8),
+    marginRight: SIZE.base_space,
+  },
+  modal: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  fullScreen: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    bottom: 0,
+    right: 0,
   },
 });
 
-export {RoomDetail};
+export {RoomDetailUnit};

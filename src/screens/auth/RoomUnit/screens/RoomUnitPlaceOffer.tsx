@@ -56,7 +56,7 @@ const RoomUnitPlaceOffer = () => {
             {(propsFormik: any) => (
               <>
                 <AppQA
-                  data={list.utilities}
+                  data={list.amenities}
                   title={'Let your guests know what your place has to offer'}
                   subTitle={'Select some keywords'}
                   value={dataSignUp}

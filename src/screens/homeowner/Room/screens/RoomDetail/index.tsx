@@ -11,6 +11,7 @@ import {IconTabActive, room_sample} from '@assets';
 import {colors, fontFamily, scaleSize, scaleWidth, SIZE, STYLE} from '@util';
 import {TabView} from 'react-native-tab-view';
 import {RoomDetailGeneral} from './RoomDetailGeneral';
+import {RoomDetailUnit} from './RoomDetailUnit';
 
 const RoomDetail = () => {
   const [index, setIndex] = React.useState(0);
@@ -25,7 +26,7 @@ const RoomDetail = () => {
       case 'general':
         return <RoomDetailGeneral props={'general'} />;
       case 'detail':
-        return <RoomDetailGeneral props={'detail'} />;
+        return <RoomDetailUnit props={'detail'} />;
       default:
         return null;
     }

@@ -44,7 +44,11 @@ const AppModal = React.memo((props: AppModalProps) => {
         {customTitle}
         {title && <AppText style={titleStyle}>{title}</AppText>}
       </Pressable>
-      <Modal isVisible={visible} backdropOpacity={0.2}>
+      <Modal
+        isVisible={visible}
+        backdropOpacity={0.2}
+        animationOutTiming={400}
+        animationInTiming={400}>
         <Pressable style={styles.modal} onPress={closeModal}>
           <View style={styles.modalBox}>
             {children}

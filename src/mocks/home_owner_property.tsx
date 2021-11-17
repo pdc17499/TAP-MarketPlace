@@ -89,151 +89,151 @@ export const ROOM_UNIT_HOWNER = {
   ],
   bedroom_number: [
     {
-      id: 1,
+      label: '1',
       value: '1',
     },
     {
-      id: 2,
+      label: '2',
       value: '2',
     },
     {
-      id: 3,
+      label: '3',
       value: '3',
     },
     {
-      id: 4,
+      label: '4',
       value: '4',
     },
     {
-      id: 5,
+      label: '5+',
       value: '5+',
     },
   ],
   bathroom_number: [
     {
-      id: 1,
+      label: '1',
       value: '1',
     },
     {
-      id: 2,
+      label: '2',
       value: '2',
     },
     {
-      id: 3,
+      label: '3',
       value: '3',
     },
     {
-      id: 4,
+      label: '4',
       value: '4',
     },
     {
-      id: 5,
+      label: '5+',
       value: '5+',
     },
   ],
   attached_bathroom: [
     {
-      id: 1,
+      label: 'Yes',
       value: 'Yes',
     },
     {
-      id: 2,
+      label: 'No',
       value: 'No',
     },
   ],
   room_furnishing: [
     {
-      id: 1,
+      label: 'Unfurnished',
       value: 'Unfurnished',
     },
     {
-      id: 2,
+      label: 'Partially Furnished',
       value: 'Partially Furnished',
     },
     {
-      id: 3,
+      label: 'Fully Furnished',
       value: 'Fully Furnished',
     },
   ],
   floor_level: [
     {
-      id: 1,
+      label: 'Ground',
       value: 'Ground',
     },
     {
-      id: 2,
+      label: 'Low',
       value: 'Low',
     },
     {
-      id: 3,
+      label: 'Mid',
       value: 'Mid',
     },
     {
-      id: 4,
+      label: 'High',
       value: 'High',
     },
     {
-      id: 5,
+      label: 'Penhouse',
       value: 'Penhouse',
     },
   ],
   allow_cooking: [
     {
-      id: 1,
+      label: 'Yes',
       value: 'Yes',
     },
     {
-      id: 2,
+      label: 'No',
       value: 'No',
     },
   ],
-  utilities: [
+  amenities: [
     {
-      id: 1,
+      label: 'Wifi',
       value: 'Wifi',
     },
     {
-      id: 2,
+      label: 'Air Conditioning',
       value: 'Air Conditioning',
     },
     {
-      id: 3,
+      label: 'TV',
       value: 'TV',
     },
     {
-      id: 4,
+      label: 'Dedicated workspace',
       value: 'Dedicated workspace',
     },
     {
-      id: 5,
+      label: 'Kitchen',
       value: 'Kitchen',
     },
     {
-      id: 6,
+      label: 'Bath tub',
       value: 'Bath tub',
     },
     {
-      id: 7,
+      label: 'Washing machine',
       value: 'Washing machine',
     },
     {
-      id: 8,
+      label: 'Balcony',
       value: 'Balcony',
     },
     {
-      id: 9,
+      label: 'Pool',
       value: 'Pool',
     },
     {
-      id: 10,
+      label: 'Gym',
       value: 'Gym',
     },
     {
-      id: 11,
+      label: 'BBQ pit',
       value: 'BBQ pit',
     },
     {
-      id: 12,
+      label: 'Diversity friendly',
       value: 'Diversity friendly',
     },
   ],
