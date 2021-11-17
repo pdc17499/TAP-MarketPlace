@@ -37,8 +37,8 @@ import {useNavigation} from '@react-navigation/core';
 import {Formik} from 'formik';
 import {ROOM_UNIT_HOWNER} from '@mocks';
 import * as yup from 'yup';
-import {Switch} from '@libs';
 import {ROOM_DETAIL_LOCATION} from '@routeName';
+import ToggleSwitch from 'toggle-switch-react-native';
 
 const RoomDetailGeneral = ({props}: any) => {
   const key = props;
@@ -66,12 +66,12 @@ const RoomDetailGeneral = ({props}: any) => {
   };
 
   const validationForm = yup.object().shape({
-    name: yup.string(),
-    country: validateForm().common.selectAtLeast,
-    occupation: validateForm().common.atLeastOnePicker,
-    ethnicity: validateForm().common.atLeastOnePicker,
-    gender: validateForm().common.atLeastOnePicker,
-    ageGroup: validateForm().common.atLeastOnePicker,
+    // location: yup.string(),
+    // kind_place: validateForm().common.selectAtLeast,
+    // lease_period: validateForm().common.atLeastOnePicker,
+    // ethnicity: validateForm().common.atLeastOnePicker,
+    // staying_with_guests: validateForm().common.atLeastOnePicker,
+    // room_active: validateForm().common.atLeastOnePicker,
   });
 
   const onChangeText = (value: any, name?: string) => {
@@ -122,144 +122,142 @@ const RoomDetailGeneral = ({props}: any) => {
   };
 
   return (
-    <ScrollView style={{flex: 1}} showsVerticalScrollIndicator={false}>
-      <View style={styles.line} />
-      <Formik
-        initialValues={formInitialValues}
-        validationSchema={validationForm}
-        validateOnChange={false}
-        enableReinitialize
-        onSubmit={onSubmit}>
-        {(props: any) => (
-          <>
-            <View>
-              <AppButton
-                label={'Property location'}
-                typeButton={'underline'}
-                title={props.values.location}
-                onPress={() => onLocation(props.values.location)}
-              />
-              <AppPicker
-                value={props.values.kind_place}
-                name={'kind_place'}
-                label={'Property type'}
-                onValueChange={onChangeText}
-                items={list.kind_place}
-                error={props.errors.kind_place}
-                stylePicker={'linear'}
-              />
-              <AppPicker
-                value={props.values.lease_period}
-                name={'lease_period'}
-                label={'Lease period'}
-                onValueChange={onChangeText}
-                items={
-                  props.values.kind_place === 'HDB'
-                    ? list.lease_your_place_hdb
-                    : list.lease_your_place
-                }
-                error={props.errors.lease_period}
-                stylePicker={'linear'}
-              />
-              <AppModal
-                label={'Rental price'}
-                customTitle={renderPriceTitle(props.values)}>
-                <>
-                  <AppSlider
-                    onValuesChangeFinish={onValuesChangeFinish}
-                    min_range_value={props.values.min_range_price}
-                    max_range_value={props.values.max_range_price}
-                    iconLeft={'dolar'}
-                    sliderLength={DEVICE.width - SIZE.padding * 3}
-                  />
-                </>
-              </AppModal>
-              <AppPicker
-                value={props.values.staying_with_guests}
-                name={'staying_with_guests'}
-                label={'Stay with guests'}
-                onValueChange={onChangeText}
-                items={list.staying_width_guests}
-                error={props.errors.staying_with_guests}
-                stylePicker={'linear'}
-              />
-              <View
-                style={{
-                  flexDirection: 'row',
-                  paddingVertical: SIZE.padding,
-                  alignItems: 'center',
-                }}>
-                <AppText
+    <>
+      <ScrollView
+        style={{flex: 1}}
+        contentContainerStyle={{paddingBottom: SIZE.big_space + SIZE.padding}}
+        showsVerticalScrollIndicator={false}>
+        <View style={styles.line} />
+        <Formik
+          initialValues={formInitialValues}
+          validationSchema={validationForm}
+          validateOnChange={false}
+          enableReinitialize
+          onSubmit={onSubmit}>
+          {(props: any) => (
+            <>
+              <View>
+                <AppButton
+                  label={'Property location'}
+                  typeButton={'underline'}
+                  title={props.values.location}
+                  onPress={() => onLocation(props.values.location)}
+                />
+                <AppPicker
+                  value={props.values.kind_place}
+                  name={'kind_place'}
+                  label={'Property type'}
+                  onValueChange={onChangeText}
+                  items={list.kind_place}
+                  error={props.errors.kind_place}
+                  stylePicker={'linear'}
+                />
+                <AppPicker
+                  value={props.values.lease_period}
+                  name={'lease_period'}
+                  label={'Lease period'}
+                  onValueChange={onChangeText}
+                  items={
+                    props.values.kind_place === 'HDB'
+                      ? list.lease_your_place_hdb
+                      : list.lease_your_place
+                  }
+                  error={props.errors.lease_period}
+                  stylePicker={'linear'}
+                />
+                <AppModal
+                  label={'Rental price'}
+                  customTitle={renderPriceTitle(props.values)}>
+                  <>
+                    <AppSlider
+                      onValuesChangeFinish={onValuesChangeFinish}
+                      min_range_value={props.values.min_range_price}
+                      max_range_value={props.values.max_range_price}
+                      iconLeft={'dolar'}
+                      sliderLength={DEVICE.width - SIZE.padding * 3}
+                    />
+                  </>
+                </AppModal>
+                <AppPicker
+                  value={props.values.staying_with_guests}
+                  name={'staying_with_guests'}
+                  label={'Stay with guests'}
+                  onValueChange={onChangeText}
+                  items={list.staying_width_guests}
+                  error={props.errors.staying_with_guests}
+                  stylePicker={'linear'}
+                />
+                <View
                   style={{
-                    flex: 1,
-                    ...fontFamily.fontWeight600,
-                    color: '#65666D',
+                    flexDirection: 'row',
+                    paddingVertical: SIZE.padding,
+                    alignItems: 'center',
                   }}>
-                  {'Active/Inactive property'}
-                </AppText>
-                {!props.values.room_active ? (
-                  <IconEyeCloseFullFill />
-                ) : (
-                  <IconEyeOpenFullFill />
-                )}
+                  <AppText
+                    style={{
+                      flex: 1,
+                      ...fontFamily.fontWeight600,
+                      color: '#65666D',
+                    }}>
+                    {'Active/Inactive property'}
+                  </AppText>
+                  {!props.values.room_active ? (
+                    <IconEyeCloseFullFill />
+                  ) : (
+                    <IconEyeOpenFullFill />
+                  )}
 
-                <View style={{marginLeft: 10, marginRight: 3}}>
-                  <Switch
-                    value={props.values.room_active}
-                    onValueChange={(val: boolean) =>
-                      onChangeText(val, 'room_active')
-                    }
-                    activeText={''}
-                    inActiveText={''}
-                    circleSize={30}
-                    circleBorderWidth={3}
-                    backgroundActive={'#2A6B58'}
-                    backgroundInactive={'#D8D8D8'}
-                    circleActiveColor={'#FAFAFA'}
-                    circleInActiveColor={'#FAFAFA'}
-                    circleActiveBorderColor={'#2A6B58'}
-                    circleInactiveBorderColor={'#D8D8D8'}
-                    style={{marginLeft: 8}}
-                  />
+                  <View style={{marginLeft: 10, marginRight: 3}}>
+                    <ToggleSwitch
+                      isOn={props.values.room_active}
+                      onColor="#2A6B58"
+                      offColor="#D8D8D8"
+                      label=""
+                      size="medium"
+                      onToggle={isOn => onChangeText(isOn, 'room_active')}
+                    />
+                  </View>
                 </View>
-              </View>
-              <View style={styles.line} />
-              <Pressable
-                style={{
-                  flexDirection: 'row',
-                  paddingVertical: SIZE.padding,
-                  alignItems: 'center',
-                }}>
-                <IconDelete />
-                <AppText
+                <View style={styles.line} />
+                <Pressable
                   style={{
-                    flex: 1,
-                    ...fontFamily.fontWeight600,
-                    color: colors.textSecondPrimary,
-                    marginLeft: 10,
+                    flexDirection: 'row',
+                    paddingVertical: SIZE.padding,
+                    alignItems: 'center',
                   }}>
-                  {'Delete property'}
-                </AppText>
-              </Pressable>
-            </View>
-            <AppButton
-              containerStyle={styles.button}
-              title={'Save change'}
-              size={'small'}
-              iconRight={'tick'}
-              onPress={props.handleSubmit}
-            />
-          </>
-        )}
-      </Formik>
-    </ScrollView>
+                  <IconDelete />
+                  <AppText
+                    style={{
+                      flex: 1,
+                      ...fontFamily.fontWeight600,
+                      color: colors.textSecondPrimary,
+                      marginLeft: 10,
+                    }}>
+                    {'Delete property'}
+                  </AppText>
+                </Pressable>
+              </View>
+            </>
+          )}
+        </Formik>
+      </ScrollView>
+      <AppButton
+        containerStyle={styles.button}
+        title={'Save change'}
+        size={'small'}
+        iconRight={'tick'}
+        onPress={props.handleSubmit}
+      />
+    </>
   );
 };
 
 const styles = StyleSheet.create({
   button: {
-    paddingTop: SIZE.base_space,
-    paddingBottom: SIZE.medium_space,
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    bottom: SIZE.medium_space,
   },
   contentContainerStyle: {
     paddingBottom: SIZE.big_space + SIZE.padding,
