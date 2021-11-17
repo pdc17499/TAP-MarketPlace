@@ -52,17 +52,15 @@ const BasicInfomation = (props: BasicInfomationProp) => {
 
   const validationForm = yup.object().shape({
     name: yup.string(),
-    country: validateForm().common.selectAtLeast,
-    occupation: validateForm().common.atLeastOnePicker,
-    ethnicity: validateForm().common.atLeastOnePicker,
-    gender: validateForm().common.atLeastOnePicker,
-    ageGroup: validateForm().common.atLeastOnePicker,
+    // country: validateForm().common.selectAtLeast,
+    // occupation: validateForm().common.atLeastOnePicker,
+    // ethnicity: validateForm().common.atLeastOnePicker,
+    // gender: validateForm().common.atLeastOnePicker,
+    // ageGroup: validateForm().common.atLeastOnePicker,
   });
 
   const onChangeText = (item: any, name?: string) => {
     if (name) {
-      console.log('valye', name);
-
       const nData: any = { ...users };
       nData[name] = item;
       setUsers(nData);

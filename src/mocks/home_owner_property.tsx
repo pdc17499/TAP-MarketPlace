@@ -411,8 +411,8 @@ export const ROOM_UNIT_HOWNER = {
       label: 'Islam',
     },
     {
-      value: 'Secular/Nonreligious/Agnostic/Atheist',
-      label: 'Secular/Nonreligious/Agnostic/Atheist',
+      value: 'Secular/Nonreligious/Atheist',
+      label: 'Secular/Nonreligious/Atheist',
     },
     {
       value: 'Buddhism',

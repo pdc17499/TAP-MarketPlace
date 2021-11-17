@@ -9,4 +9,8 @@ export * from './AppPhoneNumber';
 export * from './AppPicker';
 export * from './AppModal';
 export * from './GlobalUI';
+export * from './ModalCheckBox';
+export * from './PropertyChoices';
+
+
 // export * from './AppDropdownPicker';

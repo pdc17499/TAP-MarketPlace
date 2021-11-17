@@ -1,10 +1,11 @@
-import { AppButton, AppInput, AppPicker, AppText, Header } from '@component';
+import { AppButton, AppInput, AppModal, AppPicker, AppSlider, AppText, Header, ModalCheckedBox, PropertyChoices } from '@component';
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, Pressable } from 'react-native';
+import { View, StyleSheet, Pressable, ScrollView } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import {
   colors,
+  DEVICE,
   fontFamily,
   scaleSize,
   scaleWidth,
@@ -18,6 +19,8 @@ import { UserInfo } from '@interfaces';
 import { saveDataUser } from '@redux';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import { IconCheckedBox, IconTick, IconUncheckedBox } from '@assets';
+import { values } from 'lodash';
 
 interface HomeOwnerLifeStyleProp { }
 
@@ -33,14 +36,12 @@ const HomeOwnerLifeStyle = ((props: HomeOwnerLifeStyleProp) => {
   const [showButton, setShowButton] = useState(false)
 
   useEffect(() => {
-    // console.log('show', showButton);
     setUsers(dataUser)
     console.log('dulieu', dataUser);
   }, [dataUser])
 
-
   const formInitialValues = {
-    place: users?.lifestyle.place,
+    place: users?.lifestyle?.Friendliness,
     pet: users?.lifestyle?.Pets,
     smoking: users?.lifestyle?.Smoking,
     diet: users?.lifestyle?.DietRestriction,
@@ -48,11 +49,11 @@ const HomeOwnerLifeStyle = ((props: HomeOwnerLifeStyleProp) => {
   };
 
   const validationForm = yup.object().shape({
-    place: validateForm().common.selectAtLeast,
-    pet: validateForm().common.atLeastOnePicker,
-    smoking: validateForm().common.atLeastOnePicker,
-    diet: validateForm().common.atLeastOnePicker,
-    religion: validateForm().common.atLeastOnePicker,
+    // place: validateForm().common.selectAtLeast,
+    // pet: validateForm().common.atLeastOnePicker,
+    // smoking: validateForm().common.atLeastOnePicker,
+    // diet: validateForm().common.atLeastOnePicker,
+    // religion: validateForm().common.atLeastOnePicker,
   });
 
   const onChangeText = (item: any, name?: string) => {
@@ -88,15 +89,13 @@ const HomeOwnerLifeStyle = ((props: HomeOwnerLifeStyleProp) => {
                 paddingTop: 10,
               }}>
 
-              <AppPicker
-                value={props.values.place}
-                name={'place'}
+              <AppModal
                 label={'My place is'}
-                onValueChange={onChangeText}
-                items={list.your_place}
-                error={props.errors.place}
-                stylePicker={'linear'}
-              />
+                customTitle={<PropertyChoices data={props.values.place} />}
+                customStyleContainer={styles.modal}
+              >
+                <ModalCheckedBox data={list.your_place} />
+              </AppModal>
 
               <AppPicker
                 value={props.values.pet}
@@ -117,24 +116,24 @@ const HomeOwnerLifeStyle = ((props: HomeOwnerLifeStyleProp) => {
                 error={props.errors.smoking}
                 stylePicker={'linear'}
               />
-              <AppPicker
-                value={props.values.diet}
-                name={'diet'}
+
+              <AppModal
                 label={'Diet-choices'}
-                onValueChange={onChangeText}
-                items={list.diet_choices}
-                error={props.errors.diet}
-                stylePicker={'linear'}
-              />
-              <AppPicker
-                value={props.values.religion}
-                name={'religion'}
+                // customTitle={<PropertyChoices data={props.values.diet} />}
+                customStyleContainer={styles.modal}
+              >
+                <ModalCheckedBox data={list.diet_choices} />
+              </AppModal>
+
+              <AppModal
                 label={'Religion'}
-                onValueChange={onChangeText}
-                items={list.religions}
-                error={props.errors.religion}
-                stylePicker={'linear'}
-              />
+                customTitle={<AppText>{'Religions'}</AppText>}
+                customStyleContainer={styles.modal}
+              >
+                <ModalCheckedBox data={list.religions} />
+              </AppModal>
+
+
             </View>
             {showButton
               ? <AppButton
@@ -145,11 +144,10 @@ const HomeOwnerLifeStyle = ((props: HomeOwnerLifeStyleProp) => {
                 onPress={props.handleSubmit}
               /> : null
             }
-
           </>
         )}
       </Formik>
-    </KeyboardAwareScrollView>
+    </KeyboardAwareScrollView >
   );
 
   return (
@@ -225,8 +223,13 @@ const styles = StyleSheet.create({
     color: colors.textSecondPrimary,
     position: 'absolute',
     bottom: 5,
-    // backgroundColor: 'red'
+  },
+  modal: {
 
+  },
+  modalTxt: {
+    marginRight: scaleWidth(15),
+    alignSelf: 'center'
   }
 });
 
