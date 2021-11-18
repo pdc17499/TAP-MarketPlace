@@ -86,8 +86,8 @@ const UnAuthenStack = () => {
         name={USER_INFORMATION_NAME}
         component={UserInformationName}
       />
-      <Stack.Screen name={VERIFY_ACCOUNT} component={VerifyAccount} />
-      <Stack.Screen name={VERIFY_CODE} component={VerifyCode} />
+      {/* <Stack.Screen name={VERIFY_ACCOUNT} component={VerifyAccount} />
+      <Stack.Screen name={VERIFY_CODE} component={VerifyCode} /> */}
       <Stack.Screen name={UPDATE_NEW_PASSWORD} component={UpdateNewPassword} />
       <Stack.Screen
         name={USER_INFORMATION_GENDER}

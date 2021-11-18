@@ -37,7 +37,7 @@ export function* signUpSaga(action: any) {
     console.log({result});
     if (result) {
       yield put(saveDataUser(result));
-      // NavigationUtils.navigate(VERIFY_ACCOUNT);
+      NavigationUtils.reset(VERIFY_ACCOUNT);
     }
     // yield put(saveDataRedux(result));
   } catch (error) {

@@ -25,9 +25,19 @@ function pop(value: any) {
   _navigator.dispatch(StackActions.pop(value));
 }
 
+export function reset(routeName: string) {
+  _navigator.dispatch(
+    CommonActions.reset({
+      index: 0,
+      routes: [{name: routeName}],
+    }),
+  );
+}
+
 export const NavigationUtils = {
   navigate,
   setTopLevelNavigator,
   goBack,
   pop,
+  reset,
 };

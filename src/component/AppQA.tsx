@@ -1,5 +1,5 @@
 import {AppButton, AppText} from '@component';
-import {AppQAProps, mockProps} from '@interfaces';
+import {AppQAProps, mockProps, pickerProps} from '@interfaces';
 import {colors, DEVICE, fontFamily, scaleSize, scaleWidth, SIZE} from '@util';
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
@@ -68,9 +68,17 @@ const AppQA = React.memo((props: AppQAProps) => {
           (itm: mockProps) => itm.value !== item.value,
         );
       } else {
-        nValue[name].push(item);
+        const nItem: pickerProps = {...item};
+        if (nItem.hasOwnProperty('icon')) {
+          delete nItem.icon;
+        }
+        nValue[name].push(nItem);
       }
     } else {
+      const nItem: pickerProps = {...item};
+      if (nItem.hasOwnProperty('icon')) {
+        delete nItem.icon;
+      }
       nValue[name] = item;
     }
 
