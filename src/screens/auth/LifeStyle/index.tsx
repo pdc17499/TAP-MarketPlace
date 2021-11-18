@@ -44,7 +44,7 @@ const LifeStyle = (props: any) => {
           iconRight={'arNext'}
           onPress={onStart}
         />
-        <AppButton title={'Skip'} typeButton={'underline'} onPress={onSkip} />
+        <AppButton title={'Skip'} typeButton={'link'} onPress={onSkip} />
       </View>
     </View>
   );

@@ -1,7 +1,7 @@
 import {AppInput, AppText} from '@component';
 import MultiSlider from '@ptomasroos/react-native-multi-slider';
-import {colors, DEVICE, fontFamily, SIZE, SLIDER} from '@util';
-import React from 'react';
+import {colors, DEVICE, fontFamily, scaleWidth, SIZE, SLIDER} from '@util';
+import React, {useEffect, useState} from 'react';
 import {Pressable, StyleSheet, Text, View} from 'react-native';
 
 interface AppSliderProps {
@@ -21,44 +21,60 @@ const AppSlider = React.memo((props: AppSliderProps) => {
   const max_range_value = props.max_range_value || 0;
   const min_default = min_range || SLIDER.MIN_PRICE;
   const max_default = max_range || SLIDER.MAX_PRICE;
+  const [slideValue, setSlideValue] = useState({
+    min: 0,
+    max: 1,
+  });
+
+  useEffect(() => {
+    const nValue = {
+      min: min_range_value,
+      max: max_range_value,
+    };
+
+    setSlideValue({...nValue});
+  }, [min_range_value, max_range_value]);
+
+  const onValuesChange = (values: any) => {
+    const nValue = {
+      min: values[0],
+      max: values[1],
+    };
+    setSlideValue({...nValue});
+  };
 
   return (
     <Pressable>
       <View style={styles.container}>
         <AppInput
           label={'Min'}
-          value={min_range_value.toString()}
-          name={'min_range_value'}
+          value={slideValue.min.toString()}
+          // name={'min_range_value'}
           iconLeft={iconLeft}
           editable={false}
           containerStyle={{flex: 1}}
-          inputStyle={{
-            fontSize: SIZE.base_size + 2,
-            paddingTop: DEVICE.isIos ? 2 : SIZE.base_space - 3,
-          }}
+          inputStyle={styles.inputStyle}
           typeInput={'price'}
           customStyleLabel={{color: colors.textSecondPrimary}}
         />
         <View style={styles.line} />
         <AppInput
           label={'Max'}
-          value={max_range_value.toString()}
-          name={'max_range_value'}
+          value={slideValue.max.toString()}
+          // name={'max_range_value'}
           iconLeft={iconLeft}
           editable={false}
           containerStyle={{flex: 1}}
-          inputStyle={{
-            fontSize: SIZE.base_size + 2,
-            paddingTop: DEVICE.isIos ? 2 : SIZE.base_space - 3,
-          }}
+          inputStyle={styles.inputStyle}
           typeInput={'price'}
           customStyleLabel={{color: colors.textSecondPrimary}}
         />
       </View>
       <MultiSlider
-        values={[min_range_value, max_range_value]}
+        values={[slideValue.min, slideValue.max]}
         sliderLength={sliderLength || DEVICE.width - 2 * SIZE.padding}
-        onValuesChange={onValuesChangeFinish}
+        onValuesChange={onValuesChange}
+        onValuesChangeFinish={onValuesChangeFinish}
         min={min_default}
         max={max_default}
         allowOverlap={false}
@@ -111,6 +127,10 @@ const styles = StyleSheet.create({
   textBottom: {
     color: colors.textSecondPrimary,
     ...fontFamily.fontWeight500,
+  },
+  inputStyle: {
+    fontSize: SIZE.base_size + 2,
+    paddingTop: DEVICE.isIos ? 2 : SIZE.base_space - scaleWidth(5),
   },
 });
 

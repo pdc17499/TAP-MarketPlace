@@ -1,4 +1,11 @@
-import {AppButton, AppInput, AppQA, AppText, Header} from '@component';
+import {
+  AppButton,
+  AppInput,
+  AppPicker,
+  AppQA,
+  AppText,
+  Header,
+} from '@component';
 import {useNavigation} from '@react-navigation/core';
 import {scaleHeight, SIZE, validateForm} from '@util';
 import {Formik} from 'formik';
@@ -27,6 +34,7 @@ const UserInformationGender = () => {
   };
 
   const formInitialValues = {
+    // country: dataSignUp?.country?.cca2,
     gender: dataSignUp?.gender?.value,
     age_group: dataSignUp?.age_group?.id,
     staying_with_guests: dataSignUp?.staying_with_guests?.value,
@@ -34,6 +42,7 @@ const UserInformationGender = () => {
 
   const validationForm = yup.object().shape({
     gender: validateForm().common.selectAtLeast,
+    // country: validateForm().common.selectAtLeast,
     age_group: validateForm().common.selectAtLeast,
   });
 
@@ -48,6 +57,14 @@ const UserInformationGender = () => {
     setData(nData);
     props.setErrors({});
     navigation.navigate(USER_INFORMATION_COUNTRY);
+  };
+
+  const onChangeText = (item: any, name?: string) => {
+    if (name) {
+      const nData: any = {...dataSignUp};
+      nData[name] = item;
+      setData(nData);
+    }
   };
 
   console.log({dataSignUp});
@@ -72,6 +89,15 @@ const UserInformationGender = () => {
               typeTitle={'base'}
               error={props.errors.gender}
             />
+
+            {/* <AppPicker
+              value={props.values.country}
+              name={'country'}
+              label={'Where do you come from?'}
+              onValueChange={onChangeText}
+              typePicker={'country'}
+              error={props.errors.country}
+            /> */}
 
             <AppQA
               data={list.group_age}
