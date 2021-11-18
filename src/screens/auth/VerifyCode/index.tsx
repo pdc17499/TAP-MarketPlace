@@ -12,6 +12,7 @@ import {
 import {useDispatch} from 'react-redux';
 import {forgotPassword, verifyCodeForgotPassword} from '@redux';
 import {PROFILE} from '@routeName';
+import {NavigationUtils} from '@navigation';
 
 interface VerifyCodeProp {
   navigation: any;
@@ -72,7 +73,7 @@ const VerifyCode = ({navigation, route}: VerifyCodeProp) => {
       dispatch(verifyCodeForgotPassword({email, code: parseInt(value)}));
     }
 
-    navigation.replace(PROFILE);
+    NavigationUtils.reset(PROFILE);
   };
 
   const onResend = () => {

@@ -38,7 +38,6 @@ export function* loginSaga(action: any) {
   try {
     GlobalService.showLoading();
     const result: ResponseGenerator = yield loginApi(action.payload);
-    // NavigationUtils.reset(VERIFY_ACCOUNT);
     yield put(saveDataUser(result?.data));
     // setTimeout(() => {
     //   NavigationUtils.reset(VERIFY_ACCOUNT);
@@ -56,10 +55,11 @@ export function* signUpSaga(action: any) {
     const result: ResponseGenerator = yield signUpApi(body);
     console.log({result});
     if (result) {
+      NavigationUtils.reset(VERIFY_ACCOUNT);
       yield put(saveDataUser(result?.data));
-      setTimeout(() => {
-        NavigationUtils.reset(VERIFY_ACCOUNT);
-      }, 100);
+      // setTimeout(() => {
+      //   NavigationUtils.reset(VERIFY_ACCOUNT);
+      // }, 100);
       yield resetDataSignup();
     }
     // yield put(saveDataRedux(result));
