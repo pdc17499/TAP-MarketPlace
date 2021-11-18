@@ -1,9 +1,9 @@
 import CountryPicker from 'react-native-country-picker-modal';
-import React, {useState, useEffect} from 'react';
-import {Pressable, StyleSheet, TouchableOpacity, View} from 'react-native';
-import {AppInput, AppText} from '@component';
-import {colors, fontFamily, scaleWidth, SIZE} from '@util';
-import {DownIcon, IconShieldCheck} from '@assets';
+import React, { useState, useEffect } from 'react';
+import { Pressable, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { AppInput, AppText } from '@component';
+import { colors, fontFamily, scaleWidth, SIZE } from '@util';
+import { DownIcon, IconShieldCheck } from '@assets';
 interface IAppPhoneNumber {
   label?: string;
   value?: string;
@@ -12,10 +12,11 @@ interface IAppPhoneNumber {
   error?: string;
   type?: 'default' | 'inline';
   name?: string;
+
 }
 
 export const AppPhoneNumber = React.memo((props: IAppPhoneNumber) => {
-  const {label, value, onChangePhone, onChangeFlag, error, type} = props;
+  const { label, value, onChangePhone, onChangeFlag, error, type } = props;
   const [countryCode, setCountryCode]: any = useState('SG');
   const [visible, setVisible] = useState(false);
   const [isInLine, setIsInLine] = useState(false);

@@ -17,7 +17,7 @@ import { ROOM_UNIT_HOWNER } from '@mocks';
 import { UserInfo } from '@interfaces';
 import { saveDataUser } from '@redux';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import DateTimePicker from '@react-native-community/datetimepicker';
+import DateTimePickerModal from "react-native-modal-datetime-picker";
 import moment from 'moment';
 
 interface BasicInfomationProp { }
@@ -33,13 +33,10 @@ const BasicInfomation = (props: BasicInfomationProp) => {
   const dataUser: UserInfo = useSelector((state: any) => state?.auth?.user);
   const [showDate, setShowDate] = useState(false);
   const [dateOfBirth, setDateOfBirth] = useState('');
-  const [showButton, setShowButton] = useState(false);
 
   useEffect(() => {
     setUsers(dataUser);
   }, [dataUser]);
-
-  console.log('dataa', dataUser);
 
   const formInitialValues = {
     name: users?.name,
@@ -65,7 +62,6 @@ const BasicInfomation = (props: BasicInfomationProp) => {
       nData[name] = item;
       setUsers(nData);
     }
-    setShowButton(true);
   };
 
   const setData = (data: any) => {
@@ -76,12 +72,19 @@ const BasicInfomation = (props: BasicInfomationProp) => {
     setShowDate(true);
   };
 
-  const onChangDate = (event: any, selectedDate: any) => {
+  const hideDatePicker = () => {
+    setShowDate(false)
+  }
+
+  const onChangDate = (selectedDate: any) => {
+
+    // setShowDate(false);
+    // // setShow(Platform.OS === 'ios');
     const changeDate = selectedDate || dateOfBirth;
     const birthday = moment(changeDate).format('DD/MM/YYYY');
-    setShowDate(false);
-    // setShow(Platform.OS === 'ios');
+    console.log("A date has been picked: ", birthday);
     setDateOfBirth(birthday);
+    setShowDate(false);
   };
 
   const onSubmit = () => { };
@@ -130,7 +133,7 @@ const BasicInfomation = (props: BasicInfomationProp) => {
                   error={props.errors.ageGroup}
                   stylePicker={'linear'}
                 />
-                {/* <Pressable
+                <Pressable
                   onPress={() => showDatepicker()}
                   style={styles.birthday}>
                   <AppText style={styles.birthdayTxt}>
@@ -140,15 +143,15 @@ const BasicInfomation = (props: BasicInfomationProp) => {
                   </AppText>
                 </Pressable>
                 {showDate && (
-                  <DateTimePicker
-                    testID="dateTimePicker"
-                    value={moment().toDate()}
-                    mode={'date'}
-                    is24Hour={true}
-                    display=""
-                    onChange={onChangDate}
+
+                  <DateTimePickerModal
+                    isVisible={showDate}
+                    mode="date"
+                    onConfirm={onChangDate}
+                    onCancel={hideDatePicker}
                   />
-                )} */}
+
+                )}
               </View>
               <AppPicker
                 value={props.values.country}

@@ -1,17 +1,17 @@
-import {AppButton, AppInput, AppPhoneNumber, AppText, Header} from '@component';
-import React, {useEffect, useState} from 'react';
-import {View, StyleSheet, Pressable} from 'react-native';
-import {useSelector} from 'react-redux';
-import {colors, fontFamily, scaleSize, scaleWidth, SIZE} from '@util';
+import { AppButton, AppInput, AppPhoneNumber, AppText, Header } from '@component';
+import React, { useEffect, useState } from 'react';
+import { View, StyleSheet, Pressable } from 'react-native';
+import { useSelector } from 'react-redux';
+import { colors, fontFamily, scaleSize, scaleWidth, SIZE } from '@util';
 import * as yup from 'yup';
-import {Formik} from 'formik';
-import {UserInfo} from '@interfaces';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import {CaretRight, IconChangePassword, IconDeleteUser} from '@assets';
-import {CHANGE_PASSWORD} from '@routeName';
-import {useNavigation} from '@react-navigation/native';
+import { Formik } from 'formik';
+import { UserInfo } from '@interfaces';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { CaretRight, IconChangePassword, IconDeleteUser } from '@assets';
+import { CHANGE_PASSWORD } from '@routeName';
+import { useNavigation } from '@react-navigation/native';
 
-interface AccountSettingProp {}
+interface AccountSettingProp { }
 
 interface screenNavigationProp {
   navigate: any;
@@ -46,14 +46,14 @@ const AccountSetting = () => {
 
   const onChangeText = (item: any, name?: string) => {
     if (name) {
-      const nData: any = {...users};
+      const nData: any = { ...users };
       nData[name] = item;
       setUsers(nData);
     }
     setShowButton(true);
   };
 
-  const onSubmit = () => {};
+  const onSubmit = () => { };
 
   const RenderForm = () => (
     <KeyboardAwareScrollView showsVerticalScrollIndicator={false}>
@@ -86,7 +86,7 @@ const AccountSetting = () => {
                 <AppPhoneNumber
                   value={props.values.contact}
                   onChangeFlag={setCountryCode}
-                  onChangePhone={onChangeText}
+                  onChangePhone={setPhoneNumber}
                   name={'contact'}
                   type={'inline'}
                 />
@@ -233,4 +233,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export {AccountSetting};
+export { AccountSetting };
