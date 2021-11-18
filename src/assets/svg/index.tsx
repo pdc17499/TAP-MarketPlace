@@ -1,4 +1,4 @@
-import {colors} from '@util';
+import { colors } from '@util';
 import React from 'react';
 import Svg, {
   Path,
@@ -867,6 +867,20 @@ export const IconParkingLot = (props: iconProps) => (
       d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"
       stroke="#191718"
       strokeWidth={1.5}
+    />
+  </Svg>
+);
+
+export const IconCheckCircle = (props: iconProps) => (
+  <Svg
+    width={56}
+    height={56}
+    fill="none"
+    {...props}
+  >
+    <Path
+      d="M28 5.25A22.75 22.75 0 1050.75 28 22.777 22.777 0 0028 5.25zm10.835 18.766L26 36.266a1.756 1.756 0 01-2.42 0l-6.415-6.125a1.752 1.752 0 012.42-2.532l5.206 4.971 11.624-11.096a1.752 1.752 0 012.42 2.532z"
+      fill="#2A6B58"
     />
   </Svg>
 );

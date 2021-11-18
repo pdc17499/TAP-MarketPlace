@@ -30,11 +30,12 @@ import {
   Profile,
   BasicInfomation,
   ChangePassword,
-  HomeOwnerLifeStyle,
-  AccountSetting
+  ProfileLifeStyle,
+  AccountSetting,
+
 } from './homeowner/Profile';
 import { UpdateNewPassword } from './auth/UpdateNewPassword';
-import { YourListing, RoomDetail, RoomDetailLocation } from './homeowner/Room';
+import { YourListing, RoomDetail, RoomDetailLocation, AddSuccess } from './homeowner/Room';
 
 export {
   ChooseRole,
@@ -65,11 +66,13 @@ export {
   Profile,
   BasicInfomation,
   ChangePassword,
-  HomeOwnerLifeStyle,
+  ProfileLifeStyle,
   AccountSetting,
+
 
   // Room
   YourListing,
   RoomDetail,
   RoomDetailLocation,
+  AddSuccess
 };

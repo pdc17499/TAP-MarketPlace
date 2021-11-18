@@ -9,10 +9,10 @@ import {
   ModalCheckedBox,
   PropertyChoices,
 } from '@component';
-import React, {useEffect, useState} from 'react';
-import {View, StyleSheet, Pressable, ScrollView} from 'react-native';
-import {useDispatch} from 'react-redux';
-import {useSelector} from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { View, StyleSheet, Pressable, ScrollView } from 'react-native';
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import {
   colors,
   DEVICE,
@@ -23,29 +23,29 @@ import {
   validateForm,
 } from '@util';
 import * as yup from 'yup';
-import {Formik} from 'formik';
-import {ROOM_UNIT_HOWNER} from '@mocks';
-import {UserInfo} from '@interfaces';
-import {saveDataUser} from '@redux';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import { Formik } from 'formik';
+import { ROOM_UNIT_HOWNER } from '@mocks';
+import { UserInfo } from '@interfaces';
+import { saveDataUser } from '@redux';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import {IconCheckedBox, IconTick, IconUncheckedBox} from '@assets';
-import {values} from 'lodash';
+import { IconCheckedBox, IconTick, IconUncheckedBox } from '@assets';
+import { values } from 'lodash';
 
-interface HomeOwnerLifeStyleProp {}
+interface ProfileLifeStyleProp { }
 
 interface screenNavigationProp {
   navigate: any;
 }
 
-const HomeOwnerLifeStyle = (props: HomeOwnerLifeStyleProp) => {
+const ProfileLifeStyle = (props: ProfileLifeStyleProp) => {
   const dispatch = useDispatch();
   const list = ROOM_UNIT_HOWNER;
   const dataUser: UserInfo = useSelector((state: any) => state?.auth?.user);
   const [users, setUsers] = useState<UserInfo>();
   const [showButton, setShowButton] = useState(false);
 
-  console.log({users});
+  console.log({ users });
 
   useEffect(() => {
     setUsers(dataUser);
@@ -70,7 +70,7 @@ const HomeOwnerLifeStyle = (props: HomeOwnerLifeStyleProp) => {
 
   const onChangeText = (item: any, name?: string) => {
     if (name) {
-      const nData: any = {...dataUser};
+      const nData: any = { ...dataUser };
       nData[name] = item;
       setData(nData);
     }
@@ -81,7 +81,7 @@ const HomeOwnerLifeStyle = (props: HomeOwnerLifeStyleProp) => {
     // dispatch(saveDataUser(data));
   };
 
-  const onSubmit = () => {};
+  const onSubmit = () => { };
 
   const RenderForm = () => (
     <KeyboardAwareScrollView showsVerticalScrollIndicator={false}>
@@ -240,4 +240,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export {HomeOwnerLifeStyle};
+export { ProfileLifeStyle };

@@ -1,14 +1,14 @@
-import {AppButton, AppInput, AppText, Header} from '@component';
-import {useNavigation} from '@react-navigation/core';
-import {colors, fontFamily, scaleHeight, scaleWidth, SIZE} from '@util';
-import {Formik} from 'formik';
+import { AppButton, AppInput, AppText, Header } from '@component';
+import { useNavigation } from '@react-navigation/core';
+import { colors, fontFamily, scaleHeight, scaleWidth, SIZE } from '@util';
+import { Formik } from 'formik';
 import React from 'react';
-import {StyleSheet, View} from 'react-native';
-import {useDispatch} from 'react-redux';
+import { StyleSheet, View } from 'react-native';
+import { useDispatch } from 'react-redux';
 import * as yup from 'yup';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
-interface ChangePasswordProp {}
+interface ChangePasswordProp { }
 interface screenNavigationProp {
   navigate: any;
 }
@@ -33,7 +33,7 @@ const ChangePassword = (props: ChangePasswordProp) => {
     new_password: yup
       .string()
       .required('This field is required')
-      .min(6, 'Password must be at least 6 characters')
+      .min(8, 'Password must be at least 8 characters')
       .max(32, 'Password may not be greater than 32 characters'),
     confirm_password: yup
       .string()
@@ -46,12 +46,12 @@ const ChangePassword = (props: ChangePasswordProp) => {
         initialValues={formInitialValues}
         validationSchema={validationResetPassword}
         validateOnChange={false}
-        onSubmit={values => {}}>
+        onSubmit={values => { }}>
         {props => (
           <>
-            <View style={{flex: 1}}>
+            <View style={{ flex: 1 }}>
               <AppInput
-                containerStyle={{marginTop: SIZE.base_space / 2}}
+                containerStyle={{ marginTop: SIZE.base_space / 2 }}
                 secureTextEntry={true}
                 showEye={true}
                 label={'Old Password'}
@@ -60,7 +60,7 @@ const ChangePassword = (props: ChangePasswordProp) => {
                 error={props.errors.old_password}
               />
               <AppInput
-                containerStyle={{marginTop: SIZE.base_space / 2}}
+                containerStyle={{ marginTop: SIZE.base_space / 2 }}
                 secureTextEntry={true}
                 showEye={true}
                 label={'New Password'}
@@ -69,7 +69,7 @@ const ChangePassword = (props: ChangePasswordProp) => {
                 error={props.errors.new_password}
               />
               <AppInput
-                containerStyle={{marginTop: SIZE.base_space / 2}}
+                containerStyle={{ marginTop: SIZE.base_space / 2 }}
                 secureTextEntry={true}
                 // showEye={true}
                 label={'Confirm New Password'}
@@ -84,7 +84,7 @@ const ChangePassword = (props: ChangePasswordProp) => {
               size={'small'}
               iconRight={'tick'}
               onPress={props.handleSubmit}
-              customStyleButton={{marginTop: scaleWidth(90)}}
+              customStyleButton={{ marginTop: scaleWidth(90) }}
             />
           </>
         )}
@@ -134,4 +134,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export {ChangePassword};
+export { ChangePassword };

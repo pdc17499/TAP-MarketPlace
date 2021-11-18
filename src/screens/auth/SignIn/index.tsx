@@ -40,7 +40,7 @@ const SignIn = React.memo((props: SignInProp) => {
     password: yup
       .string()
       .required('This field is required')
-      .min(6, 'Password must be at least 6 characters')
+      .min(8, 'Password must be at least 8 characters')
       .max(32, 'Password may not be greater than 32 characters'),
   });
 

@@ -40,7 +40,7 @@ const BasicInfomation = (props: BasicInfomationProp) => {
 
   const formInitialValues = {
     name: users?.name,
-    country: users?.country?.cca2,
+    nationality: users?.nationality,
     occupation: users?.occupation,
     ethnicity: users?.ethnicity,
     gender: users?.gender,
@@ -49,7 +49,7 @@ const BasicInfomation = (props: BasicInfomationProp) => {
 
   const validationForm = yup.object().shape({
     name: yup.string(),
-    // country: validateForm().common.selectAtLeast,
+    // nationality: validateForm().common.selectAtLeast,
     // occupation: validateForm().common.atLeastOnePicker,
     // ethnicity: validateForm().common.atLeastOnePicker,
     // gender: validateForm().common.atLeastOnePicker,
@@ -77,9 +77,6 @@ const BasicInfomation = (props: BasicInfomationProp) => {
   }
 
   const onChangDate = (selectedDate: any) => {
-
-    // setShowDate(false);
-    // // setShow(Platform.OS === 'ios');
     const changeDate = selectedDate || dateOfBirth;
     const birthday = moment(changeDate).format('DD/MM/YYYY');
     console.log("A date has been picked: ", birthday);
@@ -150,16 +147,15 @@ const BasicInfomation = (props: BasicInfomationProp) => {
                     onConfirm={onChangDate}
                     onCancel={hideDatePicker}
                   />
-
                 )}
               </View>
               <AppPicker
-                value={props.values.country}
-                name={'country'}
+                value={props.values.nationality}
+                name={'nationality'}
                 label={'Nationality'}
                 onValueChange={onChangeText}
                 typePicker={'country'}
-                error={props.errors.country}
+                error={props.errors.nationality}
                 stylePicker={'linear'}
               />
               <AppPicker

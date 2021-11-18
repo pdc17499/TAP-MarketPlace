@@ -8,7 +8,7 @@ import { styles } from './style';
 import * as yup from 'yup';
 import { VERIFY_ACCOUNT } from '@routeName';
 import { useDispatch, useSelector } from 'react-redux';
-import { setDataSignup, signUp } from '@redux';
+import { resetDataSignup, setDataSignup, signUp } from '@redux';
 import { DataSignupProps, mockProps } from '@interfaces';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { ImageOrVideo } from 'react-native-image-crop-picker';
@@ -124,6 +124,7 @@ const SignUpEmail = (props: SignUpEmailProp) => {
     };
 
     dispatch(signUp({ body }));
+
     // navigation.navigate(VERIFY_ACCOUNT);
   };
 

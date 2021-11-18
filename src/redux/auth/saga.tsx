@@ -1,6 +1,6 @@
-import {put, takeLatest} from 'redux-saga/effects';
-import {saveDataUser, logoutApp} from './action';
-import {LOGIN, LOGOUT, SEND_VERIFY_EMAIL} from './type';
+import { put, takeLatest } from 'redux-saga/effects';
+import { saveDataUser, logoutApp, resetDataSignup } from './action';
+import { LOGIN, LOGOUT, SEND_VERIFY_EMAIL } from './type';
 import {
   GlobalService,
   sendVerifyEmail,
@@ -9,9 +9,9 @@ import {
   signUpApi,
 } from '@services';
 // import {VERTIFIEMAIL, VERIFYCODE} from '@routeName';
-import {showMessage} from 'react-native-flash-message';
-import {SIGNUP, VERIFY_ACCOUNT} from '@routeName';
-import {NavigationUtils} from '@navigation';
+import { showMessage } from 'react-native-flash-message';
+import { SIGNUP, VERIFY_ACCOUNT } from '@routeName';
+import { NavigationUtils } from '@navigation';
 
 export interface ResponseGenerator {
   result?: any;
@@ -32,11 +32,12 @@ export function* loginSaga(action: any) {
 export function* signUpSaga(action: any) {
   try {
     GlobalService.showLoading();
-    const {body} = action?.payload;
+    const { body } = action?.payload;
     const result: ResponseGenerator = yield signUpApi(body);
-    console.log({result});
+    console.log({ result });
     if (result) {
       yield put(saveDataUser(result));
+      yield resetDataSignup();
       NavigationUtils.reset(VERIFY_ACCOUNT);
     }
     // yield put(saveDataRedux(result));
@@ -60,12 +61,12 @@ export function* sendVerifyEmailSaga(action: any) {
   try {
     const result: ResponseGenerator = yield sendVerifyEmail(action.payload);
     console.log('res', result);
-    const {message} = result?.data;
+    const { message } = result?.data;
     showMessage({
       message: message,
       type: 'success',
     });
-  } catch (error) {}
+  } catch (error) { }
 }
 
 export function* authSaga() {

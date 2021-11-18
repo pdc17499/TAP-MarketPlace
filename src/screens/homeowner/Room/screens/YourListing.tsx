@@ -1,4 +1,4 @@
-import {AppButton, AppText, Header} from '@component';
+import { AppButton, AppText, Header } from '@component';
 import React from 'react';
 import {
   View,
@@ -16,11 +16,11 @@ import {
   IconTabActive,
   room_sample,
 } from '@assets';
-import {colors, fontFamily, scaleSize, scaleWidth, SIZE, STYLE} from '@util';
-import {SceneMap, TabView} from 'react-native-tab-view';
-import {ListingRoomProps} from '@interfaces';
-import {useNavigation} from '@react-navigation/core';
-import {ROOM_DETAIL} from '@routeName';
+import { colors, fontFamily, scaleSize, scaleWidth, SIZE, STYLE } from '@util';
+import { SceneMap, TabView } from 'react-native-tab-view';
+import { ListingRoomProps } from '@interfaces';
+import { useNavigation } from '@react-navigation/core';
+import { ROOM_DETAIL, ROOM_UNIT_ADDRESS } from '@routeName';
 
 const DATA = [
   {
@@ -81,7 +81,7 @@ interface itemProps {
   section: any;
 }
 
-const Route = React.memo(({props}: any) => {
+const Route = React.memo(({ props }: any) => {
   const key = props;
   const navigation: any = useNavigation();
 
@@ -89,8 +89,8 @@ const Route = React.memo(({props}: any) => {
     navigation.navigate(ROOM_DETAIL);
   };
 
-  const renderItem = ({item, section}: itemProps) => {
-    const {active} = item;
+  const renderItem = ({ item, section }: itemProps) => {
+    const { active } = item;
     const hide =
       (key === 'active' && !active) || (key === 'inactive' && active);
     if (hide) {
@@ -107,7 +107,7 @@ const Route = React.memo(({props}: any) => {
         <Image source={item.image} style={styles.bgRoom} />
         <AppText style={styles.roomTitle}>
           {item.type + '  '}
-          <IconDot style={{marginBottom: 4}} />
+          <IconDot style={{ marginBottom: 4 }} />
           <AppText style={styles.roomTitle}>{'  ' + item.title}</AppText>
         </AppText>
         {!active && (
@@ -144,13 +144,13 @@ const Route = React.memo(({props}: any) => {
         renderItem={renderItem}
         keyExtractor={(item: any) => item.id}
         stickySectionHeadersEnabled={false}
-        renderSectionHeader={({section: {key}}) => renderSectionHeader(key)}
+        renderSectionHeader={({ section: { key } }) => renderSectionHeader(key)}
       />
     </>
   );
 });
 
-const renderScene = ({route}: any) => {
+const renderScene = ({ route }: any) => {
   switch (route.key) {
     case 'active':
       return <Route props={'active'} />;
@@ -163,23 +163,30 @@ const renderScene = ({route}: any) => {
   }
 };
 
+
 const YourListing = () => {
+  const navigation: any = useNavigation();
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
-    {key: 'all', title: 'All'},
-    {key: 'active', title: 'Active'},
-    {key: 'inactive', title: 'Inactive'},
+    { key: 'all', title: 'All' },
+    { key: 'active', title: 'Active' },
+    { key: 'inactive', title: 'Inactive' },
   ]);
   const layout = useWindowDimensions();
 
+  const moveToRoomUnit = () => {
+    navigation.navigate(ROOM_UNIT_ADDRESS)
+  }
+
+
   const renderTabBar = (props: any) => {
-    const {navigationState, jumpTo} = props;
-    const {routes, index} = navigationState;
+    const { navigationState, jumpTo } = props;
+    const { routes, index } = navigationState;
 
     return (
       <View style={styles.tabContainer}>
         {routes.map((item: any, idx: number) => {
-          const {title, key} = item;
+          const { title, key } = item;
           const isActive = index === idx;
           const tabTitle = isActive ? styles.tabTitleActive : styles.tabTitle;
           return (
@@ -202,11 +209,11 @@ const YourListing = () => {
       <Header back customContainer={styles.customContainer} />
       <AppText style={styles.heading}>{'Your Listing'}</AppText>
       <TabView
-        navigationState={{index, routes}}
+        navigationState={{ index, routes }}
         renderScene={renderScene}
         onIndexChange={setIndex}
-        initialLayout={{width: layout.width}}
-        sceneContainerStyle={{paddingHorizontal: SIZE.padding}}
+        initialLayout={{ width: layout.width }}
+        sceneContainerStyle={{ paddingHorizontal: SIZE.padding }}
         renderTabBar={renderTabBar}
       />
       <AppButton
@@ -214,6 +221,7 @@ const YourListing = () => {
         size={'small'}
         containerStyle={styles.button}
         iconRight={'plus'}
+        onPress={() => moveToRoomUnit()}
       />
     </View>
   );
@@ -305,4 +313,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export {YourListing};
+export { YourListing };

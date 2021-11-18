@@ -21,7 +21,7 @@ interface screenNavigationProp {
 
 const VerifyCode = (props: VerifyCodeProp) => {
   const PHONE = props.route.params.phone.toString().slice(1)
-  const COUNTRY_CODE = props.route.params.coutryCode
+  const COUNTRY_CODE = props.route.params.countryCode
   console.log('hi', PHONE);
   const navigation = useNavigation<screenNavigationProp>();
   const [timerCount, setTimer] = useState(25)
