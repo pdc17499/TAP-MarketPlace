@@ -11,7 +11,7 @@ const NavigationApp = React.forwardRef((props: any, ref: any) => {
   console.log({ token });
 
   const renderStackApp = () => {
-    if (!token) {
+    if (token) {
       return <UnAuthenStack />;
     } else {
       return <AuthenStack />;

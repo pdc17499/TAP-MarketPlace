@@ -29,6 +29,7 @@ import Carousel from 'react-native-snap-carousel';
 import Modal from 'react-native-modal';
 import Video from 'react-native-video';
 import {pickerProps} from '@interfaces';
+import {ROOM_DETAIL_GELLERY} from '@routeName';
 
 const state = {
   activeIndex: 0,
@@ -183,6 +184,10 @@ const RoomDetailUnit = ({props}: any) => {
     }
   };
 
+  const onGallery = (gallery: Array<string>) => {
+    navigation.navigate(ROOM_DETAIL_GELLERY, {gallery});
+  };
+
   const renderGallery = (gallery: Array<any>) => {
     const length = gallery?.length || 0;
     const styleList = length > 4 ? styles.row : styles.rowNotBetween;
@@ -193,7 +198,9 @@ const RoomDetailUnit = ({props}: any) => {
       <View style={{paddingTop: SIZE.padding, marginBottom: 50}}>
         <View style={styles.row}>
           <AppText style={styles.label}>{'Gallery'}</AppText>
-          <Pressable style={styles.buttonEdit}>
+          <Pressable
+            style={styles.buttonEdit}
+            onPress={() => onGallery(gallery)}>
             <IconEdit />
           </Pressable>
         </View>

@@ -1,41 +1,33 @@
 import {AppButton, AppQA, AppText, Header} from '@component';
-import {RoomStepProps} from '@interfaces';
-import {ROOM_UNIT_HOWNER} from '@mocks';
-import {setDataSignup} from '@redux';
+import {colors, fontFamily, scaleWidth, SIZE} from '@util';
+import React, {useEffect, useState} from 'react';
 import {
-  colors,
-  FILE_SIZE,
-  fontFamily,
-  scaleHeight,
-  scaleWidth,
-  SIZE,
-} from '@util';
-import React, {createRef, useState} from 'react';
-import {View, StyleSheet, Image, ScrollView, Alert} from 'react-native';
-import {useDispatch, useSelector} from 'react-redux';
+  View,
+  StyleSheet,
+  Image,
+  ScrollView,
+  Alert,
+  TouchableOpacity,
+} from 'react-native';
+import {useDispatch} from 'react-redux';
 import ImagePicker, {ImageOrVideo} from 'react-native-image-crop-picker';
 import {useActionSheet} from '@expo/react-native-action-sheet';
 import Video from 'react-native-video';
 import {bg_room_unit_picture, IconAddVideos} from '@assets';
 import {NavigationUtils} from '@navigation';
-import {ADD_SUCCESS} from '@routeName';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import {USER_INFORMATION_NAME} from '@routeName';
 
-const RoomUnitGallery = () => {
+const RoomDetailGallery = ({navigation, route}: any) => {
   const dispatch = useDispatch();
-  const dataSignUp = useSelector((state: any) => state?.auth?.dataSignup);
-  const token = useSelector((state: any) => state?.auth?.token);
-  const setData = (data: any) => {
-    dispatch(setDataSignup({data}));
-  };
-
-  console.log('data', dataSignUp);
-
-  const files = dataSignUp.list_photo || [];
-  // const [files, setFiles] = useState([]);
+  const gallery = route.params.gallery;
+  const [files, setFiles] = useState([]);
   const {showActionSheetWithOptions} = useActionSheet();
   const optionPhotos = ['Upload Photos', 'Take a photo', 'Cancel'];
   const optionVideos = ['Upload Video', 'Take a video', 'Cancel'];
+
+  useEffect(() => {
+    setFiles(gallery || []);
+  }, []);
 
   const uploadPhotos = (mediaType: any) => {
     const isPhoto = mediaType === 'photo';
@@ -44,12 +36,9 @@ const RoomUnitGallery = () => {
       cropping: isPhoto,
       mediaType: mediaType,
       compressImageQuality: 0.6,
+      maxFiles: 10,
     }).then((images: any) => {
-      // images.forEach((image: ImageOrVideo) => {
-      //   if (image.size > FILE_SIZE.MAX_IMAGE) {
-      //     image = ImagePicker.(image);
-      //   }
-      // });
+      console.log({images});
       const nFiles: any = [...files, ...images];
       validateFile(nFiles);
     });
@@ -60,36 +49,33 @@ const RoomUnitGallery = () => {
       cropping: mediaType === 'photo',
       mediaType,
       compressImageQuality: 0.6,
-      compressVideoPreset: 0.6,
     }).then((image: any) => {
       const nFiles: any = [...files];
       nFiles.push(image);
       validateFile(nFiles);
-      // setFiles(nFiles);
     });
   };
 
   console.log({files});
 
   const validateFile = (nFiles: any) => {
-    const photos = nFiles.filter((file: ImageOrVideo) =>
-      file.mime.includes('image'),
-    );
-    const videos = nFiles.filter(
-      (file: ImageOrVideo) => !file.mime.includes('image'),
-    );
+    const photos = nFiles.filter((file: any) => {
+      const typeFile = checkVideo(file);
+      return typeFile === 1 || typeFile === 3;
+    });
+    const videos = nFiles.filter((file: any) => {
+      const typeFile = checkVideo(file);
+      return typeFile === 2 || typeFile === 4;
+    });
 
-    // console.log({nFiles, photos, videos});
+    console.log({nFiles, photos, videos});
 
     if (photos.length > 10) {
       Alert.alert('You can only upload up to 10 photos');
     } else if (videos.length > 1) {
       Alert.alert('You can only upload up to 1 video');
     } else {
-      const nData = {...dataSignUp};
-      nData.list_photo = nFiles;
-      setData(nData);
-      // setFiles(nFiles);
+      setFiles(nFiles);
     }
   };
 
@@ -103,22 +89,16 @@ const RoomUnitGallery = () => {
         text: 'OK',
         onPress: () => {
           const nFiles = files.filter(
-            (file: ImageOrVideo, idx: number) => index !== idx,
+            (file: any, idx: number) => index !== idx,
           );
-          const nData = {...dataSignUp};
-          nData.list_photo = nFiles;
-          setData(nData);
+          setFiles(nFiles);
         },
       },
     ]);
   };
 
   const onDone = () => {
-    // if (!token) NavigationUtils.navigate(USER_INFORMATION_NAME);
-    // else {
-    //   NavigationUtils.navigate(YOUR_LISTING)
-    // }
-    NavigationUtils.navigate(ADD_SUCCESS);
+    NavigationUtils.navigate(USER_INFORMATION_NAME);
   };
 
   const addFile = (mediaType: any) => {
@@ -142,9 +122,24 @@ const RoomUnitGallery = () => {
     );
   };
 
-  const renderImage = (file: ImageOrVideo, index: number) => {
-    const isPhoto = file.mime.includes('image');
+  const typesVideo = ['mp4'];
 
+  // 1 - image local, 2 - video local, 3 - image server, 4 - video server
+  const checkVideo = (file: any) => {
+    if (file.hasOwnProperty('mime')) {
+      const isImage = file.mime.includes('image');
+      return isImage ? 1 : 2;
+    } else {
+      var parts = file.split('.');
+      var extension = parts[parts.length - 1];
+      const isImage = typesVideo.indexOf(extension) === -1;
+      return isImage ? 3 : 4;
+    }
+  };
+
+  const renderImage = (file: any, index: number) => {
+    const typeFile = checkVideo(file);
+    const uri = typeFile === 1 || typeFile === 2 ? file.path : file;
     const styleView =
       index === 1 || index % 3 == 1
         ? {marginBottom: SIZE.padding, marginHorizontal: SIZE.padding - 1}
@@ -155,12 +150,12 @@ const RoomUnitGallery = () => {
         activeOpacity={0.8}
         key={index}
         style={styleView}>
-        {isPhoto ? (
-          <Image source={{uri: file.path}} style={styles.itemImage} />
+        {typeFile === 1 || typeFile === 3 ? (
+          <Image source={{uri}} style={styles.itemImage} />
         ) : (
           <>
             <Video
-              source={{uri: file.path}}
+              source={{uri}}
               style={styles.itemImage}
               resizeMode={'cover'}
             />
@@ -179,33 +174,33 @@ const RoomUnitGallery = () => {
   };
 
   const renderListImage = () => {
+    if (files?.length > 0) {
+      return (
+        <>
+          <View style={styles.viewSubtitle}>
+            <AppText style={styles.subTitle}>
+              {'Hold and drag to reorder'}
+            </AppText>
+            <AppText style={styles.subTitle}>{'Tap to remove'}</AppText>
+          </View>
+
+          <View style={styles.listImage}>
+            {files.map((file: ImageOrVideo, index: number) =>
+              renderImage(file, index),
+            )}
+          </View>
+        </>
+      );
+    }
+
     return (
       <>
-        {files.length > 0 ? (
-          <>
-            <View style={styles.viewSubtitle}>
-              <AppText style={styles.subTitle}>
-                {'Hold and drag to reorder'}
-              </AppText>
-              <AppText style={styles.subTitle}>{'Tap to remove'}</AppText>
-            </View>
-
-            <View style={styles.listImage}>
-              {files.map((file: ImageOrVideo, index: number) =>
-                renderImage(file, index),
-              )}
-            </View>
-          </>
-        ) : (
-          <>
-            <View style={{paddingBottom: scaleWidth(400)}}>
-              <Image source={bg_room_unit_picture} style={styles.bgImage} />
-            </View>
-            <AppText style={styles.title}>
-              {'Finally, let’s add some photos of your place'}
-            </AppText>
-          </>
-        )}
+        <View style={{paddingBottom: scaleWidth(400)}}>
+          <Image source={bg_room_unit_picture} style={styles.bgImage} />
+        </View>
+        <AppText style={styles.title}>
+          {'Finally, let’s add some photos of your place'}
+        </AppText>
       </>
     );
   };
@@ -254,7 +249,7 @@ const RoomUnitGallery = () => {
   );
 };
 
-export {RoomUnitGallery};
+export {RoomDetailGallery};
 
 const styles = StyleSheet.create({
   viewSubtitle: {
@@ -264,7 +259,7 @@ const styles = StyleSheet.create({
   listImage: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    marginRight: -SIZE.padding,
+    // marginRight: -SIZE.padding,
     paddingHorizontal: SIZE.padding,
   },
   bgImage: {

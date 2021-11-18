@@ -1,10 +1,10 @@
-import { AppButton, AppInput, AppText, Header } from '@component';
-import { useNavigation } from '@react-navigation/core';
-import { SIZE, validateForm } from '@util';
-import { Formik } from 'formik';
+import {AppButton, AppInput, AppText, Header} from '@component';
+import {useNavigation} from '@react-navigation/core';
+import {SIZE, validateForm} from '@util';
+import {Formik} from 'formik';
 import React from 'react';
-import { View } from 'react-native';
-import { styles } from './style';
+import {View} from 'react-native';
+import {styles} from './style';
 import * as yup from 'yup';
 import { VERIFY_ACCOUNT } from '@routeName';
 import { useDispatch, useSelector } from 'react-redux';
@@ -13,7 +13,7 @@ import { DataSignupProps, mockProps } from '@interfaces';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { ImageOrVideo } from 'react-native-image-crop-picker';
 
-interface SignUpEmailProp { }
+interface SignUpEmailProp {}
 
 interface screenNavigationProp {
   navigate: any;
@@ -25,7 +25,7 @@ const SignUpEmail = (props: SignUpEmailProp) => {
     (state: any) => state?.auth?.dataSignup,
   );
   const setData = (data: any) => {
-    dispatch(setDataSignup({ data }));
+    dispatch(setDataSignup({data}));
   };
 
   const formInitialValues = {
@@ -42,7 +42,7 @@ const SignUpEmail = (props: SignUpEmailProp) => {
 
   const onChangeValue = (item: any, name?: string) => {
     if (name) {
-      const nData: any = { ...dataSignUp };
+      const nData: any = {...dataSignUp};
       nData[name] = item;
       setData(nData);
     }
@@ -81,34 +81,37 @@ const SignUpEmail = (props: SignUpEmailProp) => {
         gender: dataSignUp?.gender?.value,
         ageGroup: dataSignUp?.age_group?.id,
         nationality: dataSignUp?.country?.name,
-        occupation: dataSignUp?.occupation?.label,
-        ethnicity: dataSignUp?.ethnicity?.label,
-        lifestyle: {
-          Friendliness: getList(dataSignUp?.your_place),
-          Pets: dataSignUp?.have_pet?.value,
-          Smoking: dataSignUp?.smoke?.value,
-          DietRestriction: getList(dataSignUp?.diet_choice),
-          Religion: dataSignUp?.your_religion?.value,
-        },
+        occupation: dataSignUp?.occupation?.value,
+        ethnicity: dataSignUp?.ethnicity?.value,
+        // lifestyle: {
+        //   Friendliness: getList(dataSignUp?.your_place),
+        //   Pets: dataSignUp?.have_pet?.value,
+        //   Smoking: dataSignUp?.smoke?.value,
+        //   DietRestriction: getList(dataSignUp?.diet_choice),
+        //   Religion: dataSignUp?.your_religion?.value,
+        // },
       },
       roomDesc: {
         RentalAddress: dataSignUp?.location.title,
-        PropertyType: dataSignUp?.kind_place?.value,
+        PlaceType: dataSignUp?.kind_place?.value,
         RoomDetails: {
           RoomType: dataSignUp?.room_type?.value,
           BedroomNumber: dataSignUp?.bedroom_number?.value,
           BathroomNumber: dataSignUp?.bathroom_number?.value,
-          AttachedBathroom: dataSignUp?.attached_room?.value === 'Yes',
-          FloorSize: {
-            Min: dataSignUp?.floor_size_min,
-            Max: dataSignUp?.floor_size_max,
-          },
-          RoomFurnishing: dataSignUp?.room_furnishing?.value,
-          FloorLevel: dataSignUp?.floor_level?.value,
-          allowCook: dataSignUp?.attached_room?.value === 'Yes',
-          builtYear: dataSignUp?.built_year,
+          AttachedBathroom: dataSignUp?.attached_bathroom?.value === 'Yes',
+          // FloorSize: {
+          //   Min: dataSignUp?.floor_size_min,
+          //   Max: dataSignUp?.floor_size_max,
+          // },
+          // RoomFurnishing: dataSignUp?.room_furnishing?.value,
+          // FloorLevel: dataSignUp?.floor_level?.value,
+          // allowCook: dataSignUp?.allow_cooking?.value === 'Yes',
+          // builtYear: dataSignUp?.built_year,
+          StayWithGuest: dataSignUp?.staying_with_guests?.value === 'Yes',
           keyWords: getList(dataSignUp?.key_your_place),
         },
+        Lifestyle: ['Live with Kids', 'Vegetarian'],
+        Preferences: ['Diversity friendly', 'Student'],
         LeasePeriod: {
           type: dataSignUp?.staying_with_guests?.value === 'Yes',
           value: getList(dataSignUp?.lease_your_place),
@@ -123,13 +126,12 @@ const SignUpEmail = (props: SignUpEmailProp) => {
       },
     };
 
-    dispatch(signUp({ body }));
-
+    dispatch(signUp({body}));
     // navigation.navigate(VERIFY_ACCOUNT);
   };
 
   const RenderEmailForm = () => (
-    <KeyboardAwareScrollView style={{ flex: 1, paddingHorizontal: SIZE.padding }}>
+    <KeyboardAwareScrollView style={{flex: 1, paddingHorizontal: SIZE.padding}}>
       <Formik
         enableReinitialize
         initialValues={formInitialValues}
@@ -138,7 +140,7 @@ const SignUpEmail = (props: SignUpEmailProp) => {
         onSubmit={hanldeSubmit}>
         {props => (
           <>
-            <View style={{ flex: 1 }}>
+            <View style={{flex: 1}}>
               <AppText style={styles.title}>{'Sign up'}</AppText>
               <AppInput
                 label={'Email'}
@@ -200,4 +202,4 @@ const SignUpEmail = (props: SignUpEmailProp) => {
   );
 };
 
-export { SignUpEmail };
+export {SignUpEmail};

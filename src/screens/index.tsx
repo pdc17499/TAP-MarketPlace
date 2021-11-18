@@ -1,17 +1,17 @@
 //UnAuthenticate
-import { ChooseRole } from './auth/ChooseRole';
-import { Welcome } from './auth/Welcome';
-import { SignIn } from './auth/SignIn';
-import { ResetPassword } from './auth/ResetPassword';
-import { SignUp } from './auth/SignUp';
-import { SignUpEmail } from './auth/SignUpEmail';
-import { UserInformationName } from './auth/UserInformationName';
-import { VerifyAccount } from './auth/VerifyAccount';
-import { VerifyCode } from './auth/VerifyCode';
-import { UserInformationGender } from './auth/UserInformationGender';
-import { UserInformationCountry } from './auth/UserInformationCountry';
-import { LifeStyle } from './auth/LifeStyle';
-import { LifeStyleStep } from './auth/LifeStyleStep';
+import {ChooseRole} from './auth/ChooseRole';
+import {Welcome} from './auth/Welcome';
+import {SignIn} from './auth/SignIn';
+import {ResetPassword} from './auth/ResetPassword';
+import {SignUp} from './auth/SignUp';
+import {SignUpEmail} from './auth/SignUpEmail';
+import {UserInformationName} from './auth/UserInformationName';
+import {VerifyAccount} from './auth/VerifyAccount';
+import {VerifyCode} from './auth/VerifyCode';
+import {UserInformationGender} from './auth/UserInformationGender';
+import {UserInformationCountry} from './auth/UserInformationCountry';
+import {LifeStyle} from './auth/LifeStyle';
+import {LifeStyleStep} from './auth/LifeStyleStep';
 import {
   RoomUnitGallery,
   RoomUnitAddress,
@@ -25,17 +25,22 @@ import {
 } from './auth/RoomUnit';
 
 //Authenticate
-import { Home } from './homeowner/Home';
+import {Home} from './homeowner/Home';
 import {
   Profile,
   BasicInfomation,
   ChangePassword,
   ProfileLifeStyle,
   AccountSetting,
-
 } from './homeowner/Profile';
-import { UpdateNewPassword } from './auth/UpdateNewPassword';
-import { YourListing, RoomDetail, RoomDetailLocation, AddSuccess } from './homeowner/Room';
+import {UpdateNewPassword} from './auth/UpdateNewPassword';
+import {
+  YourListing,
+  RoomDetail,
+  RoomDetailLocation,
+  AddSuccess,
+  RoomDetailGallery,
+} from './homeowner/Room';
 
 export {
   ChooseRole,
@@ -68,11 +73,10 @@ export {
   ChangePassword,
   ProfileLifeStyle,
   AccountSetting,
-
-
   // Room
   YourListing,
   RoomDetail,
   RoomDetailLocation,
-  AddSuccess
+  AddSuccess,
+  RoomDetailGallery,
 };
