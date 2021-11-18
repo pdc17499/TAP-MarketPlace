@@ -1,15 +1,6 @@
 import {AppButton, AppQA, AppText, Header} from '@component';
-import {RoomStepProps} from '@interfaces';
-import {ROOM_UNIT_HOWNER} from '@mocks';
 import {setDataSignup} from '@redux';
-import {
-  colors,
-  FILE_SIZE,
-  fontFamily,
-  scaleHeight,
-  scaleWidth,
-  SIZE,
-} from '@util';
+import {colors, fontFamily, scaleWidth, SIZE} from '@util';
 import React, {createRef, useState} from 'react';
 import {View, StyleSheet, Image, ScrollView, Alert} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
@@ -18,7 +9,7 @@ import {useActionSheet} from '@expo/react-native-action-sheet';
 import Video from 'react-native-video';
 import {bg_room_unit_picture, IconAddVideos} from '@assets';
 import {NavigationUtils} from '@navigation';
-import {ADD_SUCCESS} from '@routeName';
+import {ADD_SUCCESS, USER_INFORMATION_NAME, YOUR_LISTING} from '@routeName';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 
 const RoomUnitGallery = () => {
@@ -60,7 +51,7 @@ const RoomUnitGallery = () => {
       cropping: mediaType === 'photo',
       mediaType,
       compressImageQuality: 0.6,
-      compressVideoPreset: 0.6,
+      // compressVideoPreset: 0.6,
     }).then((image: any) => {
       const nFiles: any = [...files];
       nFiles.push(image);
@@ -114,11 +105,12 @@ const RoomUnitGallery = () => {
   };
 
   const onDone = () => {
-    // if (!token) NavigationUtils.navigate(USER_INFORMATION_NAME);
-    // else {
-    //   NavigationUtils.navigate(YOUR_LISTING)
-    // }
-    NavigationUtils.navigate(ADD_SUCCESS);
+    if (!token) {
+      NavigationUtils.navigate(USER_INFORMATION_NAME);
+    } else {
+      NavigationUtils.navigate(ADD_SUCCESS);
+    }
+    // NavigationUtils.navigate(ADD_SUCCESS);
   };
 
   const addFile = (mediaType: any) => {

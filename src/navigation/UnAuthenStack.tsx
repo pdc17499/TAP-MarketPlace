@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { createStackNavigator } from '@react-navigation/stack';
+import {createStackNavigator} from '@react-navigation/stack';
 import {
   CHOOSE_ROLE,
   RESETPASSWORD,
@@ -24,8 +24,6 @@ import {
   ROOM_UNIT_PLACE_OFFER,
   ROOM_UNIT_PRICE,
   ROOM_UNIT_TYPE_ROOM,
-  YOUR_LISTING,
-  ADD_SUCCESS,
 } from './routeName';
 
 import {
@@ -51,8 +49,6 @@ import {
   LifeStyleStep,
   UserInformationCountry,
   UpdateNewPassword,
-  YourListing,
-  AddSuccess
 } from '../screens';
 
 const Stack = createStackNavigator();
@@ -62,8 +58,7 @@ const screenOptions = {
 
 const UnAuthenStack = () => {
   return (
-    <Stack.Navigator screenOptions={screenOptions} initialRouteName={YOUR_LISTING}>
-      <Stack.Screen name={YOUR_LISTING} component={YourListing} />
+    <Stack.Navigator screenOptions={screenOptions} initialRouteName={WELCOME}>
       <Stack.Screen name={WELCOME} component={Welcome} />
       <Stack.Screen name={SIGNIN} component={SignIn} />
       <Stack.Screen name={RESETPASSWORD} component={ResetPassword} />
@@ -104,8 +99,8 @@ const UnAuthenStack = () => {
       />
       <Stack.Screen name={LIFE_STYLE} component={LifeStyle} />
       <Stack.Screen name={LIFE_STYLE_STEP} component={LifeStyleStep} />
-      <Stack.Screen name={ADD_SUCCESS} component={AddSuccess} />
-
+      <Stack.Screen name={VERIFY_CODE} component={VerifyCode} />
+      <Stack.Screen name={VERIFY_ACCOUNT} component={VerifyAccount} />
     </Stack.Navigator>
   );
 };

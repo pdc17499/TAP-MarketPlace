@@ -56,13 +56,11 @@ const screenOptions = {
 
 const AuthenStack = () => {
   return (
-    <Stack.Navigator
-      screenOptions={screenOptions}
-      initialRouteName={YOUR_LISTING}>
+    <Stack.Navigator screenOptions={screenOptions}>
+      <Stack.Screen name={PROFILE} component={Profile} />
       <Stack.Screen name={VERIFY_ACCOUNT} component={VerifyAccount} />
       <Stack.Screen name={VERIFY_CODE} component={VerifyCode} />
       <Stack.Screen name={HOME} component={Home} />
-      <Stack.Screen name={PROFILE} component={Profile} />
       <Stack.Screen name={BASIC_INFORMATION} component={BasicInfomation} />
       <Stack.Screen name={CHANGE_PASSWORD} component={ChangePassword} />
       <Stack.Screen name={ACCOUNT_SETTING} component={AccountSetting} />
