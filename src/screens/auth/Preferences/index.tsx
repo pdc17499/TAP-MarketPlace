@@ -1,10 +1,10 @@
-import {AppButton, AppQA, AppText, Header} from '@component';
+import {AppButton, AppQA, Header} from '@component';
 import {useNavigation} from '@react-navigation/core';
 import React from 'react';
-import {ScrollView, View} from 'react-native';
+import {ScrollView} from 'react-native';
 import {styles} from './style';
-import {LIFE_STYLE_STEP, PREFERENCES, SIGNUP} from '@routeName';
-import {colors, SIZE, validateForm} from '@util';
+import {SIGNUP} from '@routeName';
+import {validateForm} from '@util';
 import {DataSignupProps} from '@interfaces';
 import {useDispatch, useSelector} from 'react-redux';
 import {setDataSignup} from '@redux';
@@ -16,7 +16,7 @@ interface screenNavigationProp {
   navigate: any;
 }
 
-const LifeStyle = (props: any) => {
+const Preferences = (props: any) => {
   const navigation = useNavigation<screenNavigationProp>();
   const dispatch = useDispatch();
   const dataSignUp: DataSignupProps = useSelector(
@@ -25,27 +25,28 @@ const LifeStyle = (props: any) => {
   const setData = (data: any) => {
     dispatch(setDataSignup({data}));
   };
+
   const list = ROOM_UNIT_HOWNER;
 
   const formInitialValues = {
-    life_style: dataSignUp?.life_style,
+    preferences: dataSignUp?.preferences,
     staying_with_guests: dataSignUp?.staying_with_guests?.value,
   };
 
   const validationSchema = yup.object().shape({
-    life_style: validateForm().common.atLeastOneArray,
+    preferences: validateForm().common.atLeastOneArray,
   });
 
   const onSkip = (props: any) => {
     const nData: DataSignupProps = {...dataSignUp};
-    nData.life_style = [];
+    nData.preferences = [];
     setData(nData);
     props.setErrors({});
     navigation.navigate(SIGNUP);
   };
 
   const onContinue = () => {
-    navigation.navigate(PREFERENCES);
+    navigation.navigate(SIGNUP);
   };
 
   const renderFormStepSecond = (props: any) => {
@@ -54,13 +55,13 @@ const LifeStyle = (props: any) => {
       <>
         <AppQA
           isFlex
-          data={list.life_style}
+          data={list.preferences}
           title={'What’s your lifestyle?'}
           value={dataSignUp}
           setValue={setData}
           typeList={'even'}
-          name={'life_style'}
-          error={props.errors.life_style}
+          name={'preferences'}
+          error={props.errors.preferences}
           isMultiChoice
           showIconLeft
           customStyleButton={styles.customStyleButton}
@@ -72,7 +73,7 @@ const LifeStyle = (props: any) => {
           iconRight={'arNext'}
           onPress={props.handleSubmit}
         />
-        {props.values.staying_with_guests !== 'Yes' && (
+        {props.values.staying_with_guests === 'Yes' && (
           <AppButton
             title={'Skip'}
             typeButton={'link'}
@@ -85,7 +86,7 @@ const LifeStyle = (props: any) => {
 
   return (
     <>
-      <Header back customContainer={{backgroundColor: colors.bgSreen}} />
+      <Header back />
       <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
         <Formik
           initialValues={formInitialValues}
@@ -100,4 +101,4 @@ const LifeStyle = (props: any) => {
   );
 };
 
-export {LifeStyle};
+export {Preferences};

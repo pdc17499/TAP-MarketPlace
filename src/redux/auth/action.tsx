@@ -11,6 +11,8 @@ import {
   FORGOT_PASSWORD,
   VERIFY_CODE_FORGOT_PASSWORD,
   RESET_NEW_PASSWORD,
+  VERIFY_PHONE_NUMBER,
+  VERIFY_CODE_PHONE_NUMBER,
 } from '@redux';
 
 export const loginApp = (payload: any) => ({
@@ -53,6 +55,16 @@ export const verifyCodeForgotPassword = (payload: any) => ({
 
 export const resetNewPassword = (payload: any) => ({
   type: RESET_NEW_PASSWORD,
+  payload,
+});
+
+export const verifyPhonenumber = (payload: any) => ({
+  type: VERIFY_PHONE_NUMBER,
+  payload,
+});
+
+export const verifyCodePhonenumber = (payload: any) => ({
+  type: VERIFY_CODE_PHONE_NUMBER,
   payload,
 });
 

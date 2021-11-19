@@ -2,7 +2,15 @@ import React from 'react';
 import {StyleSheet, View, TouchableOpacity, Pressable} from 'react-native';
 import {AppText} from '@component';
 import {getStatusBarHeight} from 'react-native-iphone-x-helper';
-import {colors, DEVICE, fontFamily, scaleHeight, scaleWidth, SIZE} from '@util';
+import {
+  colors,
+  DEVICE,
+  fontFamily,
+  scaleHeight,
+  scaleWidth,
+  SIZE,
+  STYLE,
+} from '@util';
 import {IconBack, IconSkip} from '@assets';
 import {useNavigation} from '@react-navigation/native';
 import {ifIphoneX} from 'react-native-iphone-x-helper';
@@ -48,7 +56,7 @@ const Header = React.memo((props: HeaderProps) => {
           <TouchableOpacity
             style={styles.buttonLeft}
             onPress={goBack}
-            hitSlop={{top: 20, bottom: 20, left: 20, right: 20}}>
+            hitSlop={STYLE.hitSlop}>
             <IconBack iconFillColor={iconFillColor} />
           </TouchableOpacity>
         )}
@@ -57,7 +65,7 @@ const Header = React.memo((props: HeaderProps) => {
           <Pressable
             style={styles.buttonRight}
             onPress={onPressRight}
-            hitSlop={{top: 20, bottom: 20, left: 20, right: 20}}>
+            hitSlop={STYLE.hitSlop}>
             {renderIconRight()}
           </Pressable>
         )}

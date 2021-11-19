@@ -1,40 +1,57 @@
 import {IconQuestion} from '@assets';
 import {AppButton, AppText, Header, AppPhoneNumber, AppInput} from '@component';
 import {useNavigation} from '@react-navigation/core';
-import {VERIFY_CODE} from '@routeName';
-import {scaleWidth} from '@util';
+import {PROFILE, VERIFY_CODE} from '@routeName';
+import {scaleWidth, SIZE} from '@util';
 import React, {useState} from 'react';
 import {Alert, Pressable, TouchableOpacity, View} from 'react-native';
 import {styles} from './style';
-import {VerifyAccountProps} from '@interfaces';
+import {DataSignupProps, VerifyAccountProps} from '@interfaces';
+import {useDispatch, useSelector} from 'react-redux';
+import {resetDataSignup, verifyPhonenumber} from '@redux';
 
 interface VerifyCodeProp {
   navigation: any;
   route: any;
 }
-interface screenNavigationProp {
-  navigate: any;
-  route: any;
-}
 
 const VerifyAccount = (props: VerifyCodeProp) => {
-  const navigation = useNavigation<screenNavigationProp>();
+  const dispatch = useDispatch();
+  const navigation: any = useNavigation();
   const [isShowRules, setIsShowRules] = useState(false);
   const [phoneNumber, setPhoneNumber] = useState('');
   const [countryCode, setCountryCode] = useState('');
   const showRules = () => {
     setIsShowRules(!isShowRules);
   };
+  // const email = props.route?.params?.email;
+  const dataSignUp: DataSignupProps = useSelector(
+    (state: any) => state?.auth?.dataSignup,
+  );
+
+  console.log({dataSignUp});
+
   const moveToVerifyCode = () => {
-    phoneNumber !== ''
-      ? navigation.navigate(VERIFY_CODE, {
-          countryCode: countryCode,
-          phone: phoneNumber,
-        })
-      : Alert.alert('Please enter your phone number!');
+    if (phoneNumber !== '') {
+      const contact = `+${countryCode} ${phoneNumber
+        .toString()
+        .replace(/[^a-zA-Z0-9]/g, '')}`;
+      console.log({contact});
+      dispatch(
+        verifyPhonenumber({
+          email: dataSignUp?.email,
+          contact,
+        }),
+      );
+    } else {
+      Alert.alert('Please enter your phone number!');
+    }
   };
 
-  // console.log('phone', phoneNumber);
+  const onSkip = () => {
+    dispatch(resetDataSignup());
+    navigation.replace(PROFILE);
+  };
 
   return (
     <View style={styles.container}>
@@ -48,6 +65,7 @@ const VerifyAccount = (props: VerifyCodeProp) => {
           value={phoneNumber}
           onChangeFlag={setCountryCode}
           onChangePhone={setPhoneNumber}
+          maxLength={30}
         />
 
         <AppText style={styles.sendCodeTxt}>
@@ -61,7 +79,7 @@ const VerifyAccount = (props: VerifyCodeProp) => {
           </AppText>
         </Pressable>
 
-        <View style={{height: scaleWidth(170)}}>
+        <View>
           {isShowRules ? (
             <View>
               <AppText style={styles.miniTxt}>
@@ -77,13 +95,16 @@ const VerifyAccount = (props: VerifyCodeProp) => {
             </View>
           ) : null}
         </View>
-
+      </View>
+      <View
+        style={{paddingHorizontal: SIZE.padding, paddingBottom: SIZE.padding}}>
         <AppButton
           title={'Submit '}
           size={'small'}
           onPress={moveToVerifyCode}
         />
         <AppButton
+          onPress={onSkip}
           title={'Skip for now'}
           typeButton={'link'}
           customStyleTitle={styles.skipTxt}

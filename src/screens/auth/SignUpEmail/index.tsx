@@ -1,37 +1,42 @@
 import {AppButton, AppInput, AppText, Header} from '@component';
-import {useNavigation} from '@react-navigation/core';
 import {SIZE, validateForm} from '@util';
 import {Formik} from 'formik';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {View} from 'react-native';
 import {styles} from './style';
 import * as yup from 'yup';
 import {VERIFY_ACCOUNT} from '@routeName';
 import {useDispatch, useSelector} from 'react-redux';
-import {resetDataSignup, setDataSignup, signUp} from '@redux';
+import {
+  INITIAL_STATE_DATA_SIGN_UP,
+  resetDataSignup,
+  setDataSignup,
+  signUp,
+} from '@redux';
 import {DataSignupProps, mockProps} from '@interfaces';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {ImageOrVideo} from 'react-native-image-crop-picker';
 
 interface SignUpEmailProp {}
 
-interface screenNavigationProp {
-  navigate: any;
-}
-
 const SignUpEmail = (props: SignUpEmailProp) => {
   const dispatch = useDispatch();
   const dataSignUp: DataSignupProps = useSelector(
     (state: any) => state?.auth?.dataSignup,
   );
-  const setData = (data: any) => {
-    dispatch(setDataSignup({data}));
-  };
+  const [state, setState] = useState(INITIAL_STATE_DATA_SIGN_UP);
+  useEffect(() => {
+    console.log({dataSignUp});
+    setState(dataSignUp);
+  }, [dataSignUp]);
+  // const setData = (data: any) => {
+  //   dispatch(setDataSignup({data}));
+  // };
 
   const formInitialValues = {
-    email: dataSignUp?.email,
-    password: dataSignUp?.password,
-    confirm_password: dataSignUp?.confirm_password,
+    email: state?.email,
+    password: state?.password,
+    confirm_password: state?.confirm_password,
   };
 
   const validationEmail = yup.object().shape({
@@ -42,9 +47,9 @@ const SignUpEmail = (props: SignUpEmailProp) => {
 
   const onChangeValue = (item: any, name?: string) => {
     if (name) {
-      const nData: any = {...dataSignUp};
+      const nData: any = {...state};
       nData[name] = item;
-      setData(nData);
+      setState(nData);
     }
   };
 
@@ -72,60 +77,62 @@ const SignUpEmail = (props: SignUpEmailProp) => {
   };
 
   const hanldeSubmit = () => {
+    console.log(state);
     const body = {
-      idType: dataSignUp?.role_user,
+      idType: state?.role_user,
       userInfor: {
-        email: dataSignUp.email,
-        password: dataSignUp.password,
-        name: dataSignUp.user_name,
-        gender: dataSignUp?.gender?.value,
-        ageGroup: dataSignUp?.age_group?.id,
-        nationality: dataSignUp?.country?.name,
-        occupation: dataSignUp?.occupation?.value,
-        ethnicity: dataSignUp?.ethnicity?.value,
-        lifestyle: ['Live with Kids', 'Vegetarian'],
-        preferences: ['Diversity friendly', 'Student'],
+        email: state.email,
+        password: state.password,
+        name: state.user_name,
+        gender: state?.gender?.value,
+        ageGroup: state?.age_group?.id,
+        nationality: state?.country?.name,
+        occupation: state?.occupation?.value,
+        ethnicity: state?.ethnicity?.value,
+        lifestyle: getList(state?.life_style),
+        preferences: getList(state?.preferences),
         // lifestyle: {
-        //   Friendliness: getList(dataSignUp?.your_place),
-        //   Pets: dataSignUp?.have_pet?.value,
-        //   Smoking: dataSignUp?.smoke?.value,
-        //   DietRestriction: getList(dataSignUp?.diet_choice),
-        //   Religion: dataSignUp?.your_religion?.value,
+        //   Friendliness: getList(state?.your_place),
+        //   Pets: state?.have_pet?.value,
+        //   Smoking: state?.smoke?.value,
+        //   DietRestriction: getList(state?.diet_choice),
+        //   Religion: state?.your_religion?.value,
         // },
       },
       roomDesc: {
-        RentalAddress: dataSignUp?.location.title,
-        PlaceType: dataSignUp?.kind_place?.value,
+        RentalAddress: state?.location.title,
+        PlaceType: state?.kind_place?.value,
         RoomDetails: {
-          RoomType: dataSignUp?.room_type?.value,
-          BedroomNumber: dataSignUp?.bedroom_number?.value,
-          BathroomNumber: dataSignUp?.bathroom_number?.value,
-          AttachedBathroom: dataSignUp?.attached_bathroom?.value === 'Yes',
+          RoomType: state?.room_type?.value,
+          BedroomNumber: state?.bedroom_number?.value,
+          BathroomNumber: state?.bathroom_number?.value,
+          AttachedBathroom: state?.attached_bathroom?.value === 'Yes',
           // FloorSize: {
-          //   Min: dataSignUp?.floor_size_min,
-          //   Max: dataSignUp?.floor_size_max,
+          //   Min: state?.floor_size_min,
+          //   Max: state?.floor_size_max,
           // },
-          // RoomFurnishing: dataSignUp?.room_furnishing?.value,
-          // FloorLevel: dataSignUp?.floor_level?.value,
-          AllowCook: dataSignUp?.allow_cooking?.value === 'Yes',
-          // builtYear: dataSignUp?.built_year,
-          StayWithGuest: dataSignUp?.staying_with_guests?.value === 'Yes',
-          KeyWords: getList(dataSignUp?.key_your_place),
+          // RoomFurnishing: state?.room_furnishing?.value,
+          // FloorLevel: state?.floor_level?.value,
+          AllowCook: state?.allow_cooking?.value === 'Yes',
+          // builtYear: state?.built_year,
+          StayWithGuest: state?.staying_with_guests?.value === 'Yes',
+          KeyWords: getList(state?.key_your_place),
         },
         LeasePeriod: {
-          type: dataSignUp?.kind_place?.value === 'HDB',
-          value: getList(dataSignUp?.lease_your_place),
+          type: state?.kind_place?.value === 'HDB',
+          value: getList(state?.lease_your_place),
         },
         PicturesVideo: getUrlFiles(),
         RentalPrice: {
-          type: dataSignUp?.rental_price?.value,
-          Min: dataSignUp?.min_range_price,
-          Max: dataSignUp?.max_range_price,
-          Price: parseInt(dataSignUp?.negotiable_price || '0'),
+          type: state?.rental_price?.value,
+          Min: state?.min_range_price,
+          Max: state?.max_range_price,
+          Price: parseInt(state?.negotiable_price || '0'),
         },
       },
     };
 
+    dispatch(setDataSignup({data: state}));
     dispatch(signUp({body}));
     // navigation.navigate(VERIFY_ACCOUNT);
   };

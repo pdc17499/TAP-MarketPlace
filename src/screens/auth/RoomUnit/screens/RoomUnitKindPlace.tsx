@@ -7,7 +7,7 @@ import {ROOM_UNIT_PRICE} from '@routeName';
 import {fontFamily, scaleWidth, SIZE, validateForm} from '@util';
 import {Formik} from 'formik';
 import React from 'react';
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet, ScrollView} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import * as yup from 'yup';
 
@@ -25,10 +25,12 @@ const RoomUnitKindPlace = () => {
   };
 
   const formInitialValues = {
+    lease_your_place: dataSignUp?.lease_your_place,
     kind_place: dataSignUp?.kind_place?.value,
   };
 
   const validationSchema = yup.object().shape({
+    lease_your_place: validateForm().common.atLeastOneArray,
     kind_place: validateForm().common.selectAtLeast,
   });
 
@@ -37,6 +39,7 @@ const RoomUnitKindPlace = () => {
   };
 
   const renderFormStepSecond = (props: any) => {
+    console.log({props});
     return (
       <>
         <AppQA
@@ -50,11 +53,30 @@ const RoomUnitKindPlace = () => {
           customStyleTitle={{maxWidth: scaleWidth(240)}}
           error={props.errors.kind_place}
         />
-        <AppButton
-          title={'Continue'}
-          onPress={props.handleSubmit}
-          iconRight={'arNext'}
-        />
+        {props.values.kind_place && (
+          <>
+            <AppQA
+              data={
+                props.values.kind_place === 'HDB'
+                  ? list.lease_your_place_hdb
+                  : list.lease_your_place
+              }
+              title={'How long will you want to lease your place?'}
+              value={dataSignUp}
+              setValue={setData}
+              typeList={'even'}
+              name={'lease_your_place'}
+              error={props.errors.lease_your_place}
+              isMultiChoice
+            />
+            <AppButton
+              title={'Continue'}
+              onPress={props.handleSubmit}
+              iconRight={'arNext'}
+              containerStyle={{marginBottom: SIZE.medium_space}}
+            />
+          </>
+        )}
       </>
     );
   };
@@ -62,7 +84,7 @@ const RoomUnitKindPlace = () => {
   return (
     <>
       <Header back />
-      <View style={styles.container}>
+      <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
         <Formik
           initialValues={formInitialValues}
           validationSchema={validationSchema}
@@ -71,7 +93,7 @@ const RoomUnitKindPlace = () => {
           onSubmit={onNext}>
           {props => renderFormStepSecond(props)}
         </Formik>
-      </View>
+      </ScrollView>
     </>
   );
 };

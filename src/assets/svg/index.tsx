@@ -1,4 +1,4 @@
-import { colors } from '@util';
+import {colors} from '@util';
 import React from 'react';
 import Svg, {
   Path,
@@ -871,13 +871,183 @@ export const IconParkingLot = (props: iconProps) => (
   </Svg>
 );
 
+export const IconPartner = (props: iconProps) => (
+  <Svg width={38} height={36} fill="none" {...props}>
+    <Path
+      d="M10 22a7 7 0 100-14 7 7 0 000 14zM27 22a7 7 0 100-14 7 7 0 000 14z"
+      stroke={props.iconFillColor || '#AAA'}
+      strokeWidth={2}
+      strokeMiterlimit={10}
+    />
+    <Path
+      d="M1 29.828c1.074-2.052 2.617-3.756 4.476-4.941 1.858-1.185 3.966-1.809 6.112-1.809s4.254.624 6.113 1.81M14.765 29.828a13.192 13.192 0 014.7-4.941 12.356 12.356 0 016.417-1.809c2.254 0 4.467.624 6.419 1.81A13.192 13.192 0 0137 29.827"
+      stroke={props.iconFillColor || '#AAA'}
+      strokeWidth={2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </Svg>
+);
+
+export const IconKids = (props: iconProps) => (
+  <Svg width={37} height={36} fill="none" {...props}>
+    <Path
+      d="M18.5 31.5C25.956 31.5 32 25.456 32 18S25.956 4.5 18.5 4.5 5 10.544 5 18s6.044 13.5 13.5 13.5z"
+      stroke={props.iconFillColor || '#AAA'}
+      strokeWidth={2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <Path
+      d="M13.438 19.688a1.687 1.687 0 100-3.375 1.687 1.687 0 000 3.375zM23.563 19.688a1.687 1.687 0 100-3.375 1.687 1.687 0 000 3.375z"
+      stroke={props.iconFillColor || '#AAA'}
+    />
+    <Path
+      d="M22.232 23.625a6.754 6.754 0 01-7.464 0M18.5 4.5c-2.25 2.813-2.25 5.625-2.25 5.625a2.25 2.25 0 004.5 0"
+      stroke={props.iconFillColor || '#AAA'}
+      strokeWidth={2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </Svg>
+);
+
+export const IconWorking = (props: iconProps) => (
+  <Svg width={36} height={36} fill="none" {...props}>
+    <Path
+      d="M11.414 3c-.89 0-1.337 1.077-.707 1.707L14.59 8.59a1 1 0 01.257.97l-4.194 15.38a1 1 0 00.257.97l6.383 6.383a1 1 0 001.414 0l6.383-6.383a1 1 0 00.257-.97L21.153 9.56a1 1 0 01.257-.97l3.883-3.883c.63-.63.184-1.707-.707-1.707H11.414z"
+      stroke={props.iconFillColor || '#AAA'}
+      strokeWidth={2}
+      strokeLinejoin="round"
+    />
+  </Svg>
+);
+
+export const IconVegetarian = (props: iconProps) => (
+  <Svg width={37} height={36} fill="none" {...props}>
+    <G clipPath="url(#prefix__clip0_821_8489)">
+      <Path
+        d="M36.5 13.852v-1.055h-3.164a7.393 7.393 0 00-6.74 4.37 9.548 9.548 0 00-3.048-.055 5.262 5.262 0 00-1.954-5.488v-.022c0-2.856-1.67-5.437-4.229-6.647A5.28 5.28 0 0012.103 0a5.28 5.28 0 00-5.264 4.955c-2.558 1.21-4.229 3.79-4.229 6.647v.023c-1.985 1.493-2.785 4.278-1.447 6.673-1.728 3.472.066 7.678 3.786 8.828C5.602 31.25 8.028 36 12.102 36c2.066 0 3.995-1.316 5.366-3.592A9.48 9.48 0 0024.898 36c5.234 0 9.493-4.258 9.493-9.492 0-2.2-.759-4.303-2.122-5.981a7.392 7.392 0 004.231-6.675zM13.156 33.688V20.546l4.878-3.902-1.318-1.647-3.56 2.848v-5.679l2.695-1.796-1.17-1.755-2.58 1.719-2.578-1.72-1.17 1.756 2.694 1.796v5.679l-3.56-2.848-1.318 1.647 4.878 3.902v13.13c-2.449-.995-3.778-4.72-4.104-7.525l-.09-.778-.772-.138c-2.95-.528-4.424-3.864-2.801-6.403l.388-.608-.426-.583c-1.222-1.671-.54-3.702.995-4.565l.593-.334-.111-1.14c0-2.225 1.426-4.217 3.549-4.957l.777-.27c-.148-1.504-.104-.996-.107-1.102a3.168 3.168 0 013.164-3.164 3.167 3.167 0 013.164 3.162c-.015.436.07-.807-.108 1.103l.777.271c2.123.74 3.55 2.732 3.55 4.957l-.112 1.14.593.334a3.163 3.163 0 011.628 2.744c0 1.243-.685 2.066-.691 2.079-3.243 1.511-5.497 4.802-5.497 8.609 0 1.346.282 2.627.79 3.788-.784 1.743-1.867 2.938-3.04 3.392zm19.125-7.18c0 4.07-3.312 7.383-7.383 7.383-4.07 0-7.382-3.312-7.382-7.383s3.312-7.383 7.383-7.383c.376 0 .75.03 1.118.085a7.442 7.442 0 00-.064.97v1.054h3.164c.302 0 .6-.018.892-.054a7.37 7.37 0 012.272 5.328zm-3.164-7.383h-.948a5.283 5.283 0 015.167-4.219h.949a5.283 5.283 0 01-5.168 4.219z"
+        fill={props.iconFillColor || '#AAA'}
+      />
+    </G>
+    <Defs>
+      <ClipPath id="prefix__clip0_821_8489">
+        <Path fill="#fff" transform="translate(.5)" d="M0 0h36v36H0z" />
+      </ClipPath>
+    </Defs>
+  </Svg>
+);
+
+export const IconOwnPets = (props: iconProps) => (
+  <Svg width={36} height={36} fill="none" {...props}>
+    <Path
+      d="M29.813 18a2.813 2.813 0 100-5.625 2.813 2.813 0 000 5.625zM6.188 18a2.813 2.813 0 100-5.625 2.813 2.813 0 000 5.625zM12.938 11.25a2.813 2.813 0 100-5.625 2.813 2.813 0 000 5.625zM23.063 11.25a2.813 2.813 0 100-5.625 2.813 2.813 0 000 5.625zM25.768 21.917a6.123 6.123 0 01-2.907-3.643h0a5.062 5.062 0 00-9.722 0h0a6.122 6.122 0 01-2.906 3.643 4.501 4.501 0 003.898 8.102 10.198 10.198 0 017.738 0 4.501 4.501 0 003.899-8.102h0z"
+      stroke={props.iconFillColor || '#AAA'}
+      strokeWidth={2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </Svg>
+);
+
+export const IconSmoking = (props: iconProps) => (
+  <Svg width={37} height={36} fill="none" {...props}>
+    <Path
+      d="M32.598 12.33v5.625M35.973 10.08v5.625M27.183 14.58H3.138c-.505 0-.915.534-.915 1.193v4.364c0 .659.41 1.193.915 1.193h24.045c.506 0 .915-.534.915-1.193v-4.364c0-.66-.41-1.193-.915-1.193zM20.446 14.818v6.364"
+      stroke={props.iconFillColor || '#AAA'}
+      strokeWidth={2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </Svg>
+);
+
+export const IconAllowGuests = (props: iconProps) => (
+  <Svg width={36} height={36} fill="none" {...props}>
+    <Path
+      d="M16.874 14.965l-3.656-6.333a2.813 2.813 0 014.871-2.812l5.625 9.743"
+      stroke={props.iconFillColor || '#AAA'}
+      strokeWidth={2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <Path
+      d="M12.565 18.752L7.221 9.496a2.813 2.813 0 114.872-2.812l4.78 8.281"
+      stroke={props.iconFillColor || '#AAA'}
+      strokeWidth={2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <Path
+      d="M21.655 23.247a5.625 5.625 0 012.06-7.684l-1.407-2.436a2.811 2.811 0 013.164-4.125 2.812 2.812 0 011.708 1.313l2.812 4.87A11.251 11.251 0 0117.338 31.68a11.248 11.248 0 01-6.832-5.243L4.6 16.206a2.812 2.812 0 014.872-2.813l3.093 5.359M11.404 33.75a15.688 15.688 0 01-4.654-5.064M24.75 4.36a7.308 7.308 0 016.332 3.656"
+      stroke={props.iconFillColor || '#AAA'}
+      strokeWidth={2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </Svg>
+);
+
+export const IconDiversity = (props: iconProps) => (
+  <Svg width={37} height={36} fill="none" {...props}>
+    <Path
+      d="M18.5 31.5C25.956 31.5 32 25.456 32 18S25.956 4.5 18.5 4.5 5 10.544 5 18s6.044 13.5 13.5 13.5z"
+      stroke={props.iconFillColor || '#AAA'}
+      strokeWidth={2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <Path
+      d="M30.617 23.959l-7.634-4.696a1.125 1.125 0 00-.44-.156l-3.208-.433a1.125 1.125 0 00-1.178.657l-1.926 4.323a1.125 1.125 0 00.201 1.221l2.644 2.86a1.126 1.126 0 01.279.977l-.54 2.784"
+      stroke={props.iconFillColor || '#AAA'}
+      strokeWidth={2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <Path
+      d="M9.634 7.82l-1.258 2.974a1.125 1.125 0 00-.017.833l1.616 4.313a1.125 1.125 0 00.817.705l3.013.647a1.124 1.124 0 01.776.61l.536 1.106a1.125 1.125 0 001.012.634h1.89"
+      stroke={props.iconFillColor || '#AAA'}
+      strokeWidth={2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <Path
+      d="M21.94 4.943l1.312 2.35a1.125 1.125 0 01-.227 1.384l-3.785 3.422a1.124 1.124 0 01-.21.15l-1.722.951c-.166.092-.354.14-.544.14h-3.002a1.125 1.125 0 00-1.036.689l-1.171 2.78"
+      stroke={props.iconFillColor || '#AAA'}
+      strokeWidth={2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </Svg>
+);
+
+export const IconFemale = (props: iconProps) => (
+  <Svg width={36} height={36} fill="none" {...props}>
+    <Path
+      d="M18 23.625c5.592 0 10.125-4.533 10.125-10.125S23.592 3.375 18 3.375 7.875 7.908 7.875 13.5 12.408 23.625 18 23.625zM18 23.625V33.75M12.375 29.25h11.25"
+      stroke={props.iconFillColor || '#AAA'}
+      strokeWidth={2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </Svg>
+);
+
+export const IconStudent = (props: iconProps) => (
+  <Svg width={37} height={36} fill="none" {...props}>
+    <Path
+      d="M5 9v11.25M8.127 30.375a12.378 12.378 0 0120.747 0M32 9l-13.5 4.5L5 9l13.5-4.5L32 9zM24.313 11.562a7.875 7.875 0 11-11.626 0"
+      stroke={props.iconFillColor || '#AAA'}
+      strokeWidth={2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </Svg>
+);
+
 export const IconCheckCircle = (props: iconProps) => (
-  <Svg
-    width={56}
-    height={56}
-    fill="none"
-    {...props}
-  >
+  <Svg width={56} height={56} fill="none" {...props}>
     <Path
       d="M28 5.25A22.75 22.75 0 1050.75 28 22.777 22.777 0 0028 5.25zm10.835 18.766L26 36.266a1.756 1.756 0 01-2.42 0l-6.415-6.125a1.752 1.752 0 012.42-2.532l5.206 4.971 11.624-11.096a1.752 1.752 0 012.42 2.532z"
       fill="#2A6B58"

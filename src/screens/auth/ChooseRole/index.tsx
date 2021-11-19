@@ -33,6 +33,8 @@ const ChooseRole = (props: any) => {
     navigation.navigate(ROOM_UNIT_ADDRESS);
   };
 
+  const isHomeowner = role === 'Homeowner' || role === 'Agent';
+
   return (
     <View style={styles.container}>
       <Header back />
@@ -55,8 +57,9 @@ const ChooseRole = (props: any) => {
               image={list_place}
               imageStyle={styles.imageStyle}
               customStyleButton={styles.buttonLeft}
-              isActive={role === 'Homeowner' || role === 'Agent'}
+              isActive={isHomeowner}
               onPress={() => setData('Homeowner')}
+              containerStyle={{opacity: isHomeowner ? 1 : 0.5}}
             />
             <AppButton
               title={'Rent a place'}
@@ -66,9 +69,10 @@ const ChooseRole = (props: any) => {
               customStyleButton={styles.buttonRight}
               isActive={role === 'Tenant'}
               onPress={() => setData('Tenant')}
+              containerStyle={{opacity: role === 'Tenant' ? 1 : 0.5}}
             />
           </View>
-          {role === 'Homeowner' || role === 'Agent' ? (
+          {isHomeowner ? (
             <>
               <AppText style={styles.title}>{'I’m a ...'}</AppText>
               <View style={styles.row}>

@@ -10,7 +10,12 @@ import {
   useClearByFocusCell,
 } from 'react-native-confirmation-code-field';
 import {useDispatch} from 'react-redux';
-import {forgotPassword, verifyCodeForgotPassword} from '@redux';
+import {
+  forgotPassword,
+  verifyCodeForgotPassword,
+  verifyCodePhonenumber,
+  verifyPhonenumber,
+} from '@redux';
 import {PROFILE} from '@routeName';
 import {NavigationUtils} from '@navigation';
 
@@ -18,23 +23,16 @@ interface VerifyCodeProp {
   navigation: any;
   route: any;
 }
-interface screenNavigationProp {
-  navigate: any;
-  route: any;
-}
 
 const VerifyCode = ({navigation, route}: VerifyCodeProp) => {
-  let PHONE = '';
-  let COUNTRY_CODE = '';
-  let email = '';
+  let contact = '';
+  // let COUNTRY_CODE = '';
+  let email = route.params?.email;
   const isForgetPassword = route.params?.isForgetPassword;
-  if (isForgetPassword) {
-    email = route.params?.email;
-  } else {
-    PHONE = route.params?.phone.toString().slice(1);
-    COUNTRY_CODE = route.params?.countryCode;
+  if (!isForgetPassword) {
+    contact = route.params?.contact;
   }
-  console.log('hi', PHONE, route.params);
+  console.log('VerifyCode', route.params);
   const [timerCount, setTimer] = useState(25);
   const CELL_COUNT = 4;
   const [value, setValue] = useState('');
@@ -45,7 +43,6 @@ const VerifyCode = ({navigation, route}: VerifyCodeProp) => {
   });
   const dispatch = useDispatch();
   const interval = useRef<any>();
-  // const
 
   useEffect(() => {
     interval.current = setInterval(() => {
@@ -67,13 +64,18 @@ const VerifyCode = ({navigation, route}: VerifyCodeProp) => {
     }, 1000);
   };
 
-  const codeTo = isForgetPassword ? email : `+${COUNTRY_CODE} ${PHONE}`;
+  const codeTo = isForgetPassword ? email : `${contact}`;
   const onVerfiyCode = () => {
     if (isForgetPassword) {
       dispatch(verifyCodeForgotPassword({email, code: parseInt(value)}));
+    } else {
+      dispatch(
+        verifyCodePhonenumber({
+          contact,
+          code: parseInt(value),
+        }),
+      );
     }
-
-    NavigationUtils.reset(PROFILE);
   };
 
   const onResend = () => {
@@ -81,6 +83,8 @@ const VerifyCode = ({navigation, route}: VerifyCodeProp) => {
     resetInterval();
     if (isForgetPassword) {
       dispatch(forgotPassword({email}));
+    } else {
+      dispatch(verifyPhonenumber({email, contact}));
     }
   };
 

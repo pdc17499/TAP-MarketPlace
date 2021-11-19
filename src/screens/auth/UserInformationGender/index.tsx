@@ -7,7 +7,14 @@ import {
   Header,
 } from '@component';
 import {useNavigation} from '@react-navigation/core';
-import {scaleHeight, SIZE, validateForm} from '@util';
+import {
+  colors,
+  fontFamily,
+  scaleHeight,
+  scaleSize,
+  SIZE,
+  validateForm,
+} from '@util';
 import {Formik} from 'formik';
 import React, {useState} from 'react';
 import {View, ScrollView} from 'react-native';
@@ -34,20 +41,20 @@ const UserInformationGender = () => {
   };
 
   const formInitialValues = {
-    // country: dataSignUp?.country?.cca2,
+    country: dataSignUp?.country?.cca2,
     gender: dataSignUp?.gender?.value,
-    age_group: dataSignUp?.age_group?.id,
+    // age_group: dataSignUp?.age_group?.id,
     staying_with_guests: dataSignUp?.staying_with_guests?.value,
   };
 
   const validationForm = yup.object().shape({
     gender: validateForm().common.selectAtLeast,
-    // country: validateForm().common.selectAtLeast,
-    age_group: validateForm().common.selectAtLeast,
+    country: validateForm().common.selectAtLeast,
+    // age_group: validateForm().common.selectAtLeast,
   });
 
   const onContinue = () => {
-    navigation.navigate(USER_INFORMATION_COUNTRY);
+    navigation.navigate(LIFE_STYLE);
   };
 
   const onSkip = (props: any) => {
@@ -78,7 +85,7 @@ const UserInformationGender = () => {
       onSubmit={onContinue}>
       {(props: any) => (
         <View style={{flex: 1, paddingBottom: SIZE.medium_space}}>
-          <View style={{flex: 1}}>
+          <View style={{flex: 1, marginBottom: SIZE.big_space * 2}}>
             <AppQA
               data={list.gender}
               title={'How would you describe your gender?'}
@@ -88,18 +95,20 @@ const UserInformationGender = () => {
               typeList={'row'}
               typeTitle={'base'}
               error={props.errors.gender}
+              customStyleTitle={{...fontFamily.fontWeight500}}
             />
 
-            {/* <AppPicker
+            <AppPicker
               value={props.values.country}
               name={'country'}
               label={'Where do you come from?'}
               onValueChange={onChangeText}
               typePicker={'country'}
               error={props.errors.country}
-            /> */}
+              customStyleLabel={styles.labelCountry}
+            />
 
-            <AppQA
+            {/* <AppQA
               data={list.group_age}
               title={'What is your age group?'}
               value={dataSignUp}
@@ -108,7 +117,7 @@ const UserInformationGender = () => {
               typeList={'even'}
               typeTitle={'base'}
               error={props.errors.age_group}
-            />
+            /> */}
           </View>
           <AppButton
             customStyleButton={styles.button}

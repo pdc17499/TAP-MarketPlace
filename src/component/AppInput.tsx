@@ -45,6 +45,7 @@ export const AppInput = (props: IAppInput) => {
     delimiter,
     customStyleLabel,
     onPressRightIcon,
+    maxLength,
   } = props;
   const [isFocused, setIsFocused] = React.useState(false);
   const [hidePasssWord, setHidePassWord] = React.useState(true);
@@ -140,6 +141,7 @@ export const AppInput = (props: IAppInput) => {
             secureTextEntry={hidePasssWord && secureTextEntry}
             keyboardType={keyboardType}
             autoFocus={autoFocus}
+            maxLength={maxLength}
           />
         ) : (
           <TextInput
@@ -157,6 +159,7 @@ export const AppInput = (props: IAppInput) => {
             secureTextEntry={hidePasssWord && secureTextEntry}
             keyboardType={keyboardType}
             autoFocus={autoFocus}
+            maxLength={maxLength}
           />
         )}
 

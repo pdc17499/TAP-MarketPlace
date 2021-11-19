@@ -15,10 +15,13 @@ import {
   signUpApi,
   verifyCodeForgotPasswordApi,
   resetNewPasswordApi,
+  verifyPhonenumberApi,
+  verifyCodePhonenumberApi,
 } from '@services';
 // import {VERTIFIEMAIL, VERIFYCODE} from '@routeName';
 import {showMessage} from 'react-native-flash-message';
 import {
+  PROFILE,
   RESETPASSWORD,
   SIGNIN,
   SIGNUP,
@@ -29,6 +32,7 @@ import {
 } from '@routeName';
 import {NavigationUtils} from '@navigation';
 import {CommonActions, StackActions} from '@react-navigation/native';
+import {VERIFY_CODE_PHONE_NUMBER, VERIFY_PHONE_NUMBER} from '@redux';
 export interface ResponseGenerator {
   result?: any;
   data?: any;
@@ -39,9 +43,6 @@ export function* loginSaga(action: any) {
     GlobalService.showLoading();
     const result: ResponseGenerator = yield loginApi(action.payload);
     yield put(saveDataUser(result?.data));
-    // setTimeout(() => {
-    //   NavigationUtils.reset(VERIFY_ACCOUNT);
-    // }, 100);
   } catch (error) {
   } finally {
     GlobalService.hideLoading();
@@ -53,14 +54,13 @@ export function* signUpSaga(action: any) {
     GlobalService.showLoading();
     const {body} = action?.payload;
     const result: ResponseGenerator = yield signUpApi(body);
-    console.log({result});
     if (result) {
       NavigationUtils.reset(VERIFY_ACCOUNT);
       yield put(saveDataUser(result?.data));
       // setTimeout(() => {
       //   NavigationUtils.reset(VERIFY_ACCOUNT);
       // }, 100);
-      yield resetDataSignup();
+      // yield resetDataSignup();
     }
     // yield put(saveDataRedux(result));
   } catch (error) {
@@ -85,7 +85,6 @@ export function* forgotPasswordSaga(action: any) {
     GlobalService.showLoading();
     const {email} = action.payload;
     const result: ResponseGenerator = yield forgotPasswordApi({email: email});
-    console.log({action});
     if (result) {
       NavigationUtils.navigate(VERIFY_CODE, {isForgetPassword: true, email});
     }
@@ -104,7 +103,6 @@ export function* verifyCodeForgotPasswordSaga(action: any) {
       email: email,
       code: code,
     });
-    console.log({result});
     if (result) {
       NavigationUtils.navigate(UPDATE_NEW_PASSWORD, {
         token: result?.data?.token,
@@ -122,7 +120,6 @@ export function* resetNewPasswordSaga(action: any) {
     GlobalService.showLoading();
     const {token, newPassword} = action.payload;
     const result: ResponseGenerator = yield resetNewPasswordApi(action.payload);
-    console.log({result});
     if (result) {
       NavigationUtils.reset(SIGNIN);
     }
@@ -137,6 +134,43 @@ export function* resetNewPasswordSaga(action: any) {
   }
 }
 
+export function* verifyPhonenumberSaga(action: any) {
+  try {
+    GlobalService.showLoading();
+    const {contact, email} = action.payload;
+    const result: ResponseGenerator = yield verifyPhonenumberApi(
+      action.payload,
+    );
+    if (result) {
+      yield resetDataSignup();
+      NavigationUtils.navigate(VERIFY_CODE, {
+        contact,
+        email,
+      });
+    }
+  } catch (error) {
+    GlobalService.hideLoading();
+  } finally {
+    GlobalService.hideLoading();
+  }
+}
+
+export function* verifyCodePhonenumberSaga(action: any) {
+  try {
+    GlobalService.showLoading();
+    const result: ResponseGenerator = yield verifyCodePhonenumberApi(
+      action.payload,
+    );
+    if (result) {
+      StackActions.replace(PROFILE);
+    }
+  } catch (error) {
+    GlobalService.hideLoading();
+  } finally {
+    GlobalService.hideLoading();
+  }
+}
+
 export function* authSaga() {
   yield takeLatest(LOGIN, loginSaga);
   yield takeLatest(SIGNUP, signUpSaga);
@@ -144,4 +178,6 @@ export function* authSaga() {
   yield takeLatest(FORGOT_PASSWORD, forgotPasswordSaga);
   yield takeLatest(VERIFY_CODE_FORGOT_PASSWORD, verifyCodeForgotPasswordSaga);
   yield takeLatest(RESET_NEW_PASSWORD, resetNewPasswordSaga);
+  yield takeLatest(VERIFY_PHONE_NUMBER, verifyPhonenumberSaga);
+  yield takeLatest(VERIFY_CODE_PHONE_NUMBER, verifyCodePhonenumberSaga);
 }

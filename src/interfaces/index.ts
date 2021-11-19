@@ -18,6 +18,7 @@ export interface ButtonProps {
   size?: 'base' | 'small';
   typeButton?: 'linear' | 'full' | 'underline' | 'link';
   isActive?: boolean;
+  iconLeft?: any;
   iconRight?:
     | 'right'
     | 'email'
@@ -55,6 +56,7 @@ export interface IAppInput {
   typeInput?: 'default' | 'price' | 'phone' | 'password' | 'linear';
   delimiter?: string;
   onPressRightIcon?: () => void;
+  maxLength?: number
 }
 
 export interface AppSwiperProps {
@@ -70,7 +72,7 @@ export interface RefAppSwiper {
 export interface HeaderProps {
   customTitleStyle?: any;
   title?: string;
-  customContainer?: any;
+  customContainer?: ViewStyle;
   back?: any;
   btnCountine?: boolean;
   onPressRight?: () => void;
@@ -83,11 +85,14 @@ export interface HeaderProps {
 export interface mockProps {
   id?: number;
   value?: string;
+  icon?: any;
+  iconSelected?: any;
 }
 export interface pickerProps {
   label?: string;
   value?: any;
   icon?: any;
+  iconSelected?: any;
 }
 
 export interface DataSignupProps {
@@ -133,6 +138,8 @@ export interface DataSignupProps {
   confirm_password: string;
   avatar: string;
   phone: string;
+  life_style: Array<mockProps>;
+  preferences: Array<mockProps>;
 }
 
 export interface AppQAProps {
@@ -146,11 +153,14 @@ export interface AppQAProps {
   isMultiChoice?: boolean;
   children?: ReactElement;
   customStyleTitle?: TextStyle;
+  customStyleTitleButton?: TextStyle;
   customStyleViewButton?: ViewStyle;
+  customStyleButton?: any;
   name: string;
   isFlex?: boolean;
   error?: string;
   typeTitle?: 'base' | 'center-mix' | 'other';
+  showIconLeft?: any;
 }
 
 export interface UserInfo {
@@ -211,6 +221,7 @@ export interface IAppPicker {
   typePicker?: 'base' | 'linear' | 'country';
   disable?: boolean;
   stylePicker?: 'base' | 'linear';
+  customStyleLabel?: TextStyle
 }
 
 export interface ListingRoomProps {

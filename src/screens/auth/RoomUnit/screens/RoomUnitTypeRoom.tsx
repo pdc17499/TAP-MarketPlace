@@ -17,7 +17,7 @@ import _ from 'lodash';
 import * as yup from 'yup';
 import {Formik} from 'formik';
 import {useNavigation} from '@react-navigation/core';
-import {ROOM_UNIT_FURNISHING} from '@routeName';
+import {ROOM_UNIT_FURNISHING, ROOM_UNIT_PLACE_OFFER} from '@routeName';
 
 interface screenNavigationProp {
   navigate: any;
@@ -39,6 +39,8 @@ const RoomUnitTypeRoom = () => {
     bedroom_number: dataSignUp?.bedroom_number?.value,
     bathroom_number: dataSignUp?.bathroom_number?.value,
     attached_bathroom: dataSignUp?.attached_bathroom?.value,
+    allow_cooking: dataSignUp?.allow_cooking?.value,
+    staying_with_guests: dataSignUp?.staying_with_guests?.value,
   };
 
   const validationSchema = yup.object().shape({
@@ -55,10 +57,15 @@ const RoomUnitTypeRoom = () => {
       is: 'Room',
       then: validateForm().common.selectAtLeast,
     }),
+    staying_with_guests: yup.string().when('room_type', {
+      is: 'Room',
+      then: validateForm().common.selectAtLeast,
+    }),
+    allow_cooking: validateForm().common.selectAtLeast,
   });
 
   const onNext = () => {
-    navigation.navigate(ROOM_UNIT_FURNISHING);
+    navigation.navigate(ROOM_UNIT_PLACE_OFFER);
   };
 
   const onValuesChangeFinish = (values: any) => {
@@ -112,39 +119,68 @@ const RoomUnitTypeRoom = () => {
                         name={'bathroom_number'}
                         error={propsFormik.errors.bathroom_number}
                       />
+                      <AppQA
+                        data={list.allow_cooking}
+                        title={'Allow cooking?'}
+                        value={dataSignUp}
+                        setValue={setData}
+                        typeList={'even'}
+                        name={'allow_cooking'}
+                        error={propsFormik.errors.allow_cooking}
+                      />
                     </>
                   ) : (
-                    <AppQA
-                      data={list.attached_bathroom}
-                      title={'Attached bathroom'}
-                      value={dataSignUp}
-                      setValue={setData}
-                      typeList={'even'}
-                      name={'attached_bathroom'}
-                      error={propsFormik.errors.attached_bathroom}
-                    />
+                    <>
+                      <AppQA
+                        data={list.attached_bathroom}
+                        title={'Attached bathroom'}
+                        value={dataSignUp}
+                        setValue={setData}
+                        typeList={'even'}
+                        name={'attached_bathroom'}
+                        error={propsFormik.errors.attached_bathroom}
+                      />
+                      <AppQA
+                        data={list.allow_cooking}
+                        title={'Allow cooking?'}
+                        value={dataSignUp}
+                        setValue={setData}
+                        typeList={'even'}
+                        name={'allow_cooking'}
+                        error={propsFormik.errors.allow_cooking}
+                      />
+                      <AppQA
+                        data={list.staying_width_guests}
+                        title={'Will you be staying with your guests?'}
+                        value={dataSignUp}
+                        setValue={setData}
+                        typeList={'row'}
+                        name={'staying_with_guests'}
+                        error={propsFormik.errors.staying_with_guests}
+                      />
+                    </>
                   )}
 
-                  <AppText style={styles.title}>
+                  {/* <AppText style={styles.title}>
                     {'Floor size'}
                     <AppText style={styles.optional}>{' (optional)'}</AppText>
-                  </AppText>
-                  <AppSlider
+                  </AppText> */}
+                  {/* <AppSlider
                     onValuesChangeFinish={onValuesChangeFinish}
                     min_range_value={dataSignUp?.floor_size_min}
                     max_range_value={dataSignUp?.floor_size_max}
                     min_range={SLIDER.MIN_FLOOR_SIZE}
                     max_range={SLIDER.MAX_FLOOR_SIZE}
                     iconLeft={'floor_size'}
+                  /> */}
+                  <AppButton
+                    title={'Continue'}
+                    onPress={propsFormik.handleSubmit}
+                    containerStyle={styles.customStyleButton}
+                    iconRight={'arNext'}
                   />
                 </>
               )}
-              <AppButton
-                title={'Continue'}
-                onPress={propsFormik.handleSubmit}
-                containerStyle={styles.customStyleButton}
-                iconRight={'arNext'}
-              />
             </View>
           )}
         </Formik>
