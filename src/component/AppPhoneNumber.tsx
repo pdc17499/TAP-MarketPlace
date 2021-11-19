@@ -16,15 +16,23 @@ interface IAppPhoneNumber {
 }
 
 export const AppPhoneNumber = React.memo((props: IAppPhoneNumber) => {
-  const {label, value, onChangePhone, onChangeFlag, error, type, maxLength} =
-    props;
+  const {
+    label,
+    value,
+    onChangePhone,
+    onChangeFlag,
+    error,
+    type,
+    maxLength,
+    name,
+  } = props;
   const [countryCode, setCountryCode]: any = useState('SG');
   const [visible, setVisible] = useState(false);
   const [isInLine, setIsInLine] = useState(false);
 
   useEffect(() => {
     onChangeFlag('65');
-    if (type === 'inline') setIsInLine(true);
+    if (type === 'inline') setIsInLine(false);
   }, []);
 
   const onSelectFlag = (country: any) => {
@@ -37,11 +45,19 @@ export const AppPhoneNumber = React.memo((props: IAppPhoneNumber) => {
     setVisible(true);
   };
 
+  console.log({value});
+
+  const callBackOnFocus = (focus: boolean) => {
+    if (type === 'inline') {
+      setIsInLine(focus);
+    }
+  };
+
   return (
     <>
-      {isInLine ? (
-        <Pressable style={styles.inlineType} onPress={() => setIsInLine(false)}>
-          <AppText>{'N/A'}</AppText>
+      {!isInLine ? (
+        <Pressable style={styles.inlineType} onPress={() => setIsInLine(true)}>
+          <AppText>{value || 'N/A'}</AppText>
         </Pressable>
       ) : (
         <View style={styles.container}>
@@ -69,9 +85,11 @@ export const AppPhoneNumber = React.memo((props: IAppPhoneNumber) => {
               style={styles.inputPhone}
               keyboardType="number-pad"
               value={value}
-              onValueChange={onChangePhone}
+              onValueChange={text => onChangePhone(text, name)}
               maxLength={maxLength}
               inputStyle={{fontSize: SIZE.base_size + 1}}
+              callBackOnFocus={callBackOnFocus}
+              autoFocus
             />
           </View>
         </View>

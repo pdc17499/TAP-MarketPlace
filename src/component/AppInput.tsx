@@ -46,15 +46,18 @@ export const AppInput = (props: IAppInput) => {
     customStyleLabel,
     onPressRightIcon,
     maxLength,
+    callBackOnFocus,
   } = props;
   const [isFocused, setIsFocused] = React.useState(false);
   const [hidePasssWord, setHidePassWord] = React.useState(true);
 
   const handleFocus = () => {
     setIsFocused(true);
+    if (callBackOnFocus) callBackOnFocus(true);
   };
   const handleBlur = () => {
     setIsFocused(false);
+    if (callBackOnFocus) callBackOnFocus(false);
   };
   const onShowPassWord = () => {
     setHidePassWord(!hidePasssWord);

@@ -1,17 +1,22 @@
-import { AppButton, AppInput, AppPhoneNumber, AppText, Header } from '@component';
-import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, Pressable } from 'react-native';
-import { useSelector } from 'react-redux';
-import { colors, fontFamily, scaleSize, scaleWidth, SIZE } from '@util';
+import {AppButton, AppInput, AppPhoneNumber, AppText, Header} from '@component';
+import React, {useEffect, useState} from 'react';
+import {View, StyleSheet, Pressable} from 'react-native';
+import {useSelector} from 'react-redux';
+import {
+  colors,
+  fontFamily,
+  scaleSize,
+  scaleWidth,
+  SIZE,
+  validateForm,
+} from '@util';
 import * as yup from 'yup';
-import { Formik } from 'formik';
-import { UserInfo } from '@interfaces';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { CaretRight, IconChangePassword, IconDeleteUser } from '@assets';
-import { CHANGE_PASSWORD } from '@routeName';
-import { useNavigation } from '@react-navigation/native';
-
-interface AccountSettingProp { }
+import {Formik} from 'formik';
+import {UserInfo} from '@interfaces';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import {CaretRight, IconChangePassword, IconDeleteUser} from '@assets';
+import {CHANGE_PASSWORD} from '@routeName';
+import {useNavigation} from '@react-navigation/native';
 
 interface screenNavigationProp {
   navigate: any;
@@ -24,7 +29,6 @@ const AccountSetting = () => {
   const [showDate, setShowDate] = useState(false);
   const [dateOfBirth, setDateOfBirth] = useState('');
   const [showButton, setShowButton] = useState(false);
-  const [phoneNumber, setPhoneNumber] = useState('');
   const [countryCode, setCountryCode] = useState('');
 
   useEffect(() => {
@@ -40,20 +44,24 @@ const AccountSetting = () => {
   };
 
   const validationForm = yup.object().shape({
-    email: yup.string(),
-    // phone: yup.string(),
+    email: validateForm().email,
+    contact: yup.string().max(30, 'Phone number invalid'),
   });
 
   const onChangeText = (item: any, name?: string) => {
     if (name) {
-      const nData: any = { ...users };
+      const nData: any = {...users};
       nData[name] = item;
       setUsers(nData);
     }
     setShowButton(true);
   };
 
-  const onSubmit = () => { };
+  const onSubmit = () => {};
+
+  const validatePhone = (contact: number) => {
+    return contact.toString().replace(/[^a-zA-Z0-9]/g, '');
+  };
 
   const RenderForm = () => (
     <KeyboardAwareScrollView showsVerticalScrollIndicator={false}>
@@ -84,11 +92,12 @@ const AccountSetting = () => {
               <View style={styles.phoneInput}>
                 <AppText style={styles.phoneInputTxt}>{'Phone number'}</AppText>
                 <AppPhoneNumber
-                  value={props.values.contact}
+                  value={validatePhone(props.values.contact)}
                   onChangeFlag={setCountryCode}
-                  onChangePhone={setPhoneNumber}
+                  onChangePhone={onChangeText}
                   name={'contact'}
                   type={'inline'}
+                  maxLength={30}
                 />
               </View>
               <Pressable onPress={() => navigation.navigate(CHANGE_PASSWORD)}>
@@ -233,4 +242,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export { AccountSetting };
+export {AccountSetting};
