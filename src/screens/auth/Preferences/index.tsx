@@ -4,7 +4,7 @@ import React from 'react';
 import {ScrollView} from 'react-native';
 import {styles} from './style';
 import {SIGNUP} from '@routeName';
-import {validateForm} from '@util';
+import {colors, validateForm} from '@util';
 import {DataSignupProps} from '@interfaces';
 import {useDispatch, useSelector} from 'react-redux';
 import {setDataSignup} from '@redux';
@@ -56,7 +56,7 @@ const Preferences = (props: any) => {
         <AppQA
           isFlex
           data={list.preferences}
-          title={'What’s your lifestyle?'}
+          title={'What’s your preferences?'}
           value={dataSignUp}
           setValue={setData}
           typeList={'even'}
@@ -86,7 +86,7 @@ const Preferences = (props: any) => {
 
   return (
     <>
-      <Header back />
+      <Header back customContainer={{backgroundColor: colors.bgSreen}} />
       <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
         <Formik
           initialValues={formInitialValues}
