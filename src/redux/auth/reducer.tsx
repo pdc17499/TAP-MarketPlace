@@ -1,7 +1,7 @@
 import {
   SAVE_DATA_USER,
   HIDE_INTRO_SCREEN,
-  UPDATE_USER_INFOR,
+  UPDATE_USER_INFO,
   SET_DATA_SIGNUP,
   LOGIN,
   LOGOUT,
@@ -32,7 +32,7 @@ export default function dataSave(state = INITIAL_STATE_AUTH, action: any) {
         token: null,
       };
 
-    case UPDATE_USER_INFOR:
+    case UPDATE_USER_INFO:
       return {
         ...state,
         user: action?.payload?.data?.user_info,

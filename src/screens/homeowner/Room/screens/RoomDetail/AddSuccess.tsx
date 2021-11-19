@@ -1,7 +1,7 @@
-import {AppButton, AppInput, AppPhoneNumber, AppText, Header} from '@component';
-import React, {useEffect, useState} from 'react';
-import {View, StyleSheet, Pressable, Image} from 'react-native';
-import {useSelector} from 'react-redux';
+import { AppButton, AppInput, AppPhoneNumber, AppText, Header } from '@component';
+import React, { useEffect, useState } from 'react';
+import { View, StyleSheet, Pressable, Image } from 'react-native';
+import { useSelector } from 'react-redux';
 import {
   colors,
   fontFamily,
@@ -11,9 +11,9 @@ import {
   SIZE,
 } from '@util';
 import * as yup from 'yup';
-import {Formik} from 'formik';
-import {UserInfo} from '@interfaces';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import { Formik } from 'formik';
+import { UserInfo } from '@interfaces';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import {
   CaretRight,
   IconChangePassword,
@@ -23,10 +23,10 @@ import {
   IconPickLocation,
   IconPlus,
 } from '@assets';
-import {CHANGE_PASSWORD, ROOM_UNIT_ADDRESS, YOUR_LISTING} from '@routeName';
-import {useNavigation} from '@react-navigation/native';
+import { CHANGE_PASSWORD, ROOM_UNIT_ADDRESS, YOUR_LISTING } from '@routeName';
+import { useNavigation } from '@react-navigation/native';
 
-interface AddSuccessProp {}
+interface AddSuccessProp { }
 
 interface screenNavigationProp {
   navigate: any;
@@ -50,24 +50,24 @@ const AddSuccess = (props: AddSuccessProp) => {
 
   return (
     <View style={styles.container}>
-      <IconCheckCircle style={{marginTop: scaleHeight(140)}} />
+      <IconCheckCircle style={{ marginTop: scaleHeight(140) }} />
       <AppText style={styles.titile}>{'A New Place Added!'}</AppText>
-      <Image style={styles.image} source={{uri: photo}}></Image>
+      <Image style={styles.image} source={{ uri: photo }}></Image>
 
       <View style={styles.block}>
         <AppText style={styles.bigtext}>{roomData.kind_place.value}</AppText>
-        <IconDot />
+        <IconDot style={{ marginHorizontal: scaleHeight(8) }} />
         <AppText style={styles.bigtext}>{roomData.room_type.value}</AppText>
       </View>
 
-      <View style={styles.block}>
+      <View style={styles.block2}>
         <IconPickLocation
           iconFillColor={colors.textPrimary}
           width={18}
           height={18}
         />
-        <AppText style={styles.placeTxt}>
-          {roomData.location.title.slice(index)}
+        <AppText numberOfLines={2} style={styles.placeTxt}>
+          {roomData.location.title}
         </AppText>
       </View>
 
@@ -120,14 +120,21 @@ const styles = StyleSheet.create({
     ...fontFamily.fontCampWeight500,
   },
   placeTxt: {
+    marginLeft: 5,
     fontSize: scaleSize(18),
     color: colors.textPlace,
     ...fontFamily.fontWeight500,
+    lineHeight: scaleHeight(24),
   },
   block: {
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 10,
+  },
+  block2: {
+    flexDirection: 'row',
+    marginBottom: 10,
+
   },
   addTxt: {
     fontSize: scaleSize(16),
@@ -149,4 +156,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export {AddSuccess};
+export { AddSuccess };

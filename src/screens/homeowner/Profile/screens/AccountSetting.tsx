@@ -11,7 +11,6 @@ import { CaretRight, IconChangePassword, IconDeleteUser } from '@assets';
 import { CHANGE_PASSWORD } from '@routeName';
 import { useNavigation } from '@react-navigation/native';
 
-interface AccountSettingProp { }
 
 interface screenNavigationProp {
   navigate: any;
@@ -22,7 +21,7 @@ const AccountSetting = () => {
   const [users, setUsers] = useState<UserInfo>();
   const dataUser: UserInfo = useSelector((state: any) => state?.auth?.user);
   const [showDate, setShowDate] = useState(false);
-  const [dateOfBirth, setDateOfBirth] = useState('');
+
   const [showButton, setShowButton] = useState(false);
   const [phoneNumber, setPhoneNumber] = useState('');
   const [countryCode, setCountryCode] = useState('');
@@ -40,8 +39,13 @@ const AccountSetting = () => {
   };
 
   const validationForm = yup.object().shape({
-    email: yup.string(),
-    // phone: yup.string(),
+    email: yup
+      .string()
+      .required('This field is required')
+      .email('Email is not valid'),
+    phone: yup
+      .string()
+      .max(30, 'Phone number invalid'),
   });
 
   const onChangeText = (item: any, name?: string) => {
@@ -78,8 +82,17 @@ const AccountSetting = () => {
                 onValueChange={onChangeText}
                 error={props.errors.email}
                 typeInput={'linear'}
-                name={'name'}
+                name={'email'}
               />
+
+              {/* <AppInput
+                label={'Your name'}
+                value={props.values.name}
+                onValueChange={onChangeText}
+                error={props.errors.name}
+                typeInput={'linear'}
+                name={'name'}
+              /> */}
 
               <View style={styles.phoneInput}>
                 <AppText style={styles.phoneInputTxt}>{'Phone number'}</AppText>

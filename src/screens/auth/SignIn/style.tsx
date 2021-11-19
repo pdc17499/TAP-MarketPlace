@@ -3,9 +3,8 @@ import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        backgroundColor: colors.white,
-        paddingHorizontal: scaleWidth(24)
+        flex: 1, backgroundColor: colors.white, paddingHorizontal: scaleWidth(24)
+
 
     },
     logo: {
@@ -31,7 +30,7 @@ const styles = StyleSheet.create({
         ...fontFamily.fontWeight500,
         color: colors.textThirdPrimary,
         textAlign: 'right',
-        marginBottom: scaleHeight(30)
+        // marginBottom: scaleHeight(30)
     },
     signInWithTxt: {
         flex: 1,
@@ -46,13 +45,14 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1,
     },
     signInWith: {
-        flexDirection: 'row', marginTop: scaleHeight(45), alignItems: 'center',
-        marginBottom: scaleHeight(15)
+        flexDirection: 'row', alignItems: 'center',
+        // marginBottom: scaleHeight(15),
+        marginTop: scaleHeight(50)
     },
     blockButton: {
         flexDirection: 'row',
         alignItems: 'center',
-        marginTop: SIZE.medium_space
+        marginTop: scaleHeight(32)
     },
     facebookButton: {
         flex: 1,
@@ -80,8 +80,14 @@ const styles = StyleSheet.create({
     signUpLine: {
         flexDirection: 'row',
         marginTop: SIZE.big_space,
-        alignSelf: 'center'
+        alignSelf: 'center',
+        marginBottom: SIZE.medium_space,
     },
+    buttonSignIn: {
+        // position: 'absolute',
+        // bottom: SIZE.medium_space
+        marginTop: scaleHeight(54)
+    }
 
 
 

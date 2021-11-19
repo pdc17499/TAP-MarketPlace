@@ -7,6 +7,7 @@ import {
   VERIFY_EMAIL,
   VERIFY_CODE_FORGOT_PASSWORD,
   RESET_NEW_PASSWORD,
+  UPDATE_USER_INFO,
 } from './types';
 
 export const loginApi: any = async (data: any) => {
@@ -20,7 +21,7 @@ export const signUpApi: any = async (data: any) => {
 };
 
 export const logOutApi: any = async () => {
-  const response = await api.get(LOGOUT);
+  const response = await api.post(LOGOUT);
   return response;
 };
 
@@ -35,5 +36,10 @@ export const verifyCodeForgotPasswordApi: any = async (data: any) => {
 };
 export const resetNewPasswordApi: any = async (data: any) => {
   const response = await api.post(RESET_NEW_PASSWORD, data);
+  return response;
+};
+
+export const updateUserInfoApi: any = async (data: any, id: string) => {
+  const response = await api.patch(UPDATE_USER_INFO + id, data);
   return response;
 };

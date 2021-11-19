@@ -39,12 +39,12 @@ const BasicInfomation = (props: BasicInfomationProp) => {
 
   }, [dataUser]);
 
-
+  console.log('info', users);
 
   const formInitialValues = {
     name: users?.name,
-    nationality: users?.nationality,
     country: users?.country?.cca2,
+    // nationality: users?.nationality,
     occupation: users?.occupation,
     ethnicity: users?.ethnicity,
     gender: users?.gender,
@@ -53,33 +53,31 @@ const BasicInfomation = (props: BasicInfomationProp) => {
 
   const validationForm = yup.object().shape({
     name: yup.string(),
-    // nationality: validateForm().common.selectAtLeast,
+    gender: validateForm().common.selectAtLeast,
+    // country: validateForm().common.selectAtLeast,
     // occupation: validateForm().common.atLeastOnePicker,
     // ethnicity: validateForm().common.atLeastOnePicker,
-    // gender: validateForm().common.atLeastOnePicker,
+    // nationality: validateForm().common.selectAtLeast,
     // ageGroup: validateForm().common.atLeastOnePicker,
   });
 
   const onChangeText = (item: any, name?: string) => {
+
+
     if (name) {
       const nData: any = { ...users };
       nData[name] = item;
       setUsers(nData);
     }
   };
-
-  const onChangeCountry = (item: any) => {
-    console.log('name', item?.name);
-
-    // if (name) {
-    //   const nData: any = { ...users };
-    //   nData[name] = item;
-    //   setUsers(nData);
-    // }
-  };
-
-
-
+  // const onChangeCountry = (item: any, value?: string) => {
+  //   console.log('3333', item.name, value);
+  //   if (name) {
+  //     const nData: any = { ...users };
+  //     nData[name] = item.name;
+  //     setUsers(nData);
+  //   }
+  // };
   const setData = (data: any) => {
     // dispatch(saveDataUser(users));
   };
@@ -168,12 +166,21 @@ const BasicInfomation = (props: BasicInfomationProp) => {
               <AppPicker
                 value={props.values.country}
                 name={'country'}
-                label={'Nationality'}
-                onValueChange={onChangeCountry}
+                label={'Country'}
+                onValueChange={onChangeText}
                 typePicker={'country'}
                 error={props.errors.country}
                 stylePicker={'linear'}
               />
+              {/* <AppPicker
+                value={props.values.nationality}
+                name={'nationality'}
+                label={'Country'}
+                onValueChange={onChangeText}
+                items={list.nationality}
+                error={props.errors.nationality}
+                stylePicker={'linear'}
+              /> */}
               <AppPicker
                 value={props.values.occupation}
                 name={'occupation'}

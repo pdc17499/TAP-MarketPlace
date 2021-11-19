@@ -5,12 +5,12 @@ import {
   SIGNUP,
   LOGOUT,
   REMOVE_TOKEN,
-  UPDATE_USER_INFOR,
   SET_DATA_SIGNUP,
   RESET_DATA_SIGNUP,
   FORGOT_PASSWORD,
   VERIFY_CODE_FORGOT_PASSWORD,
   RESET_NEW_PASSWORD,
+  UPDATE_USER_INFO
 } from '@redux';
 
 export const loginApp = (payload: any) => ({
@@ -56,8 +56,8 @@ export const resetNewPassword = (payload: any) => ({
   payload,
 });
 
-export const updateUserInfor = (payload: any) => ({
-  type: UPDATE_USER_INFOR,
+export const updateUserInfo = (payload: any) => ({
+  type: UPDATE_USER_INFO,
   payload,
 });
 

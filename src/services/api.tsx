@@ -1,8 +1,8 @@
 import axios from 'axios';
-import {getBaseURL} from '@util';
-import {describeSuccessResponse, describeErrorResponse} from './logger';
-import {showMessage} from 'react-native-flash-message';
-import {store} from '../redux/store';
+import { getBaseURL } from '@util';
+import { describeSuccessResponse, describeErrorResponse } from './logger';
+import { showMessage } from 'react-native-flash-message';
+import { store } from '../redux/store';
 
 const api = axios.create();
 
@@ -11,8 +11,11 @@ api.interceptors.request.use(
     config.baseURL = getBaseURL();
     const state = store.getState();
     //@ts-ignore
+    // const token = state?.auth?.token?.access?.token;
+
     const token = state?.auth?.token;
-    console.log('TOKEN', token);
+
+    console.log('TOKENsss', state?.auth);
     if (token) {
       config.headers = {
         Authorization: token,
@@ -21,7 +24,7 @@ api.interceptors.request.use(
       };
     }
     if (config.method.toUpperCase() === 'GET') {
-      config.params = {...config.params};
+      config.params = { ...config.params };
     }
     return config;
   },
@@ -40,7 +43,7 @@ api.interceptors.response.use(
     }
   },
   function (error) {
-    const {message} = error?.response?.data;
+    const { message } = error?.response?.data;
     showMessage({
       message: message,
       type: 'danger',
