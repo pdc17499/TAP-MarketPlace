@@ -6,12 +6,12 @@ import React from 'react';
 import {View} from 'react-native';
 import {styles} from './style';
 import * as yup from 'yup';
-import { VERIFY_ACCOUNT } from '@routeName';
-import { useDispatch, useSelector } from 'react-redux';
-import { resetDataSignup, setDataSignup, signUp } from '@redux';
-import { DataSignupProps, mockProps } from '@interfaces';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { ImageOrVideo } from 'react-native-image-crop-picker';
+import {VERIFY_ACCOUNT} from '@routeName';
+import {useDispatch, useSelector} from 'react-redux';
+import {resetDataSignup, setDataSignup, signUp} from '@redux';
+import {DataSignupProps, mockProps} from '@interfaces';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import {ImageOrVideo} from 'react-native-image-crop-picker';
 
 interface SignUpEmailProp {}
 
@@ -83,6 +83,8 @@ const SignUpEmail = (props: SignUpEmailProp) => {
         nationality: dataSignUp?.country?.name,
         occupation: dataSignUp?.occupation?.value,
         ethnicity: dataSignUp?.ethnicity?.value,
+        lifestyle: ['Live with Kids', 'Vegetarian'],
+        preferences: ['Diversity friendly', 'Student'],
         // lifestyle: {
         //   Friendliness: getList(dataSignUp?.your_place),
         //   Pets: dataSignUp?.have_pet?.value,
@@ -105,15 +107,13 @@ const SignUpEmail = (props: SignUpEmailProp) => {
           // },
           // RoomFurnishing: dataSignUp?.room_furnishing?.value,
           // FloorLevel: dataSignUp?.floor_level?.value,
-          // allowCook: dataSignUp?.allow_cooking?.value === 'Yes',
+          AllowCook: dataSignUp?.allow_cooking?.value === 'Yes',
           // builtYear: dataSignUp?.built_year,
           StayWithGuest: dataSignUp?.staying_with_guests?.value === 'Yes',
-          keyWords: getList(dataSignUp?.key_your_place),
+          KeyWords: getList(dataSignUp?.key_your_place),
         },
-        Lifestyle: ['Live with Kids', 'Vegetarian'],
-        Preferences: ['Diversity friendly', 'Student'],
         LeasePeriod: {
-          type: dataSignUp?.staying_with_guests?.value === 'Yes',
+          type: dataSignUp?.kind_place?.value === 'HDB',
           value: getList(dataSignUp?.lease_your_place),
         },
         PicturesVideo: getUrlFiles(),

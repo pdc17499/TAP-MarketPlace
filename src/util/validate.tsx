@@ -21,7 +21,7 @@ export const validateForm = () => {
     password: yup
       .string()
       .required('This field is required')
-      .min(6, 'Password must be at least 6 characters')
+      .min(8, 'Password must be at least 8 characters')
       .max(32, 'Password may not be greater than 32 characters'),
     confirmPassword: yup
       .string()
@@ -30,7 +30,6 @@ export const validateForm = () => {
         [yup.ref('password'), null],
         'Confirm Password does not match the password',
       ),
-
     fullname: yup
       .string()
       .required('This field is required')

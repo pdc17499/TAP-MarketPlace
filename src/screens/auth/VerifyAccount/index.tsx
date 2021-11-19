@@ -1,12 +1,12 @@
-import { IconQuestion } from '@assets';
-import { AppButton, AppText, Header, AppPhoneNumber, AppInput } from '@component';
-import { useNavigation } from '@react-navigation/core';
-import { VERIFY_CODE } from '@routeName';
-import { scaleWidth } from '@util';
-import React, { useState } from 'react';
-import { Alert, Pressable, TouchableOpacity, View } from 'react-native';
-import { styles } from './style';
-import { VerifyAccountProps } from '@interfaces';
+import {IconQuestion} from '@assets';
+import {AppButton, AppText, Header, AppPhoneNumber, AppInput} from '@component';
+import {useNavigation} from '@react-navigation/core';
+import {VERIFY_CODE} from '@routeName';
+import {scaleWidth} from '@util';
+import React, {useState} from 'react';
+import {Alert, Pressable, TouchableOpacity, View} from 'react-native';
+import {styles} from './style';
+import {VerifyAccountProps} from '@interfaces';
 
 interface VerifyCodeProp {
   navigation: any;
@@ -28,9 +28,9 @@ const VerifyAccount = (props: VerifyCodeProp) => {
   const moveToVerifyCode = () => {
     phoneNumber !== ''
       ? navigation.navigate(VERIFY_CODE, {
-        countryCode: countryCode,
-        phone: phoneNumber,
-      })
+          countryCode: countryCode,
+          phone: phoneNumber,
+        })
       : Alert.alert('Please enter your phone number!');
   };
 
@@ -38,7 +38,7 @@ const VerifyAccount = (props: VerifyCodeProp) => {
 
   return (
     <View style={styles.container}>
-      <Header back />
+      <Header />
       <View style={styles.body}>
         <AppText style={styles.title}>{'Sign up'}</AppText>
         <AppText style={styles.message}>{'Verify Account'}</AppText>
@@ -61,7 +61,7 @@ const VerifyAccount = (props: VerifyCodeProp) => {
           </AppText>
         </Pressable>
 
-        <View style={{ height: scaleWidth(170) }}>
+        <View style={{height: scaleWidth(170)}}>
           {isShowRules ? (
             <View>
               <AppText style={styles.miniTxt}>
@@ -87,11 +87,11 @@ const VerifyAccount = (props: VerifyCodeProp) => {
           title={'Skip for now'}
           typeButton={'link'}
           customStyleTitle={styles.skipTxt}
-        // onPress={moveToVerifyCode}
+          // onPress={moveToVerifyCode}
         />
       </View>
     </View>
   );
 };
 
-export { VerifyAccount };
+export {VerifyAccount};

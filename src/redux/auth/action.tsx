@@ -5,12 +5,13 @@ import {
   SIGNUP,
   LOGOUT,
   REMOVE_TOKEN,
-  VERIFY_EMAIL,
-  SEND_VERIFY_EMAIL,
   UPDATE_USER_INFOR,
   SET_DATA_SIGNUP,
   RESET_DATA_SIGNUP,
-} from './type';
+  FORGOT_PASSWORD,
+  VERIFY_CODE_FORGOT_PASSWORD,
+  RESET_NEW_PASSWORD,
+} from '@redux';
 
 export const loginApp = (payload: any) => ({
   type: LOGIN,
@@ -36,18 +37,24 @@ export const signUp = (payload: any) => ({
   payload,
 });
 
-
-
 export const removeToken = () => ({
   type: REMOVE_TOKEN,
 });
 
-export const sendVerifyEmail = (payload: any) => ({
-  type: SEND_VERIFY_EMAIL,
+export const forgotPassword = (payload: any) => ({
+  type: FORGOT_PASSWORD,
   payload,
 });
 
+export const verifyCodeForgotPassword = (payload: any) => ({
+  type: VERIFY_CODE_FORGOT_PASSWORD,
+  payload,
+});
 
+export const resetNewPassword = (payload: any) => ({
+  type: RESET_NEW_PASSWORD,
+  payload,
+});
 
 export const updateUserInfor = (payload: any) => ({
   type: UPDATE_USER_INFOR,
