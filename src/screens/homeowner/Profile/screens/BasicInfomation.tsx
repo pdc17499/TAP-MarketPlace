@@ -36,11 +36,15 @@ const BasicInfomation = (props: BasicInfomationProp) => {
 
   useEffect(() => {
     setUsers(dataUser);
+
   }, [dataUser]);
+
+
 
   const formInitialValues = {
     name: users?.name,
     nationality: users?.nationality,
+    country: users?.country?.cca2,
     occupation: users?.occupation,
     ethnicity: users?.ethnicity,
     gender: users?.gender,
@@ -63,6 +67,18 @@ const BasicInfomation = (props: BasicInfomationProp) => {
       setUsers(nData);
     }
   };
+
+  const onChangeCountry = (item: any) => {
+    console.log('name', item?.name);
+
+    // if (name) {
+    //   const nData: any = { ...users };
+    //   nData[name] = item;
+    //   setUsers(nData);
+    // }
+  };
+
+
 
   const setData = (data: any) => {
     // dispatch(saveDataUser(users));
@@ -150,12 +166,12 @@ const BasicInfomation = (props: BasicInfomationProp) => {
                 )}
               </View>
               <AppPicker
-                value={props.values.nationality}
-                name={'nationality'}
+                value={props.values.country}
+                name={'country'}
                 label={'Nationality'}
-                onValueChange={onChangeText}
+                onValueChange={onChangeCountry}
                 typePicker={'country'}
-                error={props.errors.nationality}
+                error={props.errors.country}
                 stylePicker={'linear'}
               />
               <AppPicker
