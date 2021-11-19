@@ -56,7 +56,7 @@ export interface IAppInput {
   typeInput?: 'default' | 'price' | 'phone' | 'password' | 'linear';
   delimiter?: string;
   onPressRightIcon?: () => void;
-  maxLength?: number
+  maxLength?: number;
 }
 
 export interface AppSwiperProps {
@@ -221,10 +221,19 @@ export interface IAppPicker {
   typePicker?: 'base' | 'linear' | 'country';
   disable?: boolean;
   stylePicker?: 'base' | 'linear';
-  customStyleLabel?: TextStyle
+  customStyleLabel?: TextStyle;
 }
 
 export interface ListingRoomProps {
+  id: number;
+  type: string;
+  title: string;
+  image: any;
+  location: string;
+  active: boolean;
+}
+
+export interface ProfileLifeStyleProps {
   id: number;
   type: string;
   title: string;

@@ -19,6 +19,7 @@ import {
   updateUserInfoApi,
   verifyPhonenumberApi,
   verifyCodePhonenumberApi,
+  setToken,
 } from '@services';
 // import {VERTIFIEMAIL, VERIFYCODE} from '@routeName';
 import { showMessage } from 'react-native-flash-message';
@@ -32,9 +33,9 @@ import {
   VERIFY_CODE,
   WELCOME,
 } from '@routeName';
-import {NavigationUtils} from '@navigation';
-import {CommonActions, StackActions} from '@react-navigation/native';
-import {VERIFY_CODE_PHONE_NUMBER, VERIFY_PHONE_NUMBER} from '@redux';
+import { NavigationUtils } from '@navigation';
+import { CommonActions, StackActions } from '@react-navigation/native';
+import { VERIFY_CODE_PHONE_NUMBER, VERIFY_PHONE_NUMBER } from '@redux';
 export interface ResponseGenerator {
   result?: any;
   data?: any;
@@ -44,6 +45,8 @@ export function* loginSaga(action: any) {
   try {
     GlobalService.showLoading();
     const result: ResponseGenerator = yield loginApi(action.payload);
+    const token = result?.data?.tokens?.access?.token;
+    yield setToken(token);
     yield put(saveDataUser(result?.data));
   } catch (error) {
   } finally {
@@ -92,8 +95,8 @@ export function* logoutSaga() {
 export function* forgotPasswordSaga(action: any) {
   try {
     GlobalService.showLoading();
-    const {email} = action.payload;
-    const result: ResponseGenerator = yield forgotPasswordApi({email: email});
+    const { email } = action.payload;
+    const result: ResponseGenerator = yield forgotPasswordApi({ email: email });
     if (result) {
       NavigationUtils.navigate(VERIFY_CODE, { isForgetPassword: true, email });
     }
@@ -145,7 +148,7 @@ export function* resetNewPasswordSaga(action: any) {
 export function* verifyPhonenumberSaga(action: any) {
   try {
     GlobalService.showLoading();
-    const {contact, email} = action.payload;
+    const { contact, email } = action.payload;
     const result: ResponseGenerator = yield verifyPhonenumberApi(
       action.payload,
     );

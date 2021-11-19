@@ -3,22 +3,25 @@ import { getBaseURL } from '@util';
 import { describeSuccessResponse, describeErrorResponse } from './logger';
 import { showMessage } from 'react-native-flash-message';
 import { store } from '../redux/store';
+import { getToken } from '@services';
 
 const api = axios.create();
 
 api.interceptors.request.use(
   async (config: any) => {
     config.baseURL = getBaseURL();
-    const state = store.getState();
+    // const state = store.getState();
+    const token = await getToken();
+    console.log('token', token)
     //@ts-ignore
     // const token = state?.auth?.token?.access?.token;
 
-    const token = state?.auth?.token;
+    // const token = state?.auth?.token;
 
-    console.log('TOKENsss', state?.auth);
+    // console.log('TOKENsss', state?.auth);
     if (token) {
       config.headers = {
-        Authorization: token,
+        Authorization: 'Bearer ' + token,
         'Content-Type': 'application/json',
         ...config.headers,
       };

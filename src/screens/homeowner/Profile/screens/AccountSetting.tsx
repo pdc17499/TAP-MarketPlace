@@ -43,7 +43,7 @@ const AccountSetting = () => {
       .string()
       .required('This field is required')
       .email('Email is not valid'),
-    phone: yup
+    contact: yup
       .string()
       .max(30, 'Phone number invalid'),
   });

@@ -1,242 +1,189 @@
+import { AppButton, AppText, Header } from '@component';
+import React from 'react';
 import {
-  AppButton,
-  AppInput,
-  AppModal,
-  AppPicker,
-  AppSlider,
-  AppText,
-  Header,
-  ModalCheckedBox,
-  PropertyChoices,
-} from '@component';
-import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, Pressable, ScrollView } from 'react-native';
-import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux';
+  View,
+  Image,
+  FlatList,
+  Pressable,
+  StyleSheet,
+  useWindowDimensions,
+  SectionList,
+} from 'react-native';
 import {
-  colors,
-  DEVICE,
-  fontFamily,
-  scaleSize,
-  scaleWidth,
-  SIZE,
-  validateForm,
-} from '@util';
-import * as yup from 'yup';
-import { Formik } from 'formik';
-import { ROOM_UNIT_HOWNER } from '@mocks';
-import { UserInfo } from '@interfaces';
-import { saveDataUser } from '@redux';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import DateTimePicker from '@react-native-community/datetimepicker';
-import { IconCheckedBox, IconTick, IconUncheckedBox } from '@assets';
-import { values } from 'lodash';
+  IconDot,
+  IconEyeCloseFullFill,
+  IconPickLocation,
+  IconTabActive,
+  room_sample,
+} from '@assets';
+import { colors, fontFamily, scaleHeight, scaleSize, scaleWidth, SIZE, STYLE } from '@util';
+import { SceneMap, TabBar, TabView } from 'react-native-tab-view';
+import { ListingRoomProps, ProfileLifeStyleProps } from '@interfaces';
+import { useNavigation } from '@react-navigation/core';
+import { ROOM_DETAIL, ROOM_UNIT_ADDRESS } from '@routeName';
+import { QAHomeOwnerLifeStyle, QAHomeOwnerPreferences } from '@screens';
 
-interface ProfileLifeStyleProp { }
 
-interface screenNavigationProp {
-  navigate: any;
+interface itemProps {
+  item: ProfileLifeStyleProps;
+  index: number;
+  section: any;
 }
 
-const ProfileLifeStyle = (props: ProfileLifeStyleProp) => {
-  const dispatch = useDispatch();
-  const list = ROOM_UNIT_HOWNER;
-  const dataUser: UserInfo = useSelector((state: any) => state?.auth?.user);
-  const [users, setUsers] = useState<UserInfo>();
-  const [showButton, setShowButton] = useState(false);
+const FirstRoute = () => (
+  <QAHomeOwnerLifeStyle />
+);
 
-  console.log({ users });
+const SecondRoute = () => (
+  <QAHomeOwnerPreferences />
+);
 
-  useEffect(() => {
-    setUsers(dataUser);
-    console.log('dulieu', dataUser);
-  }, [dataUser]);
+const renderScene = SceneMap({
+  first: FirstRoute,
+  second: SecondRoute,
+});
 
-  const formInitialValues = {
-    place: users?.lifestyle?.Friendliness,
-    pet: users?.lifestyle?.Pets,
-    smoking: users?.lifestyle?.Smoking,
-    diet: users?.lifestyle?.DietRestriction,
-    religion: users?.lifestyle?.religion,
+
+const ProfileLifeStyle = () => {
+  const layout = useWindowDimensions();
+  const navigation: any = useNavigation();
+  const [index, setIndex] = React.useState(0);
+  const [routes] = React.useState([
+    { key: 'first', title: 'Lifestyle' },
+    { key: 'second', title: 'Preferences' },
+  ]);
+
+  const renderTabBar = (props: any) => {
+    const { navigationState, jumpTo } = props;
+    const { routes, index } = navigationState;
+
+    return (
+      <View style={styles.tabContainer}>
+        {routes.map((item: any, idx: number) => {
+          const { title, key } = item;
+          const isActive = index === idx;
+          const tabTitle = isActive ? styles.tabTitleActive : styles.tabTitle;
+          return (
+            <Pressable
+              hitSlop={STYLE.hitSlop}
+              key={key}
+              onPress={() => jumpTo(key)}
+              style={styles.tabView}>
+              <AppText style={tabTitle}>{title}</AppText>
+              {isActive && <IconTabActive />}
+            </Pressable>
+          );
+        })}
+      </View>
+    );
   };
 
-  const validationForm = yup.object().shape({
-    // place: validateForm().common.selectAtLeast,
-    // pet: validateForm().common.atLeastOnePicker,
-    // smoking: validateForm().common.atLeastOnePicker,
-    // diet: validateForm().common.atLeastOnePicker,
-    // religion: validateForm().common.atLeastOnePicker,
-  });
-
-  const onChangeText = (item: any, name?: string) => {
-    if (name) {
-      const nData: any = { ...dataUser };
-      nData[name] = item;
-      setData(nData);
-    }
-    setShowButton(true);
-  };
-
-  const setData = (data: any) => {
-    // dispatch(saveDataUser(data));
-  };
-
-  const onSubmit = () => { };
-
-  const RenderForm = () => (
-    <KeyboardAwareScrollView showsVerticalScrollIndicator={false}>
-      <Formik
-        initialValues={formInitialValues}
-        validationSchema={validationForm}
-        validateOnChange={false}
-        enableReinitialize
-        onSubmit={onSubmit}>
-        {(props: any) => (
-          <>
-            <View
-              style={{
-                flex: 1,
-                borderTopWidth: 1,
-                borderTopColor: colors.borderProfileList,
-                paddingTop: 10,
-              }}>
-              {/* <AppModal
-                label={'My place is'}
-                // customTitle={<PropertyChoices data={props.values.place} />}
-                customStyleContainer={styles.modal}
-              >
-                <ModalCheckedBox data={list.your_place} />
-              </AppModal> */}
-
-              {/* <ModalCheckedBox label={'My place is'} data={list.your_place} /> */}
-
-              <AppPicker
-                value={props.values.pet}
-                name={'pet'}
-                label={'Pets'}
-                onValueChange={onChangeText}
-                items={list.have_pets}
-                error={props.errors.pet}
-                stylePicker={'linear'}
-              />
-
-              <AppPicker
-                value={props.values.smoking}
-                name={'smoking'}
-                label={'Smoking'}
-                onValueChange={onChangeText}
-                items={list.smoking}
-                error={props.errors.smoking}
-                stylePicker={'linear'}
-              />
-
-              {/* <AppModal
-                label={'Diet-choices'}
-                // customTitle={<PropertyChoices data={props.values.diet} />}
-                customStyleContainer={styles.modal}>
-                <ModalCheckedBox data={list.diet_choices} />
-              </AppModal>
-
-              <AppModal
-                label={'Religion'}
-                customTitle={<AppText>{'Religions'}</AppText>}
-                customStyleContainer={styles.modal}>
-                <ModalCheckedBox data={list.religions} />
-              </AppModal> */}
-            </View>
-            {showButton ? (
-              <AppButton
-                customStyleButton={styles.button}
-                title={'Save change'}
-                size={'small'}
-                iconRight={'tick'}
-                onPress={props.handleSubmit}
-              />
-            ) : null}
-          </>
-        )}
-      </Formik>
-    </KeyboardAwareScrollView>
-  );
 
   return (
     <View style={styles.container}>
-      <Header back />
-      <View style={styles.body}>
-        <AppText style={styles.title}>{'Lifestyle & Preferences'}</AppText>
-        {RenderForm()}
-      </View>
+      <Header back></Header>
+      <AppText style={styles.heading}>{'Lifestyle & Preferences'}</AppText>
+
+      <TabView
+        renderTabBar={renderTabBar}
+        navigationState={{ index, routes }}
+        renderScene={renderScene}
+        onIndexChange={setIndex}
+        initialLayout={{ width: 300 }}
+
+      />
+
+
     </View>
   );
 };
 
+
+
+
 const styles = StyleSheet.create({
+  button: {
+    position: 'absolute',
+    left: SIZE.padding,
+    right: SIZE.padding,
+    bottom: SIZE.medium_space,
+  },
   container: {
     flex: 1,
     backgroundColor: colors.white,
   },
-  body: {
-    flex: 1,
-    paddingHorizontal: SIZE.padding,
+  customContainer: {
+    backgroundColor: colors.bgSreen,
   },
-  title: {
-    fontSize: scaleSize(24),
-    ...fontFamily.fontWeight500,
-    marginTop: SIZE.base_space,
-    marginBottom: scaleWidth(27),
-    color: colors.textPrimary,
+  contentContainerStyle: {
+    paddingBottom: SIZE.big_space + SIZE.padding,
   },
-  message: {
+  heading: {
+    ...fontFamily.fontCampWeight500,
     fontSize: SIZE.medium_size,
+    lineHeight: scaleSize(28),
+    paddingLeft: SIZE.padding,
+    marginTop: SIZE.base_space,
+  },
+  tabContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+  },
+  tabView: {
+    paddingVertical: scaleWidth(35),
+    paddingBottom: scaleWidth(20),
+    alignItems: 'center',
+  },
+  tabTitle: {
+    ...fontFamily.fontCampWeight500,
+    color: colors.textSecondPrimary,
+    marginBottom: 6,
+  },
+  tabTitleActive: {
     ...fontFamily.fontCampWeight600,
-    lineHeight: scaleWidth(31),
     color: colors.textPrimary,
+    marginBottom: 6,
   },
-  text: {
-    fontSize: scaleSize(15),
-    ...fontFamily.fontWeight500,
-    lineHeight: scaleWidth(15),
-    marginBottom: scaleWidth(10),
-    color: colors.primary,
+  bgRoom: {
+    width: '100%',
+    height: scaleWidth(137),
+    borderRadius: 8,
+    resizeMode: 'cover',
+    marginBottom: SIZE.padding,
   },
-  text2: {
-    fontSize: scaleSize(15),
-    ...fontFamily.fontWeight500,
-    lineHeight: scaleWidth(15),
-    color: colors.primary,
-    marginBottom: -5,
+  roomTitle: {
+    ...fontFamily.fontCampWeight500,
+    fontSize: scaleSize(18),
   },
-  input: {},
-  inputAge: {
-    marginBottom: scaleWidth(30),
-    width: scaleWidth(106),
-  },
-  button: {
-    marginTop: SIZE.medium_space,
-    marginBottom: SIZE.medium_space,
-  },
-  skip: {
-    marginBottom: SIZE.medium_space,
-  },
-  code: {
+  locationView: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
-    backgroundColor: colors.bgInput,
-    borderRadius: 8,
-    paddingHorizontal: 13,
-    minHeight: SIZE.input_height,
+    marginTop: SIZE.base_space / 2,
   },
-  birthday: {
-    fontSize: scaleSize(14),
-    color: colors.textSecondPrimary,
+  location: {
+    color: '#65666D',
+    ...fontFamily.fontWeight500,
+    marginLeft: SIZE.base_space / 2,
+  },
+  subViewInactive: {
     position: 'absolute',
-    bottom: 5,
+    left: 8,
+    top: 8,
+    backgroundColor: colors.white,
+    padding: 6,
+    borderRadius: SIZE.base_space / 2,
+    flexDirection: 'row',
+    alignItems: 'center',
   },
-  modal: {},
-  modalTxt: {
-    marginRight: scaleWidth(15),
-    alignSelf: 'center',
+  textInactive: {
+    ...fontFamily.fontCampWeight500,
+    color: colors.textSecondPrimary,
+    marginLeft: SIZE.base_space / 2,
+  },
+  line: {
+    height: 1,
+    backgroundColor: colors.borderPrimary,
+    marginBottom: SIZE.medium_space,
   },
 });
 
