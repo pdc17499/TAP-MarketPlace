@@ -57,6 +57,7 @@ export interface IAppInput {
   delimiter?: string;
   onPressRightIcon?: () => void;
   maxLength?: number;
+  callBackOnFocus?: (focus: boolean) => void;
 }
 
 export interface AppSwiperProps {
