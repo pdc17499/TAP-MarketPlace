@@ -79,16 +79,16 @@ const Profile = (props: ProfileProp) => {
     dispatch(logoutApp());
   };
 
-  const openGallery = (callback: (arg0: ImageOrVideo) => void) => {
+  const openGallery = () => {
     ImagePicker.openPicker({
       width: 1024,
       height: 1024,
       cropping: true,
     }).then((image: any) => {
-      if (typeof callback === 'function') {
-        callback(image);
-        console.log(image);
-      }
+      // if (typeof callback === 'function') {
+      //   callback(image);
+      //   console.log(image);
+      // }
       setFilePath(image.path);
       console.log(image);
     });
@@ -115,7 +115,7 @@ const Profile = (props: ProfileProp) => {
   const ListHeaderComponent = () => (
     <View>
       <Header />
-      <Pressable onPress={() => openGallery(callback())}>
+      <Pressable onPress={openGallery}>
         <Image
           source={filePath ? { uri: filePath } : avatar_default}
           style={styles.avatar}></Image>
@@ -153,7 +153,4 @@ const Profile = (props: ProfileProp) => {
   );
 };
 
-export { Profile };
-function callback(): (arg0: ImageOrVideo) => void {
-  throw new Error('Function not implemented.');
-}
+export {Profile};

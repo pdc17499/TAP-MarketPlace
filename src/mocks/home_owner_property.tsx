@@ -1,18 +1,29 @@
 import {
   IconAirConditioning,
+  IconAllowGuests,
   IconBalcony,
   IconBathTub,
   IconBBQPit,
   IconDedicatedWorkspace,
+  IconDiversity,
+  IconFemale,
   IconGym,
+  IconKids,
   IconKitchen,
+  IconOwnPets,
   IconParkingLot,
+  IconPartner,
   IconPool,
+  IconSmoking,
+  IconStudent,
   IconTV,
+  IconVegetarian,
   IconWashingMachine,
   IconWifi,
+  IconWorking,
 } from '../assets';
 import React from 'react';
+import {colors} from '@util';
 
 export const ROOM_UNIT_HOWNER = {
   kind_place: [
@@ -473,6 +484,82 @@ export const ROOM_UNIT_HOWNER = {
     {
       value: 'Baháʼí',
       label: 'Baháʼí',
+    },
+  ],
+  life_style: [
+    {
+      value: 'Live with partner',
+      label: 'Live with partner',
+      icon: <IconPartner />,
+      iconSelected: <IconPartner iconFillColor={colors.textPrimary} />,
+    },
+    {
+      value: 'Live with kids',
+      label: 'Live with kids',
+      icon: <IconKids />,
+      iconSelected: <IconKids iconFillColor={colors.textPrimary} />,
+    },
+    {
+      value: 'Working',
+      label: 'Working',
+      icon: <IconWorking />,
+      iconSelected: <IconWorking iconFillColor={colors.textPrimary} />,
+    },
+    {
+      value: 'Vegetarian',
+      label: 'Vegetarian',
+      icon: <IconVegetarian />,
+      iconSelected: <IconVegetarian iconFillColor={colors.textPrimary} />,
+    },
+    {
+      value: 'Own pets',
+      label: 'Own pets',
+      icon: <IconOwnPets />,
+      iconSelected: <IconOwnPets iconFillColor={colors.textPrimary} />,
+    },
+    {
+      value: 'Smoking',
+      label: 'Smoking',
+      icon: <IconSmoking />,
+      iconSelected: <IconSmoking iconFillColor={colors.textPrimary} />,
+    },
+  ],
+  preferences: [
+    {
+      value: 'Allow guests',
+      label: 'Live with partner',
+      icon: <IconAllowGuests />,
+      iconSelected: <IconAllowGuests iconFillColor={colors.textPrimary} />,
+    },
+    {
+      value: 'Allow smoking',
+      label: 'Allow smoking',
+      icon: <IconSmoking />,
+      iconSelected: <IconSmoking iconFillColor={colors.textPrimary} />,
+    },
+    {
+      value: 'Pet friendly',
+      label: 'Pet friendly',
+      icon: <IconOwnPets />,
+      iconSelected: <IconOwnPets iconFillColor={colors.textPrimary} />,
+    },
+    {
+      value: 'Diversity friendly',
+      label: 'Diversity friendly',
+      icon: <IconDiversity />,
+      iconSelected: <IconDiversity iconFillColor={colors.textPrimary} />,
+    },
+    {
+      value: 'Female only',
+      label: 'Female only',
+      icon: <IconFemale />,
+      iconSelected: <IconFemale iconFillColor={colors.textPrimary} />,
+    },
+    {
+      value: 'Student',
+      label: 'Student',
+      icon: <IconStudent />,
+      iconSelected: <IconStudent iconFillColor={colors.textPrimary} />,
     },
   ],
 };

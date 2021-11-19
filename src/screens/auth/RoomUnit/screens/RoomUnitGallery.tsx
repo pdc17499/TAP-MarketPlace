@@ -210,7 +210,7 @@ const RoomUnitGallery = () => {
         back
         iconFillColor={isHasFile ? 'black' : 'white'}
         customContainer={{
-          position: isHasFile ? 'static' : 'absolute',
+          position: isHasFile ? 'relative' : 'absolute',
           zIndex: 9,
           backgroundColor: 'transparent',
         }}

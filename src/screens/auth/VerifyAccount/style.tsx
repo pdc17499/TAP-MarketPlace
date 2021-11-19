@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: scaleSize(18),
     ...fontFamily.fontCampWeight600,
-    marginTop: scaleWidth(20),
+    marginTop: scaleWidth(5),
     marginBottom: scaleWidth(15),
     color: colors.textSecondPrimary,
   },
@@ -43,6 +43,7 @@ const styles = StyleSheet.create({
     ...fontFamily.fontWeight400,
     color: colors.textThirdPrimary,
     marginTop: scaleWidth(25),
+    lineHeight: scaleSize(22),
   },
   question: {
     marginTop: scaleWidth(25),
@@ -65,7 +66,8 @@ const styles = StyleSheet.create({
   skipTxt: {
     ...fontFamily.fontWeight500,
     color: colors.textSecondPrimary,
-    fontSize: scaleSize(18),
+    fontSize: scaleSize(17),
+    marginTop: -5,
   },
   skip: {
     borderBottomWidth: 1,

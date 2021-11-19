@@ -46,6 +46,11 @@ const styles = StyleSheet.create({
   button: {
     // marginBottom: scaleWidth(20),
   },
+  labelCountry: {
+    color: colors.primary,
+    ...fontFamily.fontWeight500,
+    fontSize: scaleSize(15),
+  },
 });
 
 export {styles};

@@ -61,6 +61,8 @@ export const INITIAL_STATE_DATA_SIGN_UP: DataSignupProps = {
   confirm_password: '',
   avatar: '',
   phone: '',
+  life_style: [],
+  preferences: [],
 };
 
 export const INITIAL_STATE_AUTH: AuthState = {

@@ -12,6 +12,7 @@ import {UserInformationGender} from './auth/UserInformationGender';
 import {UserInformationCountry} from './auth/UserInformationCountry';
 import {LifeStyle} from './auth/LifeStyle';
 import {LifeStyleStep} from './auth/LifeStyleStep';
+import {Preferences} from './auth/Preferences';
 import {
   RoomUnitGallery,
   RoomUnitAddress,
@@ -65,6 +66,7 @@ export {
   UserInformationCountry,
   LifeStyle,
   LifeStyleStep,
+  Preferences,
   // Authenticate
   Home,
   UpdateNewPassword,

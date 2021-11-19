@@ -35,6 +35,13 @@ api.interceptors.response.use(
   function (response: any) {
     describeSuccessResponse(response);
     try {
+      const message = response?.data?.message;
+      if (message) {
+        showMessage({
+          message: message,
+          type: 'success',
+        });
+      }
       return response?.data;
     } catch (error) {
       console.log('err2', error);

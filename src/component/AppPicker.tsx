@@ -20,6 +20,7 @@ export const AppPicker: React.FC<IAppPicker> = React.memo((props: any) => {
     typePicker,
     stylePicker,
     disable,
+    customStyleLabel,
   } = props;
   const value = props.value || '';
   const [isOpenPicker, setIsOpenPicker] = useState(false);
@@ -50,7 +51,11 @@ export const AppPicker: React.FC<IAppPicker> = React.memo((props: any) => {
 
   return (
     <View style={styles.container}>
-      {label && <AppText style={[styles.label, colorLabel]}>{label}</AppText>}
+      {label && (
+        <AppText style={[styles.label, colorLabel, customStyleLabel]}>
+          {label}
+        </AppText>
+      )}
       <View style={[styles.picker, style]}>
         {typePicker === 'country' ? (
           <View style={styles.country}>
@@ -208,7 +213,7 @@ const stylesLinear = StyleSheet.create({
   },
   label: {
     color: colors.secondPrimary,
-    fontSize: scaleSize(14.5),
+    fontSize: scaleSize(15),
     marginBottom: DEVICE.isIos ? SIZE.base_space / 2 : SIZE.base_space / 4,
     ...fontFamily.fontCampWeight500,
   },

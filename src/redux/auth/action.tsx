@@ -10,7 +10,9 @@ import {
   FORGOT_PASSWORD,
   VERIFY_CODE_FORGOT_PASSWORD,
   RESET_NEW_PASSWORD,
-  UPDATE_USER_INFO
+  UPDATE_USER_INFO,
+  VERIFY_PHONE_NUMBER,
+  VERIFY_CODE_PHONE_NUMBER,
 } from '@redux';
 
 export const loginApp = (payload: any) => ({
@@ -57,7 +59,22 @@ export const resetNewPassword = (payload: any) => ({
 });
 
 export const updateUserInfo = (payload: any) => ({
-  type: UPDATE_USER_INFO,
+type: UPDATE_USER_INFO,
+payload,
+});
+
+export const verifyPhonenumber = (payload: any) => ({
+  type: VERIFY_PHONE_NUMBER,
+  payload,
+});
+
+export const verifyCodePhonenumber = (payload: any) => ({
+  type: VERIFY_CODE_PHONE_NUMBER,
+  payload,
+});
+
+export const updateUserInfor = (payload: any) => ({
+  type: UPDATE_USER_INFOR,
   payload,
 });
 

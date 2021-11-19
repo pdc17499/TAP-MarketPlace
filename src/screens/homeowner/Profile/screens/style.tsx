@@ -81,10 +81,12 @@ const styles = StyleSheet.create({
     ...fontFamily.fontWeight500,
     fontSize: scaleSize(15),
     color: colors.textSecondPrimary,
+    marginLeft: 8,
   },
   logOut: {
     flexDirection: 'row',
-    alignSelf: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
     marginTop: SIZE.big_space,
     marginBottom: SIZE.medium_space,
   },

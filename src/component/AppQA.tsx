@@ -15,6 +15,8 @@ const AppQA = React.memo((props: AppQAProps) => {
     isMultiChoice,
     customStyleTitle,
     customStyleViewButton,
+    customStyleButton,
+    customStyleTitleButton,
     setValue,
     name,
     subTitle,
@@ -22,6 +24,7 @@ const AppQA = React.memo((props: AppQAProps) => {
     typeTitle,
     error,
     titleHighlight,
+    showIconLeft,
   } = props;
   const listStyle = typeList === 'column' ? {} : styles.listRow;
   const itemStyle =
@@ -57,7 +60,6 @@ const AppQA = React.memo((props: AppQAProps) => {
       flex: typeList === 'row' ? 1 : 0,
     },
   ];
-  // console.log({selected, value});
 
   const onChangeValue = (item: mockProps, isActive: boolean) => {
     let nValue: any = {...value};
@@ -72,12 +74,19 @@ const AppQA = React.memo((props: AppQAProps) => {
         if (nItem.hasOwnProperty('icon')) {
           delete nItem.icon;
         }
+        if (nItem.hasOwnProperty('iconSelected')) {
+          delete nItem.iconSelected;
+        }
+        console.log({nItem});
         nValue[name].push(nItem);
       }
     } else {
       const nItem: pickerProps = {...item};
       if (nItem.hasOwnProperty('icon')) {
         delete nItem.icon;
+      }
+      if (nItem.hasOwnProperty('iconSelected')) {
+        delete nItem.iconSelected;
       }
       nValue[name] = item;
     }
@@ -110,14 +119,21 @@ const AppQA = React.memo((props: AppQAProps) => {
                   (itm: mockProps) => item.value == itm?.value,
                 ) > -1
               : item.value == selected?.value;
+          let iconLeftButton = item?.icon ? item.icon : null;
+          iconLeftButton =
+            item?.iconSelected && isActive
+              ? item?.iconSelected
+              : iconLeftButton;
           return (
             <View key={item.value} style={styleViewButton}>
               <AppButton
+                iconLeft={showIconLeft && iconLeftButton}
                 onPress={() => onChangeValue(item, isActive)}
                 isActive={isActive}
                 typeButton={'linear'}
                 title={item.value}
-                customStyleButton={itemStyle}
+                customStyleButton={[itemStyle, customStyleButton]}
+                customStyleTitle={customStyleTitleButton}
               />
               {isActive && children}
             </View>
@@ -165,7 +181,7 @@ const styles = StyleSheet.create({
   },
   baseTitle: {
     ...fontFamily.fontCampWeight500,
-    fontSize: SIZE.base_size - 1,
+    fontSize: scaleSize(15),
     lineHeight: SIZE.base_size - 1,
     color: colors.primary,
   },

@@ -29,6 +29,7 @@ const AppButton = React.memo((props: ButtonProps) => {
     image,
     imageStyle,
     containerStyle,
+    iconLeft,
   } = props;
 
   const onPressButton = useCallback(
@@ -102,6 +103,7 @@ const AppButton = React.memo((props: ButtonProps) => {
         disabled={disabled}
         onPress={onPressButton}
         activeOpacity={0.75}>
+        {iconLeft && <>{iconLeft}</>}
         {image && <Image source={image} style={imageStyle} />}
         {title && <AppText style={titleStyle}>{title}</AppText>}
         {iconRight && <View style={styles.iconRight}>{renderIconRight()}</View>}

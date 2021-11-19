@@ -7,6 +7,8 @@ import {
   VERIFY_EMAIL,
   VERIFY_CODE_FORGOT_PASSWORD,
   RESET_NEW_PASSWORD,
+  VERIFY_CODE_PHONE_NUMBER,
+  VERIFY_PHONE_NUMBER,
   UPDATE_USER_INFO,
 } from './types';
 
@@ -41,5 +43,14 @@ export const resetNewPasswordApi: any = async (data: any) => {
 
 export const updateUserInfoApi: any = async (data: any, id: string) => {
   const response = await api.patch(UPDATE_USER_INFO + id, data);
+  return response;
+};
+
+export const verifyPhonenumberApi: any = async (data: any) => {
+  const response = await api.post(VERIFY_PHONE_NUMBER, data);
+  return response;
+};
+export const verifyCodePhonenumberApi: any = async (data: any) => {
+  const response = await api.post(VERIFY_CODE_PHONE_NUMBER, data);
   return response;
 };
