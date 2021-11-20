@@ -1,7 +1,7 @@
 import {AppButton, AppInput, AppText, Header} from '@component';
 import {useNavigation} from '@react-navigation/core';
 import {Formik} from 'formik';
-import React from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {View, _ScrollView, Image} from 'react-native';
 import {styles} from './style';
 import * as yup from 'yup';
@@ -23,25 +23,36 @@ const UserInformationName = () => {
   const dataSignUp: DataSignupProps = useSelector(
     (state: any) => state?.auth?.dataSignup,
   );
-  const setData = (data: any) => {
-    dispatch(setDataSignup({data}));
-  };
-  const formInitialValues = {
-    user_name: dataSignUp?.user_name,
-  };
+  const [user_name, setUsername] = useState('');
 
+  useEffect(() => {
+    setUsername(dataSignUp.user_name);
+  }, [dataSignUp.user_name]);
+
+  const formInitialValues = {
+    user_name: user_name,
+  };
   const validationForm = yup.object().shape({
     user_name: validateForm().common.reuqire,
   });
+
+  const setData = (data: any) => {
+    dispatch(setDataSignup({data}));
+  };
 
   const handleSubmit = () => {
     navigation.navigate(USER_INFORMATION_GENDER);
   };
 
-  const onChangeValue = (item: any, name?: string) => {
+  const onChangeValue = (value: any, name?: string) => {
+    setUsername(value);
+  };
+
+  const onEndEditing = (name?: string) => {
+    console.log({name});
     if (name) {
       const nData: any = {...dataSignUp};
-      nData[name] = item;
+      nData[name] = user_name;
       setData(nData);
     }
   };
@@ -72,6 +83,7 @@ const UserInformationName = () => {
                 value={props.values.user_name}
                 onValueChange={onChangeValue}
                 error={props.errors.user_name}
+                onEndEditing={onEndEditing}
               />
             </View>
             {props.values.user_name !== '' ? (

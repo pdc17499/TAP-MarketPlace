@@ -1,29 +1,20 @@
 import {
   SAVE_DATA_USER,
-  HIDE_INTRO_SCREEN,
-  UPDATE_USER_INFO,
   SET_DATA_SIGNUP,
-  LOGIN,
   LOGOUT,
-  VERIFY_EMAIL,
   RESET_DATA_SIGNUP,
 } from './type';
-import { INITIAL_STATE_AUTH } from './state';
-import { INITIAL_STATE_DATA_SIGN_UP } from '@redux';
-
+import {INITIAL_STATE_AUTH} from './state';
+import {INITIAL_STATE_DATA_SIGN_UP} from '@redux';
+import _ from 'lodash';
 
 export default function dataSave(state = INITIAL_STATE_AUTH, action: any) {
   switch (action.type) {
     case SAVE_DATA_USER:
       return {
         ...state,
-        user: action?.payload?.user,
-        token: action?.payload?.tokens,
-      };
-    case HIDE_INTRO_SCREEN:
-      return {
-        ...state,
-        showIntroScreen: action.payload,
+        user: action?.payload?.user || state?.user,
+        token: action?.payload?.tokens || state?.token,
       };
     case LOGOUT:
       return {
@@ -31,22 +22,15 @@ export default function dataSave(state = INITIAL_STATE_AUTH, action: any) {
         user: null,
         token: null,
       };
-
-    case UPDATE_USER_INFO:
-      return {
-        ...state,
-        user: action?.payload?.data?.user_info,
-      };
     case SET_DATA_SIGNUP:
       return {
         ...state,
         dataSignup: action?.payload?.data,
       };
     case RESET_DATA_SIGNUP:
-      return {
-        ...state,
+      return _.assign({}, state, {
         dataSignup: INITIAL_STATE_DATA_SIGN_UP,
-      };
+      });
 
     default:
       return state;

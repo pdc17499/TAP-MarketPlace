@@ -60,7 +60,7 @@ const AccountSetting = () => {
   const onSubmit = () => {};
 
   const validatePhone = (contact: number) => {
-    return contact.toString().replace(/[^a-zA-Z0-9]/g, '');
+    return contact ? contact.toString().replace(/[^a-zA-Z0-9]/g, '') : '';
   };
 
   const RenderForm = () => (
@@ -88,15 +88,6 @@ const AccountSetting = () => {
                 typeInput={'linear'}
                 name={'email'}
               />
-
-              {/* <AppInput
-                label={'Your name'}
-                value={props.values.name}
-                onValueChange={onChangeText}
-                error={props.errors.name}
-                typeInput={'linear'}
-                name={'name'}
-              /> */}
 
               <View style={styles.phoneInput}>
                 <AppText style={styles.phoneInputTxt}>{'Phone number'}</AppText>

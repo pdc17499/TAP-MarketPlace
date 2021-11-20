@@ -10,6 +10,7 @@ import {
   VERIFY_CODE_PHONE_NUMBER,
   VERIFY_PHONE_NUMBER,
   UPDATE_USER_INFO,
+  CHANGE_PASSWORD,
 } from './types';
 
 export const loginApi: any = async (data: any) => {
@@ -41,16 +42,22 @@ export const resetNewPasswordApi: any = async (data: any) => {
   return response;
 };
 
-export const updateUserInfoApi: any = async (data: any, id: string) => {
-  const response = await api.patch(UPDATE_USER_INFO + id, data);
-  return response;
-};
-
 export const verifyPhonenumberApi: any = async (data: any) => {
   const response = await api.post(VERIFY_PHONE_NUMBER, data);
   return response;
 };
 export const verifyCodePhonenumberApi: any = async (data: any) => {
   const response = await api.post(VERIFY_CODE_PHONE_NUMBER, data);
+  return response;
+};
+
+// profile
+export const updateUserInfoApi: any = async (data: any, id: string) => {
+  const response = await api.patch(UPDATE_USER_INFO + id, data);
+  return response;
+};
+
+export const changePasswordApi: any = async (data: any) => {
+  const response = await api.post(CHANGE_PASSWORD, data);
   return response;
 };

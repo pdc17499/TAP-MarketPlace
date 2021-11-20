@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { createStackNavigator } from '@react-navigation/stack';
+import {createStackNavigator} from '@react-navigation/stack';
 import {
   VERIFY_ACCOUNT,
   VERIFY_CODE,
@@ -23,8 +23,6 @@ import {
   ROOM_DETAIL_LOCATION,
   ROOM_DETAIL_GELLERY,
   ADD_SUCCESS,
-  QA_HOMEOWNER_LIFESTYLE,
-  QA_HOMEOWNER_PREFERENCES,
 } from './routeName';
 
 import {
@@ -49,8 +47,6 @@ import {
   RoomDetailGallery,
   RoomUnitKindPlace,
   AddSuccess,
-  QAHomeOwnerLifeStyle,
-  QAHomeOwnerPreferences,
 } from '../screens';
 
 const Stack = createStackNavigator();
@@ -69,8 +65,6 @@ const AuthenStack = () => {
       <Stack.Screen name={CHANGE_PASSWORD} component={ChangePassword} />
       <Stack.Screen name={ACCOUNT_SETTING} component={AccountSetting} />
       <Stack.Screen name={PROFILE_LIFE_STYLE} component={ProfileLifeStyle} />
-      <Stack.Screen name={QA_HOMEOWNER_LIFESTYLE} component={QAHomeOwnerLifeStyle} />
-      <Stack.Screen name={QA_HOMEOWNER_PREFERENCES} component={QAHomeOwnerPreferences} />
       <Stack.Screen name={YOUR_LISTING} component={YourListing} />
       <Stack.Screen name={ROOM_DETAIL} component={RoomDetail} />
       <Stack.Screen

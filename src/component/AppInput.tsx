@@ -47,6 +47,7 @@ export const AppInput = (props: IAppInput) => {
     onPressRightIcon,
     maxLength,
     callBackOnFocus,
+    onEndEditing,
   } = props;
   const [isFocused, setIsFocused] = React.useState(false);
   const [hidePasssWord, setHidePassWord] = React.useState(true);
@@ -114,6 +115,10 @@ export const AppInput = (props: IAppInput) => {
       },
   ];
 
+  const onEndEditingInput = (e: any) => {
+    if (onEndEditing) onEndEditing(name);
+  };
+
   return (
     <View style={containerStyle}>
       {label && (
@@ -140,11 +145,13 @@ export const AppInput = (props: IAppInput) => {
             onFocus={handleFocus}
             onBlur={handleBlur}
             numberOfLines={numberOfLines}
-            blurOnSubmit={false}
             secureTextEntry={hidePasssWord && secureTextEntry}
             keyboardType={keyboardType}
             autoFocus={autoFocus}
             maxLength={maxLength}
+            onEndEditing={onEndEditingInput}
+            returnKeyType={'done'}
+            blurOnSubmit={!multiline}
           />
         ) : (
           <TextInput
@@ -157,12 +164,14 @@ export const AppInput = (props: IAppInput) => {
             onFocus={handleFocus}
             onBlur={handleBlur}
             numberOfLines={numberOfLines}
-            blurOnSubmit={false}
             onChangeText={onChangeText}
             secureTextEntry={hidePasssWord && secureTextEntry}
             keyboardType={keyboardType}
             autoFocus={autoFocus}
             maxLength={maxLength}
+            onEndEditing={onEndEditingInput}
+            returnKeyType={'done'}
+            blurOnSubmit={!multiline}
           />
         )}
 

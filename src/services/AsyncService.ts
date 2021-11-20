@@ -20,6 +20,7 @@ export const getToken = async () => {
 };
 
 export const removeToken = async () => {
+  console.log('removeToken');
   try {
     const value = await AsyncStorage.removeItem('TOKEN');
     if (value !== null) {

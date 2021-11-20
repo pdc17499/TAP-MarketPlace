@@ -75,7 +75,7 @@ export const DownIcon = (props: iconProps) => (
 );
 
 export const CaretRight = (props: iconProps) => (
-  <Svg width={20} height={20} fill="none" {...props}>
+  <Svg width={20} height={20} viewBox="0 0 20 20" fill="none" {...props}>
     <Path
       d="M7.5 3.75L13.75 10 7.5 16.25"
       stroke={props.iconFillColor || '#B09E88'}

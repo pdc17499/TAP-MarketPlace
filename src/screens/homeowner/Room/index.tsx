@@ -4,4 +4,10 @@ import {RoomDetailLocation} from './screens/RoomDetail/RoomDetailLocation';
 import {RoomDetailGallery} from './screens/RoomDetail/RoomDetailGallery';
 import {AddSuccess} from './screens/RoomDetail/AddSuccess';
 
-export {YourListing, RoomDetail, RoomDetailLocation, AddSuccess, RoomDetailGallery};
+export {
+  YourListing,
+  RoomDetail,
+  RoomDetailLocation,
+  AddSuccess,
+  RoomDetailGallery,
+};

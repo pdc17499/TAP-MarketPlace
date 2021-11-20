@@ -72,7 +72,7 @@ const LifeStyle = (props: any) => {
           iconRight={'arNext'}
           onPress={props.handleSubmit}
         />
-        {props.values.staying_with_guests !== 'Yes' && (
+        {props.values.staying_with_guests === 'Yes' && (
           <AppButton
             title={'Skip'}
             typeButton={'link'}

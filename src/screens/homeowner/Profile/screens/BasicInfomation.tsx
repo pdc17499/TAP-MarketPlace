@@ -1,8 +1,15 @@
-import { AppButton, AppInput, AppPicker, AppText, Header } from '@component';
-import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, Pressable } from 'react-native';
-import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux';
+import {
+  AppButton,
+  AppInput,
+  AppModalCountry,
+  AppPicker,
+  AppText,
+  Header,
+} from '@component';
+import React, {useEffect, useState} from 'react';
+import {View, StyleSheet, Pressable} from 'react-native';
+import {useDispatch} from 'react-redux';
+import {useSelector} from 'react-redux';
 import {
   colors,
   fontFamily,
@@ -12,74 +19,57 @@ import {
   validateForm,
 } from '@util';
 import * as yup from 'yup';
-import { Formik } from 'formik';
-import { ROOM_UNIT_HOWNER } from '@mocks';
-import { UserInfo } from '@interfaces';
-import { saveDataUser } from '@redux';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import DateTimePickerModal from "react-native-modal-datetime-picker";
+import {Formik} from 'formik';
+import {ROOM_UNIT_HOWNER} from '@mocks';
+import {UserInfo} from '@interfaces';
+import {saveDataUser, updateUserInfo} from '@redux';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import moment from 'moment';
+import {CaretRight} from '@assets';
 
-interface BasicInfomationProp { }
+interface BasicInfomationProp {}
 
 interface screenNavigationProp {
   navigate: any;
 }
 
-const BasicInfomation = (props: BasicInfomationProp) => {
+const BasicInfomation = () => {
   const dispatch = useDispatch();
   const list = ROOM_UNIT_HOWNER;
-  const [users, setUsers] = useState<UserInfo>();
+  const [user, setUser] = useState<UserInfo>();
   const dataUser: UserInfo = useSelector((state: any) => state?.auth?.user);
   const [showDate, setShowDate] = useState(false);
   const [dateOfBirth, setDateOfBirth] = useState('');
 
   useEffect(() => {
-    setUsers(dataUser);
-
+    setUser(dataUser);
   }, [dataUser]);
 
-  console.log('info', users);
-
   const formInitialValues = {
-    name: users?.name,
-    country: users?.country?.cca2,
-    // nationality: users?.nationality,
-    occupation: users?.occupation,
-    ethnicity: users?.ethnicity,
-    gender: users?.gender,
-    ageGroup: users?.ageGroup,
+    name: user?.name,
+    nationality: user?.nationality,
+    occupation: user?.occupation,
+    ethnicity: user?.ethnicity,
+    gender: user?.gender,
+    ageGroup: user?.ageGroup,
   };
 
   const validationForm = yup.object().shape({
-    name: yup.string(),
+    name: validateForm().common.reuqire,
     gender: validateForm().common.selectAtLeast,
-    // country: validateForm().common.selectAtLeast,
     // occupation: validateForm().common.atLeastOnePicker,
     // ethnicity: validateForm().common.atLeastOnePicker,
     // nationality: validateForm().common.selectAtLeast,
     // ageGroup: validateForm().common.atLeastOnePicker,
   });
 
-  const onChangeText = (item: any, name?: string) => {
-
-
+  const onChangeValue = (item: any, name?: string) => {
     if (name) {
-      const nData: any = { ...users };
-      nData[name] = item;
-      setUsers(nData);
+      const nData: any = {...user};
+      nData[name] = name === 'nationality' ? item.name : item;
+      setUser(nData);
     }
-  };
-  // const onChangeCountry = (item: any, value?: string) => {
-  //   console.log('3333', item.name, value);
-  //   if (name) {
-  //     const nData: any = { ...users };
-  //     nData[name] = item.name;
-  //     setUsers(nData);
-  //   }
-  // };
-  const setData = (data: any) => {
-    // dispatch(saveDataUser(users));
   };
 
   const showDatepicker = () => {
@@ -87,18 +77,40 @@ const BasicInfomation = (props: BasicInfomationProp) => {
   };
 
   const hideDatePicker = () => {
-    setShowDate(false)
-  }
+    setShowDate(false);
+  };
 
   const onChangDate = (selectedDate: any) => {
     const changeDate = selectedDate || dateOfBirth;
     const birthday = moment(changeDate).format('DD/MM/YYYY');
-    console.log("A date has been picked: ", birthday);
+    console.log('A date has been picked: ', birthday);
     setDateOfBirth(birthday);
     setShowDate(false);
   };
 
-  const onSubmit = () => { };
+  const onSubmit = () => {
+    const body = {
+      name: user?.name,
+      nationality: user?.nationality,
+      occupation: user?.occupation,
+      ethnicity: user?.ethnicity,
+      gender: user?.gender || '',
+      ageGroup: user?.ageGroup || '',
+    };
+
+    dispatch(updateUserInfo({body, id: user?.id}));
+  };
+
+  const renderCustomPlaceHolder = (name: string) => {
+    return (
+      <View style={styles.viewPlacHolder}>
+        <AppText style={styles.customPlaceHolder}>
+          {`Update your ${name} `}
+        </AppText>
+        <CaretRight iconFillColor={colors.primary} width={13} height={13} />
+      </View>
+    );
+  };
 
   const RenderForm = () => (
     <KeyboardAwareScrollView showsVerticalScrollIndicator={false}>
@@ -110,17 +122,11 @@ const BasicInfomation = (props: BasicInfomationProp) => {
         onSubmit={onSubmit}>
         {(props: any) => (
           <>
-            <View
-              style={{
-                flex: 1,
-                borderTopWidth: 1,
-                borderTopColor: colors.borderProfileList,
-                paddingTop: 10,
-              }}>
+            <View style={styles.formikContainer}>
               <AppInput
                 label={'Your name'}
                 value={props.values.name}
-                onValueChange={onChangeText}
+                onValueChange={onChangeValue}
                 error={props.errors.name}
                 typeInput={'linear'}
                 name={'name'}
@@ -129,7 +135,7 @@ const BasicInfomation = (props: BasicInfomationProp) => {
                 value={props.values.gender}
                 name={'gender'}
                 label={'Gender'}
-                onValueChange={onChangeText}
+                onValueChange={onChangeValue}
                 items={list.gender}
                 error={props.errors.gender}
                 stylePicker={'linear'}
@@ -139,65 +145,63 @@ const BasicInfomation = (props: BasicInfomationProp) => {
                   value={props.values.ageGroup}
                   name={'ageGroup'}
                   label={'Age group'}
-                  onValueChange={onChangeText}
+                  onValueChange={onChangeValue}
                   items={list.group_age}
                   error={props.errors.ageGroup}
                   stylePicker={'linear'}
+                  customStyleInputPicker={{paddingBottom: scaleWidth(54)}}
                 />
-                <Pressable
-                  onPress={() => showDatepicker()}
-                  style={styles.birthday}>
-                  <AppText style={styles.birthdayTxt}>
-                    {dateOfBirth === ''
-                      ? 'Update you date of birth'
-                      : dateOfBirth}
-                  </AppText>
+                <Pressable onPress={showDatepicker}>
+                  {dateOfBirth === '' ? (
+                    renderCustomPlaceHolder('date of birth')
+                  ) : (
+                    <AppText style={styles.birthdayTxt}>{dateOfBirth}</AppText>
+                  )}
                 </Pressable>
                 {showDate && (
-
                   <DateTimePickerModal
                     isVisible={showDate}
                     mode="date"
                     onConfirm={onChangDate}
                     onCancel={hideDatePicker}
+                    maximumDate={new Date()}
                   />
                 )}
               </View>
-              <AppPicker
-                value={props.values.country}
-                name={'country'}
-                label={'Country'}
-                onValueChange={onChangeText}
-                typePicker={'country'}
-                error={props.errors.country}
-                stylePicker={'linear'}
-              />
-              {/* <AppPicker
-                value={props.values.nationality}
+              <AppModalCountry
                 name={'nationality'}
                 label={'Country'}
-                onValueChange={onChangeText}
-                items={list.nationality}
+                value={props.values.nationality}
+                onValueChange={onChangeValue}
                 error={props.errors.nationality}
-                stylePicker={'linear'}
-              /> */}
+              />
               <AppPicker
                 value={props.values.occupation}
                 name={'occupation'}
                 label={'Occupation'}
-                onValueChange={onChangeText}
+                onValueChange={onChangeValue}
                 items={list.occupation}
                 error={props.errors.occupation}
                 stylePicker={'linear'}
+                placeholder={{
+                  label: '',
+                  value: '',
+                }}
+                customePlaceholder={renderCustomPlaceHolder('Ethnicity')}
               />
               <AppPicker
                 value={props.values.ethnicity}
                 name={'ethnicity'}
                 label={'Ethnicity'}
-                onValueChange={onChangeText}
+                onValueChange={onChangeValue}
                 items={list.ethnicity}
                 error={props.errors.ethnicity}
                 stylePicker={'linear'}
+                placeholder={{
+                  label: '',
+                  value: '',
+                }}
+                customePlaceholder={renderCustomPlaceHolder('Occupation')}
               />
             </View>
 
@@ -233,6 +237,18 @@ const styles = StyleSheet.create({
   body: {
     flex: 1,
     paddingHorizontal: SIZE.padding,
+  },
+  formikContainer: {
+    flex: 1,
+    borderTopWidth: 1,
+    borderTopColor: colors.borderProfileList,
+    paddingTop: 10,
+  },
+  customPlaceHolder: {
+    color: colors.primary,
+    ...fontFamily.fontWeight600,
+    fontSize: scaleSize(14),
+    zIndex: -1,
   },
   title: {
     fontSize: scaleSize(24),
@@ -282,16 +298,19 @@ const styles = StyleSheet.create({
     paddingHorizontal: 13,
     minHeight: SIZE.input_height,
   },
-  birthday: {
-    zIndex: 1000,
-    // backgroundColor: 'red',
-    position: 'absolute',
-    bottom: 5,
-  },
   birthdayTxt: {
     fontSize: scaleSize(14),
     color: colors.textSecondPrimary,
+    position: 'absolute',
+    bottom: SIZE.padding,
+  },
+  viewPlacHolder: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    position: 'absolute',
+    bottom: SIZE.padding,
+    zIndex: -1,
   },
 });
 
-export { BasicInfomation };
+export {BasicInfomation};

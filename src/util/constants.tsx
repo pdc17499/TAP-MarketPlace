@@ -36,4 +36,9 @@ const STYLE = {
   hitSlop: {top: 20, bottom: 20, left: 20, right: 20},
 };
 
-export {DEVICE, SLIDER, FILE_SIZE, DEFAULT_COUNTRY, STYLE};
+const OPTIONS_GALLERY = {
+  optionPhotos: ['Upload Photos', 'Take a photo', 'Cancel'],
+  ptionVideos: ['Upload Video', 'Take a video', 'Cancel'],
+};
+
+export {DEVICE, SLIDER, FILE_SIZE, DEFAULT_COUNTRY, STYLE, OPTIONS_GALLERY};

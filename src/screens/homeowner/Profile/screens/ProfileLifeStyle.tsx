@@ -1,105 +1,117 @@
-import { AppButton, AppText, Header } from '@component';
-import React from 'react';
+import {AppQA, AppTabview, AppText, Header, AppButton} from '@component';
+import React, {useEffect, useRef, useState} from 'react';
+import {View, Pressable, StyleSheet, ScrollView} from 'react-native';
+import {IconTabActive} from '@assets';
 import {
-  View,
-  Image,
-  FlatList,
-  Pressable,
-  StyleSheet,
-  useWindowDimensions,
-  SectionList,
-} from 'react-native';
-import {
-  IconDot,
-  IconEyeCloseFullFill,
-  IconPickLocation,
-  IconTabActive,
-  room_sample,
-} from '@assets';
-import { colors, fontFamily, scaleHeight, scaleSize, scaleWidth, SIZE, STYLE } from '@util';
-import { SceneMap, TabBar, TabView } from 'react-native-tab-view';
-import { ListingRoomProps, ProfileLifeStyleProps } from '@interfaces';
-import { useNavigation } from '@react-navigation/core';
-import { ROOM_DETAIL, ROOM_UNIT_ADDRESS } from '@routeName';
-import { QAHomeOwnerLifeStyle, QAHomeOwnerPreferences } from '@screens';
-
-
-interface itemProps {
-  item: ProfileLifeStyleProps;
-  index: number;
-  section: any;
-}
-
-const FirstRoute = () => (
-  <QAHomeOwnerLifeStyle />
-);
-
-const SecondRoute = () => (
-  <QAHomeOwnerPreferences />
-);
-
-const renderScene = SceneMap({
-  first: FirstRoute,
-  second: SecondRoute,
-});
-
+  colors,
+  fontFamily,
+  scaleSize,
+  scaleWidth,
+  SIZE,
+  STYLE,
+  validateForm,
+} from '@util';
+import {SceneMap, TabView} from 'react-native-tab-view';
+import {UserInfo} from '@interfaces';
+import {useDispatch, useSelector} from 'react-redux';
+import {ROOM_UNIT_HOWNER} from '@mocks';
+import {updateUserInfo} from '@redux';
+import {Formik, FormikValues} from 'formik';
+import * as yup from 'yup';
 
 const ProfileLifeStyle = () => {
-  const layout = useWindowDimensions();
-  const navigation: any = useNavigation();
-  const [index, setIndex] = React.useState(0);
+  const dispatch = useDispatch();
+  const [user, setUser] = useState<UserInfo>();
   const [routes] = React.useState([
-    { key: 'first', title: 'Lifestyle' },
-    { key: 'second', title: 'Preferences' },
+    {key: 'first', title: 'Lifestyle'},
+    {key: 'second', title: 'Preferences'},
   ]);
+  const dataUser: UserInfo = useSelector((state: any) => state?.auth?.user);
+  const formRef: any = useRef<FormikValues>();
 
-  const renderTabBar = (props: any) => {
-    const { navigationState, jumpTo } = props;
-    const { routes, index } = navigationState;
+  useEffect(() => {
+    setUser(dataUser);
+  }, [dataUser]);
 
+  const list = ROOM_UNIT_HOWNER;
+  const formInitialValues = {
+    lifestyle: user?.lifestyle,
+    preferences: user?.preferences,
+  };
+  const validationSchema = yup.object().shape({
+    lifestyle: validateForm().common.atLeastOneArray,
+    preferences: validateForm().common.atLeastOneArray,
+  });
+
+  const onSubmit = (values: any) => {
+    console.log({values});
+    const body = {
+      lifestyle: user?.lifestyle,
+      preferences: user?.preferences,
+    };
+    dispatch(updateUserInfo({body, id: user?.id}));
+  };
+
+  const handleSubmit = () => {
+    if (formRef.current) {
+      formRef.current.handleSubmit();
+    }
+  };
+
+  const renderLifeStyle = (data: any, name: string) => {
     return (
-      <View style={styles.tabContainer}>
-        {routes.map((item: any, idx: number) => {
-          const { title, key } = item;
-          const isActive = index === idx;
-          const tabTitle = isActive ? styles.tabTitleActive : styles.tabTitle;
-          return (
-            <Pressable
-              hitSlop={STYLE.hitSlop}
-              key={key}
-              onPress={() => jumpTo(key)}
-              style={styles.tabView}>
-              <AppText style={tabTitle}>{title}</AppText>
-              {isActive && <IconTabActive />}
-            </Pressable>
-          );
-        })}
-      </View>
+      <ScrollView
+        style={styles.scrollview}
+        showsVerticalScrollIndicator={false}>
+        <Formik
+          innerRef={formRef}
+          initialValues={formInitialValues}
+          validationSchema={validationSchema}
+          validateOnChange={false}
+          enableReinitialize
+          onSubmit={onSubmit}>
+          {(props: any) => (
+            <AppQA
+              isFlex
+              data={data}
+              value={user}
+              setValue={setUser}
+              typeList={'even'}
+              name={name}
+              error={props.errors[name]}
+              isMultiChoice
+              showIconLeft
+              customStyleButton={styles.customStyleButton}
+              customStyleTitleButton={styles.customStyleTitleButton}
+            />
+          )}
+        </Formik>
+      </ScrollView>
     );
   };
 
+  const renderScene = SceneMap({
+    first: () => renderLifeStyle(list.life_style, 'lifestyle'),
+    second: () => renderLifeStyle(list.preferences, 'preferences'),
+  });
 
   return (
-    <View style={styles.container}>
-      <Header back></Header>
-      <AppText style={styles.heading}>{'Lifestyle & Preferences'}</AppText>
-
-      <TabView
-        renderTabBar={renderTabBar}
-        navigationState={{ index, routes }}
-        renderScene={renderScene}
-        onIndexChange={setIndex}
-        initialLayout={{ width: 300 }}
-
-      />
-
-
-    </View>
+    <>
+      <Header back />
+      <View style={styles.container}>
+        <AppText style={styles.heading}>{'Lifestyle & Preferences'}</AppText>
+        <AppTabview renderScene={renderScene} routes={routes} />
+        <AppButton
+          title={'Save change'}
+          size={'small'}
+          iconRight={'tick'}
+          containerStyle={{marginBottom: SIZE.medium_space}}
+          onPress={handleSubmit}
+        />
+      </View>
+    </>
   );
 };
-
-
-
 
 const styles = StyleSheet.create({
   button: {
@@ -111,6 +123,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.white,
+    paddingHorizontal: SIZE.padding,
+  },
+  scrollview: {
+    flex: 1,
   },
   customContainer: {
     backgroundColor: colors.bgSreen,
@@ -122,7 +138,6 @@ const styles = StyleSheet.create({
     ...fontFamily.fontCampWeight500,
     fontSize: SIZE.medium_size,
     lineHeight: scaleSize(28),
-    paddingLeft: SIZE.padding,
     marginTop: SIZE.base_space,
   },
   tabContainer: {
@@ -144,27 +159,6 @@ const styles = StyleSheet.create({
     color: colors.textPrimary,
     marginBottom: 6,
   },
-  bgRoom: {
-    width: '100%',
-    height: scaleWidth(137),
-    borderRadius: 8,
-    resizeMode: 'cover',
-    marginBottom: SIZE.padding,
-  },
-  roomTitle: {
-    ...fontFamily.fontCampWeight500,
-    fontSize: scaleSize(18),
-  },
-  locationView: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginTop: SIZE.base_space / 2,
-  },
-  location: {
-    color: '#65666D',
-    ...fontFamily.fontWeight500,
-    marginLeft: SIZE.base_space / 2,
-  },
   subViewInactive: {
     position: 'absolute',
     left: 8,
@@ -185,6 +179,11 @@ const styles = StyleSheet.create({
     backgroundColor: colors.borderPrimary,
     marginBottom: SIZE.medium_space,
   },
+  customStyleButton: {
+    flexDirection: 'column',
+    paddingVertical: SIZE.base_space,
+  },
+  customStyleTitleButton: {lineHeight: SIZE.base_size * 1.8},
 });
 
-export { ProfileLifeStyle };
+export {ProfileLifeStyle};

@@ -21,6 +21,8 @@ export const AppPicker: React.FC<IAppPicker> = React.memo((props: any) => {
     stylePicker,
     disable,
     customStyleLabel,
+    customePlaceholder,
+    customStyleInputPicker,
   } = props;
   const value = props.value || '';
   const [isOpenPicker, setIsOpenPicker] = useState(false);
@@ -34,10 +36,6 @@ export const AppPicker: React.FC<IAppPicker> = React.memo((props: any) => {
 
   const modalCountryProps = disable ? {visible: !disable} : {};
   const isLinear = stylePicker === 'linear';
-  const DownIconPicker = () => {
-    if (isLinear) return null;
-    else return <DownIcon />;
-  };
 
   const colorLabel = {
     color: isOpenPicker ? colors.primary : colors.secondPrimary,
@@ -48,6 +46,13 @@ export const AppPicker: React.FC<IAppPicker> = React.memo((props: any) => {
         ...stylesLinear,
       }
     : stylesBase;
+
+  const DownIconPicker = () => {
+    return !isLinear ? <DownIcon /> : null;
+  };
+
+  const styleInputAndroid = {...styles.inputAndroid, ...customStyleInputPicker};
+  const styleInputIOS = {...styles.inputIOS, ...customStyleInputPicker};
 
   return (
     <View style={styles.container}>
@@ -64,6 +69,7 @@ export const AppPicker: React.FC<IAppPicker> = React.memo((props: any) => {
               withCallingCode={false}
               withCallingCodeButton={false}
               countryCode={value || 'SG'}
+              // containerButtonStyle
               withFlagButton={false}
               onSelect={onSelectFlag}
               withFilter={true}
@@ -72,7 +78,6 @@ export const AppPicker: React.FC<IAppPicker> = React.memo((props: any) => {
               onOpen={() => onOpenPickerSelect(true)}
               onClose={() => onOpenPickerSelect(false)}
             />
-
             {DownIconPicker()}
           </View>
         ) : (
@@ -88,21 +93,20 @@ export const AppPicker: React.FC<IAppPicker> = React.memo((props: any) => {
                 style: styles.pickerProps,
               }}
               style={{
-                inputAndroid: styles.inputAndroid,
-                inputIOS: styles.inputIOS,
+                inputAndroid: styleInputAndroid,
+                inputIOS: styleInputIOS,
                 iconContainer: styles.iconContainer,
                 placeholder: styles.placeholder,
               }}
-              Icon={() => DEVICE.isIos && DownIconPicker()}
               onOpen={() => onOpenPickerSelect(true)}
               onClose={() => onOpenPickerSelect(false)}
             />
-            {DEVICE.isAndroid &&
-              (isLinear ? (
-                <View style={styles.customIcon2}>{DownIconPicker()}</View>
-              ) : (
-                <View style={styles.customIcon}>{DownIconPicker()}</View>
-              ))}
+            {!value && customePlaceholder}
+            {isLinear ? (
+              <View style={styles.hideDropdownAndroid} />
+            ) : (
+              <View style={styles.customIcon}>{DownIconPicker()}</View>
+            )}
           </>
         )}
       </View>
@@ -127,23 +131,21 @@ const stylesBase = StyleSheet.create({
     backgroundColor: colors.bgInput,
     zIndex: 1,
     position: 'absolute',
-    top: SIZE.input_height / 2 - 3,
-    right: 10,
-    width: 20,
-    height: 20,
+    top: 0,
+    right: 5,
+    width: 35,
+    height: SIZE.input_height,
     alignItems: 'center',
     justifyContent: 'center',
   },
-  customIcon2: {
+  hideDropdownAndroid: {
     backgroundColor: colors.white,
     zIndex: 1,
     position: 'absolute',
-    top: SIZE.input_height / 2 - scaleWidth(10),
-    right: 10,
-    width: 20,
-    height: 20,
-    alignItems: 'center',
-    justifyContent: 'center',
+    top: 0,
+    bottom: 1,
+    right: 0,
+    width: 50,
   },
   picker: {
     minHeight: SIZE.input_height,
@@ -163,8 +165,9 @@ const stylesBase = StyleSheet.create({
     fontSize: SIZE.base_size,
     color: colors.textPrimary,
     position: 'absolute',
-    top: 2,
+    top: -8,
     width: '100%',
+    zIndex: 1,
     margin: 0,
     height: SIZE.input_height,
     paddingLeft: SIZE.base_space,
@@ -182,11 +185,8 @@ const stylesBase = StyleSheet.create({
     borderRadius: 8,
   },
   iconContainer: {
-    position: 'absolute',
-    top: scaleWidth(20),
-    right: 0,
-    justifyContent: 'center',
-    marginRight: scaleWidth(10),
+    top: 10,
+    right: 12,
   },
   placeholder: {
     ...fontFamily.fontWeight400,
@@ -234,7 +234,7 @@ const stylesLinear = StyleSheet.create({
     fontSize: SIZE.base_size + 1,
     color: colors.textPrimary,
     position: 'absolute',
-    top: 2,
+    top: 0,
     width: '100%',
     margin: 0,
     height: 'auto',

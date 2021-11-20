@@ -26,7 +26,6 @@ const SignUpEmail = (props: SignUpEmailProp) => {
   );
   const [state, setState] = useState(INITIAL_STATE_DATA_SIGN_UP);
   useEffect(() => {
-    console.log({dataSignUp});
     setState(dataSignUp);
   }, [dataSignUp]);
   // const setData = (data: any) => {
@@ -42,7 +41,13 @@ const SignUpEmail = (props: SignUpEmailProp) => {
   const validationEmail = yup.object().shape({
     email: validateForm().email,
     password: validateForm().password,
-    confirm_password: validateForm().confirmPassword,
+    confirm_password: yup
+      .string()
+      .required('This field is required')
+      .oneOf(
+        [yup.ref('password'), null],
+        'Confirm Password does not match the password',
+      ),
   });
 
   const onChangeValue = (item: any, name?: string) => {
@@ -89,8 +94,8 @@ const SignUpEmail = (props: SignUpEmailProp) => {
         nationality: state?.country?.name,
         occupation: state?.occupation?.value,
         ethnicity: state?.ethnicity?.value,
-        lifestyle: getList(state?.life_style),
-        preferences: getList(state?.preferences),
+        lifestyle: state?.life_style,
+        preferences: state?.preferences,
         // lifestyle: {
         //   Friendliness: getList(state?.your_place),
         //   Pets: state?.have_pet?.value,
@@ -116,11 +121,11 @@ const SignUpEmail = (props: SignUpEmailProp) => {
           AllowCook: state?.allow_cooking?.value === 'Yes',
           // builtYear: state?.built_year,
           StayWithGuest: state?.staying_with_guests?.value === 'Yes',
-          KeyWords: getList(state?.key_your_place),
+          KeyWords: state?.key_your_place,
         },
         LeasePeriod: {
           type: state?.kind_place?.value === 'HDB',
-          value: getList(state?.lease_your_place),
+          value: state?.lease_your_place,
         },
         PicturesVideo: getUrlFiles(),
         RentalPrice: {
@@ -132,7 +137,8 @@ const SignUpEmail = (props: SignUpEmailProp) => {
       },
     };
 
-    dispatch(setDataSignup({data: state}));
+    console.log({body});
+    // dispatch(setDataSignup({data: state}));
     dispatch(signUp({body}));
     // navigation.navigate(VERIFY_ACCOUNT);
   };

@@ -1,7 +1,6 @@
 import {
   SAVE_DATA_USER,
   LOGIN,
-  HIDE_INTRO_SCREEN,
   SIGNUP,
   LOGOUT,
   REMOVE_TOKEN,
@@ -13,6 +12,7 @@ import {
   UPDATE_USER_INFO,
   VERIFY_PHONE_NUMBER,
   VERIFY_CODE_PHONE_NUMBER,
+  CHANGE_PASSWORD,
 } from '@redux';
 
 export const loginApp = (payload: any) => ({
@@ -22,11 +22,6 @@ export const loginApp = (payload: any) => ({
 
 export const logoutApp = () => ({
   type: LOGOUT,
-});
-
-export const hideIntroScreen = (payload: any) => ({
-  type: HIDE_INTRO_SCREEN,
-  payload,
 });
 
 export const saveDataUser = (payload: any) => ({
@@ -58,11 +53,6 @@ export const resetNewPassword = (payload: any) => ({
   payload,
 });
 
-export const updateUserInfo = (payload: any) => ({
-type: UPDATE_USER_INFO,
-payload,
-});
-
 export const verifyPhonenumber = (payload: any) => ({
   type: VERIFY_PHONE_NUMBER,
   payload,
@@ -73,11 +63,6 @@ export const verifyCodePhonenumber = (payload: any) => ({
   payload,
 });
 
-export const updateUserInfor = (payload: any) => ({
-  type: UPDATE_USER_INFOR,
-  payload,
-});
-
 export const setDataSignup = (payload: any) => ({
   type: SET_DATA_SIGNUP,
   payload,
@@ -85,4 +70,14 @@ export const setDataSignup = (payload: any) => ({
 
 export const resetDataSignup = () => ({
   type: RESET_DATA_SIGNUP,
+});
+
+export const updateUserInfo = (payload: any) => ({
+  type: UPDATE_USER_INFO,
+  payload,
+});
+
+export const changePassword = (payload: any) => ({
+  type: CHANGE_PASSWORD,
+  payload,
 });

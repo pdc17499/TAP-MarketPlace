@@ -58,6 +58,7 @@ export interface IAppInput {
   onPressRightIcon?: () => void;
   maxLength?: number;
   callBackOnFocus?: (focus: boolean) => void;
+  onEndEditing?: (name?: string) => void;
 }
 
 export interface AppSwiperProps {
@@ -109,7 +110,7 @@ export interface DataSignupProps {
   fixed_price: string;
   min_range_price: number;
   max_range_price: number;
-  lease_your_place: Array<mockProps>;
+  lease_your_place: Array<string>;
   staying_with_guests: mockProps;
   room_type: mockProps;
   bedroom_number: mockProps;
@@ -121,7 +122,7 @@ export interface DataSignupProps {
   floor_level: mockProps;
   allow_cooking: mockProps;
   built_year: string;
-  key_your_place: Array<mockProps>;
+  key_your_place: Array<string>;
   list_photo: Array<ImageOrVideo>;
   user_name: string;
   gender: mockProps;
@@ -129,23 +130,23 @@ export interface DataSignupProps {
   country: any;
   occupation: pickerProps;
   ethnicity: pickerProps;
-  your_place: Array<mockProps>;
+  your_place: Array<string>;
   have_pet: mockProps;
   smoke: mockProps;
-  diet_choice: Array<mockProps>;
+  diet_choice: Array<string>;
   your_religion: mockProps;
   email: string;
   password: string;
   confirm_password: string;
   avatar: string;
   phone: string;
-  life_style: Array<mockProps>;
-  preferences: Array<mockProps>;
+  life_style: Array<string>;
+  preferences: Array<string>;
 }
 
 export interface AppQAProps {
   data: Array<mockProps>;
-  title: string;
+  title?: string;
   subTitle?: string;
   titleHighlight?: Array<string>;
   value: any;
@@ -178,7 +179,7 @@ export interface UserInfo {
   id: number;
   image: string;
   is_representative: boolean;
-  lifestyle: any;
+  lifestyle: Array<string>;
   name: string;
   nationality: string;
   occupation: string;
@@ -186,6 +187,7 @@ export interface UserInfo {
   rental_account: string;
   updatedAt: string;
   date_of_birth: string;
+  preferences: Array<string>;
 }
 
 export interface Token {
@@ -223,6 +225,8 @@ export interface IAppPicker {
   disable?: boolean;
   stylePicker?: 'base' | 'linear';
   customStyleLabel?: TextStyle;
+  customePlaceholder?: JSX.Element;
+  customStyleInputPicker?: TextStyle;
 }
 
 export interface ListingRoomProps {
@@ -253,4 +257,19 @@ export interface AppModalProps {
   children?: JSX.Element;
   customTitle?: JSX.Element;
   onPressDone?: () => void;
+}
+
+export interface AppModalCountryProps {
+  label?: string;
+  onValueChange: (value: any, name?: string) => void;
+  items?: any;
+  style?: any;
+  placeholder?: any;
+  value?: any;
+  error?: string;
+  styleError?: any;
+  name?: string;
+  customStyleTitle?: ViewStyle;
+  customStyleButton?: ViewStyle | ViewStyle[];
+  customStyleContainer?: ViewStyle | ViewStyle[];
 }

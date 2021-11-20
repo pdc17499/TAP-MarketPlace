@@ -8,7 +8,7 @@ import {Alert, Pressable, TouchableOpacity, View} from 'react-native';
 import {styles} from './style';
 import {DataSignupProps, VerifyAccountProps} from '@interfaces';
 import {useDispatch, useSelector} from 'react-redux';
-import {resetDataSignup, verifyPhonenumber} from '@redux';
+import {verifyPhonenumber} from '@redux';
 
 interface VerifyCodeProp {
   navigation: any;
@@ -25,11 +25,9 @@ const VerifyAccount = (props: VerifyCodeProp) => {
     setIsShowRules(!isShowRules);
   };
   // const email = props.route?.params?.email;
-  const dataSignUp: DataSignupProps = useSelector(
-    (state: any) => state?.auth?.dataSignup,
-  );
+  const user = useSelector((state: any) => state?.auth?.user);
 
-  console.log({dataSignUp});
+  console.log({user});
 
   const moveToVerifyCode = () => {
     if (phoneNumber !== '') {
@@ -39,7 +37,7 @@ const VerifyAccount = (props: VerifyCodeProp) => {
       console.log({contact});
       dispatch(
         verifyPhonenumber({
-          email: dataSignUp?.email,
+          email: user?.email,
           contact,
         }),
       );
@@ -49,7 +47,6 @@ const VerifyAccount = (props: VerifyCodeProp) => {
   };
 
   const onSkip = () => {
-    dispatch(resetDataSignup());
     navigation.replace(PROFILE);
   };
 

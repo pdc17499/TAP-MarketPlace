@@ -1,14 +1,22 @@
-import { AppButton, AppInput, AppText, Header } from '@component';
-import { useNavigation } from '@react-navigation/core';
-import { colors, fontFamily, scaleHeight, scaleWidth, SIZE } from '@util';
-import { Formik } from 'formik';
+import {AppButton, AppInput, AppText, Header} from '@component';
+import {useNavigation} from '@react-navigation/core';
+import {
+  colors,
+  fontFamily,
+  scaleHeight,
+  scaleWidth,
+  SIZE,
+  validateForm,
+} from '@util';
+import {Formik} from 'formik';
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
-import { useDispatch } from 'react-redux';
+import {StyleSheet, View} from 'react-native';
+import {useDispatch} from 'react-redux';
 import * as yup from 'yup';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import {changePassword} from '@redux';
 
-interface ChangePasswordProp { }
+interface ChangePasswordProp {}
 interface screenNavigationProp {
   navigate: any;
 }
@@ -25,33 +33,35 @@ const ChangePassword = (props: ChangePasswordProp) => {
   };
 
   const validationResetPassword = yup.object().shape({
-    old_password: yup
-      .string()
-      .required('This field is required')
-      .min(8, 'Password must be at least 8 characters')
-      .max(32, 'Password may not be greater than 32 characters'),
-    new_password: yup
-      .string()
-      .required('This field is required')
-      .min(8, 'Password must be at least 8 characters')
-      .max(32, 'Password may not be greater than 32 characters'),
-    confirm_password: yup
-      .string()
-      .oneOf([yup.ref('new_password'), null], 'Confirm password must match'),
+    old_password: validateForm().password,
+    new_password: validateForm().newPassword,
+    confirm_password: validateForm().confirmPassword,
   });
+
+  const onSubmit = (values: any) => {
+    const body = {
+      oldPassword: values.old_password,
+      newPassword: values.new_password,
+    };
+
+    console.log({body});
+
+    dispath(changePassword(body));
+  };
 
   const RenderForm = () => (
     <KeyboardAwareScrollView showsVerticalScrollIndicator={false}>
+      <AppText style={styles.title}>{'Change Password'}</AppText>
       <Formik
         initialValues={formInitialValues}
         validationSchema={validationResetPassword}
         validateOnChange={false}
-        onSubmit={values => { }}>
+        onSubmit={onSubmit}>
         {props => (
           <>
-            <View style={{ flex: 1 }}>
+            <View style={{flex: 1}}>
               <AppInput
-                containerStyle={{ marginTop: SIZE.base_space / 2 }}
+                containerStyle={{marginTop: SIZE.base_space / 2}}
                 secureTextEntry={true}
                 showEye={true}
                 label={'Old Password'}
@@ -60,7 +70,7 @@ const ChangePassword = (props: ChangePasswordProp) => {
                 error={props.errors.old_password}
               />
               <AppInput
-                containerStyle={{ marginTop: SIZE.base_space / 2 }}
+                containerStyle={{marginTop: SIZE.base_space / 2}}
                 secureTextEntry={true}
                 showEye={true}
                 label={'New Password'}
@@ -69,7 +79,7 @@ const ChangePassword = (props: ChangePasswordProp) => {
                 error={props.errors.new_password}
               />
               <AppInput
-                containerStyle={{ marginTop: SIZE.base_space / 2 }}
+                containerStyle={{marginTop: SIZE.base_space / 2}}
                 secureTextEntry={true}
                 // showEye={true}
                 label={'Confirm New Password'}
@@ -84,7 +94,7 @@ const ChangePassword = (props: ChangePasswordProp) => {
               size={'small'}
               iconRight={'tick'}
               onPress={props.handleSubmit}
-              customStyleButton={{ marginTop: scaleWidth(90) }}
+              customStyleButton={{marginTop: scaleHeight(90)}}
             />
           </>
         )}
@@ -95,10 +105,7 @@ const ChangePassword = (props: ChangePasswordProp) => {
   return (
     <View style={styles.container}>
       <Header back />
-      <View style={styles.body}>
-        <AppText style={styles.title}>{'Change Password'}</AppText>
-        {RenderForm()}
-      </View>
+      <View style={styles.body}>{RenderForm()}</View>
     </View>
   );
 };
@@ -134,4 +141,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export { ChangePassword };
+export {ChangePassword};

@@ -8,6 +8,7 @@ const RESET_NEW_PASSWORD = 'v1/users/reset-password';
 const VERIFY_PHONE_NUMBER = 'v1/users/update-contact-no-verify';
 const VERIFY_CODE_PHONE_NUMBER = 'v1/users/send-verification-sms';
 const UPDATE_USER_INFO = 'v1/users/';
+const CHANGE_PASSWORD = 'v1/users/change-password';
 
 export {
   LOGIN,
@@ -20,4 +21,5 @@ export {
   VERIFY_PHONE_NUMBER,
   VERIFY_CODE_PHONE_NUMBER,
   UPDATE_USER_INFO,
+  CHANGE_PASSWORD,
 };

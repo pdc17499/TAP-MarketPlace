@@ -1,24 +1,16 @@
 import axios from 'axios';
-import { getBaseURL } from '@util';
-import { describeSuccessResponse, describeErrorResponse } from './logger';
-import { showMessage } from 'react-native-flash-message';
-import { store } from '../redux/store';
-import { getToken } from '@services';
+import {getBaseURL} from '@util';
+import {describeSuccessResponse, describeErrorResponse} from './logger';
+import {showMessage} from 'react-native-flash-message';
+import {getToken} from '@services';
+import {DeviceEventEmitter} from 'react-native';
 
 const api = axios.create();
 
 api.interceptors.request.use(
   async (config: any) => {
     config.baseURL = getBaseURL();
-    // const state = store.getState();
     const token = await getToken();
-    console.log('token', token)
-    //@ts-ignore
-    // const token = state?.auth?.token?.access?.token;
-
-    // const token = state?.auth?.token;
-
-    // console.log('TOKENsss', state?.auth);
     if (token) {
       config.headers = {
         Authorization: 'Bearer ' + token,
@@ -27,7 +19,7 @@ api.interceptors.request.use(
       };
     }
     if (config.method.toUpperCase() === 'GET') {
-      config.params = { ...config.params };
+      config.params = {...config.params};
     }
     return config;
   },
@@ -53,11 +45,16 @@ api.interceptors.response.use(
     }
   },
   function (error) {
-    const { message } = error?.response?.data;
+    const {message, status} = error?.response?.data;
+    console.log({error});
+    if (status === 401) {
+      DeviceEventEmitter.emit('UNAUTHENTICATION', {});
+    }
     showMessage({
       message: message,
       type: 'danger',
     });
+
     describeErrorResponse(error);
     return Promise.reject(error);
   },

@@ -278,16 +278,16 @@ export const ROOM_UNIT_HOWNER = {
   ],
   gender: [
     {
-      value: 'male',
-      label: 'male',
+      value: 'Male',
+      label: 'Male',
     },
     {
-      value: 'female',
-      label: 'female',
+      value: 'Female',
+      label: 'Female',
     },
     {
-      value: 'other',
-      label: 'other',
+      value: 'Other',
+      label: 'Other',
     },
   ],
   group_age: [

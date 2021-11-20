@@ -2,7 +2,14 @@ import {AppButton, AppQA, AppText, Header} from '@component';
 import {setDataSignup} from '@redux';
 import {colors, fontFamily, scaleWidth, SIZE} from '@util';
 import React, {createRef, useState} from 'react';
-import {View, StyleSheet, Image, ScrollView, Alert} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  Image,
+  ScrollView,
+  Alert,
+  TouchableOpacity,
+} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import ImagePicker, {ImageOrVideo} from 'react-native-image-crop-picker';
 import {useActionSheet} from '@expo/react-native-action-sheet';
@@ -10,7 +17,6 @@ import Video from 'react-native-video';
 import {bg_room_unit_picture, IconAddVideos} from '@assets';
 import {NavigationUtils} from '@navigation';
 import {ADD_SUCCESS, USER_INFORMATION_NAME, YOUR_LISTING} from '@routeName';
-import {TouchableOpacity} from 'react-native-gesture-handler';
 
 const RoomUnitGallery = () => {
   const dispatch = useDispatch();

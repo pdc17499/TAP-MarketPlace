@@ -61,37 +61,53 @@ const AppQA = React.memo((props: AppQAProps) => {
     },
   ];
 
+  // console.log({selected});
+
   const onChangeValue = (item: mockProps, isActive: boolean) => {
     let nValue: any = {...value};
-    console.log({nValue});
+
     if (isMultiChoice) {
       if (isActive) {
         nValue[name] = value[name].filter(
-          (itm: mockProps) => itm.value !== item.value,
+          (itm: mockProps) => itm !== item.value,
         );
       } else {
         const nItem: pickerProps = {...item};
-        if (nItem.hasOwnProperty('icon')) {
-          delete nItem.icon;
-        }
-        if (nItem.hasOwnProperty('iconSelected')) {
-          delete nItem.iconSelected;
-        }
-        console.log({nItem});
-        nValue[name].push(nItem);
+        // if (nItem.hasOwnProperty('icon')) {
+        //   delete nItem.icon;
+        // }
+        // if (nItem.hasOwnProperty('iconSelected')) {
+        //   delete nItem.iconSelected;
+        // }
+        // console.log({nItem});
+        nValue[name].push(nItem.value);
       }
     } else {
       const nItem: pickerProps = {...item};
-      if (nItem.hasOwnProperty('icon')) {
-        delete nItem.icon;
-      }
-      if (nItem.hasOwnProperty('iconSelected')) {
-        delete nItem.iconSelected;
-      }
-      nValue[name] = item;
+      // if (nItem.hasOwnProperty('icon')) {
+      //   delete nItem.icon;
+      // }
+      // if (nItem.hasOwnProperty('iconSelected')) {
+      //   delete nItem.iconSelected;
+      // }
+      nValue[name] = nItem;
     }
+    console.log({nValue});
 
     if (setValue) setValue(nValue);
+  };
+
+  const checkActive = (item: mockProps) => {
+    return isMultiChoice && selected?.length > 0
+      ? selected.findIndex(
+          (itm: mockProps) => item.value == (itm?.value || itm), // data selected có thể là string hoặc object
+        ) > -1
+      : item.value == selected?.value;
+  };
+
+  const renderIconLeft = (item: mockProps, isActive: boolean) => {
+    const icon = item?.icon ? item.icon : null;
+    return item?.iconSelected && isActive ? item?.iconSelected : icon;
   };
 
   return (
@@ -105,7 +121,7 @@ const AppQA = React.memo((props: AppQAProps) => {
         />
       ) : (
         <>
-          <AppText style={titleStyle}>{title}</AppText>
+          {title && <AppText style={titleStyle}>{title}</AppText>}
           {subTitle && <AppText style={styles.subTitle}>{subTitle}</AppText>}
         </>
       )}
@@ -113,21 +129,11 @@ const AppQA = React.memo((props: AppQAProps) => {
       {!!error && <AppText style={styles.error}>{error}</AppText>}
       <View style={listStyle}>
         {data.map((item: mockProps) => {
-          const isActive =
-            isMultiChoice && selected?.length > 0
-              ? selected.findIndex(
-                  (itm: mockProps) => item.value == itm?.value,
-                ) > -1
-              : item.value == selected?.value;
-          let iconLeftButton = item?.icon ? item.icon : null;
-          iconLeftButton =
-            item?.iconSelected && isActive
-              ? item?.iconSelected
-              : iconLeftButton;
+          const isActive = checkActive(item);
           return (
             <View key={item.value} style={styleViewButton}>
               <AppButton
-                iconLeft={showIconLeft && iconLeftButton}
+                iconLeft={showIconLeft && renderIconLeft(item, isActive)}
                 onPress={() => onChangeValue(item, isActive)}
                 isActive={isActive}
                 typeButton={'linear'}
