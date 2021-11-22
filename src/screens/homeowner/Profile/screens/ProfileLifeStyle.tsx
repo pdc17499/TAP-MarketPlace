@@ -35,13 +35,15 @@ const ProfileLifeStyle = () => {
 
   const list = ROOM_UNIT_HOWNER;
   const formInitialValues = {
-    lifestyle: user?.lifestyle,
-    preferences: user?.preferences,
+    lifestyle: user?.lifestyle || [],
+    preferences: user?.preferences || [],
   };
   const validationSchema = yup.object().shape({
     lifestyle: validateForm().common.atLeastOneArray,
     preferences: validateForm().common.atLeastOneArray,
   });
+
+  console.log({user});
 
   const onSubmit = (values: any) => {
     console.log({values});

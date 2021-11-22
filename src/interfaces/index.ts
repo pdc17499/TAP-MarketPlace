@@ -188,6 +188,7 @@ export interface UserInfo {
   updatedAt: string;
   date_of_birth: string;
   preferences: Array<string>;
+  isContactVerified?: boolean;
 }
 
 export interface ListRooms {

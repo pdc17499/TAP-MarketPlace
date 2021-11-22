@@ -1,9 +1,20 @@
 import CountryPicker from 'react-native-country-picker-modal';
 import React, {useState, useEffect} from 'react';
-import {Pressable, StyleSheet, TouchableOpacity, View} from 'react-native';
+import {
+  Alert,
+  Pressable,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import {AppInput, AppText} from '@component';
-import {colors, fontFamily, scaleWidth, SIZE} from '@util';
-import {DownIcon, IconShieldCheck} from '@assets';
+import {colors, fontFamily, scaleSize, scaleWidth, SIZE} from '@util';
+import {CaretRight, DownIcon, IconShieldCheck} from '@assets';
+import {useNavigation} from '@react-navigation/core';
+import {VERIFY_ACCOUNT, VERIFY_CODE} from '@routeName';
+import {useDispatch, useSelector} from 'react-redux';
+import {verifyPhonenumber} from '@redux';
+import {UserInfo} from '@interfaces';
 interface IAppPhoneNumber {
   label?: string;
   value?: string;
@@ -13,6 +24,7 @@ interface IAppPhoneNumber {
   type?: 'default' | 'inline';
   name?: string;
   maxLength?: number;
+  showVerifyNumber?: boolean;
 }
 
 export const AppPhoneNumber = React.memo((props: IAppPhoneNumber) => {
@@ -25,10 +37,14 @@ export const AppPhoneNumber = React.memo((props: IAppPhoneNumber) => {
     type,
     maxLength,
     name,
+    showVerifyNumber,
   } = props;
   const [countryCode, setCountryCode]: any = useState('SG');
   const [visible, setVisible] = useState(false);
   const [isInLine, setIsInLine] = useState(false);
+  const navigation: any = useNavigation();
+  const dispatch = useDispatch();
+  const dataUser: UserInfo = useSelector((state: any) => state?.auth?.user);
 
   useEffect(() => {
     onChangeFlag('65');
@@ -47,9 +63,27 @@ export const AppPhoneNumber = React.memo((props: IAppPhoneNumber) => {
 
   console.log({value});
 
-  const callBackOnFocus = (focus: boolean) => {
-    if (type === 'inline') {
-      setIsInLine(focus);
+  // const callBackOnFocus = (focus: boolean) => {
+  //   if (type === 'inline') {
+  //     setIsInLine(focus);
+  //   }
+  // };
+
+  const onNavigateVerify = () => {
+    if (value && value !== '') {
+      const contact = `+${countryCode} ${value
+        .toString()
+        .replace(/[^a-zA-Z0-9]/g, '')}`;
+      console.log({contact});
+      dispatch(
+        verifyPhonenumber({
+          email: dataUser?.email,
+          contact,
+        }),
+      );
+      navigation.navigate(VERIFY_CODE, {contact});
+    } else {
+      Alert.alert('Please enter your phone number!');
     }
   };
 
@@ -57,7 +91,9 @@ export const AppPhoneNumber = React.memo((props: IAppPhoneNumber) => {
     <>
       {!isInLine ? (
         <Pressable style={styles.inlineType} onPress={() => setIsInLine(true)}>
-          <AppText>{value || 'N/A'}</AppText>
+          <AppText style={{...fontFamily.fontWeight500}}>
+            {value || 'N/A'}
+          </AppText>
         </Pressable>
       ) : (
         <View style={styles.container}>
@@ -88,11 +124,20 @@ export const AppPhoneNumber = React.memo((props: IAppPhoneNumber) => {
               onValueChange={text => onChangePhone(text, name)}
               maxLength={maxLength}
               inputStyle={{fontSize: SIZE.base_size + 1}}
-              callBackOnFocus={callBackOnFocus}
+              // callBackOnFocus={callBackOnFocus}
               autoFocus
             />
           </View>
         </View>
+      )}
+
+      {showVerifyNumber && (
+        <Pressable style={styles.verifyPress} onPress={onNavigateVerify}>
+          <AppText style={{fontSize: scaleSize(14), color: colors.primary}}>
+            {'Verify this number'}
+          </AppText>
+          <CaretRight width={14} height={14} iconFillColor={colors.primary} />
+        </Pressable>
       )}
 
       {!!error && <AppText style={styles.error}>{error}</AppText>}
@@ -129,6 +174,11 @@ const styles = StyleSheet.create({
   },
   inlineType: {
     flexDirection: 'row',
-    marginTop: SIZE.base_space,
+    marginTop: SIZE.base_space / 2,
+  },
+  verifyPress: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: scaleWidth(17),
   },
 });

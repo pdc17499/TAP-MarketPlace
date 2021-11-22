@@ -1,4 +1,4 @@
-import {AppButton, AppText, Header} from '@component';
+import {AppText} from '@component';
 import React, {useEffect, useState} from 'react';
 import {
   View,
@@ -8,7 +8,7 @@ import {
   DeviceEventEmitter,
 } from 'react-native';
 import {useDispatch} from 'react-redux';
-import {logoutApp} from '@redux';
+import {getProfileUser, logoutApp} from '@redux';
 import {useSelector} from 'react-redux';
 import {
   IconHouseLine,
@@ -86,12 +86,16 @@ const Profile = (props: ProfileProp) => {
 
   useEffect(() => {
     DeviceEventEmitter.addListener('UNAUTHENTICATION', logOut);
-
+    getProfile();
     return () => DeviceEventEmitter.removeAllListeners();
   }, []);
 
   const logOut = () => {
     dispatch(logoutApp());
+  };
+
+  const getProfile = () => {
+    dispatch(getProfileUser());
   };
 
   const openGallery = () => {

@@ -50,8 +50,12 @@ const AppQA = React.memo((props: AppQAProps) => {
 
   const selected = value
     ? isMultiChoice
-      ? [...value[name]]
-      : {...value[name]}
+      ? value[name]
+        ? [...value[name]]
+        : []
+      : value[name]
+      ? {...value[name]}
+      : {}
     : null;
 
   const styleViewButton = [
@@ -80,7 +84,12 @@ const AppQA = React.memo((props: AppQAProps) => {
         //   delete nItem.iconSelected;
         // }
         // console.log({nItem});
-        nValue[name].push(nItem.value);
+        // console.log(nValue[name]);
+        if (nValue[name]) {
+          nValue[name].push(nItem.value);
+        } else {
+          nValue[name] = [nItem.value];
+        }
       }
     } else {
       const nItem: pickerProps = {...item};

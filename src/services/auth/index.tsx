@@ -4,15 +4,13 @@ import {
   LOGOUT,
   FORGOT_PASSWORD,
   SIGNUP,
-  VERIFY_EMAIL,
   VERIFY_CODE_FORGOT_PASSWORD,
   RESET_NEW_PASSWORD,
   VERIFY_CODE_PHONE_NUMBER,
   VERIFY_PHONE_NUMBER,
   UPDATE_USER_INFO,
   CHANGE_PASSWORD,
-  // GET_LIST_ROOMS,
-  // GET_ROOM_DETAIL
+  GET_PROFILE_USER,
 } from './types';
 
 export const loginApi: any = async (data: any) => {
@@ -64,13 +62,7 @@ export const changePasswordApi: any = async (data: any) => {
   return response;
 };
 
-// // room detail
-// export const getListRoomsApi: any = async () => {
-//   const response = await api.get(GET_LIST_ROOMS);
-//   return response;
-// };
-
-// export const getRoomDetailApi: any = async (data: any) => {
-//   const response = await api.get(GET_ROOM_DETAIL + data);
-//   return response;
-// };
+export const getProfileUserApi: any = async () => {
+  const response = await api.get(GET_PROFILE_USER);
+  return response;
+};

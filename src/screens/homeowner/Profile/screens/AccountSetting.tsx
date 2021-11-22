@@ -1,7 +1,7 @@
 import {AppButton, AppInput, AppPhoneNumber, AppText, Header} from '@component';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {View, StyleSheet, Pressable} from 'react-native';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {
   colors,
   fontFamily,
@@ -11,12 +11,13 @@ import {
   validateForm,
 } from '@util';
 import * as yup from 'yup';
-import {Formik} from 'formik';
+import {Formik, FormikValues} from 'formik';
 import {UserInfo} from '@interfaces';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {CaretRight, IconChangePassword, IconDeleteUser} from '@assets';
 import {CHANGE_PASSWORD} from '@routeName';
 import {useNavigation} from '@react-navigation/native';
+import {updateUserInfo} from '@redux';
 
 interface screenNavigationProp {
   navigate: any;
@@ -24,48 +25,66 @@ interface screenNavigationProp {
 
 const AccountSetting = () => {
   const navigation = useNavigation<screenNavigationProp>();
-  const [users, setUsers] = useState<UserInfo>();
+  const [user, setUser] = useState<UserInfo>();
   const dataUser: UserInfo = useSelector((state: any) => state?.auth?.user);
   const [showDate, setShowDate] = useState(false);
-
+  const dispatch = useDispatch();
   const [showButton, setShowButton] = useState(false);
   const [countryCode, setCountryCode] = useState('');
+  const formRef: any = useRef<FormikValues>();
 
   useEffect(() => {
-    setUsers(dataUser);
+    setUser(dataUser);
     console.log(dataUser);
   }, [dataUser]);
 
   console.log('dataa', dataUser);
 
   const formInitialValues = {
-    email: users?.email,
-    contact: users?.contact,
+    email: user?.email,
+    contact: user?.contact,
   };
 
   const validationForm = yup.object().shape({
     email: validateForm().email,
-    contact: yup.string().max(30, 'Phone number invalid'),
+    contact: validateForm().common.reuqire,
   });
 
   const onChangeText = (item: any, name?: string) => {
     if (name) {
-      const nData: any = {...users};
+      const nData: any = {...user};
       nData[name] = item;
-      setUsers(nData);
+      setUser(nData);
     }
     setShowButton(true);
   };
-
-  const onSubmit = () => {};
 
   const validatePhone = (contact: number) => {
     return contact ? contact.toString().replace(/[^a-zA-Z0-9]/g, '') : '';
   };
 
+  const onSubmit = (values: any) => {
+    const contact = `${values.contact.toString().replace(/[^a-zA-Z0-9]/g, '')}`;
+    const body = {
+      email: user?.email,
+      contact,
+    };
+    console.log({body});
+    dispatch(updateUserInfo({body, id: user?.id}));
+  };
+
+  const handleSubmit = () => {
+    if (formRef.current) {
+      formRef.current.handleSubmit();
+    }
+  };
+
   const RenderForm = () => (
-    <KeyboardAwareScrollView showsVerticalScrollIndicator={false}>
+    <KeyboardAwareScrollView
+      showsVerticalScrollIndicator={false}
+      style={{flex: 1}}>
       <Formik
+        innerRef={formRef}
         initialValues={formInitialValues}
         validationSchema={validationForm}
         validateOnChange={false}
@@ -98,6 +117,8 @@ const AccountSetting = () => {
                   name={'contact'}
                   type={'inline'}
                   maxLength={30}
+                  error={props.errors.contact}
+                  showVerifyNumber={!user?.isContactVerified}
                 />
               </View>
               <Pressable onPress={() => navigation.navigate(CHANGE_PASSWORD)}>
@@ -114,14 +135,6 @@ const AccountSetting = () => {
                 <AppText style={styles.titleDelete}>{'Delete account'}</AppText>
               </View>
             </View>
-
-            <AppButton
-              customStyleButton={styles.button}
-              title={'Save change'}
-              size={'small'}
-              iconRight={'tick'}
-              onPress={props.handleSubmit}
-            />
           </>
         )}
       </Formik>
@@ -134,6 +147,13 @@ const AccountSetting = () => {
       <View style={styles.body}>
         <AppText style={styles.title}>{'Account Setting'}</AppText>
         {RenderForm()}
+        <AppButton
+          customStyleButton={styles.button}
+          title={'Save change'}
+          size={'small'}
+          iconRight={'tick'}
+          onPress={handleSubmit}
+        />
       </View>
     </View>
   );
@@ -232,13 +252,13 @@ const styles = StyleSheet.create({
     // alignItems: 'center',
     borderBottomWidth: 1,
     borderBottomColor: colors.borderProfileList,
-    paddingBottom: scaleWidth(20),
+    paddingBottom: SIZE.padding,
   },
   phoneInputTxt: {
     ...fontFamily.fontWeight500,
     fontSize: scaleSize(15),
-    color: colors.textPrimary,
-    marginTop: scaleWidth(15),
+    color: colors.secondPrimary,
+    marginTop: SIZE.padding,
   },
 });
 
