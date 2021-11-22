@@ -10,6 +10,14 @@ const VERIFY_CODE_PHONE_NUMBER = 'v1/users/send-verification-sms';
 const UPDATE_USER_INFO = 'v1/users/';
 const CHANGE_PASSWORD = 'v1/users/change-password';
 
+//Profile
+const GET_PROFILE = '/v1/';
+
+//Room
+const GET_LIST_ROOMS = 'v1/rooms';
+const GET_ROOM_DETAIL = '/v1/rooms/:';
+
+
 export {
   LOGIN,
   SIGNUP,
@@ -22,4 +30,7 @@ export {
   VERIFY_CODE_PHONE_NUMBER,
   UPDATE_USER_INFO,
   CHANGE_PASSWORD,
+  // GET_LIST_ROOMS,
+  // GET_ROOM_DETAIL,
+  // GET_PROFILE,
 };

@@ -13,6 +13,10 @@ import {
   VERIFY_PHONE_NUMBER,
   VERIFY_CODE_PHONE_NUMBER,
   CHANGE_PASSWORD,
+  GET_LIST_ROOMS,
+  GET_ROOM_DETAIL,
+  GET_HOME_OWNER_PROFILE,
+  SET_LIST_ROOMS,
 } from '@redux';
 
 export const loginApp = (payload: any) => ({
@@ -81,3 +85,14 @@ export const changePassword = (payload: any) => ({
   type: CHANGE_PASSWORD,
   payload,
 });
+
+
+
+
+export const getHomeOwnerProfile = (payload: string) => ({
+  type: GET_HOME_OWNER_PROFILE,
+  payload,
+});
+
+
+

@@ -3,9 +3,10 @@ import {
   SET_DATA_SIGNUP,
   LOGOUT,
   RESET_DATA_SIGNUP,
+
 } from './type';
-import {INITIAL_STATE_AUTH} from './state';
-import {INITIAL_STATE_DATA_SIGN_UP} from '@redux';
+import { INITIAL_STATE_AUTH } from './state';
+import { INITIAL_STATE_DATA_SIGN_UP, } from '@redux';
 import _ from 'lodash';
 
 export default function dataSave(state = INITIAL_STATE_AUTH, action: any) {
@@ -31,7 +32,6 @@ export default function dataSave(state = INITIAL_STATE_AUTH, action: any) {
       return _.assign({}, state, {
         dataSignup: INITIAL_STATE_DATA_SIGN_UP,
       });
-
     default:
       return state;
   }

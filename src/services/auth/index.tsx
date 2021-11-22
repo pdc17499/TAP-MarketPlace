@@ -11,6 +11,8 @@ import {
   VERIFY_PHONE_NUMBER,
   UPDATE_USER_INFO,
   CHANGE_PASSWORD,
+  // GET_LIST_ROOMS,
+  // GET_ROOM_DETAIL
 } from './types';
 
 export const loginApi: any = async (data: any) => {
@@ -61,3 +63,14 @@ export const changePasswordApi: any = async (data: any) => {
   const response = await api.post(CHANGE_PASSWORD, data);
   return response;
 };
+
+// // room detail
+// export const getListRoomsApi: any = async () => {
+//   const response = await api.get(GET_LIST_ROOMS);
+//   return response;
+// };
+
+// export const getRoomDetailApi: any = async (data: any) => {
+//   const response = await api.get(GET_ROOM_DETAIL + data);
+//   return response;
+// };

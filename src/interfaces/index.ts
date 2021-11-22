@@ -190,6 +190,21 @@ export interface UserInfo {
   preferences: Array<string>;
 }
 
+export interface ListRooms {
+  LeasePeriod: any;
+  PicturesVideo: Array<string>;
+  PlaceType: string;
+  PriceFlexibility: string;
+  RentalAddress: string;
+  RentalPrice: any;
+  RoomDetails: any;
+  createdAt: string;
+  id: number;
+  isActive: boolean;
+  updatedAt: string;
+  userId: number;
+}
+
 export interface Token {
   access: {
     expires: string;

@@ -1,5 +1,5 @@
-import {put, takeLatest} from 'redux-saga/effects';
-import {saveDataUser} from './action';
+import { put, takeLatest } from 'redux-saga/effects';
+import { saveDataUser } from './action';
 import {
   GlobalService,
   forgotPasswordApi,
@@ -14,9 +14,10 @@ import {
   setToken,
   removeToken,
   changePasswordApi,
+  getListRoomsApi,
 } from '@services';
 // import {VERTIFIEMAIL, VERIFYCODE} from '@routeName';
-import {showMessage} from 'react-native-flash-message';
+import { showMessage } from 'react-native-flash-message';
 import {
   PROFILE,
   RESETPASSWORD,
@@ -27,8 +28,8 @@ import {
   VERIFY_CODE,
   WELCOME,
 } from '@routeName';
-import {NavigationUtils} from '@navigation';
-import {CommonActions, StackActions} from '@react-navigation/native';
+import { NavigationUtils } from '@navigation';
+import { CommonActions, StackActions } from '@react-navigation/native';
 import {
   LOGIN,
   LOGOUT,
@@ -39,6 +40,13 @@ import {
   CHANGE_PASSWORD,
   VERIFY_CODE_PHONE_NUMBER,
   VERIFY_PHONE_NUMBER,
+  GET_LIST_ROOMS,
+  getRoomDetail,
+  GET_ROOM_DETAIL,
+  getHomeOwnerProfile,
+  GET_HOME_OWNER_PROFILE,
+  getListRooms,
+  setListRooms,
 } from '@redux';
 export interface ResponseGenerator {
   result?: any;
@@ -61,9 +69,9 @@ export function* loginSaga(action: any) {
 export function* signUpSaga(action: any) {
   try {
     GlobalService.showLoading();
-    const {body} = action?.payload;
+    const { body } = action?.payload;
     const result: ResponseGenerator = yield signUpApi(body);
-    console.log({result});
+    console.log({ result });
     if (result) {
       NavigationUtils.reset(VERIFY_ACCOUNT);
       const token = result?.data?.tokens?.access?.token;
@@ -92,10 +100,10 @@ export function* logoutSaga() {
 export function* forgotPasswordSaga(action: any) {
   try {
     GlobalService.showLoading();
-    const {email} = action.payload;
-    const result: ResponseGenerator = yield forgotPasswordApi({email: email});
+    const { email } = action.payload;
+    const result: ResponseGenerator = yield forgotPasswordApi({ email: email });
     if (result) {
-      NavigationUtils.navigate(VERIFY_CODE, {isForgetPassword: true, email});
+      NavigationUtils.navigate(VERIFY_CODE, { isForgetPassword: true, email });
     }
   } catch (error) {
     GlobalService.hideLoading();
@@ -107,7 +115,7 @@ export function* forgotPasswordSaga(action: any) {
 export function* verifyCodeForgotPasswordSaga(action: any) {
   try {
     GlobalService.showLoading();
-    const {email, code} = action.payload;
+    const { email, code } = action.payload;
     const result: ResponseGenerator = yield verifyCodeForgotPasswordApi({
       email: email,
       code: code,
@@ -145,7 +153,7 @@ export function* resetNewPasswordSaga(action: any) {
 export function* verifyPhonenumberSaga(action: any) {
   try {
     GlobalService.showLoading();
-    const {contact, email} = action.payload;
+    const { contact, email } = action.payload;
     const result: ResponseGenerator = yield verifyPhonenumberApi(
       action.payload,
     );
@@ -181,15 +189,15 @@ export function* verifyCodePhonenumberSaga(action: any) {
 export function* upDateUserInfoSaga(action: any) {
   try {
     GlobalService.showLoading();
-    const {body, id} = action.payload;
+    const { body, id } = action.payload;
     const result: ResponseGenerator = yield updateUserInfoApi(body, id);
-    console.log({result});
+    console.log({ result });
     if (result) {
       showMessage({
         type: 'success',
         message: 'Update User Information Successfully!',
       });
-      yield put(saveDataUser({user: result}));
+      yield put(saveDataUser({ user: result }));
     }
   } catch (error) {
     GlobalService.hideLoading();
@@ -202,7 +210,7 @@ export function* changePasswordSaga(action: any) {
   try {
     GlobalService.showLoading();
     const result: ResponseGenerator = yield changePasswordApi(action.payload);
-    console.log({result});
+    console.log({ result });
     if (result) {
       // showMessage({
       //   type: 'success',
@@ -216,6 +224,7 @@ export function* changePasswordSaga(action: any) {
     GlobalService.hideLoading();
   }
 }
+
 
 export function* authSaga() {
   yield takeLatest(LOGIN, loginSaga);

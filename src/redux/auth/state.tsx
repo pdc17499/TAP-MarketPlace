@@ -1,4 +1,4 @@
-import {DataSignupProps, Token, UserInfo} from '@interfaces';
+import { DataSignupProps, Token, UserInfo } from '@interfaces';
 import moment from 'moment';
 
 export type AuthState = {
@@ -8,6 +8,7 @@ export type AuthState = {
   showIntroScreen: boolean;
   typeUser: 'Homeowner' | 'Tenant' | 'Agent';
   dataSignup: DataSignupProps;
+  listRooms: any
 };
 
 export const INITIAL_STATE_DATA_SIGN_UP: DataSignupProps = {
@@ -64,4 +65,5 @@ export const INITIAL_STATE_AUTH: AuthState = {
   showIntroScreen: true,
   typeUser: 'Homeowner',
   dataSignup: INITIAL_STATE_DATA_SIGN_UP,
+  listRooms: null
 };

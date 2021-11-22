@@ -1,5 +1,5 @@
 import { AppButton, AppText, Header } from '@component';
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   View,
   Image,
@@ -18,99 +18,70 @@ import {
 } from '@assets';
 import { colors, fontFamily, scaleSize, scaleWidth, SIZE, STYLE } from '@util';
 import { SceneMap, TabView } from 'react-native-tab-view';
-import { ListingRoomProps } from '@interfaces';
+import { ListingRoomProps, ListRooms } from '@interfaces';
 import { useNavigation } from '@react-navigation/core';
 import { ROOM_DETAIL, ROOM_UNIT_ADDRESS } from '@routeName';
+import { useDispatch, useSelector } from 'react-redux';
+import { getListRooms, getListRoomsSaga } from '@redux';
 
-const DATA = [
-  {
-    key: 'active',
-    data: [
-      {
-        id: 1,
-        type: 'Condo',
-        title: 'Entire Home',
-        image: room_sample,
-        location: '12 Kallang Avenue',
-        active: true,
-      },
-      {
-        id: 2,
-        type: 'HDB',
-        title: 'Room',
-        image: room_sample,
-        location: '69 Robinson Rd',
-        active: true,
-      },
-      {
-        id: 3,
-        type: 'Shophouse',
-        title: 'Entire Home',
-        image: room_sample,
-        location: '47 Jln Pemimpin',
-        active: true,
-      },
-    ],
-  },
-  {
-    key: 'inactive',
-    data: [
-      {
-        id: 4,
-        type: 'Shophouse',
-        title: 'Entire Home',
-        image: room_sample,
-        location: '12 Kallang Avenue',
-        active: false,
-      },
-      {
-        id: 5,
-        type: 'Landed',
-        title: 'Entire Home',
-        image: room_sample,
-        location: '12 Kallang Avenue',
-        active: false,
-      },
-    ],
-  },
-];
 
 interface itemProps {
-  item: ListingRoomProps;
+  item: ListRooms;
   index: number;
   section: any;
 }
 
 const Route = React.memo(({ props }: any) => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    console.log('hiiii');
+    dispatch(getListRooms())
+  }, [])
+  const rooms: [] = useSelector((state: any) => state?.rooms?.listRooms);
+  const data1 = rooms.filter((item: any) => item?.isActive === true);
+  const data2 = rooms.filter((item: any) => item?.isActive === false);
+
+  const DATA1 = [
+    {
+      key: 'active',
+      data: data1,
+    },
+    {
+      key: 'inactive',
+      data: data2,
+    },
+  ];
+
   const key = props;
   const navigation: any = useNavigation();
 
-  const onRoomDetail = () => {
-    navigation.navigate(ROOM_DETAIL);
+  const onRoomDetail = (id: number) => {
+    navigation.navigate(ROOM_DETAIL, { id: id });
   };
 
   const renderItem = ({ item, section }: itemProps) => {
-    const { active } = item;
+    console.log('tem', item);
+
+    const { isActive } = item;
     const hide =
-      (key === 'active' && !active) || (key === 'inactive' && active);
+      (key === 'active' && !isActive) || (key === 'inactive' && isActive);
     if (hide) {
       return <View />;
     }
-
     return (
       <Pressable
-        onPress={onRoomDetail}
+        onPress={() => onRoomDetail(item.id)}
         style={{
           marginBottom: SIZE.medium_space,
-          opacity: active ? 1 : 0.5,
+          opacity: isActive ? 1 : 0.5,
         }}>
-        <Image source={item.image} style={styles.bgRoom} />
+        <Image source={{ uri: item?.PicturesVideo[0] }} style={styles.bgRoom} />
         <AppText style={styles.roomTitle}>
-          {item.type + '  '}
+          {item?.PlaceType + '  '}
           <IconDot style={{ marginBottom: 4 }} />
-          <AppText style={styles.roomTitle}>{'  ' + item.title}</AppText>
+          <AppText style={styles.roomTitle}>{'  ' + item?.RoomDetails?.RoomType}</AppText>
         </AppText>
-        {!active && (
+        {!isActive && (
           <View style={styles.subViewInactive}>
             <IconEyeCloseFullFill />
             <AppText style={styles.textInactive}>{'Inactive'}</AppText>
@@ -118,7 +89,7 @@ const Route = React.memo(({ props }: any) => {
         )}
         <View style={styles.locationView}>
           <IconPickLocation iconFillColor={'black'} width={16} height={16} />
-          <AppText style={styles.location}>{item.location}</AppText>
+          <AppText style={styles.location}>{item?.RentalAddress}</AppText>
         </View>
       </Pressable>
     );
@@ -140,7 +111,7 @@ const Route = React.memo(({ props }: any) => {
         }}
         contentContainerStyle={styles.contentContainerStyle}
         showsVerticalScrollIndicator={false}
-        sections={DATA}
+        sections={DATA1}
         renderItem={renderItem}
         keyExtractor={(item: any) => item.id}
         stickySectionHeadersEnabled={false}
