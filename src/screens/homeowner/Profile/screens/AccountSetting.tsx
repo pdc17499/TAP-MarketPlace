@@ -92,13 +92,7 @@ const AccountSetting = () => {
         onSubmit={onSubmit}>
         {(props: any) => (
           <>
-            <View
-              style={{
-                flex: 1,
-                borderTopWidth: 1,
-                borderTopColor: colors.borderProfileList,
-                paddingTop: 10,
-              }}>
+            <View style={styles.formik}>
               <AppInput
                 label={'Email'}
                 value={props.values.email}
@@ -187,6 +181,12 @@ const styles = StyleSheet.create({
     lineHeight: scaleWidth(15),
     marginBottom: scaleWidth(10),
     color: colors.primary,
+  },
+  formik: {
+    flex: 1,
+    borderTopWidth: 1,
+    borderTopColor: colors.borderProfileList,
+    paddingTop: 10,
   },
   text2: {
     fontSize: scaleSize(15),

@@ -60,9 +60,7 @@ const screenOptions = {
 
 const UnAuthenStack = () => {
   return (
-    <Stack.Navigator
-      screenOptions={screenOptions}
-      initialRouteName={ROOM_UNIT_GALLERY}>
+    <Stack.Navigator screenOptions={screenOptions} initialRouteName={WELCOME}>
       <Stack.Screen name={WELCOME} component={Welcome} />
       <Stack.Screen name={SIGNIN} component={SignIn} />
       <Stack.Screen name={RESETPASSWORD} component={ResetPassword} />

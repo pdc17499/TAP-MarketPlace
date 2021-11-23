@@ -5,16 +5,26 @@ import {showMessage} from 'react-native-flash-message';
 import {getToken} from '@services';
 import {DeviceEventEmitter} from 'react-native';
 
-const api = axios.create();
+const ApiConfigs: any = {
+  baseURL: 'https://tap-api.adamo.tech/',
+  responseType: 'json',
+  timeout: 10000,
+  headers: {
+    'X-Requested-With': 'XMLHttpRequest',
+    'Content-Type': 'application/json',
+    timeout: 5000,
+  },
+};
+
+const api = axios.create(ApiConfigs);
 
 api.interceptors.request.use(
   async (config: any) => {
-    config.baseURL = getBaseURL();
+    // config.baseURL = getBaseURL();
     const token = await getToken();
     if (token) {
       config.headers = {
         Authorization: 'Bearer ' + token,
-        'Content-Type': 'application/json',
         ...config.headers,
       };
     }

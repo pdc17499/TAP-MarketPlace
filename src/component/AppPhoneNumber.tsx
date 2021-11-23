@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {AppInput, AppText} from '@component';
+import {AppInput, AppModalCountry, AppText} from '@component';
 import {colors, fontFamily, scaleSize, scaleWidth, SIZE} from '@util';
 import {CaretRight, DownIcon, IconShieldCheck} from '@assets';
 import {useNavigation} from '@react-navigation/core';
@@ -69,6 +69,8 @@ export const AppPhoneNumber = React.memo((props: IAppPhoneNumber) => {
   //   }
   // };
 
+  const onChangeValue = () => {};
+
   const onNavigateVerify = () => {
     if (value && value !== '') {
       const contact = `+${countryCode} ${value
@@ -98,7 +100,7 @@ export const AppPhoneNumber = React.memo((props: IAppPhoneNumber) => {
       ) : (
         <View style={styles.container}>
           <TouchableOpacity style={styles.code} onPress={showModal}>
-            <CountryPicker
+            {/* <CountryPicker
               theme={{
                 fontSize: SIZE.base_size,
                 ...fontFamily.fontWeight400,
@@ -110,6 +112,12 @@ export const AppPhoneNumber = React.memo((props: IAppPhoneNumber) => {
               withFlagButton={false}
               onSelect={onSelectFlag}
               withFilter={true}
+            /> */}
+            <AppModalCountry
+              name={'nationality'}
+              label={'Country'}
+              // value={''}
+              onValueChange={onChangeValue}
             />
             <DownIcon />
           </TouchableOpacity>

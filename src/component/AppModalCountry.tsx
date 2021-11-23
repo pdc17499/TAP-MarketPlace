@@ -61,11 +61,7 @@ export const AppModalCountry = (props: AppModalCountryProps) => {
     if (item.name.includes(search)) {
       return (
         <Pressable
-          style={{
-            borderTopWidth: 1,
-            borderTopColor: colors.borderProfileList,
-            paddingVertical: 8,
-          }}
+          style={styles.countryView}
           onPress={() => onSelectCountry(item)}>
           <AppText>{`${item.flag}   ${item.name}`}</AppText>
         </Pressable>
@@ -103,13 +99,7 @@ export const AppModalCountry = (props: AppModalCountryProps) => {
             </Pressable>
             <TextInput
               placeholder={'Search country'}
-              style={{
-                flex: 1,
-                paddingVertical: 5,
-                marginLeft: 15,
-                ...fontFamily.fontWeight500,
-                fontSize: SIZE.base_size,
-              }}
+              style={styles.inputSearch}
               value={search}
               onChangeText={setSearch}
             />
@@ -174,5 +164,17 @@ const styles = StyleSheet.create({
     textDecorationLine: 'underline',
     textDecorationStyle: 'solid',
     textDecorationColor: colors.textSecondPrimary,
+  },
+  inputSearch: {
+    flex: 1,
+    paddingVertical: 5,
+    marginLeft: 15,
+    ...fontFamily.fontWeight500,
+    fontSize: SIZE.base_size,
+  },
+  countryView: {
+    borderTopWidth: 1,
+    borderTopColor: colors.borderProfileList,
+    paddingVertical: 8,
   },
 });

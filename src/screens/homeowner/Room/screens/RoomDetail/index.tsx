@@ -1,5 +1,5 @@
-import { AppText, Header } from '@component';
-import React, { useEffect } from 'react';
+import {AppText, Header} from '@component';
+import React, {useEffect} from 'react';
 import {
   View,
   Image,
@@ -7,31 +7,31 @@ import {
   StyleSheet,
   useWindowDimensions,
 } from 'react-native';
-import { IconTabActive, room_sample } from '@assets';
-import { colors, fontFamily, scaleSize, scaleWidth, SIZE, STYLE } from '@util';
-import { TabView } from 'react-native-tab-view';
-import { RoomDetailGeneral } from './RoomDetailGeneral';
-import { RoomDetailUnit } from './RoomDetailUnit';
-import { useDispatch } from 'react-redux';
-import { getRoomDetail } from '@redux';
+import {IconTabActive, room_sample} from '@assets';
+import {colors, fontFamily, scaleSize, scaleWidth, SIZE, STYLE} from '@util';
+import {TabView} from 'react-native-tab-view';
+import {RoomDetailGeneral} from './RoomDetailGeneral';
+import {RoomDetailUnit} from './RoomDetailUnit';
+import {useDispatch} from 'react-redux';
+import {getRoomDetail} from '@redux';
 
 const RoomDetail = (route: any) => {
   console.log('paa', route.route.params.id);
-  const roomId = route.route.params.id
-  const dispatch = useDispatch()
+  const roomId = route.route.params.id;
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getRoomDetail(roomId))
-  }, [])
+    // dispatch(getRoomDetail(roomId))
+  }, []);
 
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
-    { key: 'general', title: 'General' },
-    { key: 'detail', title: 'Room/Unit Details' },
+    {key: 'general', title: 'General'},
+    {key: 'detail', title: 'Room/Unit Details'},
   ]);
   const layout = useWindowDimensions();
 
-  const renderScene = ({ route }: any) => {
+  const renderScene = ({route}: any) => {
     switch (route.key) {
       case 'general':
         return <RoomDetailGeneral props={'general'} />;
@@ -43,14 +43,14 @@ const RoomDetail = (route: any) => {
   };
 
   const renderTabBar = (props: any) => {
-    const { navigationState, jumpTo } = props;
-    const { routes, index } = navigationState;
+    const {navigationState, jumpTo} = props;
+    const {routes, index} = navigationState;
 
     return (
       <>
         <View style={styles.tabContainer}>
           {routes.map((item: any, idx: number) => {
-            const { title, key } = item;
+            const {title, key} = item;
             const isActive = index === idx;
             const tabTitle = isActive ? styles.tabTitleActive : styles.tabTitle;
             return (
@@ -75,10 +75,10 @@ const RoomDetail = (route: any) => {
       <View style={styles.main}>
         <Image source={room_sample} style={styles.bgRoom} />
         <TabView
-          navigationState={{ index, routes }}
+          navigationState={{index, routes}}
           renderScene={renderScene}
           onIndexChange={setIndex}
-          initialLayout={{ width: layout.width }}
+          initialLayout={{width: layout.width}}
           renderTabBar={renderTabBar}
         />
       </View>
@@ -160,4 +160,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export { RoomDetail };
+export {RoomDetail};

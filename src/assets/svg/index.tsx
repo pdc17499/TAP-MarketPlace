@@ -163,10 +163,10 @@ export const IconPickLocation = (props: iconProps) => (
 );
 
 export const IconClear = (props: iconProps) => (
-  <Svg width={20} height={20} fill="none" {...props}>
+  <Svg width={20} height={20} viewBox="0 0 20 20" fill="none" {...props}>
     <Path
       d="M15.625 4.375l-11.25 11.25M15.625 15.625L4.375 4.375"
-      stroke="#AAA"
+      stroke={props.iconFillColor || '#AAA'}
       strokeWidth={2}
       strokeLinecap="round"
       strokeLinejoin="round"
@@ -533,10 +533,10 @@ export const IconPlus = (props: iconProps) => (
 );
 
 export const IconDelete = (props: iconProps) => (
-  <Svg width={20} height={20} fill="none" {...props}>
+  <Svg width={20} height={20} viewBox="0 0 20 20" fill="none" {...props}>
     <Path
       d="M17.557 4.358a92.78 92.78 0 00-4.033-.308v-.008l-.183-1.084c-.125-.767-.309-1.917-2.259-1.917H8.9c-1.942 0-2.125 1.1-2.258 1.909l-.175 1.066c-.775.05-1.55.1-2.325.175l-1.7.167a.626.626 0 00-.567.684.62.62 0 00.683.558l1.7-.167c4.367-.433 8.767-.266 13.184.175h.066a.631.631 0 00.625-.566.639.639 0 00-.575-.684zM16.024 6.784a1.054 1.054 0 00-.758-.325H4.733A1.04 1.04 0 003.69 7.566l.517 8.55c.091 1.267.208 2.85 3.116 2.85h5.35c2.909 0 3.026-1.575 3.117-2.85l.517-8.542a1.08 1.08 0 00-.284-.792zm-4.641 8.008H8.608a.63.63 0 01-.625-.625.63.63 0 01.625-.625h2.775a.63.63 0 01.625.625.63.63 0 01-.625.625zm.7-3.333H7.916a.63.63 0 01-.625-.625.63.63 0 01.625-.625h4.167a.63.63 0 01.625.625.63.63 0 01-.625.625z"
-      fill="#AAA"
+      fill={props.iconFillColor || '#AAA'}
     />
   </Svg>
 );
