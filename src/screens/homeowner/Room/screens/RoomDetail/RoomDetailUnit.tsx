@@ -7,9 +7,9 @@ import {
   Header,
   ModalCheckedBox,
 } from '@component';
-import React, {useState} from 'react';
-import {View, Image, Pressable, StyleSheet, ScrollView} from 'react-native';
-import {IconBack, IconClear, IconDola, IconEdit, room_sample} from '@assets';
+import React, { useState } from 'react';
+import { View, Image, Pressable, StyleSheet, ScrollView } from 'react-native';
+import { IconBack, IconClear, IconDola, IconEdit, room_sample } from '@assets';
 import {
   colors,
   DEVICE,
@@ -21,15 +21,16 @@ import {
   STYLE,
   YEARS,
 } from '@util';
-import {useNavigation} from '@react-navigation/core';
-import {Formik} from 'formik';
-import {ROOM_UNIT_HOWNER} from '@mocks';
+import { useNavigation } from '@react-navigation/core';
+import { Formik } from 'formik';
+import { ROOM_UNIT_HOWNER } from '@mocks';
 import * as yup from 'yup';
 import Carousel from 'react-native-snap-carousel';
 import Modal from 'react-native-modal';
 import Video from 'react-native-video';
-import {pickerProps} from '@interfaces';
-import {ROOM_DETAIL_GELLERY} from '@routeName';
+import { pickerProps } from '@interfaces';
+import { ROOM_DETAIL_GELLERY } from '@routeName';
+import { useSelector } from 'react-redux';
 
 const state = {
   activeIndex: 0,
@@ -57,30 +58,23 @@ const state = {
   ],
 };
 
-const RoomDetailUnit = ({props}: any) => {
+
+const RoomDetailUnit = ({ props }: any) => {
   const key = props;
   const navigation: any = useNavigation();
+  const ROOM: any = useSelector((state: any) => state?.rooms?.roomDetail);
   const [room, setRoom] = useState({
-    room_type: 'Entire Home',
-    bedroom_number: '2',
-    bathroom_number: '3',
-    room_furnishing: 'Partially Furnished',
-    floor_size_min: 5000,
-    floor_size_max: 5500,
-    floor_level: 'Low',
-    built_year: '2020',
-    allow_cooking: 'Yes',
-    amenities: ['Wifi', 'TV'],
-    gallery: [
-      'https://file-examples-com.github.io/uploads/2017/10/file_example_PNG_1MB.png',
-      'https://file-examples-com.github.io/uploads/2017/10/file_example_PNG_1MB.png',
-      'https://file-examples-com.github.io/uploads/2017/10/file_example_PNG_1MB.png',
-      'https://file-examples-com.github.io/uploads/2017/04/file_example_MP4_1280_10MG.mp4',
-      'https://file-examples-com.github.io/uploads/2017/10/file_example_PNG_1MB.png',
-      'https://file-examples-com.github.io/uploads/2017/10/file_example_PNG_1MB.png',
-      'https://file-examples-com.github.io/uploads/2017/10/file_example_PNG_1MB.png',
-      'https://file-examples-com.github.io/uploads/2017/10/file_example_PNG_1MB.png',
-    ],
+    room_type: ROOM?.RoomDetails?.RoomType,
+    bedroom_number: ROOM?.RoomDetails?.BedroomNumber,
+    bathroom_number: ROOM?.RoomDetails?.BathroomNumber,
+    // room_furnishing: 'Partially Furnished',
+    // floor_size_min: 5000,
+    // floor_size_max: 5500,
+    // floor_level: 'Low',
+    // built_year: '2020',
+    allow_cooking: ROOM?.RoomDetails?.AllowCook ? 'Yes' : 'No',
+    amenities: ROOM?.RoomDetails?.KeyWords,
+    gallery: ROOM?.PicturesVideo,
   });
   const [visible, setVisible] = useState(false);
 
@@ -98,11 +92,11 @@ const RoomDetailUnit = ({props}: any) => {
     room_type: room.room_type,
     bedroom_number: room.bedroom_number,
     bathroom_number: room.bathroom_number,
-    room_furnishing: room.room_furnishing,
-    floor_size_min: room.floor_size_min,
-    floor_size_max: room.floor_size_max,
-    floor_level: room.floor_level,
-    built_year: room.built_year,
+    // room_furnishing: room.room_furnishing,
+    // floor_size_min: room.floor_size_min,
+    // floor_size_max: room.floor_size_max,
+    // floor_level: room.floor_level,
+    // built_year: room.built_year,
     allow_cooking: room.allow_cooking,
     amenities: room.amenities,
     gallery: room.gallery,
@@ -118,19 +112,19 @@ const RoomDetailUnit = ({props}: any) => {
   });
 
   const onChangeValue = (value: any, name?: string) => {
-    const nRoom: any = {...room};
+    const nRoom: any = { ...room };
     if (name) {
       nRoom[name] = value;
       setRoom(nRoom);
-      console.log({value});
+      console.log({ value });
     }
   };
 
-  const onSubmit = (values: any) => {};
+  const onSubmit = (values: any) => { };
 
   const onValuesChangeFinish = (values: any) => {
-    console.log({values});
-    const nRoom: any = {...room};
+    console.log({ values });
+    const nRoom: any = { ...room };
     nRoom['floor_size_min'] = values[0];
     nRoom['floor_size_max'] = values[1];
     setRoom(nRoom);
@@ -138,7 +132,7 @@ const RoomDetailUnit = ({props}: any) => {
 
   const renderFloorSizeContent = (values: any) => {
     return (
-      <View style={{flexDirection: 'row', alignItems: 'center'}}>
+      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
         <IconDola width={10} height={15} iconFillColor={colors.secondPrimary} />
         <AppText
           isPrice
@@ -185,7 +179,7 @@ const RoomDetailUnit = ({props}: any) => {
   };
 
   const onGallery = (gallery: Array<string>) => {
-    navigation.navigate(ROOM_DETAIL_GELLERY, {gallery});
+    navigation.navigate(ROOM_DETAIL_GELLERY, { gallery });
   };
 
   const renderGallery = (gallery: Array<any>) => {
@@ -195,7 +189,7 @@ const RoomDetailUnit = ({props}: any) => {
       length > 4 ? styles.smallImage : styles.smallImageWidthSpace;
 
     return (
-      <View style={{paddingTop: SIZE.padding, marginBottom: 50}}>
+      <View style={{ paddingTop: SIZE.padding, marginBottom: 50 }}>
         <View style={styles.row}>
           <AppText style={styles.label}>{'Gallery'}</AppText>
           <Pressable
@@ -206,7 +200,7 @@ const RoomDetailUnit = ({props}: any) => {
         </View>
         {length > 0 && (
           <Pressable onPress={openModal}>
-            <Image source={{uri: gallery[0]}} style={styles.firstImage} />
+            <Image source={{ uri: gallery[0] }} style={styles.firstImage} />
             <View style={styleList}>
               {gallery.map((item: any, index: number) => {
                 const isVideo = checkVideo(item);
@@ -215,14 +209,14 @@ const RoomDetailUnit = ({props}: any) => {
                     <View key={index.toString()}>
                       {isVideo ? (
                         <Video
-                          source={{uri: item}}
+                          source={{ uri: item }}
                           style={styleFile}
                           resizeMode={'cover'}
-                          // controls
-                          // paused
+                        // controls
+                        // paused
                         />
                       ) : (
-                        <Image source={{uri: item}} style={styleFile} />
+                        <Image source={{ uri: item }} style={styleFile} />
                       )}
                       {index === 4 && (
                         <View style={styles.shadowGallery}>
@@ -269,22 +263,22 @@ const RoomDetailUnit = ({props}: any) => {
 
   var typesVideo = ['mp4'];
 
-  const _renderFile = ({item, index}: any) => {
-    console.log({item});
+  const _renderFile = ({ item, index }: any) => {
+    console.log({ item });
     const isVideo = checkVideo(item);
 
     return (
       <View key={index.toString()}>
         {isVideo ? (
           <Video
-            source={{uri: item}}
+            source={{ uri: item }}
             style={styles.gallery}
             resizeMode={'contain'}
-            // controls
-            // paused
+          // controls
+          // paused
           />
         ) : (
-          <Image source={{uri: item}} style={styles.gallery} />
+          <Image source={{ uri: item }} style={styles.gallery} />
         )}
       </View>
     );
@@ -316,7 +310,7 @@ const RoomDetailUnit = ({props}: any) => {
   return (
     <>
       <ScrollView
-        style={{flex: 1}}
+        style={{ flex: 1 }}
         contentContainerStyle={styles.contentContainerStyle}
         showsVerticalScrollIndicator={false}>
         <View style={styles.line} />
@@ -336,7 +330,7 @@ const RoomDetailUnit = ({props}: any) => {
                   'bathroom_number',
                   'Number of Bathrooms',
                 )}
-                <AppModal
+                {/* <AppModal
                   label={'Floor size'}
                   customTitle={renderFloorSizeContent(props.values)}>
                   <AppSlider
@@ -348,11 +342,11 @@ const RoomDetailUnit = ({props}: any) => {
                     iconLeft={'dolar'}
                     sliderLength={DEVICE.width - SIZE.padding * 3}
                   />
-                </AppModal>
-                {renderAppPicker(props, 'room_furnishing', 'Room furnishing')}
-                {renderAppPicker(props, 'floor_level', 'Floor level')}
+                </AppModal> */}
+                {/* {renderAppPicker(props, 'room_furnishing', 'Room furnishing')} */}
+                {/* {renderAppPicker(props, 'floor_level', 'Floor level')} */}
                 {renderAppPicker(props, 'allow_cooking', 'Allow cooking')}
-                {renderAppPicker(props, 'built_year', 'Built year')}
+                {/* {renderAppPicker(props, 'built_year', 'Built year')} */}
                 <ModalCheckedBox
                   label={'Amenities'}
                   data={list.amenities}
@@ -469,4 +463,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export {RoomDetailUnit};
+export { RoomDetailUnit };

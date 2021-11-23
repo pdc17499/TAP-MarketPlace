@@ -1,6 +1,6 @@
-import {AppButton, AppQA, AppText, Header} from '@component';
-import {colors, fontFamily, scaleWidth, SIZE} from '@util';
-import React, {useEffect, useState} from 'react';
+import { AppButton, AppQA, AppText, Header } from '@component';
+import { colors, fontFamily, scaleWidth, SIZE } from '@util';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   StyleSheet,
@@ -9,19 +9,19 @@ import {
   Alert,
   TouchableOpacity,
 } from 'react-native';
-import {useDispatch} from 'react-redux';
-import ImagePicker, {ImageOrVideo} from 'react-native-image-crop-picker';
-import {useActionSheet} from '@expo/react-native-action-sheet';
+import { useDispatch } from 'react-redux';
+import ImagePicker, { ImageOrVideo } from 'react-native-image-crop-picker';
+import { useActionSheet } from '@expo/react-native-action-sheet';
 import Video from 'react-native-video';
-import {bg_room_unit_picture, IconAddVideos} from '@assets';
-import {NavigationUtils} from '@navigation';
-import {USER_INFORMATION_NAME} from '@routeName';
+import { bg_room_unit_picture, IconAddVideos } from '@assets';
+import { NavigationUtils } from '@navigation';
+import { USER_INFORMATION_NAME } from '@routeName';
 
-const RoomDetailGallery = ({navigation, route}: any) => {
+const RoomDetailGallery = ({ navigation, route }: any) => {
   const dispatch = useDispatch();
   const gallery = route.params.gallery;
   const [files, setFiles] = useState([]);
-  const {showActionSheetWithOptions} = useActionSheet();
+  const { showActionSheetWithOptions } = useActionSheet();
   const optionPhotos = ['Upload Photos', 'Take a photo', 'Cancel'];
   const optionVideos = ['Upload Video', 'Take a video', 'Cancel'];
 
@@ -38,7 +38,7 @@ const RoomDetailGallery = ({navigation, route}: any) => {
       compressImageQuality: 0.6,
       maxFiles: 10,
     }).then((images: any) => {
-      console.log({images});
+      console.log({ images });
       const nFiles: any = [...files, ...images];
       validateFile(nFiles);
     });
@@ -56,7 +56,7 @@ const RoomDetailGallery = ({navigation, route}: any) => {
     });
   };
 
-  console.log({files});
+  console.log({ files });
 
   const validateFile = (nFiles: any) => {
     const photos = nFiles.filter((file: any) => {
@@ -68,7 +68,7 @@ const RoomDetailGallery = ({navigation, route}: any) => {
       return typeFile === 2 || typeFile === 4;
     });
 
-    console.log({nFiles, photos, videos});
+    console.log({ nFiles, photos, videos });
 
     if (photos.length > 10) {
       Alert.alert('You can only upload up to 10 photos');
@@ -112,7 +112,7 @@ const RoomDetailGallery = ({navigation, route}: any) => {
       },
       buttonIndex => {
         // Do something here depending on the button index selected
-        console.log({buttonIndex});
+        console.log({ buttonIndex });
         if (buttonIndex === 0) {
           uploadPhotos(mediaType);
         } else if (buttonIndex === 1) {
@@ -142,8 +142,8 @@ const RoomDetailGallery = ({navigation, route}: any) => {
     const uri = typeFile === 1 || typeFile === 2 ? file.path : file;
     const styleView =
       index === 1 || index % 3 == 1
-        ? {marginBottom: SIZE.padding, marginHorizontal: SIZE.padding - 1}
-        : {marginBottom: SIZE.padding};
+        ? { marginBottom: SIZE.padding, marginHorizontal: SIZE.padding - 1 }
+        : { marginBottom: SIZE.padding };
     return (
       <TouchableOpacity
         onPress={() => removeFile(index)}
@@ -151,11 +151,11 @@ const RoomDetailGallery = ({navigation, route}: any) => {
         key={index}
         style={styleView}>
         {typeFile === 1 || typeFile === 3 ? (
-          <Image source={{uri}} style={styles.itemImage} />
+          <Image source={{ uri }} style={styles.itemImage} />
         ) : (
           <>
             <Video
-              source={{uri}}
+              source={{ uri }}
               style={styles.itemImage}
               resizeMode={'cover'}
             />
@@ -195,7 +195,7 @@ const RoomDetailGallery = ({navigation, route}: any) => {
 
     return (
       <>
-        <View style={{paddingBottom: scaleWidth(400)}}>
+        <View style={{ paddingBottom: scaleWidth(400) }}>
           <Image source={bg_room_unit_picture} style={styles.bgImage} />
         </View>
         <AppText style={styles.title}>
@@ -218,7 +218,7 @@ const RoomDetailGallery = ({navigation, route}: any) => {
           backgroundColor: 'transparent',
         }}
       />
-      <ScrollView style={{flex: 1}} showsVerticalScrollIndicator={false}>
+      <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
         {renderListImage()}
         <View style={styles.padding}>
           <AppButton
@@ -249,7 +249,7 @@ const RoomDetailGallery = ({navigation, route}: any) => {
   );
 };
 
-export {RoomDetailGallery};
+export { RoomDetailGallery };
 
 const styles = StyleSheet.create({
   viewSubtitle: {
@@ -268,7 +268,7 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
     position: 'absolute',
   },
-  customStyleTitle: {color: colors.primary},
+  customStyleTitle: { color: colors.primary },
   itemImage: {
     width: scaleWidth(93),
     height: scaleWidth(93),

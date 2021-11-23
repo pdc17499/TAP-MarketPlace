@@ -1,7 +1,7 @@
-import {AppButton, AppQA, AppText, Header} from '@component';
-import {setDataSignup} from '@redux';
-import {colors, fontFamily, scaleWidth, SIZE} from '@util';
-import React, {createRef, useState} from 'react';
+import { AppButton, AppQA, AppText, Header } from '@component';
+import { addNewRoom, addNewRoomSaga, setDataSignup } from '@redux';
+import { colors, fontFamily, scaleWidth, SIZE } from '@util';
+import React, { createRef, useState } from 'react';
 import {
   View,
   StyleSheet,
@@ -10,27 +10,27 @@ import {
   Alert,
   TouchableOpacity,
 } from 'react-native';
-import {useDispatch, useSelector} from 'react-redux';
-import ImagePicker, {ImageOrVideo} from 'react-native-image-crop-picker';
-import {useActionSheet} from '@expo/react-native-action-sheet';
+import { useDispatch, useSelector } from 'react-redux';
+import ImagePicker, { ImageOrVideo } from 'react-native-image-crop-picker';
+import { useActionSheet } from '@expo/react-native-action-sheet';
 import Video from 'react-native-video';
-import {bg_room_unit_picture, IconAddVideos} from '@assets';
-import {NavigationUtils} from '@navigation';
-import {ADD_SUCCESS, USER_INFORMATION_NAME, YOUR_LISTING} from '@routeName';
+import { bg_room_unit_picture, IconAddVideos } from '@assets';
+import { NavigationUtils } from '@navigation';
+import { ADD_SUCCESS, USER_INFORMATION_NAME, YOUR_LISTING } from '@routeName';
 
 const RoomUnitGallery = () => {
   const dispatch = useDispatch();
   const dataSignUp = useSelector((state: any) => state?.auth?.dataSignup);
   const token = useSelector((state: any) => state?.auth?.token);
   const setData = (data: any) => {
-    dispatch(setDataSignup({data}));
+    dispatch(setDataSignup({ data }));
   };
 
   console.log('data', dataSignUp);
 
   const files = dataSignUp.list_photo || [];
   // const [files, setFiles] = useState([]);
-  const {showActionSheetWithOptions} = useActionSheet();
+  const { showActionSheetWithOptions } = useActionSheet();
   const optionPhotos = ['Upload Photos', 'Take a photo', 'Cancel'];
   const optionVideos = ['Upload Video', 'Take a video', 'Cancel'];
 
@@ -66,7 +66,7 @@ const RoomUnitGallery = () => {
     });
   };
 
-  console.log({files});
+  console.log({ files });
 
   const validateFile = (nFiles: any) => {
     const photos = nFiles.filter((file: ImageOrVideo) =>
@@ -83,7 +83,7 @@ const RoomUnitGallery = () => {
     } else if (videos.length > 1) {
       Alert.alert('You can only upload up to 1 video');
     } else {
-      const nData = {...dataSignUp};
+      const nData = { ...dataSignUp };
       nData.list_photo = nFiles;
       setData(nData);
       // setFiles(nFiles);
@@ -102,19 +102,59 @@ const RoomUnitGallery = () => {
           const nFiles = files.filter(
             (file: ImageOrVideo, idx: number) => index !== idx,
           );
-          const nData = {...dataSignUp};
+          const nData = { ...dataSignUp };
           nData.list_photo = nFiles;
           setData(nData);
         },
       },
     ]);
   };
+  const getUrlFiles = () => {
+    const files = dataSignUp?.list_photo;
+    if (files?.length > 0) {
+      const urls: string[] = [];
+      files.map((file: ImageOrVideo) => {
+        urls.push(file.path);
+      });
+
+      return urls;
+    }
+  };
 
   const onDone = () => {
     if (!token) {
       NavigationUtils.navigate(USER_INFORMATION_NAME);
     } else {
-      NavigationUtils.navigate(ADD_SUCCESS);
+      const state = dataSignUp
+      const body = {
+        roomDesc: {
+          RentalAddress: state?.location.title,
+          PlaceType: state?.kind_place?.value,
+          RoomDetails: {
+            RoomType: state?.room_type?.value,
+            BedroomNumber: state?.bedroom_number?.value,
+            BathroomNumber: state?.bathroom_number?.value,
+            AttachedBathroom: state?.attached_bathroom?.value === 'Yes',
+            AllowCook: state?.allow_cooking?.value === 'Yes',
+            StayWithGuest: state?.staying_with_guests?.value === 'Yes',
+            KeyWords: state?.key_your_place,
+          },
+          LeasePeriod: {
+            type: state?.kind_place?.value === 'HDB',
+            value: state?.lease_your_place,
+          },
+          PicturesVideo: getUrlFiles(),
+          RentalPrice: {
+            type: state?.rental_price?.value,
+            Min: state?.min_range_price,
+            Max: state?.max_range_price,
+            Price: parseInt(state?.negotiable_price || '0'),
+          },
+        },
+      }
+      console.log('lease', body);
+      // console.log('hello')
+      dispatch(addNewRoom({ body }))
     }
     // NavigationUtils.navigate(ADD_SUCCESS);
   };
@@ -130,7 +170,7 @@ const RoomUnitGallery = () => {
       },
       buttonIndex => {
         // Do something here depending on the button index selected
-        console.log({buttonIndex});
+        console.log({ buttonIndex });
         if (buttonIndex === 0) {
           uploadPhotos(mediaType);
         } else if (buttonIndex === 1) {
@@ -145,8 +185,8 @@ const RoomUnitGallery = () => {
 
     const styleView =
       index === 1 || index % 3 == 1
-        ? {marginBottom: SIZE.padding, marginHorizontal: SIZE.padding - 1}
-        : {marginBottom: SIZE.padding};
+        ? { marginBottom: SIZE.padding, marginHorizontal: SIZE.padding - 1 }
+        : { marginBottom: SIZE.padding };
     return (
       <TouchableOpacity
         onPress={() => removeFile(index)}
@@ -154,11 +194,11 @@ const RoomUnitGallery = () => {
         key={index}
         style={styleView}>
         {isPhoto ? (
-          <Image source={{uri: file.path}} style={styles.itemImage} />
+          <Image source={{ uri: file.path }} style={styles.itemImage} />
         ) : (
           <>
             <Video
-              source={{uri: file.path}}
+              source={{ uri: file.path }}
               style={styles.itemImage}
               resizeMode={'cover'}
             />
@@ -196,7 +236,7 @@ const RoomUnitGallery = () => {
           </>
         ) : (
           <>
-            <View style={{paddingBottom: scaleWidth(400)}}>
+            <View style={{ paddingBottom: scaleWidth(400) }}>
               <Image source={bg_room_unit_picture} style={styles.bgImage} />
             </View>
             <AppText style={styles.title}>
@@ -221,7 +261,7 @@ const RoomUnitGallery = () => {
           backgroundColor: 'transparent',
         }}
       />
-      <ScrollView style={{flex: 1}} showsVerticalScrollIndicator={false}>
+      <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
         {renderListImage()}
         <View style={styles.padding}>
           <AppButton
@@ -252,7 +292,7 @@ const RoomUnitGallery = () => {
   );
 };
 
-export {RoomUnitGallery};
+export { RoomUnitGallery };
 
 const styles = StyleSheet.create({
   viewSubtitle: {
@@ -271,7 +311,7 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
     position: 'absolute',
   },
-  customStyleTitle: {color: colors.primary},
+  customStyleTitle: { color: colors.primary },
   itemImage: {
     width: scaleWidth(93),
     height: scaleWidth(93),

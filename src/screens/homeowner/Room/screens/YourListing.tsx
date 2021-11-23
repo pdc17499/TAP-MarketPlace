@@ -22,7 +22,7 @@ import { ListingRoomProps, ListRooms } from '@interfaces';
 import { useNavigation } from '@react-navigation/core';
 import { ROOM_DETAIL, ROOM_UNIT_ADDRESS } from '@routeName';
 import { useDispatch, useSelector } from 'react-redux';
-import { getListRooms, getListRoomsSaga } from '@redux';
+import { getListRooms, getListRoomsSaga, resetDataSignup } from '@redux';
 
 
 interface itemProps {
@@ -32,11 +32,6 @@ interface itemProps {
 }
 
 const Route = React.memo(({ props }: any) => {
-  const dispatch = useDispatch();
-  useEffect(() => {
-    console.log('hiiii');
-    dispatch(getListRooms())
-  }, [])
   const rooms: [] = useSelector((state: any) => state?.rooms?.listRooms);
   const data1 = rooms.filter((item: any) => item?.isActive === true);
   const data2 = rooms.filter((item: any) => item?.isActive === false);
@@ -75,7 +70,7 @@ const Route = React.memo(({ props }: any) => {
           marginBottom: SIZE.medium_space,
           opacity: isActive ? 1 : 0.5,
         }}>
-        <Image source={{ uri: item?.PicturesVideo[0] }} style={styles.bgRoom} />
+        <Image source={{ uri: item?.PicturesVideo[0] || room_sample }} style={styles.bgRoom} />
         <AppText style={styles.roomTitle}>
           {item?.PlaceType + '  '}
           <IconDot style={{ marginBottom: 4 }} />
@@ -137,7 +132,13 @@ const renderScene = ({ route }: any) => {
 
 const YourListing = () => {
   const navigation: any = useNavigation();
+  const dispatch = useDispatch();
   const [index, setIndex] = React.useState(0);
+  useEffect(() => {
+    console.log('hiiii');
+    dispatch(getListRooms())
+  }, [])
+
   const [routes] = React.useState([
     { key: 'all', title: 'All' },
     { key: 'active', title: 'Active' },
@@ -146,9 +147,9 @@ const YourListing = () => {
   const layout = useWindowDimensions();
 
   const moveToRoomUnit = () => {
+    dispatch(resetDataSignup())
     navigation.navigate(ROOM_UNIT_ADDRESS)
   }
-
 
   const renderTabBar = (props: any) => {
     const { navigationState, jumpTo } = props;

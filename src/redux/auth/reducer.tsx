@@ -29,9 +29,10 @@ export default function dataSave(state = INITIAL_STATE_AUTH, action: any) {
         dataSignup: action?.payload?.data,
       };
     case RESET_DATA_SIGNUP:
-      return _.assign({}, state, {
-        dataSignup: INITIAL_STATE_DATA_SIGN_UP,
-      });
+      const nState = { ...state };
+      nState.dataSignup = INITIAL_STATE_DATA_SIGN_UP;
+      console.log({ nState });
+      return nState;
     default:
       return state;
   }

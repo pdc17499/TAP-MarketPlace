@@ -6,7 +6,7 @@ import {
   AppText,
   Header,
 } from '@component';
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Image,
@@ -33,28 +33,30 @@ import {
   STYLE,
   validateForm,
 } from '@util';
-import {useNavigation} from '@react-navigation/core';
-import {Formik} from 'formik';
-import {ROOM_UNIT_HOWNER} from '@mocks';
+import { useNavigation } from '@react-navigation/core';
+import { Formik } from 'formik';
+import { ROOM_UNIT_HOWNER } from '@mocks';
 import * as yup from 'yup';
-import {ROOM_DETAIL_LOCATION} from '@routeName';
+import { ROOM_DETAIL_LOCATION } from '@routeName';
 import ToggleSwitch from 'toggle-switch-react-native';
+import { useDispatch, useSelector } from 'react-redux';
+import { deleteRoom } from '@redux';
 
-const RoomDetailGeneral = ({props}: any) => {
+const RoomDetailGeneral = ({ props }: any) => {
   const key = props;
+  const ROOM: any = useSelector((state: any) => state?.rooms?.roomDetail);
+  const dispatch = useDispatch();
   const navigation: any = useNavigation();
   const [room, setRoom] = useState({
-    location: 'Singapore',
-    kind_place: 'Condo',
-    lease_period: '3 months',
-    min_range_price: 10000,
-    max_range_price: 20000,
-    staying_with_guests: 'Yes',
-    room_active: false,
+    location: ROOM?.RentalAddress,
+    kind_place: ROOM?.PlaceType,
+    lease_period: ROOM?.LeasePeriod?.value[0] + ' months',
+    min_range_price: ROOM?.RentalPrice?.Min,
+    max_range_price: ROOM?.RentalPrice?.Max,
+    staying_with_guests: ROOM?.StayWithGuest ? 'Yes' : 'No',
+    room_active: ROOM?.isActive,
   });
-
   const list = ROOM_UNIT_HOWNER;
-
   const formInitialValues = {
     location: room.location,
     kind_place: room.kind_place,
@@ -75,31 +77,31 @@ const RoomDetailGeneral = ({props}: any) => {
   });
 
   const onChangeText = (value: any, name?: string) => {
-    const nRoom: any = {...room};
+    const nRoom: any = { ...room };
     if (name) {
       nRoom[name] = value;
       setRoom(nRoom);
-      console.log({value});
+      console.log({ value });
     }
   };
 
-  const onSubmit = (values: any) => {};
+  const onSubmit = (values: any) => { };
 
   const onValuesChangeFinish = (values: any) => {
-    console.log({values});
-    const nRoom: any = {...room};
+    console.log({ values });
+    const nRoom: any = { ...room };
     nRoom['min_range_price'] = values[0];
     nRoom['max_range_price'] = values[1];
     setRoom(nRoom);
   };
 
   const onLocation = (locate: string) => {
-    navigation.navigate(ROOM_DETAIL_LOCATION, {locate, onChangeText});
+    navigation.navigate(ROOM_DETAIL_LOCATION, { locate, onChangeText });
   };
 
   const renderPriceTitle = (values: any) => {
     return (
-      <View style={{flexDirection: 'row', alignItems: 'center'}}>
+      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
         <IconDola width={10} height={15} iconFillColor={colors.secondPrimary} />
         <AppText
           isPrice
@@ -121,11 +123,15 @@ const RoomDetailGeneral = ({props}: any) => {
     );
   };
 
+  const onDelete = () => {
+    dispatch(deleteRoom(ROOM.id))
+  }
+
   return (
     <>
       <ScrollView
-        style={{flex: 1}}
-        contentContainerStyle={{paddingBottom: SIZE.big_space + SIZE.padding}}
+        style={{ flex: 1 }}
+        contentContainerStyle={{ paddingBottom: SIZE.big_space + SIZE.padding }}
         showsVerticalScrollIndicator={false}>
         <View style={styles.line} />
         <Formik
@@ -207,7 +213,7 @@ const RoomDetailGeneral = ({props}: any) => {
                     <IconEyeOpenFullFill />
                   )}
 
-                  <View style={{marginLeft: 10, marginRight: 3}}>
+                  <View style={{ marginLeft: 10, marginRight: 3 }}>
                     <ToggleSwitch
                       isOn={props.values.room_active}
                       onColor="#2A6B58"
@@ -220,6 +226,7 @@ const RoomDetailGeneral = ({props}: any) => {
                 </View>
                 <View style={styles.line} />
                 <Pressable
+                  onPress={onDelete}
                   style={{
                     flexDirection: 'row',
                     paddingVertical: SIZE.padding,
@@ -268,4 +275,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export {RoomDetailGeneral};
+export { RoomDetailGeneral };

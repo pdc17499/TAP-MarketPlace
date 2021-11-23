@@ -1,8 +1,8 @@
-import {IconCheckedBox, IconUncheckedBox} from '@assets';
-import {AppModal, AppText} from '@component';
-import {scaleWidth} from '@util';
-import React, {useEffect, useState} from 'react';
-import {Pressable, ScrollView, StyleSheet, View} from 'react-native';
+import { IconCheckedBox, IconUncheckedBox } from '@assets';
+import { AppModal, AppText } from '@component';
+import { scaleWidth } from '@util';
+import React, { useEffect, useState } from 'react';
+import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
 
 interface ModalCheckedBoxProps {
   data: any;
@@ -15,11 +15,12 @@ interface ModalCheckedBoxProps {
 }
 
 export const ModalCheckedBox = (props: ModalCheckedBoxProps) => {
-  const {data, label, selected, onPressDone, name, viewContent, title} = props;
+  const { data, label, selected, onPressDone, name, viewContent, title } = props;
   const [selectedItem, setSelectedItem] = useState<Array<string>>([]);
 
   useEffect(() => {
     setSelectedItem(selected);
+
   }, [selected]);
 
   const onCheck = (isSelected: boolean, item: any) => {

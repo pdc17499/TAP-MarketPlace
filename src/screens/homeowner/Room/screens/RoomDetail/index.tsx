@@ -6,17 +6,19 @@ import {
   Pressable,
   StyleSheet,
   useWindowDimensions,
+  TouchableOpacity,
 } from 'react-native';
 import { IconTabActive, room_sample } from '@assets';
 import { colors, fontFamily, scaleSize, scaleWidth, SIZE, STYLE } from '@util';
 import { TabView } from 'react-native-tab-view';
 import { RoomDetailGeneral } from './RoomDetailGeneral';
 import { RoomDetailUnit } from './RoomDetailUnit';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { getRoomDetail } from '@redux';
+import Video from 'react-native-video';
 
 const RoomDetail = (route: any) => {
-  console.log('paa', route.route.params.id);
+  // console.log('paa', route.route.params.id);
   const roomId = route.route.params.id
   const dispatch = useDispatch()
 
@@ -24,12 +26,30 @@ const RoomDetail = (route: any) => {
     dispatch(getRoomDetail(roomId))
   }, [])
 
+  const ROOM: any = useSelector((state: any) => state?.rooms?.roomDetail);
+  // console.log('paa', ROOM);
+
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
     { key: 'general', title: 'General' },
     { key: 'detail', title: 'Room/Unit Details' },
   ]);
   const layout = useWindowDimensions();
+  const typesVideo = ['mp4'];
+
+  const checkVideo = (file: any) => {
+    if (file?.hasOwnProperty('mime')) {
+      const isImage = file.mime.includes('image');
+      return isImage ? 1 : 2;
+    } else {
+      var parts = file?.split('.');
+      var extension = parts[parts.length - 1];
+      const isImage = typesVideo.indexOf(extension) === -1;
+      console.log('isImange', isImage);
+      return isImage ? 3 : 4;
+    }
+  };
+
 
   const renderScene = ({ route }: any) => {
     switch (route.key) {
@@ -40,6 +60,26 @@ const RoomDetail = (route: any) => {
       default:
         return null;
     }
+  };
+  const renderImage = (file: any) => {
+    const typeFile = checkVideo(file);
+    console.log('typleFuile', typeFile);
+    const uri = typeFile === 1 || typeFile === 2 ? file.path : file;
+    return (
+      <>
+        {typeFile === 1 || typeFile === 3 ? (
+          <Image source={{ uri }} style={styles.itemImage} />
+        ) : (
+          <>
+            <Video
+              source={{ uri }}
+              style={styles.itemImage}
+              resizeMode={'cover'}
+            />
+          </>
+        )}
+      </>
+    );
   };
 
   const renderTabBar = (props: any) => {
@@ -73,7 +113,7 @@ const RoomDetail = (route: any) => {
     <View style={styles.container}>
       <Header back customContainer={styles.customContainer} />
       <View style={styles.main}>
-        <Image source={room_sample} style={styles.bgRoom} />
+        {ROOM !== null ? renderImage(ROOM?.PicturesVideo[0]) : null}
         <TabView
           navigationState={{ index, routes }}
           renderScene={renderScene}
@@ -157,6 +197,28 @@ const styles = StyleSheet.create({
     height: 1,
     backgroundColor: colors.borderProfileList,
     // marginBottom: SIZE.base_space,
+  },
+  itemImage: {
+    width: scaleWidth(327),
+    height: scaleWidth(130),
+    borderRadius: 8,
+  },
+  viewProfile: {
+    position: 'absolute',
+    top: -scaleWidth(44),
+    left: -SIZE.padding / 2,
+    right: -SIZE.padding / 2,
+    bottom: -SIZE.padding / 2,
+    alignItems: 'center',
+    borderRadius: 14,
+    borderWidth: 1,
+    borderColor: colors.google,
+  },
+  profilePhoto: {
+    fontSize: SIZE.small_size,
+    marginTop: SIZE.base_space,
+    color: colors.textThirdPrimary,
+    ...fontFamily.fontWeight500,
   },
 });
 
