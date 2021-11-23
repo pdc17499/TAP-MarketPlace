@@ -19,26 +19,23 @@ const VerifyAccount = (props: VerifyCodeProp) => {
   const dispatch = useDispatch();
   const navigation: any = useNavigation();
   const [isShowRules, setIsShowRules] = useState(false);
-  const [phoneNumber, setPhoneNumber] = useState('');
-  const [countryCode, setCountryCode] = useState('');
-  const showRules = () => {
-    setIsShowRules(!isShowRules);
-  };
+  const [contact, setContact] = useState('');
   // const email = props.route?.params?.email;
   const user = useSelector((state: any) => state?.auth?.user);
 
   console.log({user});
 
+  const showRules = () => {
+    setIsShowRules(!isShowRules);
+  };
+
   const moveToVerifyCode = () => {
-    if (phoneNumber !== '') {
-      const contact = `+${countryCode} ${phoneNumber
-        .toString()
-        .replace(/[^a-zA-Z0-9]/g, '')}`;
+    if (contact !== '') {
       console.log({contact});
       dispatch(
         verifyPhonenumber({
           email: user?.email,
-          contact,
+          contact: contact,
         }),
       );
     } else {
@@ -50,6 +47,10 @@ const VerifyAccount = (props: VerifyCodeProp) => {
     navigation.replace(PROFILE);
   };
 
+  const onChangeContact = (nContact: string) => {
+    setContact(nContact);
+  };
+
   return (
     <View style={styles.container}>
       <Header />
@@ -59,10 +60,10 @@ const VerifyAccount = (props: VerifyCodeProp) => {
         <AppText style={styles.yourPhoneTxt}>{'Your Phone Number'}</AppText>
 
         <AppPhoneNumber
-          value={phoneNumber}
-          onChangeFlag={setCountryCode}
-          onChangePhone={setPhoneNumber}
+          value={contact}
+          onChangePhone={onChangeContact}
           maxLength={30}
+          name={'contact'}
         />
 
         <AppText style={styles.sendCodeTxt}>

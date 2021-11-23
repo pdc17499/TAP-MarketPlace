@@ -127,7 +127,7 @@ export interface DataSignupProps {
   user_name: string;
   gender: mockProps;
   age_group: mockProps;
-  country: any;
+  country: string;
   occupation: pickerProps;
   ethnicity: pickerProps;
   your_place: Array<string>;
@@ -243,6 +243,7 @@ export interface IAppPicker {
   customStyleLabel?: TextStyle;
   customePlaceholder?: JSX.Element;
   customStyleInputPicker?: TextStyle;
+  customSubview?: JSX.Element;
 }
 
 export interface ListingRoomProps {
@@ -277,7 +278,7 @@ export interface AppModalProps {
 
 export interface AppModalCountryProps {
   label?: string;
-  onValueChange: (value: any, name?: string) => void;
+  onValueChange: (value: string, name?: string) => void;
   items?: any;
   style?: any;
   placeholder?: any;
@@ -288,4 +289,6 @@ export interface AppModalCountryProps {
   customStyleTitle?: ViewStyle;
   customStyleButton?: ViewStyle | ViewStyle[];
   customStyleContainer?: ViewStyle | ViewStyle[];
+  type?: 'phone_code' | 'country'
+  typeButton?: 'linear' | 'base',
 }

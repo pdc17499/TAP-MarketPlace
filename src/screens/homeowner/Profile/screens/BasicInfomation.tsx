@@ -61,7 +61,7 @@ const BasicInfomation = () => {
   const onChangeValue = (item: any, name?: string) => {
     if (name) {
       const nData: any = {...user};
-      nData[name] = name === 'nationality' ? item.name : item;
+      nData[name] = item;
       setUser(nData);
     }
   };
@@ -174,6 +174,8 @@ const BasicInfomation = () => {
                 value={props.values.nationality}
                 onValueChange={onChangeValue}
                 error={props.errors.nationality}
+                type={'country'}
+                typeButton={'linear'}
               />
               <AppPicker
                 value={props.values.occupation}

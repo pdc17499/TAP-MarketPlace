@@ -36,9 +36,7 @@ const AccountSetting = () => {
   useEffect(() => {
     setUser(dataUser);
     console.log(dataUser);
-  }, [dataUser]);
-
-  console.log('dataa', dataUser);
+  }, []);
 
   const formInitialValues = {
     email: user?.email,
@@ -56,12 +54,11 @@ const AccountSetting = () => {
       nData[name] = item;
       setUser(nData);
     }
-    setShowButton(true);
   };
 
-  const validatePhone = (contact: number) => {
-    return contact ? contact.toString().replace(/[^a-zA-Z0-9]/g, '') : '';
-  };
+  // const validatePhone = (contact: number) => {
+  //   return contact ? contact.toString().replace(/[^a-zA-Z0-9]/g, '') : '';
+  // };
 
   const onSubmit = (values: any) => {
     const contact = `${values.contact.toString().replace(/[^a-zA-Z0-9]/g, '')}`;
@@ -105,14 +102,14 @@ const AccountSetting = () => {
               <View style={styles.phoneInput}>
                 <AppText style={styles.phoneInputTxt}>{'Phone number'}</AppText>
                 <AppPhoneNumber
-                  value={validatePhone(props.values.contact)}
-                  onChangeFlag={setCountryCode}
+                  value={props.values.contact}
                   onChangePhone={onChangeText}
                   name={'contact'}
                   type={'inline'}
                   maxLength={30}
                   error={props.errors.contact}
-                  showVerifyNumber={!user?.isContactVerified}
+                  showVerifyNumber
+                  isContactVerified={user?.isContactVerified}
                 />
               </View>
               <Pressable onPress={() => navigation.navigate(CHANGE_PASSWORD)}>

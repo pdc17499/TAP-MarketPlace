@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import {AppInput, AppModalCountry, AppText} from '@component';
 import {colors, fontFamily, scaleSize, scaleWidth, SIZE} from '@util';
-import {CaretRight, DownIcon, IconShieldCheck} from '@assets';
+import {CaretRight, DownIcon, IconShieldCheck, IconVerifyPhone} from '@assets';
 import {useNavigation} from '@react-navigation/core';
 import {VERIFY_ACCOUNT, VERIFY_CODE} from '@routeName';
 import {useDispatch, useSelector} from 'react-redux';
@@ -19,12 +19,12 @@ interface IAppPhoneNumber {
   label?: string;
   value?: string;
   onChangePhone: (text: string, name?: string) => void;
-  onChangeFlag: (text: string) => void;
   error?: string;
   type?: 'default' | 'inline';
   name?: string;
   maxLength?: number;
   showVerifyNumber?: boolean;
+  isContactVerified?: boolean;
 }
 
 export const AppPhoneNumber = React.memo((props: IAppPhoneNumber) => {
@@ -32,104 +32,111 @@ export const AppPhoneNumber = React.memo((props: IAppPhoneNumber) => {
     label,
     value,
     onChangePhone,
-    onChangeFlag,
     error,
     type,
     maxLength,
     name,
     showVerifyNumber,
+    isContactVerified,
   } = props;
-  const [countryCode, setCountryCode]: any = useState('SG');
-  const [visible, setVisible] = useState(false);
+  const [phone, setPhone] = useState({
+    code: '',
+    number: '',
+  });
   const [isInLine, setIsInLine] = useState(false);
   const navigation: any = useNavigation();
   const dispatch = useDispatch();
   const dataUser: UserInfo = useSelector((state: any) => state?.auth?.user);
 
   useEffect(() => {
-    onChangeFlag('65');
-    if (type === 'inline') setIsInLine(false);
+    getCountryCode();
+  }, [value]);
+
+  useEffect(() => {
+    if (type === 'inline') setIsInLine(true);
   }, []);
 
-  const onSelectFlag = (country: any) => {
-    setCountryCode(country?.cca2);
-    onChangeFlag(country?.callingCode[0] || '65');
-    setVisible(false);
+  const getCountryCode = () => {
+    if (!value) {
+      setPhone({
+        code: '',
+        number: '',
+      });
+    } else {
+      const index = value.indexOf(' ');
+      if (index === -1) {
+        const contact = `+65 ${value}`;
+        onChangePhone(contact, name);
+      } else {
+        const nCode = value.substring(0, index);
+        const nPhone = value.substring(index + 1, value.length);
+        setPhone({
+          code: nCode,
+          number: nPhone,
+        });
+      }
+    }
   };
-
-  const showModal = () => {
-    setVisible(true);
-  };
-
-  console.log({value});
-
-  // const callBackOnFocus = (focus: boolean) => {
-  //   if (type === 'inline') {
-  //     setIsInLine(focus);
-  //   }
-  // };
-
-  const onChangeValue = () => {};
 
   const onNavigateVerify = () => {
     if (value && value !== '') {
-      const contact = `+${countryCode} ${value
-        .toString()
-        .replace(/[^a-zA-Z0-9]/g, '')}`;
-      console.log({contact});
+      // const contact = `${countryCode} ${value
+      //   .toString()
+      //   .replace(/[^a-zA-Z0-9]/g, '')}`;
+      console.log({value});
       dispatch(
         verifyPhonenumber({
           email: dataUser?.email,
-          contact,
+          contact: value,
         }),
       );
-      navigation.navigate(VERIFY_CODE, {contact});
+      navigation.navigate(VERIFY_CODE, {contact: value});
     } else {
       Alert.alert('Please enter your phone number!');
     }
   };
 
+  const onChangePhoneNumber = (nPhone: any) => {
+    const contact = `${phone.code} ${nPhone
+      .toString()
+      .replace(/[^a-zA-Z0-9]/g, '')}`;
+    console.log({contact});
+    onChangePhone(contact, name);
+  };
+
+  const onChangeCode = (nCode: any) => {
+    const contact = `${nCode} ${phone.number}`;
+    console.log({contact});
+    onChangePhone(contact, name);
+  };
+
   return (
     <>
-      {!isInLine ? (
-        <Pressable style={styles.inlineType} onPress={() => setIsInLine(true)}>
+      {isInLine ? (
+        <Pressable style={styles.inlineType} onPress={() => setIsInLine(false)}>
           <AppText style={{...fontFamily.fontWeight500}}>
-            {value || 'N/A'}
+            {`${phone.code} ${phone.number}  ` || 'N/A'}
           </AppText>
+          {isContactVerified && <IconVerifyPhone style={{bottom: 3}} />}
         </Pressable>
       ) : (
         <View style={styles.container}>
-          <TouchableOpacity style={styles.code} onPress={showModal}>
-            {/* <CountryPicker
-              theme={{
-                fontSize: SIZE.base_size,
-                ...fontFamily.fontWeight400,
-              }}
-              visible={visible}
-              withCallingCode={false}
-              withCallingCodeButton={true}
-              countryCode={countryCode || 'SG'}
-              withFlagButton={false}
-              onSelect={onSelectFlag}
-              withFilter={true}
-            /> */}
-            <AppModalCountry
-              name={'nationality'}
-              label={'Country'}
-              // value={''}
-              onValueChange={onChangeValue}
-            />
-            <DownIcon />
-          </TouchableOpacity>
+          <AppModalCountry
+            value={phone.code}
+            onValueChange={onChangeCode}
+            customStyleContainer={styles.customStyleContainer}
+            customStyleButton={styles.customStyleButton}
+            type={'phone_code'}
+            typeButton={'base'}
+          />
           <View style={styles.input}>
             <AppInput
               typeInput={'phone'}
               delimiter={' - '}
-              label={label}
               style={styles.inputPhone}
               keyboardType="number-pad"
-              value={value}
-              onValueChange={text => onChangePhone(text, name)}
+              value={phone.number}
+              onValueChange={onChangePhoneNumber}
               maxLength={maxLength}
               inputStyle={{fontSize: SIZE.base_size + 1}}
               // callBackOnFocus={callBackOnFocus}
@@ -139,7 +146,7 @@ export const AppPhoneNumber = React.memo((props: IAppPhoneNumber) => {
         </View>
       )}
 
-      {showVerifyNumber && (
+      {showVerifyNumber && !isContactVerified && (
         <Pressable style={styles.verifyPress} onPress={onNavigateVerify}>
           <AppText style={{fontSize: scaleSize(14), color: colors.primary}}>
             {'Verify this number'}
@@ -170,7 +177,7 @@ const styles = StyleSheet.create({
   code: {
     flexDirection: 'row',
     alignItems: 'center',
-    width: scaleWidth(86),
+    minWidth: scaleWidth(70),
     justifyContent: 'space-between',
     backgroundColor: colors.bgInput,
     borderRadius: 8,
@@ -189,4 +196,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: scaleWidth(17),
   },
+  customStyleContainer: {paddingTop: 0, paddingRight: 0},
+  customStyleButton: {paddingBottom: 8, marginTop: 0},
 });

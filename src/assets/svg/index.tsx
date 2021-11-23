@@ -1054,3 +1054,22 @@ export const IconCheckCircle = (props: iconProps) => (
     />
   </Svg>
 );
+
+export const IconVerifyPhone = (props: iconProps) => (
+  <Svg width={20} height={20} fill="none" {...props}>
+    <Path
+      d="M3.125 8.958V4.375a.625.625 0 01.625-.625h12.5a.625.625 0 01.625.625v4.583c0 6.564-5.57 8.739-6.683 9.107a.59.59 0 01-.384 0c-1.112-.368-6.683-2.543-6.683-9.107z"
+      stroke="#2A6B58"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <Path
+      d="M13.438 8.125L8.854 12.5l-2.291-2.188"
+      stroke="#2A6B58"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </Svg>
+);
