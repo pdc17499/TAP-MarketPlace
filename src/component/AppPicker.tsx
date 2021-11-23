@@ -23,6 +23,7 @@ export const AppPicker: React.FC<IAppPicker> = React.memo((props: any) => {
     customStyleLabel,
     customePlaceholder,
     customStyleInputPicker,
+    customSubview,
   } = props;
   const value = props.value || '';
   const [isOpenPicker, setIsOpenPicker] = useState(false);
@@ -55,63 +56,66 @@ export const AppPicker: React.FC<IAppPicker> = React.memo((props: any) => {
   const styleInputIOS = {...styles.inputIOS, ...customStyleInputPicker};
 
   return (
-    <View style={styles.container}>
-      {label && (
-        <AppText style={[styles.label, colorLabel, customStyleLabel]}>
-          {label}
-        </AppText>
-      )}
-      <View style={[styles.picker, style]}>
-        {typePicker === 'country' ? (
-          <View style={styles.country}>
-            <CountryPicker
-              theme={styles.themePickerCountry}
-              withCallingCode={false}
-              withCallingCodeButton={false}
-              countryCode={value || 'SG'}
-              // containerButtonStyle
-              withFlagButton={false}
-              onSelect={onSelectFlag}
-              withFilter={true}
-              withCountryNameButton
-              modalProps={modalCountryProps}
-              onOpen={() => onOpenPickerSelect(true)}
-              onClose={() => onOpenPickerSelect(false)}
-            />
-            {DownIconPicker()}
-          </View>
-        ) : (
-          <>
-            <RNPickerSelect
-              disabled={disable}
-              onValueChange={item => onValueChange(item, name)}
-              useNativeAndroidPickerStyle={false}
-              placeholder={placeholder || {label: 'N/A', value: 'N/A'}}
-              value={value}
-              items={items}
-              pickerProps={{
-                style: styles.pickerProps,
-              }}
-              style={{
-                inputAndroid: styleInputAndroid,
-                inputIOS: styleInputIOS,
-                iconContainer: styles.iconContainer,
-                placeholder: styles.placeholder,
-              }}
-              onOpen={() => onOpenPickerSelect(true)}
-              onClose={() => onOpenPickerSelect(false)}
-            />
-            {!value && customePlaceholder}
-            {isLinear ? (
-              <View style={styles.hideDropdownAndroid} />
-            ) : (
-              <View style={styles.customIcon}>{DownIconPicker()}</View>
-            )}
-          </>
+    <>
+      <View style={styles.container}>
+        {label && (
+          <AppText style={[styles.label, colorLabel, customStyleLabel]}>
+            {label}
+          </AppText>
         )}
+        <View style={[styles.picker, style]}>
+          {typePicker === 'country' ? (
+            <View style={styles.country}>
+              <CountryPicker
+                theme={styles.themePickerCountry}
+                withCallingCode={false}
+                withCallingCodeButton={false}
+                countryCode={value || 'SG'}
+                // containerButtonStyle
+                withFlagButton={false}
+                onSelect={onSelectFlag}
+                withFilter={true}
+                withCountryNameButton
+                modalProps={modalCountryProps}
+                onOpen={() => onOpenPickerSelect(true)}
+                onClose={() => onOpenPickerSelect(false)}
+              />
+              {DownIconPicker()}
+            </View>
+          ) : (
+            <>
+              <RNPickerSelect
+                disabled={disable}
+                onValueChange={item => onValueChange(item, name)}
+                useNativeAndroidPickerStyle={false}
+                placeholder={placeholder || {label: 'N/A', value: 'N/A'}}
+                value={value}
+                items={items}
+                pickerProps={{
+                  style: styles.pickerProps,
+                }}
+                style={{
+                  inputAndroid: styleInputAndroid,
+                  inputIOS: styleInputIOS,
+                  iconContainer: styles.iconContainer,
+                  placeholder: styles.placeholder,
+                }}
+                onOpen={() => onOpenPickerSelect(true)}
+                onClose={() => onOpenPickerSelect(false)}
+              />
+              {!value && customePlaceholder}
+              {isLinear ? (
+                <View style={styles.hideDropdownAndroid} />
+              ) : (
+                <View style={styles.customIcon}>{DownIconPicker()}</View>
+              )}
+            </>
+          )}
+        </View>
+        {customSubview}
       </View>
       {!!error && <AppText style={[styles.error, styleError]}>{error}</AppText>}
-    </View>
+    </>
   );
 });
 
@@ -157,8 +161,9 @@ const stylesBase = StyleSheet.create({
     marginBottom: SIZE.base_space,
   },
   error: {
-    marginTop: 5,
+    marginTop: 6,
     color: colors.red,
+    fontSize: scaleSize(15),
   },
   inputAndroid: {
     ...fontFamily.fontWeight400,
@@ -207,6 +212,8 @@ const stylesBase = StyleSheet.create({
 const stylesLinear = StyleSheet.create({
   container: {
     marginTop: SIZE.padding,
+    borderBottomColor: colors.borderProfileList,
+    borderBottomWidth: 1,
   },
   picker: {
     justifyContent: 'center',
@@ -238,10 +245,11 @@ const stylesLinear = StyleSheet.create({
     width: '100%',
     margin: 0,
     height: 'auto',
+    minHeight: SIZE.input_height,
     paddingLeft: 0,
     backgroundColor: 'transparent',
-    borderBottomColor: colors.borderProfileList,
-    borderBottomWidth: 1,
+    // borderBottomColor: colors.borderProfileList,
+    // borderBottomWidth: 1,
     borderRadius: 0,
     paddingBottom: scaleWidth(20),
     paddingTop: 0,
@@ -254,8 +262,8 @@ const stylesLinear = StyleSheet.create({
     fontSize: SIZE.base_size + 1,
     paddingLeft: 0,
     backgroundColor: 'transparent',
-    borderBottomColor: colors.borderProfileList,
-    borderBottomWidth: 1,
+    // borderBottomColor: colors.borderProfileList,
+    // borderBottomWidth: 1,
     borderRadius: 0,
     paddingBottom: SIZE.padding,
   },

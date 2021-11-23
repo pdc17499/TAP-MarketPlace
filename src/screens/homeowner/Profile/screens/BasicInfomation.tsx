@@ -28,12 +28,6 @@ import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import moment from 'moment';
 import {CaretRight} from '@assets';
 
-interface BasicInfomationProp {}
-
-interface screenNavigationProp {
-  navigate: any;
-}
-
 const BasicInfomation = () => {
   const dispatch = useDispatch();
   const list = ROOM_UNIT_HOWNER;
@@ -53,15 +47,15 @@ const BasicInfomation = () => {
     ethnicity: user?.ethnicity,
     gender: user?.gender,
     ageGroup: user?.ageGroup,
+    dob: user?.dob || '',
   };
 
   const validationForm = yup.object().shape({
     name: validateForm().common.reuqire,
-    gender: validateForm().common.selectAtLeast,
-    // occupation: validateForm().common.atLeastOnePicker,
-    // ethnicity: validateForm().common.atLeastOnePicker,
-    // nationality: validateForm().common.selectAtLeast,
-    // ageGroup: validateForm().common.atLeastOnePicker,
+    gender: validateForm().common.atLeastOnePicker,
+    nationality: validateForm().common.selectAtLeast,
+    ageGroup: validateForm().common.atLeastOnePicker,
+    dob: validateForm().common.reuqire,
   });
 
   const onChangeValue = (item: any, name?: string) => {
@@ -147,17 +141,23 @@ const BasicInfomation = () => {
                   label={'Age group'}
                   onValueChange={onChangeValue}
                   items={list.group_age}
-                  error={props.errors.ageGroup}
+                  error={props.errors.ageGroup || props.errors.dob}
                   stylePicker={'linear'}
-                  customStyleInputPicker={{paddingBottom: scaleWidth(54)}}
+                  customSubview={
+                    <Pressable
+                      onPress={showDatepicker}
+                      style={{marginTop: SIZE.padding}}>
+                      {dateOfBirth === '' ? (
+                        renderCustomPlaceHolder('date of birth')
+                      ) : (
+                        <AppText style={styles.birthdayTxt}>
+                          {dateOfBirth}
+                        </AppText>
+                      )}
+                    </Pressable>
+                  }
                 />
-                <Pressable onPress={showDatepicker}>
-                  {dateOfBirth === '' ? (
-                    renderCustomPlaceHolder('date of birth')
-                  ) : (
-                    <AppText style={styles.birthdayTxt}>{dateOfBirth}</AppText>
-                  )}
-                </Pressable>
+
                 {showDate && (
                   <DateTimePickerModal
                     isVisible={showDate}
@@ -301,8 +301,7 @@ const styles = StyleSheet.create({
   birthdayTxt: {
     fontSize: scaleSize(14),
     color: colors.textSecondPrimary,
-    position: 'absolute',
-    bottom: SIZE.padding,
+    // marginTop: 20,
   },
   viewPlacHolder: {
     flexDirection: 'row',
