@@ -36,9 +36,7 @@ const AccountSetting = () => {
   useEffect(() => {
     setUser(dataUser);
     console.log(dataUser);
-  }, [dataUser]);
-
-  console.log('dataa', dataUser);
+  }, []);
 
   const formInitialValues = {
     email: user?.email,
@@ -56,12 +54,11 @@ const AccountSetting = () => {
       nData[name] = item;
       setUser(nData);
     }
-    setShowButton(true);
   };
 
-  const validatePhone = (contact: number) => {
-    return contact ? contact.toString().replace(/[^a-zA-Z0-9]/g, '') : '';
-  };
+  // const validatePhone = (contact: number) => {
+  //   return contact ? contact.toString().replace(/[^a-zA-Z0-9]/g, '') : '';
+  // };
 
   const onSubmit = (values: any) => {
     const contact = `${values.contact.toString().replace(/[^a-zA-Z0-9]/g, '')}`;
@@ -92,13 +89,7 @@ const AccountSetting = () => {
         onSubmit={onSubmit}>
         {(props: any) => (
           <>
-            <View
-              style={{
-                flex: 1,
-                borderTopWidth: 1,
-                borderTopColor: colors.borderProfileList,
-                paddingTop: 10,
-              }}>
+            <View style={styles.formik}>
               <AppInput
                 label={'Email'}
                 value={props.values.email}
@@ -111,14 +102,14 @@ const AccountSetting = () => {
               <View style={styles.phoneInput}>
                 <AppText style={styles.phoneInputTxt}>{'Phone number'}</AppText>
                 <AppPhoneNumber
-                  value={validatePhone(props.values.contact)}
-                  onChangeFlag={setCountryCode}
+                  value={props.values.contact}
                   onChangePhone={onChangeText}
                   name={'contact'}
                   type={'inline'}
                   maxLength={30}
                   error={props.errors.contact}
-                  showVerifyNumber={!user?.isContactVerified}
+                  showVerifyNumber
+                  isContactVerified={user?.isContactVerified}
                 />
               </View>
               <Pressable onPress={() => navigation.navigate(CHANGE_PASSWORD)}>
@@ -187,6 +178,12 @@ const styles = StyleSheet.create({
     lineHeight: scaleWidth(15),
     marginBottom: scaleWidth(10),
     color: colors.primary,
+  },
+  formik: {
+    flex: 1,
+    borderTopWidth: 1,
+    borderTopColor: colors.borderProfileList,
+    paddingTop: 10,
   },
   text2: {
     fontSize: scaleSize(15),

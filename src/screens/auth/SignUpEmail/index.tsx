@@ -91,7 +91,7 @@ const SignUpEmail = (props: SignUpEmailProp) => {
         name: state.user_name,
         gender: state?.gender?.value,
         ageGroup: state?.age_group?.id,
-        nationality: state?.country?.name,
+        nationality: state?.country,
         occupation: state?.occupation?.value,
         ethnicity: state?.ethnicity?.value,
         lifestyle: state?.life_style,

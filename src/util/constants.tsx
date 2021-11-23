@@ -19,7 +19,7 @@ const SLIDER = {
 };
 
 const FILE_SIZE = {
-  MAX_IMAGE: 1048576,
+  MAX_IMAGE: 10485760,
 };
 
 const DEFAULT_COUNTRY = {
@@ -38,7 +38,7 @@ const STYLE = {
 
 const OPTIONS_GALLERY = {
   optionPhotos: ['Upload Photos', 'Take a photo', 'Cancel'],
-  ptionVideos: ['Upload Video', 'Take a video', 'Cancel'],
+  optionVideos: ['Upload Video', 'Take a video', 'Cancel'],
 };
 
 export {DEVICE, SLIDER, FILE_SIZE, DEFAULT_COUNTRY, STYLE, OPTIONS_GALLERY};

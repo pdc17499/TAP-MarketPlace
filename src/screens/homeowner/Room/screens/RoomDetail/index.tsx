@@ -1,5 +1,5 @@
-import { AppText, Header } from '@component';
-import React, { useEffect } from 'react';
+import {AppText, Header} from '@component';
+import React, {useEffect} from 'react';
 import {
   View,
   Image,
@@ -8,13 +8,13 @@ import {
   useWindowDimensions,
   TouchableOpacity,
 } from 'react-native';
-import { IconTabActive, room_sample } from '@assets';
-import { colors, fontFamily, scaleSize, scaleWidth, SIZE, STYLE } from '@util';
-import { TabView } from 'react-native-tab-view';
-import { RoomDetailGeneral } from './RoomDetailGeneral';
-import { RoomDetailUnit } from './RoomDetailUnit';
-import { useDispatch, useSelector } from 'react-redux';
-import { getRoomDetail } from '@redux';
+import {IconTabActive, room_sample} from '@assets';
+import {colors, fontFamily, scaleSize, scaleWidth, SIZE, STYLE} from '@util';
+import {TabView} from 'react-native-tab-view';
+import {RoomDetailGeneral} from './RoomDetailGeneral';
+import {RoomDetailUnit} from './RoomDetailUnit';
+import {useDispatch, useSelector} from 'react-redux';
+import {getRoomDetail} from '@redux';
 import Video from 'react-native-video';
 
 const RoomDetail = (route: any) => {
@@ -23,16 +23,16 @@ const RoomDetail = (route: any) => {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    dispatch(getRoomDetail(roomId))
-  }, [])
+    // dispatch(getRoomDetail(roomId))
+  }, []);
 
   const ROOM: any = useSelector((state: any) => state?.rooms?.roomDetail);
   // console.log('paa', ROOM);
 
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
-    { key: 'general', title: 'General' },
-    { key: 'detail', title: 'Room/Unit Details' },
+    {key: 'general', title: 'General'},
+    {key: 'detail', title: 'Room/Unit Details'},
   ]);
   const layout = useWindowDimensions();
   const typesVideo = ['mp4'];
@@ -51,7 +51,7 @@ const RoomDetail = (route: any) => {
   };
 
 
-  const renderScene = ({ route }: any) => {
+  const renderScene = ({route}: any) => {
     switch (route.key) {
       case 'general':
         return <RoomDetailGeneral props={'general'} />;
@@ -83,14 +83,14 @@ const RoomDetail = (route: any) => {
   };
 
   const renderTabBar = (props: any) => {
-    const { navigationState, jumpTo } = props;
-    const { routes, index } = navigationState;
+    const {navigationState, jumpTo} = props;
+    const {routes, index} = navigationState;
 
     return (
       <>
         <View style={styles.tabContainer}>
           {routes.map((item: any, idx: number) => {
-            const { title, key } = item;
+            const {title, key} = item;
             const isActive = index === idx;
             const tabTitle = isActive ? styles.tabTitleActive : styles.tabTitle;
             return (
@@ -115,10 +115,10 @@ const RoomDetail = (route: any) => {
       <View style={styles.main}>
         {ROOM !== null ? renderImage(ROOM?.PicturesVideo[0]) : null}
         <TabView
-          navigationState={{ index, routes }}
+          navigationState={{index, routes}}
           renderScene={renderScene}
           onIndexChange={setIndex}
-          initialLayout={{ width: layout.width }}
+          initialLayout={{width: layout.width}}
           renderTabBar={renderTabBar}
         />
       </View>
@@ -222,4 +222,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export { RoomDetail };
+export {RoomDetail};

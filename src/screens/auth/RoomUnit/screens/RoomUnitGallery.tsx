@@ -1,22 +1,36 @@
-import { AppButton, AppQA, AppText, Header } from '@component';
-import { addNewRoom, addNewRoomSaga, setDataSignup } from '@redux';
-import { colors, fontFamily, scaleWidth, SIZE } from '@util';
-import React, { createRef, useState } from 'react';
+import {AppButton, AppText, Header} from '@component';
+import {addNewRoom, addNewRoomSaga, setDataSignup} from '@redux';
+import {
+  colors,
+  FILE_SIZE,
+  fontFamily,
+  OPTIONS_GALLERY,
+  scaleWidth,
+  SIZE,
+  STYLE,
+} from '@util';
+import React, {useState} from 'react';
 import {
   View,
   StyleSheet,
   Image,
   ScrollView,
   Alert,
-  TouchableOpacity,
+  LayoutAnimation,
+  Pressable,
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import ImagePicker, { ImageOrVideo } from 'react-native-image-crop-picker';
 import { useActionSheet } from '@expo/react-native-action-sheet';
 import Video from 'react-native-video';
-import { bg_room_unit_picture, IconAddVideos } from '@assets';
-import { NavigationUtils } from '@navigation';
-import { ADD_SUCCESS, USER_INFORMATION_NAME, YOUR_LISTING } from '@routeName';
+import {bg_room_unit_picture, IconAddVideos, IconClear} from '@assets';
+import {NavigationUtils} from '@navigation';
+import {ADD_SUCCESS, USER_INFORMATION_NAME} from '@routeName';
+import {
+  DraxDragWithReceiverEventData,
+  DraxProvider,
+  DraxView,
+} from 'react-native-drax';
 
 const RoomUnitGallery = () => {
   const dispatch = useDispatch();
@@ -25,14 +39,8 @@ const RoomUnitGallery = () => {
   const setData = (data: any) => {
     dispatch(setDataSignup({ data }));
   };
-
-  console.log('data', dataSignUp);
-
-  const files = dataSignUp.list_photo || [];
-  // const [files, setFiles] = useState([]);
-  const { showActionSheetWithOptions } = useActionSheet();
-  const optionPhotos = ['Upload Photos', 'Take a photo', 'Cancel'];
-  const optionVideos = ['Upload Video', 'Take a video', 'Cancel'];
+  const [files, setFiles] = useState([]);
+  const {showActionSheetWithOptions} = useActionSheet();
 
   const uploadPhotos = (mediaType: any) => {
     const isPhoto = mediaType === 'photo';
@@ -41,13 +49,17 @@ const RoomUnitGallery = () => {
       cropping: isPhoto,
       mediaType: mediaType,
       compressImageQuality: 0.6,
+      compressImageMaxWidth: 1000,
+      compressImageMaxHeight: 1000,
     }).then((images: any) => {
-      // images.forEach((image: ImageOrVideo) => {
-      //   if (image.size > FILE_SIZE.MAX_IMAGE) {
-      //     image = ImagePicker.(image);
-      //   }
-      // });
-      const nFiles: any = [...files, ...images];
+      const nFiles: any = [...files];
+      images.forEach((image: ImageOrVideo) => {
+        console.log({nFiles});
+        if (image.size < FILE_SIZE.MAX_IMAGE) {
+          nFiles.push(image);
+        }
+      });
+
       validateFile(nFiles);
     });
   };
@@ -57,16 +69,14 @@ const RoomUnitGallery = () => {
       cropping: mediaType === 'photo',
       mediaType,
       compressImageQuality: 0.6,
-      // compressVideoPreset: 0.6,
+      compressImageMaxWidth: 1000,
+      compressImageMaxHeight: 1000,
     }).then((image: any) => {
       const nFiles: any = [...files];
       nFiles.push(image);
       validateFile(nFiles);
-      // setFiles(nFiles);
     });
   };
-
-  console.log({ files });
 
   const validateFile = (nFiles: any) => {
     const photos = nFiles.filter((file: ImageOrVideo) =>
@@ -76,17 +86,13 @@ const RoomUnitGallery = () => {
       (file: ImageOrVideo) => !file.mime.includes('image'),
     );
 
-    // console.log({nFiles, photos, videos});
-
     if (photos.length > 10) {
       Alert.alert('You can only upload up to 10 photos');
     } else if (videos.length > 1) {
       Alert.alert('You can only upload up to 1 video');
     } else {
-      const nData = { ...dataSignUp };
-      nData.list_photo = nFiles;
-      setData(nData);
-      // setFiles(nFiles);
+      LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
+      setFiles(nFiles);
     }
   };
 
@@ -102,9 +108,10 @@ const RoomUnitGallery = () => {
           const nFiles = files.filter(
             (file: ImageOrVideo, idx: number) => index !== idx,
           );
-          const nData = { ...dataSignUp };
-          nData.list_photo = nFiles;
-          setData(nData);
+          LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
+          setTimeout(() => {
+            setFiles(nFiles);
+          }, 100);
         },
       },
     ]);
@@ -122,45 +129,17 @@ const RoomUnitGallery = () => {
   };
 
   const onDone = () => {
-    if (!token) {
-      NavigationUtils.navigate(USER_INFORMATION_NAME);
-    } else {
-      const state = dataSignUp
-      const body = {
-        roomDesc: {
-          RentalAddress: state?.location.title,
-          PlaceType: state?.kind_place?.value,
-          RoomDetails: {
-            RoomType: state?.room_type?.value,
-            BedroomNumber: state?.bedroom_number?.value,
-            BathroomNumber: state?.bathroom_number?.value,
-            AttachedBathroom: state?.attached_bathroom?.value === 'Yes',
-            AllowCook: state?.allow_cooking?.value === 'Yes',
-            StayWithGuest: state?.staying_with_guests?.value === 'Yes',
-            KeyWords: state?.key_your_place,
-          },
-          LeasePeriod: {
-            type: state?.kind_place?.value === 'HDB',
-            value: state?.lease_your_place,
-          },
-          PicturesVideo: getUrlFiles(),
-          RentalPrice: {
-            type: state?.rental_price?.value,
-            Min: state?.min_range_price,
-            Max: state?.max_range_price,
-            Price: parseInt(state?.negotiable_price || '0'),
-          },
-        },
-      }
-      console.log('lease', body);
-      // console.log('hello')
-      dispatch(addNewRoom({ body }))
-    }
-    // NavigationUtils.navigate(ADD_SUCCESS);
+    const nData = {...dataSignUp};
+    nData.list_photo = files;
+    setData(nData);
+    NavigationUtils.navigate(USER_INFORMATION_NAME);
   };
 
   const addFile = (mediaType: any) => {
-    const options = mediaType == 'photo' ? optionPhotos : optionVideos;
+    const options =
+      mediaType == 'photo'
+        ? OPTIONS_GALLERY.optionPhotos
+        : OPTIONS_GALLERY.optionVideos;
     const cancelButtonIndex = 2;
 
     showActionSheetWithOptions(
@@ -169,8 +148,7 @@ const RoomUnitGallery = () => {
         cancelButtonIndex,
       },
       buttonIndex => {
-        // Do something here depending on the button index selected
-        console.log({ buttonIndex });
+        console.log({buttonIndex});
         if (buttonIndex === 0) {
           uploadPhotos(mediaType);
         } else if (buttonIndex === 1) {
@@ -178,6 +156,29 @@ const RoomUnitGallery = () => {
         }
       },
     );
+  };
+
+  const move = (array: any, from: number, to: number) => {
+    array.splice(to, 0, array.splice(from, 1)[0]);
+    return [...array];
+  };
+
+  const onReceiveDragDrop = (event: DraxDragWithReceiverEventData) => {
+    console.log({event});
+    const {dragged, receiver} = event;
+    const idDragged = parseInt(dragged.id);
+    const idReceiver = parseInt(receiver.id);
+    let nFiles: any = [...files];
+    nFiles = move(nFiles, idDragged, idReceiver);
+    const firstFile = nFiles[0];
+    if (!firstFile.mime.includes('image')) {
+      Alert.alert('Profile photo must be an image');
+    } else {
+      LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
+      setTimeout(() => {
+        setFiles(nFiles);
+      }, 100);
+    }
   };
 
   const renderImage = (file: ImageOrVideo, index: number) => {
@@ -188,37 +189,51 @@ const RoomUnitGallery = () => {
         ? { marginBottom: SIZE.padding, marginHorizontal: SIZE.padding - 1 }
         : { marginBottom: SIZE.padding };
     return (
-      <TouchableOpacity
-        onPress={() => removeFile(index)}
-        activeOpacity={0.8}
-        key={index}
-        style={styleView}>
-        {isPhoto ? (
-          <Image source={{ uri: file.path }} style={styles.itemImage} />
-        ) : (
-          <>
-            <Video
-              source={{ uri: file.path }}
-              style={styles.itemImage}
-              resizeMode={'cover'}
-            />
-            <View style={styles.videoSubView}>
-              <IconAddVideos iconFillColor={colors.white} />
-            </View>
-          </>
-        )}
+      <>
+        <View style={styleView}>
+          <Pressable
+            onPress={() => removeFile(index)}
+            style={styles.remove}
+            hitSlop={STYLE.hitSlop}>
+            <IconClear iconFillColor={colors.white} width={14} height={14} />
+          </Pressable>
+          <DraxView
+            id={index.toString()}
+            // style={styleView}
+            draggingStyle={styles.dragging}
+            dragReleasedStyle={styles.dragging}
+            dragPayload={'R'}
+            longPressDelay={0}
+            onReceiveDragDrop={onReceiveDragDrop}>
+            {isPhoto ? (
+              <Image source={{uri: file.path}} style={styles.itemImage} />
+            ) : (
+              <>
+                <Video
+                  source={{uri: file.path}}
+                  style={styles.itemImage}
+                  resizeMode={'cover'}
+                  muted
+                />
+                <View style={styles.videoSubView}>
+                  <IconAddVideos iconFillColor={colors.white} />
+                </View>
+              </>
+            )}
+          </DraxView>
+        </View>
         {index === 0 && (
           <View style={styles.viewProfile}>
             <AppText style={styles.profilePhoto}>{'Profile photo'}</AppText>
           </View>
         )}
-      </TouchableOpacity>
+      </>
     );
   };
 
   const renderListImage = () => {
     return (
-      <>
+      <DraxProvider>
         {files.length > 0 ? (
           <>
             <View style={styles.viewSubtitle}>
@@ -244,7 +259,34 @@ const RoomUnitGallery = () => {
             </AppText>
           </>
         )}
-      </>
+        <View style={styles.padding}>
+          <AppButton
+            onPress={() => addFile('photo')}
+            title={'Add photos'}
+            typeButton={'linear'}
+            iconRight={'addPhoto'}
+            customStyleTitle={styles.customStyleTitle}
+          />
+
+          {files.length > 0 && (
+            <AppButton
+              onPress={() => addFile('video')}
+              title={'Add videos'}
+              typeButton={'linear'}
+              iconRight={'addVideo'}
+              customStyleTitle={styles.customStyleTitle}
+            />
+          )}
+        </View>
+        {files.length > 0 && (
+          <AppButton
+            title={'Done'}
+            onPress={onDone}
+            iconRight={'tick'}
+            containerStyle={styles.padding}
+          />
+        )}
+      </DraxProvider>
     );
   };
 
@@ -261,33 +303,9 @@ const RoomUnitGallery = () => {
           backgroundColor: 'transparent',
         }}
       />
-      <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
+      <ScrollView showsVerticalScrollIndicator={false}>
         {renderListImage()}
-        <View style={styles.padding}>
-          <AppButton
-            onPress={() => addFile('photo')}
-            title={'Add photos'}
-            typeButton={'linear'}
-            iconRight={'addPhoto'}
-            customStyleTitle={styles.customStyleTitle}
-          />
-          <AppButton
-            onPress={() => addFile('video')}
-            title={'Add videos'}
-            typeButton={'linear'}
-            iconRight={'addVideo'}
-            customStyleTitle={styles.customStyleTitle}
-          />
-        </View>
       </ScrollView>
-      {files.length > 0 && (
-        <AppButton
-          title={'Done'}
-          onPress={onDone}
-          iconRight={'tick'}
-          containerStyle={styles.padding}
-        />
-      )}
     </View>
   );
 };
@@ -302,8 +320,9 @@ const styles = StyleSheet.create({
   listImage: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    marginRight: -SIZE.padding,
+    marginRight: 0,
     paddingHorizontal: SIZE.padding,
+    marginTop: SIZE.padding,
   },
   bgImage: {
     width: scaleWidth(375),
@@ -321,12 +340,13 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: -scaleWidth(44),
     left: -SIZE.padding / 2,
-    right: -SIZE.padding / 2,
-    bottom: -SIZE.padding / 2,
+    width: scaleWidth(93) + SIZE.padding,
+    height: scaleWidth(93) + scaleWidth(44) + SIZE.padding / 2,
     alignItems: 'center',
     borderRadius: 14,
     borderWidth: 1,
     borderColor: colors.google,
+    zIndex: -1,
   },
   profilePhoto: {
     fontSize: SIZE.small_size,
@@ -335,13 +355,12 @@ const styles = StyleSheet.create({
     ...fontFamily.fontWeight500,
   },
   padding: {
-    marginHorizontal: SIZE.padding,
+    paddingHorizontal: SIZE.padding,
     paddingBottom: SIZE.medium_space,
   },
   container: {
     flex: 1,
     backgroundColor: colors.bgSreen,
-    // paddingHorizontal: SIZE.padding,
   },
   title: {
     ...fontFamily.fontCampWeight600,
@@ -368,5 +387,17 @@ const styles = StyleSheet.create({
     right: 0,
     borderBottomRightRadius: 8,
     borderTopLeftRadius: 8,
+  },
+  dragging: {
+    opacity: 0.2,
+  },
+  remove: {
+    position: 'absolute',
+    right: -8,
+    zIndex: 1,
+    top: -6,
+    backgroundColor: colors.primary,
+    borderRadius: 10,
+    padding: 3,
   },
 });

@@ -1,26 +1,12 @@
-import {
-  AppButton,
-  AppInput,
-  AppPicker,
-  AppQA,
-  AppText,
-  Header,
-} from '@component';
+import {AppButton, AppModalCountry, AppQA, AppText, Header} from '@component';
 import {useNavigation} from '@react-navigation/core';
-import {
-  colors,
-  fontFamily,
-  scaleHeight,
-  scaleSize,
-  SIZE,
-  validateForm,
-} from '@util';
+import {fontFamily, SIZE, validateForm} from '@util';
 import {Formik} from 'formik';
-import React, {useState} from 'react';
+import React from 'react';
 import {View, ScrollView} from 'react-native';
 import {styles} from './style';
 import * as yup from 'yup';
-import {TENANT_PROPERTY} from '@mocks';
+import {ROOM_UNIT_HOWNER} from '@mocks';
 import {useDispatch, useSelector} from 'react-redux';
 import {setDataSignup} from '@redux';
 import {LIFE_STYLE, USER_INFORMATION_COUNTRY} from '@routeName';
@@ -32,7 +18,7 @@ interface screenNavigationProp {
 const UserInformationGender = () => {
   const navigation = useNavigation<screenNavigationProp>();
   const dispatch = useDispatch();
-  const list = TENANT_PROPERTY;
+  const list = ROOM_UNIT_HOWNER;
   const dataSignUp: DataSignupProps = useSelector(
     (state: any) => state?.auth?.dataSignup,
   );
@@ -41,7 +27,7 @@ const UserInformationGender = () => {
   };
 
   const formInitialValues = {
-    country: dataSignUp?.country?.cca2,
+    country: dataSignUp?.country,
     gender: dataSignUp?.gender?.value,
     // age_group: dataSignUp?.age_group?.id,
     staying_with_guests: dataSignUp?.staying_with_guests?.value,
@@ -98,7 +84,7 @@ const UserInformationGender = () => {
               customStyleTitle={{...fontFamily.fontWeight500}}
             />
 
-            <AppPicker
+            {/* <AppPicker
               value={props.values.country}
               name={'country'}
               label={'Where do you come from?'}
@@ -106,6 +92,15 @@ const UserInformationGender = () => {
               typePicker={'country'}
               error={props.errors.country}
               customStyleLabel={styles.labelCountry}
+            /> */}
+
+            <AppModalCountry
+              label={'Where do you come from?'}
+              name={'country'}
+              value={props.values.country}
+              onValueChange={onChangeText}
+              type={'country'}
+              typeButton={'base'}
             />
 
             {/* <AppQA

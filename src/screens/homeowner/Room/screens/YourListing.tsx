@@ -1,9 +1,8 @@
-import { AppButton, AppText, Header } from '@component';
-import React, { useEffect } from 'react';
+import {AppButton, AppText, Header} from '@component';
+import React, {useEffect} from 'react';
 import {
   View,
   Image,
-  FlatList,
   Pressable,
   StyleSheet,
   useWindowDimensions,
@@ -16,14 +15,13 @@ import {
   IconTabActive,
   room_sample,
 } from '@assets';
-import { colors, fontFamily, scaleSize, scaleWidth, SIZE, STYLE } from '@util';
-import { SceneMap, TabView } from 'react-native-tab-view';
-import { ListingRoomProps, ListRooms } from '@interfaces';
-import { useNavigation } from '@react-navigation/core';
-import { ROOM_DETAIL, ROOM_UNIT_ADDRESS } from '@routeName';
-import { useDispatch, useSelector } from 'react-redux';
-import { getListRooms, getListRoomsSaga, resetDataSignup } from '@redux';
-
+import {colors, fontFamily, scaleSize, scaleWidth, SIZE, STYLE} from '@util';
+import {SceneMap, TabView} from 'react-native-tab-view';
+import {ListingRoomProps, ListRooms} from '@interfaces';
+import {useNavigation} from '@react-navigation/core';
+import {ROOM_DETAIL, ROOM_UNIT_ADDRESS} from '@routeName';
+import {useDispatch, useSelector} from 'react-redux';
+import {getListRooms, resetDataSignup} from '@redux';
 
 interface itemProps {
   item: ListRooms;
@@ -31,7 +29,7 @@ interface itemProps {
   section: any;
 }
 
-const Route = React.memo(({ props }: any) => {
+const Route = React.memo(({props}: any) => {
   const rooms: [] = useSelector((state: any) => state?.rooms?.listRooms);
   const data1 = rooms.filter((item: any) => item?.isActive === true);
   const data2 = rooms.filter((item: any) => item?.isActive === false);
@@ -51,13 +49,13 @@ const Route = React.memo(({ props }: any) => {
   const navigation: any = useNavigation();
 
   const onRoomDetail = (id: number) => {
-    navigation.navigate(ROOM_DETAIL, { id: id });
+    navigation.navigate(ROOM_DETAIL, {id: id});
   };
 
-  const renderItem = ({ item, section }: itemProps) => {
+  const renderItem = ({item, section}: itemProps) => {
     console.log('tem', item);
 
-    const { isActive } = item;
+    const {isActive} = item;
     const hide =
       (key === 'active' && !isActive) || (key === 'inactive' && isActive);
     if (hide) {
@@ -70,11 +68,16 @@ const Route = React.memo(({ props }: any) => {
           marginBottom: SIZE.medium_space,
           opacity: isActive ? 1 : 0.5,
         }}>
-        <Image source={{ uri: item?.PicturesVideo[0] || room_sample }} style={styles.bgRoom} />
+        <Image
+          source={{uri: item?.PicturesVideo[0] || room_sample}}
+          style={styles.bgRoom}
+        />
         <AppText style={styles.roomTitle}>
           {item?.PlaceType + '  '}
-          <IconDot style={{ marginBottom: 4 }} />
-          <AppText style={styles.roomTitle}>{'  ' + item?.RoomDetails?.RoomType}</AppText>
+          <IconDot style={{marginBottom: 4}} />
+          <AppText style={styles.roomTitle}>
+            {'  ' + item?.RoomDetails?.RoomType}
+          </AppText>
         </AppText>
         {!isActive && (
           <View style={styles.subViewInactive}>
@@ -110,13 +113,13 @@ const Route = React.memo(({ props }: any) => {
         renderItem={renderItem}
         keyExtractor={(item: any) => item.id}
         stickySectionHeadersEnabled={false}
-        renderSectionHeader={({ section: { key } }) => renderSectionHeader(key)}
+        renderSectionHeader={({section: {key}}) => renderSectionHeader(key)}
       />
     </>
   );
 });
 
-const renderScene = ({ route }: any) => {
+const renderScene = ({route}: any) => {
   switch (route.key) {
     case 'active':
       return <Route props={'active'} />;
@@ -129,36 +132,34 @@ const renderScene = ({ route }: any) => {
   }
 };
 
-
 const YourListing = () => {
   const navigation: any = useNavigation();
   const dispatch = useDispatch();
   const [index, setIndex] = React.useState(0);
   useEffect(() => {
-    console.log('hiiii');
-    dispatch(getListRooms())
-  }, [])
+    dispatch(getListRooms());
+  }, []);
 
   const [routes] = React.useState([
-    { key: 'all', title: 'All' },
-    { key: 'active', title: 'Active' },
-    { key: 'inactive', title: 'Inactive' },
+    {key: 'all', title: 'All'},
+    {key: 'active', title: 'Active'},
+    {key: 'inactive', title: 'Inactive'},
   ]);
   const layout = useWindowDimensions();
 
   const moveToRoomUnit = () => {
-    dispatch(resetDataSignup())
-    navigation.navigate(ROOM_UNIT_ADDRESS)
-  }
+    dispatch(resetDataSignup());
+    navigation.navigate(ROOM_UNIT_ADDRESS);
+  };
 
   const renderTabBar = (props: any) => {
-    const { navigationState, jumpTo } = props;
-    const { routes, index } = navigationState;
+    const {navigationState, jumpTo} = props;
+    const {routes, index} = navigationState;
 
     return (
       <View style={styles.tabContainer}>
         {routes.map((item: any, idx: number) => {
-          const { title, key } = item;
+          const {title, key} = item;
           const isActive = index === idx;
           const tabTitle = isActive ? styles.tabTitleActive : styles.tabTitle;
           return (
@@ -181,11 +182,11 @@ const YourListing = () => {
       <Header back customContainer={styles.customContainer} />
       <AppText style={styles.heading}>{'Your Listing'}</AppText>
       <TabView
-        navigationState={{ index, routes }}
+        navigationState={{index, routes}}
         renderScene={renderScene}
         onIndexChange={setIndex}
-        initialLayout={{ width: layout.width }}
-        sceneContainerStyle={{ paddingHorizontal: SIZE.padding }}
+        initialLayout={{width: layout.width}}
+        sceneContainerStyle={{paddingHorizontal: SIZE.padding}}
         renderTabBar={renderTabBar}
       />
       <AppButton
@@ -285,4 +286,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export { YourListing };
+export {YourListing};
