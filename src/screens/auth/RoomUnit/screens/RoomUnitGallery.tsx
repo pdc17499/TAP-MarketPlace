@@ -1,7 +1,7 @@
-import {AppButton, AppQA, AppText, Header} from '@component';
+import {AppButton, AppListImage, AppQA, AppText, Header} from '@component';
 import {setDataSignup} from '@redux';
 import {colors, fontFamily, scaleWidth, SIZE} from '@util';
-import React, {createRef, useState} from 'react';
+import React, {createRef, useRef, useState} from 'react';
 import {
   View,
   StyleSheet,
@@ -25,6 +25,9 @@ const RoomUnitGallery = () => {
   const setData = (data: any) => {
     dispatch(setDataSignup({data}));
   };
+  const [listImage, setListImage] = React.useState(new Array(6).fill(null));
+  const currentImg = useRef<Array<any>>([]);
+  const listRemoveImage = useRef<Array<any>>([]);
 
   console.log('data', dataSignUp);
 
@@ -179,7 +182,15 @@ const RoomUnitGallery = () => {
   const renderListImage = () => {
     return (
       <>
-        {files.length > 0 ? (
+        <AppListImage
+          onChangeListImg={(listImg: any) => {
+            currentImg.current = listImg;
+            setListImage(listImg);
+          }}
+          onRemoveImage={(id: any) => listRemoveImage.current.push(id)}
+          images={listImage}
+        />
+        {/* {files.length > 0 ? (
           <>
             <View style={styles.viewSubtitle}>
               <AppText style={styles.subTitle}>
@@ -193,6 +204,14 @@ const RoomUnitGallery = () => {
                 renderImage(file, index),
               )}
             </View>
+            <AppListImage
+              onChangeListImg={(listImg: any) => {
+                currentImg.current = listImg;
+                setListImage(listImg);
+              }}
+              onRemoveImage={(id: any) => listRemoveImage.current.push(id)}
+              images={files}
+            />
           </>
         ) : (
           <>
@@ -203,7 +222,7 @@ const RoomUnitGallery = () => {
               {'Finally, let’s add some photos of your place'}
             </AppText>
           </>
-        )}
+        )} */}
       </>
     );
   };
