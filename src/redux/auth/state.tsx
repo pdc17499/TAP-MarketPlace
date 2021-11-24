@@ -56,6 +56,9 @@ export const INITIAL_STATE_DATA_SIGN_UP: DataSignupProps = {
   phone: '',
   life_style: [],
   preferences: [],
+  agency_name: '',
+  license_no: '',
+  sale_person_no: '',
 };
 
 export const INITIAL_STATE_AUTH: AuthState = {

@@ -21,6 +21,8 @@ import {
   ROOM_UNIT_PRICE,
   ROOM_UNIT_TYPE_ROOM,
   PREFERENCES,
+  AGENCY_INFORMATION_NAME,
+  AGENCY_BASIC_INFORMATION,
 } from './routeName';
 
 import {
@@ -43,6 +45,8 @@ import {
   LifeStyle,
   UpdateNewPassword,
   Preferences,
+  AgencyInformationName,
+  AgencyBasicInformation,
 } from '../screens';
 
 const Stack = createStackNavigator();
@@ -79,6 +83,14 @@ const UnAuthenStack = () => {
       />
       <Stack.Screen name={LIFE_STYLE} component={LifeStyle} />
       <Stack.Screen name={PREFERENCES} component={Preferences} />
+      <Stack.Screen
+        name={AGENCY_INFORMATION_NAME}
+        component={AgencyInformationName}
+      />
+      <Stack.Screen
+        name={AGENCY_BASIC_INFORMATION}
+        component={AgencyBasicInformation}
+      />
       <Stack.Screen name={VERIFY_CODE} component={VerifyCode} />
       <Stack.Screen name={VERIFY_ACCOUNT} component={VerifyAccount} />
     </Stack.Navigator>

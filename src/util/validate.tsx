@@ -13,6 +13,13 @@ export const validateForm = () => {
         .array()
         .min(1, 'You must select 1 option')
         .required(),
+      compareNA: yup.string().test({
+        name: 'compareNA',
+        message: 'You must select 1 option',
+        test: function (value) {
+          return value !== 'N/A';
+        },
+      }),
     },
     email: yup
       .string()

@@ -326,6 +326,20 @@ export const ROOM_UNIT_HOWNER = {
       label: 'Other',
     },
   ],
+  gender_agency: [
+    {
+      value: 'Mr.',
+      label: 'Mr.',
+    },
+    {
+      value: 'Ms.',
+      label: 'Ms.',
+    },
+    {
+      value: 'Mrs.',
+      label: 'Mrs.',
+    },
+  ],
   group_age: [
     {
       value: 1,
@@ -596,6 +610,16 @@ export const ROOM_UNIT_HOWNER = {
       label: 'Student',
       icon: <IconStudent />,
       iconSelected: <IconStudent iconFillColor={colors.textPrimary} />,
+    },
+  ],
+  agency_name: [
+    {
+      value: 'Agency 1',
+      label: 'Agency 1',
+    },
+    {
+      value: 'Agency 2',
+      label: 'Agency 2',
     },
   ],
 };

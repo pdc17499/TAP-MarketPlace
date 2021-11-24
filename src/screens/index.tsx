@@ -21,6 +21,12 @@ import {
   ListLocations,
 } from './auth/RoomUnit';
 
+// Sign in Information
+import {
+  AgencyInformationName,
+  AgencyBasicInformation,
+} from './auth/UserInformation';
+
 //Authenticate
 import {Home} from './homeowner/Home';
 import {
@@ -31,6 +37,8 @@ import {
   AccountSetting,
 } from './homeowner/Profile';
 import {UpdateNewPassword} from './auth/UpdateNewPassword';
+
+// Room
 import {
   YourListing,
   RoomDetail,
@@ -59,6 +67,8 @@ export {
   UserInformationGender,
   LifeStyle,
   Preferences,
+  AgencyInformationName,
+  AgencyBasicInformation,
   // Authenticate
   Home,
   UpdateNewPassword,
