@@ -6,10 +6,10 @@ import {
   AppText,
   Header,
 } from '@component';
-import React, {useEffect, useState} from 'react';
-import {View, StyleSheet, Pressable} from 'react-native';
-import {useDispatch} from 'react-redux';
-import {useSelector} from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { View, StyleSheet, Pressable } from 'react-native';
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import {
   colors,
   fontFamily,
@@ -19,14 +19,14 @@ import {
   validateForm,
 } from '@util';
 import * as yup from 'yup';
-import {Formik} from 'formik';
-import {ROOM_UNIT_HOWNER} from '@mocks';
-import {UserInfo} from '@interfaces';
-import {saveDataUser, updateUserInfo} from '@redux';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import { Formik } from 'formik';
+import { ROOM_UNIT_HOWNER } from '@mocks';
+import { UserInfo } from '@interfaces';
+import { saveDataUser, updateUserInfo } from '@redux';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import moment from 'moment';
-import {CaretRight} from '@assets';
+import { CaretRight } from '@assets';
 
 const BasicInfomation = () => {
   const dispatch = useDispatch();
@@ -60,7 +60,7 @@ const BasicInfomation = () => {
 
   const onChangeValue = (item: any, name?: string) => {
     if (name) {
-      const nData: any = {...user};
+      const nData: any = { ...user };
       nData[name] = name === 'nationality' ? item.name : item;
       setUser(nData);
     }
@@ -92,7 +92,7 @@ const BasicInfomation = () => {
       ageGroup: user?.ageGroup || '',
     };
 
-    dispatch(updateUserInfo({body, id: user?.id}));
+    dispatch(updateUserInfo({ body, id: user?.id }));
   };
 
   const renderCustomPlaceHolder = (name: string) => {
@@ -146,7 +146,7 @@ const BasicInfomation = () => {
                   customSubview={
                     <Pressable
                       onPress={showDatepicker}
-                      style={{marginTop: SIZE.padding}}>
+                      style={{ marginTop: SIZE.padding }}>
                       {dateOfBirth === '' ? (
                         renderCustomPlaceHolder('date of birth')
                       ) : (
@@ -312,4 +312,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export {BasicInfomation};
+export { BasicInfomation };

@@ -14,23 +14,19 @@ import {
   setToken,
   removeToken,
   changePasswordApi,
-  getListRoomsApi,
   getProfileUserApi,
 } from '@services';
 // import {VERTIFIEMAIL, VERIFYCODE} from '@routeName';
 import { showMessage } from 'react-native-flash-message';
 import {
   PROFILE,
-  RESETPASSWORD,
   SIGNIN,
   SIGNUP,
   UPDATE_NEW_PASSWORD,
   VERIFY_ACCOUNT,
   VERIFY_CODE,
-  WELCOME,
 } from '@routeName';
 import { NavigationUtils } from '@navigation';
-import { CommonActions, StackActions } from '@react-navigation/native';
 import {
   LOGIN,
   LOGOUT,
@@ -41,11 +37,6 @@ import {
   CHANGE_PASSWORD,
   VERIFY_CODE_PHONE_NUMBER,
   VERIFY_PHONE_NUMBER,
-  GET_LIST_ROOMS,
-  getRoomDetail,
-  GET_ROOM_DETAIL,
-  getListRooms,
-  setListRooms,
   GET_PROFILE_USER,
 } from '@redux';
 export interface ResponseGenerator {

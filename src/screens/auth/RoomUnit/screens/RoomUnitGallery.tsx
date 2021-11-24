@@ -1,5 +1,5 @@
 import { AppButton, AppText, Header } from '@component';
-import { addNewRoom, addNewRoomSaga, setDataSignup } from '@redux';
+import { addNewRoom, addNewRoomSaga, setDataSignup, upLoadFileSaga } from '@redux';
 import {
   colors,
   FILE_SIZE,
@@ -59,7 +59,6 @@ const RoomUnitGallery = () => {
           nFiles.push(image);
         }
       });
-
       validateFile(nFiles);
     });
   };
@@ -91,6 +90,7 @@ const RoomUnitGallery = () => {
     } else if (videos.length > 1) {
       Alert.alert('You can only upload up to 1 video');
     } else {
+      // dispatch(upLoadFileSaga(nFiles))
       LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
       setFiles(nFiles);
     }
@@ -123,21 +123,46 @@ const RoomUnitGallery = () => {
       files.map((file: ImageOrVideo) => {
         urls.push(file.path);
       });
-
       return urls;
     }
   };
 
   const onDone = () => {
-
     const nData = { ...dataSignUp };
     nData.list_photo = files;
     setData(nData);
+    console.log('nData', nData);
     if (token) {
-      dispatch(addNewRoom(nData))
+      const state = nData
+      const body = {
+        roomDesc: {
+          RentalAddress: state?.location.title,
+          PlaceType: state?.kind_place?.value,
+          RoomDetails: {
+            RoomType: state?.room_type?.value,
+            BedroomNumber: state?.bedroom_number?.value,
+            BathroomNumber: state?.bathroom_number?.value,
+            AttachedBathroom: state?.attached_bathroom?.value === 'Yes',
+            AllowCook: state?.allow_cooking?.value === 'Yes',
+            StayWithGuest: state?.staying_with_guests?.value === 'Yes',
+            KeyWords: state?.key_your_place,
+          },
+          LeasePeriod: {
+            type: state?.kind_place?.value === 'HDB',
+            value: state?.lease_your_place,
+          },
+          PicturesVideo: getUrlFiles(),
+          RentalPrice: {
+            type: state?.rental_price?.value,
+            Min: state?.min_range_price,
+            Max: state?.max_range_price,
+            Price: parseInt(state?.negotiable_price || '0'),
+          },
+        },
+      }
+      dispatch(addNewRoom({ body }))
     }
     else {
-
       NavigationUtils.navigate(USER_INFORMATION_NAME);
     }
   };

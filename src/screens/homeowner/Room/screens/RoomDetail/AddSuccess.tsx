@@ -1,7 +1,7 @@
 import { AppButton, AppInput, AppPhoneNumber, AppText, Header } from '@component';
 import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, Pressable, Image } from 'react-native';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   colors,
   fontFamily,
@@ -25,6 +25,7 @@ import {
 } from '@assets';
 import { CHANGE_PASSWORD, ROOM_UNIT_ADDRESS, YOUR_LISTING } from '@routeName';
 import { useNavigation } from '@react-navigation/native';
+import { resetDataSignup } from '@redux';
 
 interface AddSuccessProp { }
 
@@ -33,6 +34,7 @@ interface screenNavigationProp {
 }
 
 const AddSuccess = (props: AddSuccessProp) => {
+  const dispatch = useDispatch()
   const navigation = useNavigation<screenNavigationProp>();
   const roomData: any = useSelector((state: any) => state?.auth?.dataSignup);
 
@@ -45,6 +47,7 @@ const AddSuccess = (props: AddSuccessProp) => {
   };
 
   const moveToRoomUnit = () => {
+    // dispatch(resetDataSignup())
     navigation.navigate(ROOM_UNIT_ADDRESS);
   };
 

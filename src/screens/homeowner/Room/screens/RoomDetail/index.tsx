@@ -112,7 +112,8 @@ const RoomDetail = (route: any) => {
     <View style={styles.container}>
       <Header back customContainer={styles.customContainer} />
       <View style={styles.main}>
-        {ROOM !== null ? renderImage(ROOM?.PicturesVideo[0]) : null}
+        {ROOM?.PicturesVideo ? renderImage(ROOM?.PicturesVideo[0])
+          : <Image source={room_sample} style={styles.itemImage}></Image>}
         <TabView
           navigationState={{ index, routes }}
           renderScene={renderScene}

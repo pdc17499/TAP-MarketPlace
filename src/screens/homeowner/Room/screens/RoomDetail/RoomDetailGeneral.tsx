@@ -2,6 +2,7 @@ import {
   AppButton,
   AppModal,
   AppPicker,
+  AppQA,
   AppSlider,
   AppText,
   Header,
@@ -49,10 +50,11 @@ const RoomDetailGeneral = ({ props }: any) => {
 
   const dispatch = useDispatch();
   const navigation: any = useNavigation();
+
   const [room, setRoom] = useState({
     location: ROOM?.RentalAddress,
     kind_place: ROOM?.PlaceType,
-    lease_period: ROOM?.LeasePeriod?.value[0] + ' months',
+    lease_period: ROOM?.LeasePeriod?.value.map((item: string) => item + '  '),
     min_range_price: ROOM?.RentalPrice?.Min,
     max_range_price: ROOM?.RentalPrice?.Max,
     staying_with_guests: ROOM?.StayWithGuest ? 'Yes' : 'No',
@@ -60,13 +62,13 @@ const RoomDetailGeneral = ({ props }: any) => {
   });
   const list = ROOM_UNIT_HOWNER;
   const formInitialValues = {
-    location: room.location,
-    kind_place: room.kind_place,
-    lease_period: room.lease_period,
-    min_range_price: room.min_range_price,
-    max_range_price: room.max_range_price,
-    staying_with_guests: room.staying_with_guests,
-    room_active: room.room_active,
+    location: room?.location,
+    kind_place: room?.kind_place,
+    lease_period: room?.lease_period,
+    min_range_price: room?.min_range_price,
+    max_range_price: room?.max_range_price,
+    staying_with_guests: room?.staying_with_guests,
+    room_active: room?.room_active,
   };
 
   const validationForm = yup.object().shape({
@@ -87,7 +89,10 @@ const RoomDetailGeneral = ({ props }: any) => {
     }
   };
 
-  const onSubmit = (values: any) => { };
+  const onSubmit = () => {
+
+
+  };
 
   const onValuesChangeFinish = (values: any) => {
     console.log({ values });
@@ -160,7 +165,7 @@ const RoomDetailGeneral = ({ props }: any) => {
                   error={props.errors.kind_place}
                   stylePicker={'linear'}
                 />
-                <AppPicker
+                {/* <AppPicker
                   value={props.values.lease_period}
                   name={'lease_period'}
                   label={'Lease period'}
@@ -171,8 +176,32 @@ const RoomDetailGeneral = ({ props }: any) => {
                       : list.lease_your_place
                   }
                   error={props.errors.lease_period}
-                  stylePicker={'linear'}
+                  stylePicke
+                  r={'linear'}
+                /> */}
+
+                {/* <AppQA
+                  data={
+                    props.values.kind_place === 'HDB'
+                      ? list.lease_your_place_hdb_new
+                      : list.lease_your_place_new
+                  }
+                  value={props.values.lease_period}
+                  setValue={onChangeText}
+                  typeList={'even'}
+                  name={'lease_your_place'}
+                  error={props.errors.lease_your_place}
+                  isMultiChoice
+                /> */}
+
+                <AppButton
+                  label={'Lease Period (Months)'}
+                  typeButton={'underline'}
+                  title={props.values.lease_period}
+                  onPress={() => { }}
                 />
+
+
                 <AppModal
                   label={'Rental price'}
                   customTitle={renderPriceTitle(props.values)}>

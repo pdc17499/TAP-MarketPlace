@@ -23,7 +23,7 @@ import {
   IconWorking,
 } from '../assets';
 import React from 'react';
-import {colors} from '@util';
+import { colors } from '@util';
 
 export const ROOM_UNIT_HOWNER = {
   kind_place: [
@@ -92,6 +92,42 @@ export const ROOM_UNIT_HOWNER = {
     {
       label: '36 months',
       value: '36 months',
+    },
+  ],
+  lease_your_place_new: [
+    {
+      label: '3',
+      value: '3',
+    },
+    {
+      label: '9',
+      value: '9',
+    },
+    {
+      label: '12',
+      value: '12',
+    },
+    {
+      label: '36',
+      value: '36',
+    },
+  ],
+  lease_your_place_hdb_new: [
+    {
+      label: '6',
+      value: '6',
+    },
+    {
+      label: '9',
+      value: '9',
+    },
+    {
+      label: '12',
+      value: '12',
+    },
+    {
+      label: '36',
+      value: '36',
     },
   ],
   staying_width_guests: [

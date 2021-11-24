@@ -7,5 +7,4 @@ export type RoomsState = {
 export const INITIAL_STATE_ROOMS: RoomsState = {
   listRooms: [],
   roomDetail: null
-
 };

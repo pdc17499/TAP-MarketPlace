@@ -4,7 +4,10 @@ import {
   SET_LIST_ROOMS,
   SET_ROOM_DETAIL,
   ADD_NEW_ROOM,
-  DELETE_ROOM
+  DELETE_ROOM,
+  SAVE_NEW_ROOM,
+  DELETE_ROOM_REDUX,
+  UPLOAD_FILE,
 } from '@redux';
 
 
@@ -32,9 +35,32 @@ export const addNewRoom = (payload: any) => ({
   payload,
 });
 
+export const saveNewRoom = (payload: any) => ({
+  type: SAVE_NEW_ROOM,
+  payload,
+});
+
+
 export const deleteRoom = (payload: any) => ({
   type: DELETE_ROOM,
   payload,
 });
+
+export const deleteRoomRedux = (payload: any) => ({
+  type: DELETE_ROOM_REDUX,
+  payload,
+});
+
+export const updateRoom = (payload: any, id: string) => ({
+  type: DELETE_ROOM,
+  payload,
+  id,
+});
+
+export const uploadFile = (payload: any) => ({
+  type: UPLOAD_FILE,
+  payload,
+});
+
 
 
