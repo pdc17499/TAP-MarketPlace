@@ -174,6 +174,7 @@ const BasicInfomation = () => {
                 value={props.values.nationality}
                 onValueChange={onChangeValue}
                 error={props.errors.nationality}
+                typeButton={'linear'}
               />
               <AppPicker
                 value={props.values.occupation}

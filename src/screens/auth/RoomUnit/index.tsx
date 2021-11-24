@@ -4,7 +4,7 @@ import {RoomUnitKindPlace} from './screens/RoomUnitKindPlace';
 import {RoomUnitPlaceOffer} from './screens/RoomUnitPlaceOffer';
 import {RoomUnitPrice} from './screens/RoomUnitPrice';
 import {RoomUnitTypeRoom} from './screens/RoomUnitTypeRoom';
-import {ListLocations} from './screens/RoomUnitAddress';
+import {ListLocations} from './screens/ListLocations';
 
 export {
   RoomUnitGallery,

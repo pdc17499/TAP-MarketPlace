@@ -3,7 +3,7 @@ import {useNavigation} from '@react-navigation/core';
 import React from 'react';
 import {ScrollView, View} from 'react-native';
 import {styles} from './style';
-import {LIFE_STYLE_STEP, PREFERENCES, SIGNUP} from '@routeName';
+import {PREFERENCES, SIGNUP} from '@routeName';
 import {colors, SIZE, validateForm} from '@util';
 import {DataSignupProps} from '@interfaces';
 import {useDispatch, useSelector} from 'react-redux';
@@ -26,6 +26,7 @@ const LifeStyle = (props: any) => {
     dispatch(setDataSignup({data}));
   };
   const list = ROOM_UNIT_HOWNER;
+  const isTenant = dataSignUp?.role_user === 'Tenant';
 
   const formInitialValues = {
     life_style: dataSignUp?.life_style,
@@ -72,7 +73,7 @@ const LifeStyle = (props: any) => {
           iconRight={'arNext'}
           onPress={props.handleSubmit}
         />
-        {props.values.staying_with_guests === 'Yes' && (
+        {(props.values.staying_with_guests === 'Yes' || isTenant) && (
           <AppButton
             title={'Skip'}
             typeButton={'link'}

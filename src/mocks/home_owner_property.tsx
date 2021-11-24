@@ -44,6 +44,28 @@ export const ROOM_UNIT_HOWNER = {
       value: 'Shophouse',
     },
   ],
+  kind_place_tenant: [
+    {
+      label: 'Any',
+      value: 'Any',
+    },
+    {
+      label: 'Condo',
+      value: 'Condo',
+    },
+    {
+      label: 'HDB',
+      value: 'HDB',
+    },
+    {
+      label: 'Landed',
+      value: 'Landed',
+    },
+    {
+      label: 'Shophouse',
+      value: 'Shophouse',
+    },
+  ],
   rental_price: [
     {
       label: 'Negotiable',
@@ -166,6 +188,20 @@ export const ROOM_UNIT_HOWNER = {
     {
       label: 'No',
       value: 'No',
+    },
+  ],
+  attached_bathroom_tenant: [
+    {
+      label: 'Yes',
+      value: 'Yes',
+    },
+    {
+      label: 'No',
+      value: 'No',
+    },
+    {
+      label: 'Any',
+      value: 'Any',
     },
   ],
   room_furnishing: [

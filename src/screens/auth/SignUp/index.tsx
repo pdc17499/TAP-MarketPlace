@@ -1,13 +1,16 @@
-import { iconFacebook, iconGoogle } from '@assets';
-import { AppButton, AppText, Header } from '@component';
-import { useNavigation } from '@react-navigation/core';
-import { SIGNUP_EMAIL } from '@routeName';
+import {iconFacebook, iconGoogle} from '@assets';
+import {AppButton, AppText, Header} from '@component';
+import {DataSignupProps} from '@interfaces';
+import {useNavigation} from '@react-navigation/core';
+import {SIGNUP_EMAIL} from '@routeName';
+import {colors} from '@util';
 import React from 'react';
-import { View } from 'react-native';
-import { useDispatch } from 'react-redux';
-import { styles } from './style';
+import {View} from 'react-native';
+import {Text} from 'react-native-svg';
+import {useDispatch, useSelector} from 'react-redux';
+import {styles} from './style';
 
-interface SignUpProp { }
+interface SignUpProp {}
 
 interface screenNavigationProp {
   navigate: any;
@@ -15,26 +18,34 @@ interface screenNavigationProp {
 
 const SignUp = (props: SignUpProp) => {
   const navigation = useNavigation<screenNavigationProp>();
-  const dispath = useDispatch();
+  const dataSignUp: DataSignupProps = useSelector(
+    (state: any) => state?.auth?.dataSignup,
+  );
 
   const moveToSignUpWithEmail = () => {
-    navigation.navigate(SIGNUP_EMAIL)
-  }
+    navigation.navigate(SIGNUP_EMAIL);
+  };
+  const isTenant = dataSignUp?.role_user === 'Tenant';
+  // const title = isTenant ? ""
 
   return (
-    <View style={styles.container} >
+    <View style={styles.container}>
       <Header back />
       <View style={styles.body}>
+        <AppText style={styles.title}>{"Let's create an account"}</AppText>
 
-        <AppText
-          style={styles.title}>
-          {"Let's create an account"}
-        </AppText>
-
-        <AppText
-          style={styles.description}>
-          {'Finally, sign up and meet your potential guests'}
-        </AppText>
+        {isTenant ? (
+          <AppText style={styles.description}>
+            {'Finally, sign up and see amazing places we found for '}
+            <AppText style={[styles.description, {color: colors.primary}]}>
+              {'you!'}
+            </AppText>
+          </AppText>
+        ) : (
+          <AppText style={styles.description}>
+            {'Finally, sign up and meet your potential guests'}
+          </AppText>
+        )}
 
         <AppButton
           title={'Sign up with Google'}
@@ -71,9 +82,8 @@ const SignUp = (props: SignUpProp) => {
           onPress={moveToSignUpWithEmail}
         />
       </View>
-
     </View>
   );
 };
 
-export { SignUp };
+export {SignUp};

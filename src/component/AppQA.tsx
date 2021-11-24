@@ -77,14 +77,6 @@ const AppQA = React.memo((props: AppQAProps) => {
         );
       } else {
         const nItem: pickerProps = {...item};
-        // if (nItem.hasOwnProperty('icon')) {
-        //   delete nItem.icon;
-        // }
-        // if (nItem.hasOwnProperty('iconSelected')) {
-        //   delete nItem.iconSelected;
-        // }
-        // console.log({nItem});
-        // console.log(nValue[name]);
         if (nValue[name]) {
           nValue[name].push(nItem.value);
         } else {
@@ -93,12 +85,6 @@ const AppQA = React.memo((props: AppQAProps) => {
       }
     } else {
       const nItem: pickerProps = {...item};
-      // if (nItem.hasOwnProperty('icon')) {
-      //   delete nItem.icon;
-      // }
-      // if (nItem.hasOwnProperty('iconSelected')) {
-      //   delete nItem.iconSelected;
-      // }
       nValue[name] = nItem;
     }
     console.log({nValue});

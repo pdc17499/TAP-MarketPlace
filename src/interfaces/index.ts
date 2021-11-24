@@ -289,6 +289,6 @@ export interface AppModalCountryProps {
   customStyleTitle?: ViewStyle;
   customStyleButton?: ViewStyle | ViewStyle[];
   customStyleContainer?: ViewStyle | ViewStyle[];
-  type?: 'phone_code' | 'country'
-  typeButton?: 'linear' | 'base',
+  type?: 'phone_code' | 'country';
+  typeButton?: 'linear' | 'base';
 }

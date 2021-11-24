@@ -25,6 +25,7 @@ const UserInformationGender = () => {
   const setData = (data: any) => {
     dispatch(setDataSignup({data}));
   };
+  const isTenant = dataSignUp?.role_user === 'Tenant';
 
   const formInitialValues = {
     country: dataSignUp?.country,
@@ -101,6 +102,7 @@ const UserInformationGender = () => {
               onValueChange={onChangeText}
               type={'country'}
               typeButton={'base'}
+              customStyleButton={{paddingTop: 0}}
             />
 
             {/* <AppQA
@@ -121,7 +123,7 @@ const UserInformationGender = () => {
             iconRight={'arNext'}
             onPress={props.handleSubmit}
           />
-          {props.values.staying_with_guests === 'Yes' && (
+          {(props.values.staying_with_guests === 'Yes' || isTenant) && (
             <AppButton
               customStyleButton={styles.button}
               title={'Skip'}

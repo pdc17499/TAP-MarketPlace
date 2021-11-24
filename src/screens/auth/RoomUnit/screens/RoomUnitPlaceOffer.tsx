@@ -1,9 +1,8 @@
 import {AppButton, AppQA, Header} from '@component';
-import {RoomStepProps} from '@interfaces';
 import {ROOM_UNIT_HOWNER} from '@mocks';
 import {useNavigation} from '@react-navigation/core';
 import {setDataSignup} from '@redux';
-import {ROOM_UNIT_GALLERY} from '@routeName';
+import {ROOM_UNIT_GALLERY, USER_INFORMATION_NAME} from '@routeName';
 import {
   colors,
   DEVICE,
@@ -27,6 +26,7 @@ const RoomUnitPlaceOffer = () => {
   const setData = (data: any) => {
     dispatch(setDataSignup({data}));
   };
+  const isTenant = dataSignUp?.role_user === 'Tenant';
 
   const formInitialValues = {
     key_your_place: dataSignUp?.key_your_place,
@@ -37,8 +37,12 @@ const RoomUnitPlaceOffer = () => {
   });
 
   const onContinue = () => {
-    navigation.navigate(ROOM_UNIT_GALLERY);
+    navigation.navigate(isTenant ? USER_INFORMATION_NAME : ROOM_UNIT_GALLERY);
   };
+
+  const title = isTenant
+    ? 'What do you wish to have at your new place?'
+    : ' Let your guests know what your place has to offer';
 
   return (
     <>
@@ -57,7 +61,7 @@ const RoomUnitPlaceOffer = () => {
               <>
                 <AppQA
                   data={list.amenities}
-                  title={'Let your guests know what your place has to offer'}
+                  title={title}
                   subTitle={'Select some keywords'}
                   value={dataSignUp}
                   setValue={setData}
