@@ -8,11 +8,11 @@ import {DeviceEventEmitter} from 'react-native';
 const ApiConfigs: any = {
   baseURL: 'https://tap-api.adamo.tech/',
   responseType: 'json',
-  timeout: 10000,
+  timeout: 30000,
   headers: {
     'X-Requested-With': 'XMLHttpRequest',
     'Content-Type': 'application/json',
-    timeout: 5000,
+    timeout: 10000,
   },
 };
 

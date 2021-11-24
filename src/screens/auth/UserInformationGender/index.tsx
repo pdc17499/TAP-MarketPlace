@@ -9,7 +9,7 @@ import * as yup from 'yup';
 import {ROOM_UNIT_HOWNER} from '@mocks';
 import {useDispatch, useSelector} from 'react-redux';
 import {setDataSignup} from '@redux';
-import {LIFE_STYLE, USER_INFORMATION_COUNTRY} from '@routeName';
+import {LIFE_STYLE, SIGNUP} from '@routeName';
 import {DataSignupProps} from '@interfaces';
 interface screenNavigationProp {
   navigate: any;
@@ -49,7 +49,7 @@ const UserInformationGender = () => {
     nData.age_group = {};
     setData(nData);
     props.setErrors({});
-    navigation.navigate(USER_INFORMATION_COUNTRY);
+    navigation.navigate(SIGNUP);
   };
 
   const onChangeText = (item: any, name?: string) => {

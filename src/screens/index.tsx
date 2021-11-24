@@ -9,16 +9,12 @@ import {UserInformationName} from './auth/UserInformationName';
 import {VerifyAccount} from './auth/VerifyAccount';
 import {VerifyCode} from './auth/VerifyCode';
 import {UserInformationGender} from './auth/UserInformationGender';
-import {UserInformationCountry} from './auth/UserInformationCountry';
 import {LifeStyle} from './auth/LifeStyle';
-import {LifeStyleStep} from './auth/LifeStyleStep';
 import {Preferences} from './auth/Preferences';
 import {
   RoomUnitGallery,
   RoomUnitAddress,
-  RoomUnitFurnishing,
   RoomUnitKindPlace,
-  RoomUnitLeasePeriod,
   RoomUnitPlaceOffer,
   RoomUnitPrice,
   RoomUnitTypeRoom,
@@ -47,9 +43,7 @@ export {
   ChooseRole,
   RoomUnitGallery,
   RoomUnitAddress,
-  RoomUnitFurnishing,
   RoomUnitKindPlace,
-  RoomUnitLeasePeriod,
   RoomUnitPlaceOffer,
   RoomUnitPrice,
   RoomUnitTypeRoom,
@@ -63,9 +57,7 @@ export {
   VerifyAccount,
   VerifyCode,
   UserInformationGender,
-  UserInformationCountry,
   LifeStyle,
-  LifeStyleStep,
   Preferences,
   // Authenticate
   Home,

@@ -61,13 +61,14 @@ const AccountSetting = () => {
   // };
 
   const onSubmit = (values: any) => {
-    const contact = `${values.contact.toString().replace(/[^a-zA-Z0-9]/g, '')}`;
+    console.log({values});
+    // const contact = `${values.contact.toString().replace(/[^a-zA-Z0-9]/g, '')}`;
     const body = {
       email: user?.email,
-      contact,
+      contact: user?.contact,
     };
     console.log({body});
-    dispatch(updateUserInfo({body, id: user?.id}));
+    // dispatch(updateUserInfo({body, id: user?.id}));
   };
 
   const handleSubmit = () => {

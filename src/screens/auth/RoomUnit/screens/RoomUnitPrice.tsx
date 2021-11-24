@@ -17,7 +17,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import * as yup from 'yup';
 import {Formik} from 'formik';
 import {useNavigation} from '@react-navigation/native';
-import {ROOM_UNIT_LEASE_PERIOD, ROOM_UNIT_TYPE_ROOM} from '@routeName';
+import {ROOM_UNIT_TYPE_ROOM} from '@routeName';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 interface screenNavigationProp {

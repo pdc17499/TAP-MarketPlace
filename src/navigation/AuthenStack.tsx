@@ -5,10 +5,8 @@ import {
   VERIFY_ACCOUNT,
   VERIFY_CODE,
   ROOM_UNIT_ADDRESS,
-  ROOM_UNIT_FURNISHING,
   ROOM_UNIT_GALLERY,
   ROOM_UNIT_KIND_PLACE,
-  ROOM_UNIT_LEASE_PERIOD,
   ROOM_UNIT_PLACE_OFFER,
   ROOM_UNIT_PRICE,
   ROOM_UNIT_TYPE_ROOM,
@@ -28,8 +26,6 @@ import {
 import {
   RoomUnitGallery,
   RoomUnitAddress,
-  RoomUnitFurnishing,
-  RoomUnitLeasePeriod,
   RoomUnitPlaceOffer,
   RoomUnitPrice,
   RoomUnitTypeRoom,
@@ -75,16 +71,8 @@ const AuthenStack = () => {
 
       {/* Room unit */}
       <Stack.Screen name={ROOM_UNIT_ADDRESS} component={RoomUnitAddress} />
-      <Stack.Screen
-        name={ROOM_UNIT_FURNISHING}
-        component={RoomUnitFurnishing}
-      />
       <Stack.Screen name={ROOM_UNIT_GALLERY} component={RoomUnitGallery} />
       <Stack.Screen name={ROOM_UNIT_KIND_PLACE} component={RoomUnitKindPlace} />
-      <Stack.Screen
-        name={ROOM_UNIT_LEASE_PERIOD}
-        component={RoomUnitLeasePeriod}
-      />
       <Stack.Screen
         name={ROOM_UNIT_PLACE_OFFER}
         component={RoomUnitPlaceOffer}
