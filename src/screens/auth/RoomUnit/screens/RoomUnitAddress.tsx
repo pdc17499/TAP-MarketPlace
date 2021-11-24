@@ -1,91 +1,18 @@
-import {IconMapPin} from '@assets';
 import {AppButton, AppInput, AppText, Header} from '@component';
-import {DataSignupProps, RoomStepProps} from '@interfaces';
+import {DataSignupProps} from '@interfaces';
 import {useNavigation} from '@react-navigation/core';
 import {setDataSignup} from '@redux';
 import {ROOM_UNIT_KIND_PLACE} from '@routeName';
-import {getListLocation, getPlaceLocation} from '@services';
+import {ListLocations} from '@screens';
 import {colors, fontFamily, scaleWidth, SIZE} from '@util';
 import React, {useEffect, useState} from 'react';
-import {
-  View,
-  TouchableOpacity,
-  StyleSheet,
-  Pressable,
-  ScrollView,
-} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {useDispatch, useSelector} from 'react-redux';
 
 interface screenNavigationProp {
   navigate: any;
 }
-
-interface ListLocationProps {
-  location: any;
-  onSelectLocation: (location: any) => void;
-}
-
-export const ListLocations = ({
-  location,
-  onSelectLocation,
-}: ListLocationProps) => {
-  const [listLocation, setListLocation] = useState([]);
-  useEffect(() => {
-    async function getLocation() {
-      const response: any = await getListLocation(location?.title);
-      if (response && response?.data?.results) {
-        const list = response?.data?.results;
-        const nList = list?.length > 7 ? list.slice(0, 7) : list;
-        setListLocation(nList);
-      }
-    }
-
-    getLocation();
-  }, [location]);
-
-  const getMyLocation = async () => {
-    const response: any = await getPlaceLocation();
-    console.log({response});
-    if (response && response?.data?.results) {
-      const location = response?.data?.results[0];
-      onSelectLocation(location);
-    }
-  };
-
-  return (
-    <>
-      {location?.lat === -1 && listLocation?.length > 0 && (
-        <ScrollView showsVerticalScrollIndicator={false}>
-          {listLocation.map((locate: any) => (
-            <Pressable
-              key={locate.geometry.location.lat}
-              onPress={() => onSelectLocation(locate)}
-              style={styles.locationItem}>
-              <IconMapPin />
-              <AppText style={styles.textLocation} numberOfLines={2}>
-                {`${locate.name} - ${locate.formatted_address}`}
-              </AppText>
-            </Pressable>
-          ))}
-        </ScrollView>
-      )}
-
-      {location?.title === '' && (
-        <>
-          <TouchableOpacity
-            style={styles.btnYourLocation}
-            onPress={getMyLocation}>
-            <AppText style={styles.textYourLocation}>
-              {'Use your current location'}
-            </AppText>
-          </TouchableOpacity>
-          <View style={styles.line} />
-        </>
-      )}
-    </>
-  );
-};
 
 const RoomUnitAddress = () => {
   const navigation = useNavigation<screenNavigationProp>();
@@ -120,14 +47,17 @@ const RoomUnitAddress = () => {
     navigation.navigate(ROOM_UNIT_KIND_PLACE);
   };
 
+  const title =
+    dataSignUp?.role_user === 'Tenant'
+      ? 'Where are you planning to stay'
+      : 'Where’s your place located?';
+
   return (
     <>
       <Header back />
       <View style={styles.container}>
         <KeyboardAwareScrollView style={{flex: 1}}>
-          <AppText style={styles.title}>
-            {'Where’s your place located?'}
-          </AppText>
+          <AppText style={styles.title}>{title}</AppText>
           <AppInput
             iconRight={location?.title == '' ? 'other' : 'clear'}
             iconLeft="map"

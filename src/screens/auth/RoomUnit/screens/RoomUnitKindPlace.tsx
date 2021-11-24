@@ -1,5 +1,5 @@
 import {AppButton, AppQA, Header} from '@component';
-import {RoomStepProps} from '@interfaces';
+import {DataSignupProps, RoomStepProps} from '@interfaces';
 import {ROOM_UNIT_HOWNER} from '@mocks';
 import {useNavigation} from '@react-navigation/core';
 import {setDataSignup} from '@redux';
@@ -19,8 +19,11 @@ const RoomUnitKindPlace = () => {
   const navigation = useNavigation<screenNavigationProp>();
   const dispatch = useDispatch();
   const list = ROOM_UNIT_HOWNER;
-  const dataSignUp = useSelector((state: any) => state?.auth?.dataSignup);
-  const setData = (data: any) => {
+  const dataSignUp: DataSignupProps = useSelector(
+    (state: any) => state?.auth?.dataSignup,
+  );
+  const setData = (data: DataSignupProps) => {
+    console.log({data});
     dispatch(setDataSignup({data}));
   };
 
@@ -35,8 +38,28 @@ const RoomUnitKindPlace = () => {
   });
 
   const onNext = () => {
+    const data = {...dataSignUp};
+    const {kind_place, lease_your_place} = data;
+    if (lease_your_place?.length > 0) {
+      const month = kind_place.value === 'HDB' ? '3 months' : '6 months';
+      data.lease_your_place = lease_your_place.filter(
+        (item: string) => item !== month,
+      );
+      console.log({data});
+    }
+    dispatch(setDataSignup({data}));
     navigation.navigate(ROOM_UNIT_PRICE);
   };
+
+  const isTenant = dataSignUp?.role_user === 'Tenant';
+
+  const title = isTenant
+    ? 'Property type you prefer'
+    : 'What kind of place will you host?';
+
+  const titleSecond = isTenant
+    ? 'Lease period you prefer'
+    : 'How long will you want to lease your place?';
 
   const renderFormStepSecond = (props: any) => {
     console.log({props});
@@ -44,13 +67,13 @@ const RoomUnitKindPlace = () => {
       <>
         <AppQA
           isFlex
-          data={list.kind_place}
-          title={'What kind of place will you host?'}
+          data={isTenant ? list.kind_place_tenant : list.kind_place}
+          title={title}
           value={dataSignUp}
           setValue={setData}
           typeList={'even'}
           name={'kind_place'}
-          customStyleTitle={{maxWidth: scaleWidth(240)}}
+          customStyleTitle={{maxWidth: scaleWidth(isTenant ? 320 : 240)}}
           error={props.errors.kind_place}
         />
         {props.values.kind_place && (
@@ -61,7 +84,7 @@ const RoomUnitKindPlace = () => {
                   ? list.lease_your_place_hdb
                   : list.lease_your_place
               }
-              title={'How long will you want to lease your place?'}
+              title={titleSecond}
               value={dataSignUp}
               setValue={setData}
               typeList={'even'}

@@ -1,11 +1,16 @@
-import React, {useEffect, useState} from 'react';
-import {View, StyleSheet, KeyboardAvoidingView, ScrollView} from 'react-native';
-import {AppButton, AppInput, AppQA, AppSlider, Header} from '@component';
-import {DataSignupProps, RoomStepProps} from '@interfaces';
+import React from 'react';
+import {View, StyleSheet} from 'react-native';
+import {
+  AppButton,
+  AppInput,
+  AppQA,
+  AppSlider,
+  AppText,
+  Header,
+} from '@component';
 import {ROOM_UNIT_HOWNER} from '@mocks';
 import {
   colors,
-  DEVICE,
   fontFamily,
   scaleSize,
   scaleWidth,
@@ -17,8 +22,9 @@ import {useDispatch, useSelector} from 'react-redux';
 import * as yup from 'yup';
 import {Formik} from 'formik';
 import {useNavigation} from '@react-navigation/native';
-import {ROOM_UNIT_LEASE_PERIOD, ROOM_UNIT_TYPE_ROOM} from '@routeName';
+import {ROOM_UNIT_TYPE_ROOM} from '@routeName';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import {DataSignupProps} from '@interfaces';
 
 interface screenNavigationProp {
   navigate: any;
@@ -28,7 +34,9 @@ const RoomUnitPrice = () => {
   const navigation = useNavigation<screenNavigationProp>();
   const dispatch = useDispatch();
   const list = ROOM_UNIT_HOWNER;
-  const dataSignUp = useSelector((state: any) => state?.auth?.dataSignup);
+  const dataSignUp: DataSignupProps = useSelector(
+    (state: any) => state?.auth?.dataSignup,
+  );
 
   const setData = (data: any) => {
     dispatch(setDataSignup({data}));
@@ -51,8 +59,6 @@ const RoomUnitPrice = () => {
       then: validateForm().common.reuqire,
     }),
   });
-
-  console.log({dataSignUp});
 
   const onNext = () => {
     navigation.navigate(ROOM_UNIT_TYPE_ROOM);
@@ -111,47 +117,65 @@ const RoomUnitPrice = () => {
     }
   };
 
+  const isTenant = dataSignUp?.role_user === 'Tenant';
+  const title = isTenant ? 'What’s your budget?' : 'What is your rental price?';
+
   return (
     <>
       <Header back />
-      <KeyboardAwareScrollView
-        style={styles.container}
-        showsVerticalScrollIndicator={false}>
-        <Formik
-          initialValues={formInitialValues}
-          validationSchema={validationSchema}
-          validateOnChange={false}
-          enableReinitialize
-          onSubmit={onNext}>
-          {(propsFormik: any) => (
-            <>
-              <View
-                style={{
-                  flex: 1,
-                  paddingHorizontal: SIZE.padding,
-                }}>
-                <AppQA
-                  isFlex
-                  data={list.rental_price}
-                  title={'What is your rental price?'}
-                  value={dataSignUp}
-                  name={'rental_price'}
-                  setValue={setData}
-                  typeList={'column'}
-                  children={renderChildren(propsFormik)}
-                  error={propsFormik.errors.rental_price}
+      {isTenant ? (
+        <View style={styles.container}>
+          <View style={{flex: 1, paddingHorizontal: SIZE.padding}}>
+            <AppText style={styles.title}>{title}</AppText>
+            {renderPriceRange()}
+          </View>
+          <AppButton
+            title={'Continue'}
+            onPress={onNext}
+            containerStyle={styles.customStyleButton}
+            iconRight={'arNext'}
+          />
+        </View>
+      ) : (
+        <KeyboardAwareScrollView
+          style={styles.container}
+          showsVerticalScrollIndicator={false}>
+          <Formik
+            initialValues={formInitialValues}
+            validationSchema={validationSchema}
+            validateOnChange={false}
+            enableReinitialize
+            onSubmit={onNext}>
+            {(propsFormik: any) => (
+              <>
+                <View
+                  style={{
+                    flex: 1,
+                    paddingHorizontal: SIZE.padding,
+                  }}>
+                  <AppQA
+                    isFlex
+                    data={list.rental_price}
+                    title={title}
+                    value={dataSignUp}
+                    name={'rental_price'}
+                    setValue={setData}
+                    typeList={'column'}
+                    children={renderChildren(propsFormik)}
+                    error={propsFormik.errors.rental_price}
+                  />
+                </View>
+                <AppButton
+                  title={'Continue'}
+                  onPress={propsFormik.handleSubmit}
+                  containerStyle={styles.customStyleButton}
+                  iconRight={'arNext'}
                 />
-              </View>
-              <AppButton
-                title={'Continue'}
-                onPress={propsFormik.handleSubmit}
-                containerStyle={styles.customStyleButton}
-                iconRight={'arNext'}
-              />
-            </>
-          )}
-        </Formik>
-      </KeyboardAwareScrollView>
+              </>
+            )}
+          </Formik>
+        </KeyboardAwareScrollView>
+      )}
     </>
   );
 };
@@ -167,9 +191,7 @@ const styles = StyleSheet.create({
     ...fontFamily.fontCampWeight600,
     fontSize: SIZE.medium_size,
     lineHeight: SIZE.medium_size * 1.3,
-    marginBottom: SIZE.padding,
     marginTop: SIZE.padding,
-    maxWidth: scaleWidth(240),
   },
   customStyleButton: {
     flex: 0,

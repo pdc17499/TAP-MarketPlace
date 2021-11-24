@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
   line: {
     height: 1.5,
     width: 8,
-    backgroundColor: colors.bgInput,
+    backgroundColor: '#D8D8D8',
     marginBottom: SIZE.input_height / 2,
     marginHorizontal: 5,
   },

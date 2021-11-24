@@ -142,6 +142,9 @@ export interface DataSignupProps {
   phone: string;
   life_style: Array<string>;
   preferences: Array<string>;
+  agency_name: string;
+  license_no: string;
+  sale_person_no: string;
 }
 
 export interface AppQAProps {
@@ -289,6 +292,6 @@ export interface AppModalCountryProps {
   customStyleTitle?: ViewStyle;
   customStyleButton?: ViewStyle | ViewStyle[];
   customStyleContainer?: ViewStyle | ViewStyle[];
-  type?: 'phone_code' | 'country'
-  typeButton?: 'linear' | 'base',
+  type?: 'phone_code' | 'country';
+  typeButton?: 'linear' | 'base';
 }

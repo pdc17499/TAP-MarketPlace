@@ -9,7 +9,7 @@ import * as yup from 'yup';
 import {ROOM_UNIT_HOWNER} from '@mocks';
 import {useDispatch, useSelector} from 'react-redux';
 import {setDataSignup} from '@redux';
-import {LIFE_STYLE, USER_INFORMATION_COUNTRY} from '@routeName';
+import {LIFE_STYLE, SIGNUP} from '@routeName';
 import {DataSignupProps} from '@interfaces';
 interface screenNavigationProp {
   navigate: any;
@@ -25,6 +25,7 @@ const UserInformationGender = () => {
   const setData = (data: any) => {
     dispatch(setDataSignup({data}));
   };
+  const isTenant = dataSignUp?.role_user === 'Tenant';
 
   const formInitialValues = {
     country: dataSignUp?.country,
@@ -49,7 +50,7 @@ const UserInformationGender = () => {
     nData.age_group = {};
     setData(nData);
     props.setErrors({});
-    navigation.navigate(USER_INFORMATION_COUNTRY);
+    navigation.navigate(SIGNUP);
   };
 
   const onChangeText = (item: any, name?: string) => {
@@ -101,6 +102,7 @@ const UserInformationGender = () => {
               onValueChange={onChangeText}
               type={'country'}
               typeButton={'base'}
+              customStyleButton={{paddingTop: 0}}
             />
 
             {/* <AppQA
@@ -121,7 +123,7 @@ const UserInformationGender = () => {
             iconRight={'arNext'}
             onPress={props.handleSubmit}
           />
-          {props.values.staying_with_guests === 'Yes' && (
+          {(props.values.staying_with_guests === 'Yes' || isTenant) && (
             <AppButton
               customStyleButton={styles.button}
               title={'Skip'}

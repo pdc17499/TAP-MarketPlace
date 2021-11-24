@@ -44,6 +44,28 @@ export const ROOM_UNIT_HOWNER = {
       value: 'Shophouse',
     },
   ],
+  kind_place_tenant: [
+    {
+      label: 'Any',
+      value: 'Any',
+    },
+    {
+      label: 'Condo',
+      value: 'Condo',
+    },
+    {
+      label: 'HDB',
+      value: 'HDB',
+    },
+    {
+      label: 'Landed',
+      value: 'Landed',
+    },
+    {
+      label: 'Shophouse',
+      value: 'Shophouse',
+    },
+  ],
   rental_price: [
     {
       label: 'Negotiable',
@@ -204,6 +226,20 @@ export const ROOM_UNIT_HOWNER = {
       value: 'No',
     },
   ],
+  attached_bathroom_tenant: [
+    {
+      label: 'Yes',
+      value: 'Yes',
+    },
+    {
+      label: 'No',
+      value: 'No',
+    },
+    {
+      label: 'Any',
+      value: 'Any',
+    },
+  ],
   room_furnishing: [
     {
       label: 'Unfurnished',
@@ -324,6 +360,20 @@ export const ROOM_UNIT_HOWNER = {
     {
       value: 'Other',
       label: 'Other',
+    },
+  ],
+  gender_agency: [
+    {
+      value: 'Mr.',
+      label: 'Mr.',
+    },
+    {
+      value: 'Ms.',
+      label: 'Ms.',
+    },
+    {
+      value: 'Mrs.',
+      label: 'Mrs.',
     },
   ],
   group_age: [
@@ -596,6 +646,16 @@ export const ROOM_UNIT_HOWNER = {
       label: 'Student',
       icon: <IconStudent />,
       iconSelected: <IconStudent iconFillColor={colors.textPrimary} />,
+    },
+  ],
+  agency_name: [
+    {
+      value: 'Agency 1',
+      label: 'Agency 1',
+    },
+    {
+      value: 'Agency 2',
+      label: 'Agency 2',
     },
   ],
 };

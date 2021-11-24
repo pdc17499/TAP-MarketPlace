@@ -1,15 +1,8 @@
-import {AppButton, AppQA, AppSlider, AppText, Header} from '@component';
-import {DataSignupProps, RoomStepProps} from '@interfaces';
+import {AppButton, AppQA, AppText, Header} from '@component';
+import {DataSignupProps} from '@interfaces';
 import {ROOM_UNIT_HOWNER} from '@mocks';
 import {setDataSignup} from '@redux';
-import {
-  colors,
-  fontFamily,
-  scaleWidth,
-  SIZE,
-  SLIDER,
-  validateForm,
-} from '@util';
+import {colors, fontFamily, scaleWidth, SIZE, validateForm} from '@util';
 import React from 'react';
 import {View, StyleSheet, ScrollView} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
@@ -17,7 +10,7 @@ import _ from 'lodash';
 import * as yup from 'yup';
 import {Formik} from 'formik';
 import {useNavigation} from '@react-navigation/core';
-import {ROOM_UNIT_FURNISHING, ROOM_UNIT_PLACE_OFFER} from '@routeName';
+import {ROOM_UNIT_PLACE_OFFER} from '@routeName';
 
 interface screenNavigationProp {
   navigate: any;
@@ -33,6 +26,8 @@ const RoomUnitTypeRoom = () => {
   const setData = (data: any) => {
     dispatch(setDataSignup({data}));
   };
+
+  const isTenant = dataSignUp?.role_user === 'Tenant';
 
   const formInitialValues = {
     room_type: dataSignUp?.room_type?.value,
@@ -57,14 +52,26 @@ const RoomUnitTypeRoom = () => {
       is: 'Room',
       then: validateForm().common.selectAtLeast,
     }),
-    staying_with_guests: yup.string().when('room_type', {
-      is: 'Room',
-      then: validateForm().common.selectAtLeast,
-    }),
+    staying_with_guests: isTenant
+      ? yup.object().nullable()
+      : yup.string().when('room_type', {
+          is: 'Room',
+          then: validateForm().common.selectAtLeast,
+        }),
     allow_cooking: validateForm().common.selectAtLeast,
   });
 
   const onNext = () => {
+    const data = {...dataSignUp};
+    const {room_type} = data;
+    if (room_type.value === 'Entire Home') {
+      data.attached_bathroom = {};
+      data.staying_with_guests = {};
+    } else {
+      data.bedroom_number = {};
+      data.bathroom_number = {};
+    }
+    dispatch(setDataSignup({data}));
     navigation.navigate(ROOM_UNIT_PLACE_OFFER);
   };
 
@@ -74,6 +81,17 @@ const RoomUnitTypeRoom = () => {
     nData['floor_size_max'] = values[1];
     setData(nData);
   };
+
+  const subTitle = !isTenant
+    ? 'I want to rent out'
+    : 'Room type you’re looking for';
+  const cookingTitle = !isTenant ? 'Allow cooking?' : 'Will you be cooking?';
+  const attachedTitle = !isTenant
+    ? 'Attached bathroom'
+    : 'Do you prefer attached bathroom?';
+  const listAttached = isTenant
+    ? list.attached_bathroom_tenant
+    : list.attached_bathroom;
 
   return (
     <View style={{flex: 1}}>
@@ -86,15 +104,19 @@ const RoomUnitTypeRoom = () => {
           enableReinitialize
           onSubmit={onNext}>
           {(propsFormik: any) => (
-            <View style={{flex: 1, paddingHorizontal: SIZE.padding}}>
-              <AppText style={styles.titleHeading}>{'Room details'}</AppText>
+            <View style={styles.formik}>
+              {!isTenant && (
+                <AppText style={styles.titleHeading}>{'Room details'}</AppText>
+              )}
+
               <AppQA
                 data={list.room_type}
-                title={'I want to rent out'}
+                title={subTitle}
                 value={dataSignUp}
                 setValue={setData}
                 typeList={'even'}
                 name={'room_type'}
+                customStyleTitle={{maxWidth: scaleWidth(280)}}
                 error={propsFormik.errors.room_type}
               />
               {!_.isEmpty(dataSignUp.room_type) && (
@@ -121,7 +143,7 @@ const RoomUnitTypeRoom = () => {
                       />
                       <AppQA
                         data={list.allow_cooking}
-                        title={'Allow cooking?'}
+                        title={cookingTitle}
                         value={dataSignUp}
                         setValue={setData}
                         typeList={'even'}
@@ -132,32 +154,35 @@ const RoomUnitTypeRoom = () => {
                   ) : (
                     <>
                       <AppQA
-                        data={list.attached_bathroom}
-                        title={'Attached bathroom'}
+                        data={listAttached}
+                        title={attachedTitle}
                         value={dataSignUp}
                         setValue={setData}
-                        typeList={'even'}
+                        typeList={isTenant ? 'row' : 'even'}
                         name={'attached_bathroom'}
                         error={propsFormik.errors.attached_bathroom}
+                        customStyleTitle={{maxWidth: scaleWidth(260)}}
                       />
                       <AppQA
                         data={list.allow_cooking}
-                        title={'Allow cooking?'}
+                        title={cookingTitle}
                         value={dataSignUp}
                         setValue={setData}
                         typeList={'even'}
                         name={'allow_cooking'}
                         error={propsFormik.errors.allow_cooking}
                       />
-                      <AppQA
-                        data={list.staying_width_guests}
-                        title={'Will you be staying with your guests?'}
-                        value={dataSignUp}
-                        setValue={setData}
-                        typeList={'row'}
-                        name={'staying_with_guests'}
-                        error={propsFormik.errors.staying_with_guests}
-                      />
+                      {!isTenant && (
+                        <AppQA
+                          data={list.staying_width_guests}
+                          title={'Will you be staying with your guests?'}
+                          value={dataSignUp}
+                          setValue={setData}
+                          typeList={'row'}
+                          name={'staying_with_guests'}
+                          error={propsFormik.errors.staying_with_guests}
+                        />
+                      )}
                     </>
                   )}
 
@@ -222,4 +247,5 @@ const styles = StyleSheet.create({
     maxWidth: scaleWidth(106),
     marginBottom: SIZE.medium_space,
   },
+  formik: {flex: 1, paddingHorizontal: SIZE.padding},
 });

@@ -25,7 +25,7 @@ const Preferences = (props: any) => {
   const setData = (data: any) => {
     dispatch(setDataSignup({data}));
   };
-
+  const isTenant = dataSignUp?.role_user === 'Tenant';
   const list = ROOM_UNIT_HOWNER;
 
   const formInitialValues = {
@@ -73,7 +73,7 @@ const Preferences = (props: any) => {
           iconRight={'arNext'}
           onPress={props.handleSubmit}
         />
-        {props.values.staying_with_guests === 'Yes' && (
+        {(props.values.staying_with_guests === 'Yes' || isTenant) && (
           <AppButton
             title={'Skip'}
             typeButton={'link'}

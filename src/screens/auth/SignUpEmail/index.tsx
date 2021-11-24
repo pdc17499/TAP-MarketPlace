@@ -25,6 +25,7 @@ const SignUpEmail = (props: SignUpEmailProp) => {
     (state: any) => state?.auth?.dataSignup,
   );
   const [state, setState] = useState(INITIAL_STATE_DATA_SIGN_UP);
+  const isTenant = dataSignUp?.role_user === 'Tenant';
   useEffect(() => {
     setState(dataSignUp);
   }, [dataSignUp]);
@@ -70,20 +71,31 @@ const SignUpEmail = (props: SignUpEmailProp) => {
     }
   };
 
-  const getList = (list: Array<mockProps>) => {
-    if (list?.length > 0) {
-      const values: string[] = [];
-      list.map((file: mockProps) => {
-        if (file.value) values.push(file.value);
-      });
-
-      return values;
-    }
-  };
-
   const hanldeSubmit = () => {
     console.log(state);
-    const body = {
+    const RentalPrice = {
+      type: state?.rental_price?.value,
+      Min: state?.min_range_price,
+      Max: state?.max_range_price,
+      Price: parseInt(state?.negotiable_price || '0'),
+    };
+
+    const BudgetPrice = {
+      Min: state?.min_range_price,
+      Max: state?.max_range_price,
+    };
+
+    const RoomDetails = {
+      RoomType: state?.room_type?.value,
+      BedroomNumber: state?.bedroom_number?.value,
+      BathroomNumber: state?.bathroom_number?.value,
+      AttachedBathroom: state?.attached_bathroom?.value === 'Yes',
+      AllowCook: state?.allow_cooking?.value === 'Yes',
+      StayWithGuest: state?.staying_with_guests?.value === 'Yes',
+      KeyWords: state?.key_your_place,
+    };
+
+    const body: any = {
       idType: state?.role_user,
       userInfor: {
         email: state.email,
@@ -96,49 +108,27 @@ const SignUpEmail = (props: SignUpEmailProp) => {
         ethnicity: state?.ethnicity?.value,
         lifestyle: state?.life_style,
         preferences: state?.preferences,
-        // lifestyle: {
-        //   Friendliness: getList(state?.your_place),
-        //   Pets: state?.have_pet?.value,
-        //   Smoking: state?.smoke?.value,
-        //   DietRestriction: getList(state?.diet_choice),
-        //   Religion: state?.your_religion?.value,
-        // },
       },
       roomDesc: {
         RentalAddress: state?.location.title,
         PlaceType: state?.kind_place?.value,
-        RoomDetails: {
-          RoomType: state?.room_type?.value,
-          BedroomNumber: state?.bedroom_number?.value,
-          BathroomNumber: state?.bathroom_number?.value,
-          AttachedBathroom: state?.attached_bathroom?.value === 'Yes',
-          // FloorSize: {
-          //   Min: state?.floor_size_min,
-          //   Max: state?.floor_size_max,
-          // },
-          // RoomFurnishing: state?.room_furnishing?.value,
-          // FloorLevel: state?.floor_level?.value,
-          AllowCook: state?.allow_cooking?.value === 'Yes',
-          // builtYear: state?.built_year,
-          StayWithGuest: state?.staying_with_guests?.value === 'Yes',
-          KeyWords: state?.key_your_place,
-        },
         LeasePeriod: {
           type: state?.kind_place?.value === 'HDB',
           value: state?.lease_your_place,
         },
         PicturesVideo: getUrlFiles(),
-        RentalPrice: {
-          type: state?.rental_price?.value,
-          Min: state?.min_range_price,
-          Max: state?.max_range_price,
-          Price: parseInt(state?.negotiable_price || '0'),
-        },
       },
     };
 
+    if (isTenant) {
+      body.roomDesc.BudgetPrice = BudgetPrice;
+      body.roomDesc.RoomProperty = RoomDetails;
+    } else {
+      body.roomDesc.RentalPrice = RentalPrice;
+      body.roomDesc.RoomDetails = RoomDetails;
+    }
+
     console.log({body});
-    // dispatch(setDataSignup({data: state}));
     dispatch(signUp({body}));
     // navigation.navigate(VERIFY_ACCOUNT);
   };
@@ -184,7 +174,7 @@ const SignUpEmail = (props: SignUpEmailProp) => {
                 label={'Confirm Password'}
                 name={'confirm_password'}
                 secureTextEntry={true}
-                showEye={true}
+                // showEye={true}
                 placeholder={'Confirm your password'}
                 iconLeft={'key'}
                 value={props.values.confirm_password}

@@ -13,27 +13,23 @@ import {
   VERIFY_CODE,
   USER_INFORMATION_GENDER,
   LIFE_STYLE,
-  LIFE_STYLE_STEP,
-  USER_INFORMATION_COUNTRY,
   UPDATE_NEW_PASSWORD,
   ROOM_UNIT_ADDRESS,
-  ROOM_UNIT_FURNISHING,
   ROOM_UNIT_GALLERY,
   ROOM_UNIT_KIND_PLACE,
-  ROOM_UNIT_LEASE_PERIOD,
   ROOM_UNIT_PLACE_OFFER,
   ROOM_UNIT_PRICE,
   ROOM_UNIT_TYPE_ROOM,
   PREFERENCES,
+  AGENCY_INFORMATION_NAME,
+  AGENCY_BASIC_INFORMATION,
 } from './routeName';
 
 import {
   ChooseRole,
   RoomUnitGallery,
   RoomUnitAddress,
-  RoomUnitFurnishing,
   RoomUnitKindPlace,
-  RoomUnitLeasePeriod,
   RoomUnitPlaceOffer,
   RoomUnitPrice,
   RoomUnitTypeRoom,
@@ -47,10 +43,10 @@ import {
   VerifyCode,
   UserInformationGender,
   LifeStyle,
-  LifeStyleStep,
-  UserInformationCountry,
   UpdateNewPassword,
   Preferences,
+  AgencyInformationName,
+  AgencyBasicInformation,
 } from '../screens';
 
 const Stack = createStackNavigator();
@@ -66,16 +62,8 @@ const UnAuthenStack = () => {
       <Stack.Screen name={RESETPASSWORD} component={ResetPassword} />
       <Stack.Screen name={CHOOSE_ROLE} component={ChooseRole} />
       <Stack.Screen name={ROOM_UNIT_ADDRESS} component={RoomUnitAddress} />
-      <Stack.Screen
-        name={ROOM_UNIT_FURNISHING}
-        component={RoomUnitFurnishing}
-      />
       <Stack.Screen name={ROOM_UNIT_GALLERY} component={RoomUnitGallery} />
       <Stack.Screen name={ROOM_UNIT_KIND_PLACE} component={RoomUnitKindPlace} />
-      <Stack.Screen
-        name={ROOM_UNIT_LEASE_PERIOD}
-        component={RoomUnitLeasePeriod}
-      />
       <Stack.Screen
         name={ROOM_UNIT_PLACE_OFFER}
         component={RoomUnitPlaceOffer}
@@ -93,13 +81,16 @@ const UnAuthenStack = () => {
         name={USER_INFORMATION_GENDER}
         component={UserInformationGender}
       />
-      <Stack.Screen
-        name={USER_INFORMATION_COUNTRY}
-        component={UserInformationCountry}
-      />
       <Stack.Screen name={LIFE_STYLE} component={LifeStyle} />
-      <Stack.Screen name={LIFE_STYLE_STEP} component={LifeStyleStep} />
       <Stack.Screen name={PREFERENCES} component={Preferences} />
+      <Stack.Screen
+        name={AGENCY_INFORMATION_NAME}
+        component={AgencyInformationName}
+      />
+      <Stack.Screen
+        name={AGENCY_BASIC_INFORMATION}
+        component={AgencyBasicInformation}
+      />
       <Stack.Screen name={VERIFY_CODE} component={VerifyCode} />
       <Stack.Screen name={VERIFY_ACCOUNT} component={VerifyAccount} />
     </Stack.Navigator>
