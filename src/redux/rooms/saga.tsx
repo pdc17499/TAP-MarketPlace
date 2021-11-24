@@ -69,7 +69,7 @@ export function* addNewRoomSaga(action: any) {
     const result: ResponseGenerator2 = yield addNewRoomApi(body);
     console.log({ result });
     if (result) {
-      yield put(addNewRoom(result?.data))
+      // yield put(addNewRoom(result?.data))
       NavigationUtils.navigate(ADD_SUCCESS);
     }
   } catch (error) {

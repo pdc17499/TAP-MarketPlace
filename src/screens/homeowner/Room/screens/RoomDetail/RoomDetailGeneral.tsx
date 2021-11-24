@@ -45,6 +45,8 @@ import { deleteRoom } from '@redux';
 const RoomDetailGeneral = ({ props }: any) => {
   const key = props;
   const ROOM: any = useSelector((state: any) => state?.rooms?.roomDetail);
+  console.log('hhh', ROOM);
+
   const dispatch = useDispatch();
   const navigation: any = useNavigation();
   const [room, setRoom] = useState({

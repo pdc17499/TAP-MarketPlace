@@ -7,8 +7,6 @@ import {
 import { INITIAL_STATE_ROOMS } from './state';
 import _ from 'lodash';
 
-
-
 export default function dataSave(state = INITIAL_STATE_ROOMS, action: any) {
   switch (action.type) {
     case SET_LIST_ROOMS:

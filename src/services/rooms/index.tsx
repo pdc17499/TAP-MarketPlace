@@ -1,7 +1,8 @@
 import api from '../api';
 import {
   GET_LIST_ROOMS,
-  GET_ROOM_DETAIL
+  GET_ROOM_DETAIL,
+  DELETE_ROOM,
 } from './types';
 
 // room detail
@@ -21,7 +22,9 @@ export const addNewRoomApi: any = async (data: any) => {
 };
 
 export const deleteRoomApi: any = async (data: any) => {
-  const response = await api.post(GET_ROOM_DETAIL + data);
+  const response = await api.delete(DELETE_ROOM + data);
   return response;
 };
+
+
 

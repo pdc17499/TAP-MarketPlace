@@ -1,5 +1,5 @@
-import {AppButton, AppText, Header} from '@component';
-import {addNewRoom, addNewRoomSaga, setDataSignup} from '@redux';
+import { AppButton, AppText, Header } from '@component';
+import { addNewRoom, addNewRoomSaga, setDataSignup } from '@redux';
 import {
   colors,
   FILE_SIZE,
@@ -9,7 +9,7 @@ import {
   SIZE,
   STYLE,
 } from '@util';
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   View,
   StyleSheet,
@@ -23,9 +23,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import ImagePicker, { ImageOrVideo } from 'react-native-image-crop-picker';
 import { useActionSheet } from '@expo/react-native-action-sheet';
 import Video from 'react-native-video';
-import {bg_room_unit_picture, IconAddVideos, IconClear} from '@assets';
-import {NavigationUtils} from '@navigation';
-import {ADD_SUCCESS, USER_INFORMATION_NAME} from '@routeName';
+import { bg_room_unit_picture, IconAddVideos, IconClear } from '@assets';
+import { NavigationUtils } from '@navigation';
+import { ADD_SUCCESS, USER_INFORMATION_NAME } from '@routeName';
 import {
   DraxDragWithReceiverEventData,
   DraxProvider,
@@ -40,7 +40,7 @@ const RoomUnitGallery = () => {
     dispatch(setDataSignup({ data }));
   };
   const [files, setFiles] = useState([]);
-  const {showActionSheetWithOptions} = useActionSheet();
+  const { showActionSheetWithOptions } = useActionSheet();
 
   const uploadPhotos = (mediaType: any) => {
     const isPhoto = mediaType === 'photo';
@@ -54,7 +54,7 @@ const RoomUnitGallery = () => {
     }).then((images: any) => {
       const nFiles: any = [...files];
       images.forEach((image: ImageOrVideo) => {
-        console.log({nFiles});
+        console.log({ nFiles });
         if (image.size < FILE_SIZE.MAX_IMAGE) {
           nFiles.push(image);
         }
@@ -129,10 +129,17 @@ const RoomUnitGallery = () => {
   };
 
   const onDone = () => {
-    const nData = {...dataSignUp};
+
+    const nData = { ...dataSignUp };
     nData.list_photo = files;
     setData(nData);
-    NavigationUtils.navigate(USER_INFORMATION_NAME);
+    if (token) {
+      dispatch(addNewRoom(nData))
+    }
+    else {
+
+      NavigationUtils.navigate(USER_INFORMATION_NAME);
+    }
   };
 
   const addFile = (mediaType: any) => {
@@ -148,7 +155,7 @@ const RoomUnitGallery = () => {
         cancelButtonIndex,
       },
       buttonIndex => {
-        console.log({buttonIndex});
+        console.log({ buttonIndex });
         if (buttonIndex === 0) {
           uploadPhotos(mediaType);
         } else if (buttonIndex === 1) {
@@ -164,8 +171,8 @@ const RoomUnitGallery = () => {
   };
 
   const onReceiveDragDrop = (event: DraxDragWithReceiverEventData) => {
-    console.log({event});
-    const {dragged, receiver} = event;
+    console.log({ event });
+    const { dragged, receiver } = event;
     const idDragged = parseInt(dragged.id);
     const idReceiver = parseInt(receiver.id);
     let nFiles: any = [...files];
@@ -206,11 +213,11 @@ const RoomUnitGallery = () => {
             longPressDelay={0}
             onReceiveDragDrop={onReceiveDragDrop}>
             {isPhoto ? (
-              <Image source={{uri: file.path}} style={styles.itemImage} />
+              <Image source={{ uri: file.path }} style={styles.itemImage} />
             ) : (
               <>
                 <Video
-                  source={{uri: file.path}}
+                  source={{ uri: file.path }}
                   style={styles.itemImage}
                   resizeMode={'cover'}
                   muted
