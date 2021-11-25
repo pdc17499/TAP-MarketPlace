@@ -8,7 +8,7 @@ import {
   DeviceEventEmitter,
 } from 'react-native';
 import {useDispatch} from 'react-redux';
-import {getProfileUser, logoutApp} from '@redux';
+import {getProfileUser, logoutApp, updateUserInfo} from '@redux';
 import {useSelector} from 'react-redux';
 import {
   IconHouseLine,
@@ -31,6 +31,7 @@ import {useNavigation} from '@react-navigation/native';
 import {
   colors,
   fontFamily,
+  getBaseURL,
   OPTIONS_GALLERY,
   scaleSize,
   scaleWidth,
@@ -38,6 +39,7 @@ import {
 } from '@util';
 import {StyleSheet} from 'react-native';
 import {useActionSheet} from '@expo/react-native-action-sheet';
+import {GlobalService, uploadFile} from '@services';
 interface ProfileProp {}
 
 interface screenNavigationProp {
@@ -80,7 +82,6 @@ const Profile = (props: ProfileProp) => {
   const USER = useSelector((state: any) => state.auth.user);
   // const USER = INITIAL_STATE_DATA_SIGN_UP
   console.log('INFO', USER);
-  const [filePath, setFilePath] = useState();
   const dispatch = useDispatch();
   const {showActionSheetWithOptions} = useActionSheet();
 
@@ -121,13 +122,11 @@ const Profile = (props: ProfileProp) => {
 
   const uploadPhotos = () => {
     ImagePicker.openPicker({
-      height: 720,
-      width: 1280,
-      compressImageQuality: 0.8,
+      compressImageMaxHeight: 1200,
+      compressImageMaxWidth: 1200,
       cropping: true,
     }).then((image: any) => {
-      setFilePath(image.path);
-      console.log(image);
+      getUrlFile(image);
     });
   };
 
@@ -135,11 +134,24 @@ const Profile = (props: ProfileProp) => {
     ImagePicker.openCamera({
       cropping: true,
       mediaType: 'photo',
-      compressImageQuality: 0.6,
+      ompressImageMaxHeight: 1200,
+      compressImageMaxWidth: 1200,
     }).then((image: any) => {
-      setFilePath(image.path);
-      console.log(image);
+      getUrlFile(image);
     });
+  };
+
+  const getUrlFile = async (image: any) => {
+    GlobalService.showLoading();
+    const result = await uploadFile(image);
+    const base_url = getBaseURL();
+    if (result.imagePath) {
+      const url: string = base_url + '/v1/file' + result?.imagePath;
+      const body = {
+        image: url,
+      };
+      dispatch(updateUserInfo({body, id: USER?.id}));
+    }
   };
 
   const moveToDetail = (item: any) => {
@@ -160,11 +172,13 @@ const Profile = (props: ProfileProp) => {
     </Pressable>
   );
 
+  console.log({USER});
+
   const ListHeaderComponent = () => (
     <>
       <Pressable onPress={openGallery}>
         <Image
-          source={filePath ? {uri: filePath} : avatar_default}
+          source={USER?.image ? {uri: USER?.image} : avatar_default}
           style={styles.avatar}
         />
       </Pressable>

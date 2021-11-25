@@ -1,5 +1,4 @@
 import axios from 'axios';
-import {getBaseURL} from '@util';
 import {describeSuccessResponse, describeErrorResponse} from './logger';
 import {showMessage} from 'react-native-flash-message';
 import {getToken} from '@services';

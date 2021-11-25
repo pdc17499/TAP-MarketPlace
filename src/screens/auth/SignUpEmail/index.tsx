@@ -26,6 +26,7 @@ const SignUpEmail = (props: SignUpEmailProp) => {
   );
   const [state, setState] = useState(INITIAL_STATE_DATA_SIGN_UP);
   const isTenant = dataSignUp?.role_user === 'Tenant';
+  const isAgent = dataSignUp?.role_user === 'Agent';
   useEffect(() => {
     setState(dataSignUp);
   }, [dataSignUp]);
@@ -95,6 +96,13 @@ const SignUpEmail = (props: SignUpEmailProp) => {
       KeyWords: state?.key_your_place,
     };
 
+    const agenyInfo = {
+      agencyName: state?.agency_name,
+      licenseNumber: state?.license_no,
+      salespersonNumber: state?.sale_person_no,
+      gender: state?.gender,
+    };
+
     const body: any = {
       idType: state?.role_user,
       userInfor: {
@@ -116,7 +124,7 @@ const SignUpEmail = (props: SignUpEmailProp) => {
           type: state?.kind_place?.value === 'HDB',
           value: state?.lease_your_place,
         },
-        PicturesVideo: getUrlFiles(),
+        // PicturesVideo: getUrlFiles(),
       },
     };
 
@@ -124,6 +132,10 @@ const SignUpEmail = (props: SignUpEmailProp) => {
       body.roomDesc.BudgetPrice = BudgetPrice;
       body.roomDesc.RoomProperty = RoomDetails;
     } else {
+      if (isAgent) {
+        const nUserInfo = {...body.userInfor, ...agenyInfo};
+        body.userInfor = nUserInfo;
+      }
       body.roomDesc.RentalPrice = RentalPrice;
       body.roomDesc.RoomDetails = RoomDetails;
     }
@@ -134,7 +146,7 @@ const SignUpEmail = (props: SignUpEmailProp) => {
   };
 
   const RenderEmailForm = () => (
-    <KeyboardAwareScrollView style={{flex: 1, paddingHorizontal: SIZE.padding}}>
+    <KeyboardAwareScrollView style={styles.keyboard}>
       <Formik
         enableReinitialize
         initialValues={formInitialValues}

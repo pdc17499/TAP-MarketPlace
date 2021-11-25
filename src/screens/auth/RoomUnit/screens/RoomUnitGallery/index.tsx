@@ -1,50 +1,76 @@
-import { AppButton, AppText, Header } from '@component';
-import { addNewRoom, addNewRoomSaga, setDataSignup } from '@redux';
+import {AppButton, AppText, Header} from '@component';
+import {addNewRoom, setDataSignup} from '@redux';
 import {
   colors,
+  DEVICE,
   FILE_SIZE,
-  fontFamily,
+  getBaseURL,
   OPTIONS_GALLERY,
   scaleWidth,
   SIZE,
   STYLE,
 } from '@util';
-import React, { useState } from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {
   View,
-  StyleSheet,
   Image,
   ScrollView,
   Alert,
   LayoutAnimation,
   Pressable,
+  UIManager,
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import ImagePicker, { ImageOrVideo } from 'react-native-image-crop-picker';
 import { useActionSheet } from '@expo/react-native-action-sheet';
 import Video from 'react-native-video';
-import { bg_room_unit_picture, IconAddVideos, IconClear } from '@assets';
-import { NavigationUtils } from '@navigation';
-import { ADD_SUCCESS, USER_INFORMATION_NAME } from '@routeName';
+import {bg_room_unit_picture, IconAddVideos, IconClear} from '@assets';
+import {NavigationUtils} from '@navigation';
+import {ADD_SUCCESS, AGENCY_BASIC_INFORMATION, USER_INFORMATION_NAME} from '@routeName';
 import {
   DraxDragWithReceiverEventData,
   DraxProvider,
   DraxView,
 } from 'react-native-drax';
-import { GlobalService, uploadFileApi } from '@services';
+import {GlobalService, uploadFileApi, uploadFile} from '@services';
+import {styles} from './styles';
 
-const RoomUnitGallery = () => {
+const RoomUnitGallery = React.memo(() => {
   const dispatch = useDispatch();
   const dataSignUp = useSelector((state: any) => state?.auth?.dataSignup);
   const token = useSelector((state: any) => state?.auth?.token);
+  const room: any = useSelector((state: any) => state?.rooms?.roomDetail);
   const setData = (data: any) => {
     dispatch(setDataSignup({ data }));
   };
   const [files, setFiles] = useState([]);
-  const { showActionSheetWithOptions } = useActionSheet();
+  const {showActionSheetWithOptions} = useActionSheet();
+  const BASE_URL = getBaseURL() + '/v1/file';
+  const numPhotos = useRef(0);
+  const numVideos = useRef(0);
+  if (DEVICE.isAndroid) {
+    if (UIManager.setLayoutAnimationEnabledExperimental) {
+      UIManager.setLayoutAnimationEnabledExperimental(true);
+    }
+  }
+
+  useEffect(() => {
+    numPhotos.current = 0;
+    numVideos.current = 0;
+    files.map((file: any) => {
+      if (file.uri.includes('images')) {
+        numPhotos.current += 1;
+      } else {
+        numVideos.current += 1;
+      }
+    });
+  }, [files]);
 
   const uploadPhotos = (mediaType: any) => {
     const isPhoto = mediaType === 'photo';
+    const maxFiles = isPhoto
+      ? FILE_SIZE.MAX_IMAGE_COUNT - numPhotos.current
+      : FILE_SIZE.MAX_VIDEO_COUNT - numVideos.current;
     ImagePicker.openPicker({
       multiple: true,
       cropping: isPhoto,
@@ -52,66 +78,66 @@ const RoomUnitGallery = () => {
       compressImageQuality: 0.6,
       compressImageMaxWidth: 1000,
       compressImageMaxHeight: 1000,
-    }).then((images: any) => {
-      const nFiles: any = [...files];
-      images.forEach((image: ImageOrVideo) => {
-        console.log({ nFiles });
-        if (image.size < FILE_SIZE.MAX_IMAGE) {
-          nFiles.push(image);
-        }
-      });
-      validateFile(nFiles);
+      maxFiles: maxFiles,
+    }).then((nFiles: any) => {
+      validateFile(nFiles, isPhoto);
     });
   };
 
   const takePhoto = (mediaType: any) => {
+    const isPhoto = mediaType === 'photo';
     ImagePicker.openCamera({
-      cropping: mediaType === 'photo',
+      cropping: true,
       mediaType,
       compressImageQuality: 0.6,
       compressImageMaxWidth: 1000,
-      compressImageMaxHeight: 1000,
-    }).then((image: any) => {
-      const nFiles: any = [...files];
-      nFiles.push(image);
-      validateFile(nFiles);
+      compressImageMaxHeighte: 1000,
+    }).then(async (file: ImageOrVideo) => {
+      validateFile([file], isPhoto);
     });
   };
 
-  // const getFileUrl = async (nFiles: Array<any>) => {
-  //   const pathFile = nFiles.map(item => item?.path)
-  //   console.log('pathss', pathFile);
-  //   try {
-  //     GlobalService.showLoading();
-  //     const result = await uploadFileApi(pathFile[0])
-  //     if (result) {
-  //       console.log('re', result);
-  //     }
-  //   } catch (error) {
-  //     GlobalService.hideLoading();
-  //   } finally {
-  //     GlobalService.hideLoading();
-  //   }
-  // }
-
-  const validateFile = (nFiles: any) => {
-    const photos = nFiles.filter((file: ImageOrVideo) =>
-      file.mime.includes('image'),
-    );
-    const videos = nFiles.filter(
-      (file: ImageOrVideo) => !file.mime.includes('image'),
-    );
-
-    if (photos.length > 10) {
+  const validateFile = async (nFiles: any, isPhoto: boolean) => {
+    if (
+      isPhoto &&
+      nFiles.length + numPhotos.current > FILE_SIZE.MAX_IMAGE_COUNT
+    ) {
       Alert.alert('You can only upload up to 10 photos');
-    } else if (videos.length > 1) {
+    } else if (
+      !isPhoto &&
+      nFiles.length + numVideos.current > FILE_SIZE.MAX_IMAGE_COUNT
+    ) {
       Alert.alert('You can only upload up to 1 video');
     } else {
-      console.log('fileeee', nFiles);
-      // getFileUrl(nFiles)
-      LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
-      setFiles(nFiles);
+      const arrFile: any = [];
+      nFiles.forEach(async (file: ImageOrVideo) => {
+        if (
+          (isPhoto && file.size < FILE_SIZE.MAX_IMAGE_SIZE) ||
+          (!isPhoto && file.size < FILE_SIZE.MAX_VIDEO_SIZE)
+        ) {
+          const response = await getUrlFile(file);
+          if (response) {
+            arrFile.push({
+              format: response.format,
+              uri: BASE_URL + response.imagePath,
+            });
+            showFiles(arrFile);
+          }
+        }
+      });
     }
+  };
+
+  const showFiles = (nFiles: any) => {
+    const listFile: any = [...files, ...nFiles];
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
+    setFiles(listFile);
+  };
+
+  const getUrlFile = async (image: any) => {
+    const result = await uploadFile(image);
+    console.log({result});
+    return result;
   };
 
   const removeFile = (index: number) => {
@@ -134,59 +160,19 @@ const RoomUnitGallery = () => {
       },
     ]);
   };
-  const getUrlFiles = () => {
-    const files = dataSignUp?.list_photo;
-    if (files?.length > 0) {
-      const urls: string[] = [];
-      files.map((file: ImageOrVideo) => {
-        urls.push(file.path);
-      });
-      console.log('ss', urls);
-      return urls;
-    }
-  };
 
   const onDone = () => {
     const nData = { ...dataSignUp };
     nData.list_photo = files;
     setData(nData);
     if (token) {
-      const state = nData
-      // const Path = getUrlFiles()
-      // console.log('path', Path);
-
-      const body = {
-        roomDesc: {
-          RentalAddress: state?.location.title,
-          PlaceType: state?.kind_place?.value,
-          RoomDetails: {
-            RoomType: state?.room_type?.value,
-            BedroomNumber: state?.bedroom_number?.value,
-            BathroomNumber: state?.bathroom_number?.value,
-            AttachedBathroom: state?.attached_bathroom?.value === 'Yes',
-            AllowCook: state?.allow_cooking?.value === 'Yes',
-            StayWithGuest: state?.staying_with_guests?.value === 'Yes',
-            KeyWords: state?.key_your_place,
-          },
-          LeasePeriod: {
-            type: state?.kind_place?.value === 'HDB',
-            value: state?.lease_your_place,
-          },
-          PicturesVideo: getUrlFiles(),
-          RentalPrice: {
-            type: state?.rental_price?.value,
-            Min: state?.min_range_price,
-            Max: state?.max_range_price,
-            Price: parseInt(state?.negotiable_price || '0'),
-          },
-        },
+      dispatch(addNewRoom(nData));
+    } else {
+      if (dataSignUp?.role_user === 'Agent') {
+        NavigationUtils.navigate(AGENCY_BASIC_INFORMATION);
+      } else {
+        NavigationUtils.navigate(USER_INFORMATION_NAME);
       }
-      console.log({ body });
-
-      dispatch(addNewRoom({ body }))
-    }
-    else {
-      NavigationUtils.navigate(USER_INFORMATION_NAME);
     }
   };
 
@@ -226,7 +212,7 @@ const RoomUnitGallery = () => {
     let nFiles: any = [...files];
     nFiles = move(nFiles, idDragged, idReceiver);
     const firstFile = nFiles[0];
-    if (!firstFile.mime.includes('image')) {
+    if (!firstFile.uri.includes('images')) {
       Alert.alert('Profile photo must be an image');
     } else {
       LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
@@ -236,8 +222,8 @@ const RoomUnitGallery = () => {
     }
   };
 
-  const renderImage = (file: ImageOrVideo, index: number) => {
-    const isPhoto = file.mime.includes('image');
+  const renderImage = (file: any, index: number) => {
+    const isPhoto = file.uri.includes('images');
 
     const styleView =
       index === 1 || index % 3 == 1
@@ -245,7 +231,7 @@ const RoomUnitGallery = () => {
         : { marginBottom: SIZE.padding };
     return (
       <>
-        <View style={styleView}>
+        <View style={styleView} key={index.toString()}>
           <Pressable
             onPress={() => removeFile(index)}
             style={styles.remove}
@@ -254,18 +240,20 @@ const RoomUnitGallery = () => {
           </Pressable>
           <DraxView
             id={index.toString()}
-            // style={styleView}
             draggingStyle={styles.dragging}
             dragReleasedStyle={styles.dragging}
             dragPayload={'R'}
             longPressDelay={0}
             onReceiveDragDrop={onReceiveDragDrop}>
+            <View style={styles.remove}>
+              <IconClear iconFillColor={colors.white} width={14} height={14} />
+            </View>
             {isPhoto ? (
-              <Image source={{ uri: file.path }} style={styles.itemImage} />
+              <Image source={{uri: file.uri}} style={styles.itemImage} />
             ) : (
               <>
                 <Video
-                  source={{ uri: file.path }}
+                  source={{uri: file.uri}}
                   style={styles.itemImage}
                   resizeMode={'cover'}
                   muted
@@ -287,6 +275,7 @@ const RoomUnitGallery = () => {
   };
 
   const renderListImage = () => {
+    console.log({files});
     return (
       <DraxProvider>
         {files.length > 0 ? (
@@ -299,8 +288,8 @@ const RoomUnitGallery = () => {
             </View>
 
             <View style={styles.listImage}>
-              {files.map((file: ImageOrVideo, index: number) =>
-                renderImage(file, index),
+              {files.map((uri: string, index: number) =>
+                renderImage(uri, index),
               )}
             </View>
           </>
@@ -359,100 +348,11 @@ const RoomUnitGallery = () => {
         }}
       />
       <ScrollView showsVerticalScrollIndicator={false}>
+        {token && <AppText style={styles.textGallery}>{'Gallery'}</AppText>}
         {renderListImage()}
       </ScrollView>
     </View>
   );
-};
-
-export { RoomUnitGallery };
-
-const styles = StyleSheet.create({
-  viewSubtitle: {
-    marginTop: SIZE.base_space,
-    marginBottom: SIZE.big_space,
-  },
-  listImage: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    marginRight: 0,
-    paddingHorizontal: SIZE.padding,
-    marginTop: SIZE.padding,
-  },
-  bgImage: {
-    width: scaleWidth(375),
-    height: scaleWidth(390),
-    resizeMode: 'contain',
-    position: 'absolute',
-  },
-  customStyleTitle: { color: colors.primary },
-  itemImage: {
-    width: scaleWidth(93),
-    height: scaleWidth(93),
-    borderRadius: 8,
-  },
-  viewProfile: {
-    position: 'absolute',
-    top: -scaleWidth(44),
-    left: SIZE.padding / 2,
-    width: scaleWidth(93) + SIZE.padding,
-    height: scaleWidth(93) + scaleWidth(44) + SIZE.padding / 2,
-    alignItems: 'center',
-    borderRadius: 14,
-    borderWidth: 1,
-    borderColor: colors.google,
-    zIndex: -1,
-  },
-  profilePhoto: {
-    fontSize: SIZE.small_size,
-    marginTop: SIZE.base_space,
-    color: colors.textThirdPrimary,
-    ...fontFamily.fontWeight500,
-  },
-  padding: {
-    paddingHorizontal: SIZE.padding,
-    paddingBottom: SIZE.medium_space,
-  },
-  container: {
-    flex: 1,
-    backgroundColor: colors.bgSreen,
-  },
-  title: {
-    ...fontFamily.fontCampWeight600,
-    fontSize: SIZE.semi_size,
-    lineHeight: scaleWidth(36),
-    marginBottom: SIZE.padding,
-    marginTop: SIZE.padding,
-    textAlign: 'center',
-    color: colors.secondPrimary,
-  },
-  subTitle: {
-    lineHeight: SIZE.base_size * 1.3,
-    textAlign: 'center',
-    color: colors.textSecondPrimary,
-  },
-  videoSubView: {
-    width: 32,
-    height: 32,
-    backgroundColor: 'rgba(0,0,0,0.5)',
-    alignItems: 'center',
-    justifyContent: 'center',
-    bottom: 0,
-    position: 'absolute',
-    right: 0,
-    borderBottomRightRadius: 8,
-    borderTopLeftRadius: 8,
-  },
-  dragging: {
-    opacity: 0.2,
-  },
-  remove: {
-    position: 'absolute',
-    right: -8,
-    zIndex: 1,
-    top: -6,
-    backgroundColor: colors.primary,
-    borderRadius: 10,
-    padding: 3,
-  },
 });
+
+export {RoomUnitGallery};

@@ -7,9 +7,9 @@ import {
   SIZE,
   validateForm,
 } from '@util';
-import React, {useRef, useState} from 'react';
+import React, {useRef} from 'react';
 import {StyleSheet, View} from 'react-native';
-import {DataSignupProps, VerifyAccountProps} from '@interfaces';
+import {DataSignupProps} from '@interfaces';
 import {useDispatch, useSelector} from 'react-redux';
 import {ROOM_UNIT_HOWNER} from '@mocks';
 import {Formik, FormikValues} from 'formik';
@@ -30,8 +30,8 @@ const AgencyBasicInformation = ({navigation}: VerifyCodeProp) => {
   const formRef: any = useRef<FormikValues>();
 
   const formInitialValues = {
-    user_name: '',
-    gender: 'Mr.',
+    user_name: dataSignUp?.user_name,
+    gender: dataSignUp?.gender,
   };
 
   const validationForm = yup.object().shape({
@@ -41,11 +41,15 @@ const AgencyBasicInformation = ({navigation}: VerifyCodeProp) => {
 
   const list = ROOM_UNIT_HOWNER;
 
+  const onChangeValue = (value: any, name?: string) => {
+    if (name) {
+      const data: any = {...dataSignUp};
+      data[name] = value;
+      dispatch(setDataSignup({data}));
+    }
+  };
+
   const onSubmit = (values: any) => {
-    const data = {...dataSignUp};
-    data.user_name = values.gender + values.user_name.trim();
-    console.log({data});
-    dispatch(setDataSignup({data}));
     navigation.navigate(AGENCY_INFORMATION_NAME);
   };
 
@@ -74,25 +78,22 @@ const AgencyBasicInformation = ({navigation}: VerifyCodeProp) => {
                 <AppPicker
                   value={props.values.gender}
                   name={'gender'}
-                  onValueChange={value => props.setFieldValue('gender', value)}
+                  onValueChange={onChangeValue}
                   items={list.gender_agency}
                   customStyleInputPicker={{width: scaleWidth(90)}}
                 />
                 <AppInput
                   name={'user_name'}
                   value={props.values.user_name}
-                  onValueChange={value =>
-                    props.setFieldValue('user_name', value)
-                  }
-                  containerStyle={{
-                    flex: 1,
-                    marginLeft: SIZE.base_space,
-                    marginTop: SIZE.base_space,
-                  }}
+                  onValueChange={onChangeValue}
+                  containerStyle={styles.input}
                   placeholder={'Enter your name'}
                 />
               </View>
-              <AppText style={styles.error}>
+              <AppText
+                style={
+                  props.errors.user_name ? styles.errorInput : styles.error
+                }>
                 {props.errors.gender || props.errors.user_name}
               </AppText>
             </>
@@ -143,6 +144,18 @@ const styles = StyleSheet.create({
     color: colors.red,
     fontSize: scaleSize(15),
     lineHeight: scaleSize(17),
+  },
+  errorInput: {
+    marginLeft: scaleWidth(90) + SIZE.base_space,
+    marginTop: 5,
+    color: colors.red,
+    fontSize: scaleSize(15),
+    lineHeight: scaleSize(17),
+  },
+  input: {
+    flex: 1,
+    marginLeft: SIZE.base_space,
+    marginTop: SIZE.base_space,
   },
 });
 

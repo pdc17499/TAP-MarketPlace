@@ -7,22 +7,23 @@ import {
   SIZE,
   validateForm,
 } from '@util';
-import React, {useState} from 'react';
+import React, {useRef} from 'react';
 import {StyleSheet, View} from 'react-native';
-import {DataSignupProps, VerifyAccountProps} from '@interfaces';
+import {DataSignupProps} from '@interfaces';
 import {useDispatch, useSelector} from 'react-redux';
 import {ROOM_UNIT_HOWNER} from '@mocks';
-import {Formik} from 'formik';
+import {Formik, FormikValues} from 'formik';
 import * as yup from 'yup';
 import {setDataSignup} from '@redux';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import {SIGNUP} from '@routeName';
 
 interface VerifyCodeProp {
   navigation: any;
   route: any;
 }
 
-const AgencyInformationName = (props: VerifyCodeProp) => {
+const AgencyInformationName = ({navigation}: VerifyCodeProp) => {
   const dispatch = useDispatch();
   const dataSignUp: DataSignupProps = useSelector(
     (state: any) => state?.auth?.dataSignup,
@@ -30,6 +31,7 @@ const AgencyInformationName = (props: VerifyCodeProp) => {
   const setData = (data: any) => {
     dispatch(setDataSignup({data}));
   };
+  const formRef: any = useRef<FormikValues>();
 
   const formInitialValues = {
     agency_name: dataSignUp?.agency_name,
@@ -38,15 +40,30 @@ const AgencyInformationName = (props: VerifyCodeProp) => {
   };
 
   const validationForm = yup.object().shape({
-    gender: validateForm().common.selectAtLeast,
-    country: validateForm().common.selectAtLeast,
+    agency_name: validateForm().common.atLeastOnePicker,
+    license_no: validateForm().common.reuqire,
+    sale_person_no: validateForm().common.reuqire,
   });
 
   const list = ROOM_UNIT_HOWNER;
 
-  const onChangeValue = (value: string, name?: string) => {};
+  const onChangeValue = (value: any, name?: string) => {
+    if (name) {
+      const nData: any = {...dataSignUp};
+      nData[name] = value;
+      setData(nData);
+    }
+  };
 
-  const handleSubmit = () => {};
+  const onSubmit = () => {
+    navigation.navigate(SIGNUP);
+  };
+
+  const handleSubmit = () => {
+    if (formRef.current) {
+      formRef.current.handleSubmit();
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -55,17 +72,18 @@ const AgencyInformationName = (props: VerifyCodeProp) => {
         <AppText style={styles.title}>{'Sign up'}</AppText>
         <AppText style={styles.message}>{'Your Agency Information'}</AppText>
         <Formik
+          innerRef={formRef}
           initialValues={formInitialValues}
           validationSchema={validationForm}
           validateOnChange={false}
           enableReinitialize
-          onSubmit={handleSubmit}>
+          onSubmit={onSubmit}>
           {props => (
             <>
               <AppPicker
                 value={props.values.agency_name}
                 error={props.errors.agency_name}
-                name={'gender'}
+                name={'agency_name'}
                 label={'Agency name'}
                 onValueChange={onChangeValue}
                 items={list.agency_name}
@@ -76,7 +94,7 @@ const AgencyInformationName = (props: VerifyCodeProp) => {
                 }}
               />
               <AppInput
-                name={'user_name'}
+                name={'license_no'}
                 label={'CEA License no.'}
                 value={props.values.license_no}
                 onValueChange={onChangeValue}
@@ -85,7 +103,7 @@ const AgencyInformationName = (props: VerifyCodeProp) => {
                 customStyleLabel={{marginTop: SIZE.padding}}
               />
               <AppInput
-                name={'user_name'}
+                name={'sale_person_no'}
                 label={'CEA Salesperson no.'}
                 value={props.values.sale_person_no}
                 onValueChange={onChangeValue}
@@ -98,7 +116,12 @@ const AgencyInformationName = (props: VerifyCodeProp) => {
         </Formik>
       </KeyboardAwareScrollView>
       <View style={styles.buttonView}>
-        <AppButton title={'Continue'} size={'small'} iconRight={'arNext'} />
+        <AppButton
+          onPress={handleSubmit}
+          title={'Continue'}
+          size={'small'}
+          iconRight={'arNext'}
+        />
       </View>
     </View>
   );

@@ -16,14 +16,15 @@ import {
   scaleSize,
   scaleWidth,
   SIZE,
+  STYLE,
   validateForm,
 } from '@util';
 import * as yup from 'yup';
-import { Formik } from 'formik';
-import { ROOM_UNIT_HOWNER } from '@mocks';
-import { UserInfo } from '@interfaces';
-import { saveDataUser, updateUserInfo } from '@redux';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import {Formik} from 'formik';
+import {ROOM_UNIT_HOWNER} from '@mocks';
+import {UserInfo} from '@interfaces';
+import {saveDataUser, updateUserInfo} from '@redux';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import moment from 'moment';
 import { CaretRight } from '@assets';
@@ -34,11 +35,20 @@ const BasicInfomation = () => {
   const [user, setUser] = useState<UserInfo>();
   const dataUser: UserInfo = useSelector((state: any) => state?.auth?.user);
   const [showDate, setShowDate] = useState(false);
-  const [dateOfBirth, setDateOfBirth] = useState('');
 
   useEffect(() => {
     setUser(dataUser);
   }, [dataUser]);
+
+  console.log({user});
+
+  const formateDateServer = (date: any) => {
+    if (date) {
+      return moment(date, 'YYYY-MM-DDTHH:mm:ssSSZ').format('DD/MM/YYYY');
+    }
+
+    return '';
+  };
 
   const formInitialValues = {
     name: user?.name,
@@ -47,21 +57,21 @@ const BasicInfomation = () => {
     ethnicity: user?.ethnicity,
     gender: user?.gender,
     ageGroup: user?.ageGroup,
-    dob: user?.dob || '',
+    dob: formateDateServer(user?.dob),
   };
 
   const validationForm = yup.object().shape({
     name: validateForm().common.reuqire,
     gender: validateForm().common.atLeastOnePicker,
     nationality: validateForm().common.selectAtLeast,
-    ageGroup: validateForm().common.atLeastOnePicker,
-    dob: validateForm().common.reuqire,
+    // ageGroup: validateForm().common.atLeastOnePicker,
+    // dob: validateForm().common.reuqire,
   });
 
   const onChangeValue = (item: any, name?: string) => {
     if (name) {
-      const nData: any = { ...user };
-      nData[name] = name === 'nationality' ? item.name : item;
+      const nData: any = {...user};
+      nData[name] = item;
       setUser(nData);
     }
   };
@@ -75,11 +85,18 @@ const BasicInfomation = () => {
   };
 
   const onChangDate = (selectedDate: any) => {
-    const changeDate = selectedDate || dateOfBirth;
+    const changeDate = selectedDate || '';
     const birthday = moment(changeDate).format('DD/MM/YYYY');
-    console.log('A date has been picked: ', birthday);
-    setDateOfBirth(birthday);
+    onChangeValue(birthday, 'dob');
     setShowDate(false);
+  };
+
+  const formateDate = (date: any) => {
+    if (date) {
+      return moment(date, 'DD/MM/YYYY').format('YYYY-MM-DD');
+    }
+
+    return '';
   };
 
   const onSubmit = () => {
@@ -90,14 +107,19 @@ const BasicInfomation = () => {
       ethnicity: user?.ethnicity,
       gender: user?.gender || '',
       ageGroup: user?.ageGroup || '',
+      dob: formateDate(user?.dob),
     };
 
     dispatch(updateUserInfo({ body, id: user?.id }));
   };
 
   const renderCustomPlaceHolder = (name: string) => {
+    const style =
+      name === 'date of birth'
+        ? styles.viewPlacHolderDOB
+        : styles.viewPlacHolder;
     return (
-      <View style={styles.viewPlacHolder}>
+      <View style={style}>
         <AppText style={styles.customPlaceHolder}>
           {`Update your ${name} `}
         </AppText>
@@ -143,16 +165,20 @@ const BasicInfomation = () => {
                   items={list.group_age}
                   error={props.errors.ageGroup || props.errors.dob}
                   stylePicker={'linear'}
+                  customStyleInputPicker={{}}
                   customSubview={
                     <Pressable
+                      hitSlop={STYLE.hitSlop}
                       onPress={showDatepicker}
-                      style={{ marginTop: SIZE.padding }}>
-                      {dateOfBirth === '' ? (
+                      style={{marginTop: SIZE.padding}}>
+                      {!props.values.dob ? (
                         renderCustomPlaceHolder('date of birth')
                       ) : (
-                        <AppText style={styles.birthdayTxt}>
-                          {dateOfBirth}
-                        </AppText>
+                        <View style={styles.viewPlacHolderDOB}>
+                          <AppText style={styles.birthdayTxt}>
+                            {props.values.dob}
+                          </AppText>
+                        </View>
                       )}
                     </Pressable>
                   }
@@ -175,6 +201,7 @@ const BasicInfomation = () => {
                 onValueChange={onChangeValue}
                 error={props.errors.nationality}
                 typeButton={'linear'}
+                type={'country'}
               />
               <AppPicker
                 value={props.values.occupation}
@@ -300,16 +327,22 @@ const styles = StyleSheet.create({
     minHeight: SIZE.input_height,
   },
   birthdayTxt: {
-    fontSize: scaleSize(14),
+    fontSize: scaleSize(15),
     color: colors.textSecondPrimary,
     // marginTop: 20,
   },
   viewPlacHolder: {
     flexDirection: 'row',
     alignItems: 'center',
-    position: 'absolute',
-    bottom: SIZE.padding,
-    zIndex: -1,
+    zIndex: 1,
+    bottom: SIZE.padding + 4,
+    marginTop: -SIZE.base_space,
+  },
+  viewPlacHolderDOB: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    zIndex: 1,
+    bottom: SIZE.padding + 8,
   },
 });
 

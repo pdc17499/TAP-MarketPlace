@@ -103,7 +103,7 @@ export const AppModalCountry = (props: AppModalCountryProps) => {
         backdropOpacity={0.3}
         animationOutTiming={400}
         animationInTiming={400}
-        style={{marginHorizontal: 0, marginBottom: 0}}>
+        style={{margin: 0}}>
         <View style={styles.modal}>
           <View style={styles.searchView}>
             <Pressable onPress={closeModal} hitSlop={STYLE.hitSlop}>
@@ -143,7 +143,7 @@ const styles = StyleSheet.create({
     left: 0,
     top: 0,
     paddingHorizontal: SIZE.base_space,
-    paddingTop: 10,
+    paddingTop: SIZE.base_space,
   },
   label: {
     color: colors.secondPrimary,
@@ -207,7 +207,7 @@ const styles = StyleSheet.create({
   countryView: {
     borderTopWidth: 1,
     borderTopColor: colors.borderProfileList,
-    paddingVertical: 8,
+    paddingVertical: SIZE.base_space,
   },
   searchView: {
     flexDirection: 'row',

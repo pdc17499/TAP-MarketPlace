@@ -6,7 +6,6 @@ import {SIGNUP_EMAIL} from '@routeName';
 import {colors} from '@util';
 import React from 'react';
 import {View} from 'react-native';
-import {Text} from 'react-native-svg';
 import {useDispatch, useSelector} from 'react-redux';
 import {styles} from './style';
 
@@ -25,8 +24,7 @@ const SignUp = (props: SignUpProp) => {
   const moveToSignUpWithEmail = () => {
     navigation.navigate(SIGNUP_EMAIL);
   };
-  const isTenant = dataSignUp?.role_user === 'Tenant';
-  // const title = isTenant ? ""
+  const role_user = dataSignUp?.role_user;
 
   return (
     <View style={styles.container}>
@@ -34,7 +32,7 @@ const SignUp = (props: SignUpProp) => {
       <View style={styles.body}>
         <AppText style={styles.title}>{"Let's create an account"}</AppText>
 
-        {isTenant ? (
+        {role_user === 'Tenant' ? (
           <AppText style={styles.description}>
             {'Finally, sign up and see amazing places we found for '}
             <AppText style={[styles.description, {color: colors.primary}]}>
@@ -43,7 +41,9 @@ const SignUp = (props: SignUpProp) => {
           </AppText>
         ) : (
           <AppText style={styles.description}>
-            {'Finally, sign up and meet your potential guests'}
+            {role_user === 'Agent'
+              ? 'Finally, sign up and find potential guests for your homeowners'
+              : 'Finally, sign up and meet your potential guests'}
           </AppText>
         )}
 
