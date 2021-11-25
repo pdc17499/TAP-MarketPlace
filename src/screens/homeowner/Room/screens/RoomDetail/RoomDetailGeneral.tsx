@@ -159,7 +159,7 @@ const RoomDetailGeneral = ({ props }: any) => {
           // "roomFurnishing": ROOM?.roomFurnishing,
         },
         "LeasePeriod": {
-          "type": false,
+          "type": room?.kind_place?.value === 'HDB',
           "value": room?.lease_period,
         },
         "PicturesVideo": ROOM?.PicturesVideo || [],
