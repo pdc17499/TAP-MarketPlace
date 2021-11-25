@@ -50,10 +50,10 @@ export function* getRoomDetailSaga(action: any) {
     console.log('hello', result?.data);
 
     if (result) {
-      showMessage({
-        type: 'success',
-        message: 'Get Room Success!',
-      });
+      // showMessage({
+      //   type: 'success',
+      //   message: 'Get Room Success!',
+      // });
       yield put(setRoomDetail(result?.data));
     }
   } catch (error) {
@@ -87,10 +87,10 @@ export function* deleteRoomSaga(action: any) {
     const result: ResponseGenerator2 = yield deleteRoomApi(action.payload);
     console.log('hello', result?.data);
     if (result) {
-      showMessage({
-        type: 'success',
-        message: 'Delete Room Success!',
-      });
+      // showMessage({
+      //   type: 'success',
+      //   message: 'Delete Room Success!',
+      // });
       yield put(deleteRoomRedux(action.payload));
       NavigationUtils.navigate(YOUR_LISTING);
     }
@@ -119,23 +119,23 @@ export function* updateRoomSaga(action: any) {
   }
 }
 
-export function* upLoadFileSaga(action: any) {
-  try {
-    GlobalService.showLoading();
-    const result: ResponseGenerator2 = yield uploadFileApi(action.payload);
-    if (result) {
-      showMessage({
-        type: 'success',
-        message: ' UpLoad Files Success!',
-      });
-      console.log('ress', result);
-    }
-  } catch (error) {
-    GlobalService.hideLoading();
-  } finally {
-    GlobalService.hideLoading();
-  }
-}
+// export function* upLoadFileSaga(action: any) {
+//   try {
+//     GlobalService.showLoading();
+//     const result: ResponseGenerator2 = yield uploadFileApi(action.payload);
+//     if (result) {
+//       showMessage({
+//         type: 'success',
+//         message: ' UpLoad Files Success!',
+//       });
+//       console.log('ress', result);
+//     }
+//   } catch (error) {
+//     GlobalService.hideLoading();
+//   } finally {
+//     GlobalService.hideLoading();
+//   }
+// }
 
 export function* roomsSaga() {
   yield takeLatest(GET_LIST_ROOMS, getListRoomsSaga);
@@ -143,6 +143,6 @@ export function* roomsSaga() {
   yield takeLatest(ADD_NEW_ROOM, addNewRoomSaga);
   yield takeLatest(DELETE_ROOM, deleteRoomSaga);
   yield takeLatest(UPDATE_ROOM, updateRoomSaga);
-  yield takeLatest(UPLOAD_FILE, upLoadFileSaga);
+  // yield takeLatest(UPLOAD_FILE, upLoadFileSaga);
 
 }

@@ -7,7 +7,7 @@ import {
   Header,
   ModalCheckedBox,
 } from '@component';
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { View, Image, Pressable, StyleSheet, ScrollView } from 'react-native';
 import { IconBack, IconClear, IconDola, IconEdit, room_sample } from '@assets';
 import {
@@ -22,7 +22,7 @@ import {
   YEARS,
 } from '@util';
 import { useNavigation } from '@react-navigation/core';
-import { Formik } from 'formik';
+import { Formik, FormikValues } from 'formik';
 import { ROOM_UNIT_HOWNER } from '@mocks';
 import * as yup from 'yup';
 import Carousel from 'react-native-snap-carousel';
@@ -30,7 +30,8 @@ import Modal from 'react-native-modal';
 import Video from 'react-native-video';
 import { pickerProps } from '@interfaces';
 import { ROOM_DETAIL_GELLERY } from '@routeName';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateRoom } from '@redux';
 
 const state = {
   activeIndex: 0,
@@ -62,21 +63,25 @@ const state = {
 const RoomDetailUnit = ({ props }: any) => {
   const key = props;
   const navigation: any = useNavigation();
+  const dispatch = useDispatch();
   const ROOM: any = useSelector((state: any) => state?.rooms?.roomDetail);
+  const formRef = useRef<FormikValues>()
   const [room, setRoom] = useState({
     room_type: ROOM?.RoomDetails?.RoomType,
     bedroom_number: ROOM?.RoomDetails?.BedroomNumber,
     bathroom_number: ROOM?.RoomDetails?.BathroomNumber,
-    // room_furnishing: 'Partially Furnished',
-    // floor_size_min: 5000,
-    // floor_size_max: 5500,
-    // floor_level: 'Low',
-    // built_year: '2020',
+    room_furnishing: ROOM?.RoomDetails?.RoomFurnishing,
+    floor_size_min: ROOM?.RoomDetails?.FloorSizeMin,
+    floor_size_max: ROOM?.RoomDetails?.FloorSizeMax,
+    floor_level: ROOM?.RoomDetails?.FloorLevel,
+    built_year: ROOM?.RoomDetails?.BuiltYear,
     allow_cooking: ROOM?.RoomDetails?.AllowCook ? 'Yes' : 'No',
     amenities: ROOM?.RoomDetails?.KeyWords,
     gallery: ROOM?.PicturesVideo,
   });
   const [visible, setVisible] = useState(false);
+
+
 
   const openModal = () => {
     setVisible(true);
@@ -92,11 +97,11 @@ const RoomDetailUnit = ({ props }: any) => {
     room_type: room.room_type,
     bedroom_number: room.bedroom_number,
     bathroom_number: room.bathroom_number,
-    // room_furnishing: room.room_furnishing,
-    // floor_size_min: room.floor_size_min,
-    // floor_size_max: room.floor_size_max,
-    // floor_level: room.floor_level,
-    // built_year: room.built_year,
+    room_furnishing: room.room_furnishing,
+    floor_size_min: room.floor_size_min,
+    floor_size_max: room.floor_size_max,
+    floor_level: room.floor_level,
+    built_year: room.built_year,
     allow_cooking: room.allow_cooking,
     amenities: room.amenities,
     gallery: room.gallery,
@@ -303,9 +308,45 @@ const RoomDetailUnit = ({ props }: any) => {
         </>
       );
     }
-
     return <View />;
   };
+
+  const handleSubmit = () => {
+    if (formRef.current) {
+      formRef.current.handleSubmit()
+    }
+  }
+
+  const updateRoomInfomation = () => {
+    console.log('room', room);
+    console.log('ROOM', ROOM);
+
+    const body = {
+      "roomDesc": {
+        "RentalAddress": ROOM?.RentalAddress,
+        "PlaceType": ROOM?.PlaceType,
+        "RoomDetails": {
+          "RoomType": room?.room_type,
+          "BedroomNumber": room?.bedroom_number,
+          "BathroomNumber": room?.bathroom_number,
+          "AttachedBathroom": ROOM?.AttachedBathroom,
+          "StayWithGuest": ROOM?.StayWithGuest,
+          "AllowCook": room?.allow_cooking === 'Yes',
+          "KeyWords": room?.amenities,
+          // "builtYear": room?.built_year,
+          // "floorLevel": room?.floor_level,
+          // "floorSizeMax": room?.floor_size_max,
+          // "floorSizeMin": room?.floor_size_min,
+          // "roomFurnishing": room?.room_furnishing,
+        },
+        "LeasePeriod": ROOM?.LeasePeriod,
+        "PicturesVideo": ROOM?.PicturesVideo || [],
+        "RentalPrice": ROOM?.RentalPrice,
+        "isActive": ROOM?.isActive
+      }
+    }
+    dispatch(updateRoom(body, ROOM?.id))
+  }
 
   return (
     <>
@@ -315,11 +356,12 @@ const RoomDetailUnit = ({ props }: any) => {
         showsVerticalScrollIndicator={false}>
         <View style={styles.line} />
         <Formik
+          innerRef={formRef}
           initialValues={formInitialValues}
           validationSchema={validationForm}
           validateOnChange={false}
           enableReinitialize
-          onSubmit={onSubmit}>
+          onSubmit={updateRoomInfomation}>
           {(props: any) => (
             <>
               <View>
@@ -330,7 +372,7 @@ const RoomDetailUnit = ({ props }: any) => {
                   'bathroom_number',
                   'Number of Bathrooms',
                 )}
-                {/* <AppModal
+                <AppModal
                   label={'Floor size'}
                   customTitle={renderFloorSizeContent(props.values)}>
                   <AppSlider
@@ -342,11 +384,12 @@ const RoomDetailUnit = ({ props }: any) => {
                     iconLeft={'dolar'}
                     sliderLength={DEVICE.width - SIZE.padding * 3}
                   />
-                </AppModal> */}
-                {/* {renderAppPicker(props, 'room_furnishing', 'Room furnishing')} */}
-                {/* {renderAppPicker(props, 'floor_level', 'Floor level')} */}
+                </AppModal>
+                {renderAppPicker(props, 'room_furnishing', 'Room furnishing')}
+                {renderAppPicker(props, 'floor_level', 'Floor level')}
                 {renderAppPicker(props, 'allow_cooking', 'Allow cooking')}
-                {/* {renderAppPicker(props, 'built_year', 'Built year')} */}
+                {renderAppPicker(props, 'built_year', 'Built year')}
+
                 <ModalCheckedBox
                   label={'Amenities'}
                   data={list.amenities}
@@ -366,7 +409,7 @@ const RoomDetailUnit = ({ props }: any) => {
         title={'Save change'}
         size={'small'}
         iconRight={'tick'}
-        onPress={props.handleSubmit}
+        onPress={handleSubmit}
       />
     </>
   );

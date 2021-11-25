@@ -5,6 +5,7 @@ import {
   DELETE_ROOM,
   SAVE_NEW_ROOM,
   DELETE_ROOM_REDUX,
+  UPDATE_ROOM
 } from './type';
 import { INITIAL_STATE_ROOMS } from './state';
 import _ from 'lodash';
@@ -25,6 +26,12 @@ export default function dataSave(state = INITIAL_STATE_ROOMS, action: any) {
       console.log('action', action?.payload);
       state.listRooms.push(action?.payload)
       return { ...state, listRooms: [...state.listRooms] };
+
+    case UPDATE_ROOM:
+      const index = state.listRooms.findIndex(item => item.id === action.id)
+      console.log('index', index);
+      state.listRooms[index] = action?.payload?.roomDesc
+      return { ...state, listRooms: [...state.listRooms], RoomDetails: action?.payload?.roomDesc };
 
     case DELETE_ROOM_REDUX:
       console.log('actionDelete', action?.payload);

@@ -8,6 +8,7 @@ import {
   SAVE_NEW_ROOM,
   DELETE_ROOM_REDUX,
   UPLOAD_FILE,
+  UPDATE_ROOM,
 } from '@redux';
 
 
@@ -52,10 +53,16 @@ export const deleteRoomRedux = (payload: any) => ({
 });
 
 export const updateRoom = (payload: any, id: string) => ({
-  type: DELETE_ROOM,
+  type: UPDATE_ROOM,
   payload,
   id,
 });
+
+// export const updateRoomRedux = (payload: any, id: string) => ({
+//   type: UPDATE_ROOM,
+//   payload,
+//   id,
+// });
 
 export const uploadFile = (payload: any) => ({
   type: UPLOAD_FILE,

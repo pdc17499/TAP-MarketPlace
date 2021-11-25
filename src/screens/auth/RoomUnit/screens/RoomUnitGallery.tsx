@@ -1,5 +1,5 @@
 import { AppButton, AppText, Header } from '@component';
-import { addNewRoom, addNewRoomSaga, setDataSignup, upLoadFileSaga } from '@redux';
+import { addNewRoom, addNewRoomSaga, setDataSignup } from '@redux';
 import {
   colors,
   FILE_SIZE,
@@ -9,7 +9,7 @@ import {
   SIZE,
   STYLE,
 } from '@util';
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   View,
   StyleSheet,
@@ -19,28 +19,29 @@ import {
   LayoutAnimation,
   Pressable,
 } from 'react-native';
-import {useDispatch, useSelector} from 'react-redux';
-import ImagePicker, {ImageOrVideo} from 'react-native-image-crop-picker';
-import {useActionSheet} from '@expo/react-native-action-sheet';
+import { useDispatch, useSelector } from 'react-redux';
+import ImagePicker, { ImageOrVideo } from 'react-native-image-crop-picker';
+import { useActionSheet } from '@expo/react-native-action-sheet';
 import Video from 'react-native-video';
-import {bg_room_unit_picture, IconAddVideos, IconClear} from '@assets';
-import {NavigationUtils} from '@navigation';
-import {ADD_SUCCESS, USER_INFORMATION_NAME} from '@routeName';
+import { bg_room_unit_picture, IconAddVideos, IconClear } from '@assets';
+import { NavigationUtils } from '@navigation';
+import { ADD_SUCCESS, USER_INFORMATION_NAME } from '@routeName';
 import {
   DraxDragWithReceiverEventData,
   DraxProvider,
   DraxView,
 } from 'react-native-drax';
+import { GlobalService, uploadFileApi } from '@services';
 
 const RoomUnitGallery = () => {
   const dispatch = useDispatch();
   const dataSignUp = useSelector((state: any) => state?.auth?.dataSignup);
   const token = useSelector((state: any) => state?.auth?.token);
   const setData = (data: any) => {
-    dispatch(setDataSignup({data}));
+    dispatch(setDataSignup({ data }));
   };
   const [files, setFiles] = useState([]);
-  const {showActionSheetWithOptions} = useActionSheet();
+  const { showActionSheetWithOptions } = useActionSheet();
 
   const uploadPhotos = (mediaType: any) => {
     const isPhoto = mediaType === 'photo';
@@ -54,7 +55,7 @@ const RoomUnitGallery = () => {
     }).then((images: any) => {
       const nFiles: any = [...files];
       images.forEach((image: ImageOrVideo) => {
-        console.log({nFiles});
+        console.log({ nFiles });
         if (image.size < FILE_SIZE.MAX_IMAGE) {
           nFiles.push(image);
         }
@@ -77,6 +78,22 @@ const RoomUnitGallery = () => {
     });
   };
 
+  // const getFileUrl = async (nFiles: Array<any>) => {
+  //   const pathFile = nFiles.map(item => item?.path)
+  //   console.log('pathss', pathFile);
+  //   try {
+  //     GlobalService.showLoading();
+  //     const result = await uploadFileApi(pathFile[0])
+  //     if (result) {
+  //       console.log('re', result);
+  //     }
+  //   } catch (error) {
+  //     GlobalService.hideLoading();
+  //   } finally {
+  //     GlobalService.hideLoading();
+  //   }
+  // }
+
   const validateFile = (nFiles: any) => {
     const photos = nFiles.filter((file: ImageOrVideo) =>
       file.mime.includes('image'),
@@ -90,7 +107,8 @@ const RoomUnitGallery = () => {
     } else if (videos.length > 1) {
       Alert.alert('You can only upload up to 1 video');
     } else {
-      // dispatch(upLoadFileSaga(nFiles))
+      console.log('fileeee', nFiles);
+      // getFileUrl(nFiles)
       LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
       setFiles(nFiles);
     }
@@ -123,17 +141,20 @@ const RoomUnitGallery = () => {
       files.map((file: ImageOrVideo) => {
         urls.push(file.path);
       });
+      console.log('ss', urls);
       return urls;
     }
   };
 
   const onDone = () => {
-    const nData = {...dataSignUp};
+    const nData = { ...dataSignUp };
     nData.list_photo = files;
     setData(nData);
-    console.log('nData', nData);
     if (token) {
       const state = nData
+      // const Path = getUrlFiles()
+      // console.log('path', Path);
+
       const body = {
         roomDesc: {
           RentalAddress: state?.location.title,
@@ -160,6 +181,8 @@ const RoomUnitGallery = () => {
           },
         },
       }
+      console.log({ body });
+
       dispatch(addNewRoom({ body }))
     }
     else {
@@ -180,7 +203,7 @@ const RoomUnitGallery = () => {
         cancelButtonIndex,
       },
       buttonIndex => {
-        console.log({buttonIndex});
+        console.log({ buttonIndex });
         if (buttonIndex === 0) {
           uploadPhotos(mediaType);
         } else if (buttonIndex === 1) {
@@ -196,8 +219,8 @@ const RoomUnitGallery = () => {
   };
 
   const onReceiveDragDrop = (event: DraxDragWithReceiverEventData) => {
-    console.log({event});
-    const {dragged, receiver} = event;
+    console.log({ event });
+    const { dragged, receiver } = event;
     const idDragged = parseInt(dragged.id);
     const idReceiver = parseInt(receiver.id);
     let nFiles: any = [...files];
@@ -218,8 +241,8 @@ const RoomUnitGallery = () => {
 
     const styleView =
       index === 1 || index % 3 == 1
-        ? {marginBottom: SIZE.padding, marginHorizontal: SIZE.padding - 1}
-        : {marginBottom: SIZE.padding};
+        ? { marginBottom: SIZE.padding, marginHorizontal: SIZE.padding - 1 }
+        : { marginBottom: SIZE.padding };
     return (
       <>
         <View style={styleView}>
@@ -238,11 +261,11 @@ const RoomUnitGallery = () => {
             longPressDelay={0}
             onReceiveDragDrop={onReceiveDragDrop}>
             {isPhoto ? (
-              <Image source={{uri: file.path}} style={styles.itemImage} />
+              <Image source={{ uri: file.path }} style={styles.itemImage} />
             ) : (
               <>
                 <Video
-                  source={{uri: file.path}}
+                  source={{ uri: file.path }}
                   style={styles.itemImage}
                   resizeMode={'cover'}
                   muted
@@ -283,7 +306,7 @@ const RoomUnitGallery = () => {
           </>
         ) : (
           <>
-            <View style={{paddingBottom: scaleWidth(400)}}>
+            <View style={{ paddingBottom: scaleWidth(400) }}>
               <Image source={bg_room_unit_picture} style={styles.bgImage} />
             </View>
             <AppText style={styles.title}>
@@ -342,7 +365,7 @@ const RoomUnitGallery = () => {
   );
 };
 
-export {RoomUnitGallery};
+export { RoomUnitGallery };
 
 const styles = StyleSheet.create({
   viewSubtitle: {
@@ -362,7 +385,7 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
     position: 'absolute',
   },
-  customStyleTitle: {color: colors.primary},
+  customStyleTitle: { color: colors.primary },
   itemImage: {
     width: scaleWidth(93),
     height: scaleWidth(93),

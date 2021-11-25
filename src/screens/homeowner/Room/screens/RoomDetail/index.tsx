@@ -42,7 +42,7 @@ const RoomDetail = (route: any) => {
       return isImage ? 1 : 2;
     } else {
       var parts = file?.split('.');
-      var extension = parts[parts.length - 1];
+      var extension = parts[parts?.length - 1];
       const isImage = typesVideo.indexOf(extension) === -1;
       console.log('isImange', isImage);
       return isImage ? 3 : 4;

@@ -34,9 +34,9 @@ export const updateRoomApi: any = async (data: any, id: string) => {
 };
 
 
-export const uploadFileApi: any = async (data: any) => {
+export const uploadFileApi: any = async (file: string) => {
   var bodyFormData = new FormData();
-  bodyFormData.append('file', data);
+  bodyFormData.append('file', file);
   const response = await api.post(UPLOAD_FILE, bodyFormData);
   return response;
 };

@@ -6,8 +6,9 @@ import {
   AppSlider,
   AppText,
   Header,
+  ModalCheckedBox,
 } from '@component';
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import {
   View,
   Image,
@@ -15,6 +16,7 @@ import {
   StyleSheet,
   useWindowDimensions,
   ScrollView,
+  Alert,
 } from 'react-native';
 import {
   IconDelete,
@@ -35,26 +37,25 @@ import {
   validateForm,
 } from '@util';
 import { useNavigation } from '@react-navigation/core';
-import { Formik } from 'formik';
+import { Formik, FormikValues } from 'formik';
 import { ROOM_UNIT_HOWNER } from '@mocks';
 import * as yup from 'yup';
 import { ROOM_DETAIL_LOCATION } from '@routeName';
 import ToggleSwitch from 'toggle-switch-react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteRoom } from '@redux';
+import { deleteRoom, updateRoom } from '@redux';
 
 const RoomDetailGeneral = ({ props }: any) => {
   const key = props;
   const ROOM: any = useSelector((state: any) => state?.rooms?.roomDetail);
-  console.log('hhh', ROOM);
-
   const dispatch = useDispatch();
   const navigation: any = useNavigation();
+  const formRef = useRef<FormikValues>()
 
   const [room, setRoom] = useState({
     location: ROOM?.RentalAddress,
     kind_place: ROOM?.PlaceType,
-    lease_period: ROOM?.LeasePeriod?.value.map((item: string) => item + '  '),
+    lease_period: ROOM?.LeasePeriod?.value,
     min_range_price: ROOM?.RentalPrice?.Min,
     max_range_price: ROOM?.RentalPrice?.Max,
     staying_with_guests: ROOM?.StayWithGuest ? 'Yes' : 'No',
@@ -87,11 +88,6 @@ const RoomDetailGeneral = ({ props }: any) => {
       setRoom(nRoom);
       console.log({ value });
     }
-  };
-
-  const onSubmit = () => {
-
-
   };
 
   const onValuesChangeFinish = (values: any) => {
@@ -130,8 +126,70 @@ const RoomDetailGeneral = ({ props }: any) => {
     );
   };
 
+  const handleSubmit = () => {
+    if (formRef.current) {
+      formRef.current.handleSubmit()
+    }
+  }
+
   const onDelete = () => {
     dispatch(deleteRoom(ROOM.id))
+  }
+
+  const updateRoomInfomation = () => {
+    console.log('erro', room);
+    console.log('ROOM', ROOM);
+
+    const body = {
+      "roomDesc": {
+        "RentalAddress": room?.location,
+        "PlaceType": room?.kind_place,
+        "RoomDetails": {
+          "RoomType": ROOM?.RoomType,
+          "BedroomNumber": ROOM?.BedroomNumber,
+          "BathroomNumber": ROOM?.BathroomNumber,
+          "AttachedBathroom": ROOM?.AttachedBathroom,
+          "StayWithGuest": room?.staying_with_guests === 'Yes',
+          "AllowCook": ROOM?.AllowCook,
+          "KeyWords": ROOM?.KeyWords,
+          // "builtYear": ROOM?.builtYear,
+          // "floorLevel": ROOM?.floorLevel,
+          // "floorSizeMax": ROOM?.floorSizeMax,
+          // "floorSizeMin": ROOM?.floorSizeMin,
+          // "roomFurnishing": ROOM?.roomFurnishing,
+        },
+        "LeasePeriod": {
+          "type": false,
+          "value": room?.lease_period,
+        },
+        "PicturesVideo": ROOM?.PicturesVideo || [],
+        "RentalPrice": {
+          "type": ROOM?.RentalPrice?.type,
+          "Min": room?.min_range_price,
+          "Max": room?.max_range_price,
+          "Price": ROOM?.RentalPrice?.Price
+        },
+        "isActive": room?.room_active
+      }
+    }
+    console.log('helo', { body })
+    dispatch(updateRoom(body, ROOM?.id))
+  }
+
+  const renderPeriod = (period: Array<string>) => {
+    if (period?.length > 0) {
+      return (
+        <View style={{ flexDirection: 'row' }} >
+          {period.map((item: string, index: number) => {
+            if (index === 0) return <AppText style={styles.period}>{`${item} months`}</AppText>
+            else
+              return (
+                <AppText style={styles.period}>{` - ${item} months`}</AppText>
+              );
+          })}
+        </View>
+      );
+    }
   }
 
   return (
@@ -142,86 +200,61 @@ const RoomDetailGeneral = ({ props }: any) => {
         showsVerticalScrollIndicator={false}>
         <View style={styles.line} />
         <Formik
+          innerRef={formRef}
           initialValues={formInitialValues}
           validationSchema={validationForm}
           validateOnChange={false}
           enableReinitialize
-          onSubmit={onSubmit}>
-          {(props: any) => (
+          onSubmit={updateRoomInfomation}
+        >
+          {(propsFormik: any) => (
             <>
               <View>
                 <AppButton
                   label={'Property location'}
                   typeButton={'underline'}
-                  title={props.values.location}
-                  onPress={() => onLocation(props.values.location)}
+                  title={propsFormik.values.location}
+                  onPress={() => onLocation(propsFormik.values.location)}
                 />
                 <AppPicker
-                  value={props.values.kind_place}
+                  value={propsFormik.values.kind_place}
                   name={'kind_place'}
                   label={'Property type'}
                   onValueChange={onChangeText}
                   items={list.kind_place}
-                  error={props.errors.kind_place}
+                  error={propsFormik.errors.kind_place}
                   stylePicker={'linear'}
                 />
-                {/* <AppPicker
-                  value={props.values.lease_period}
+                <ModalCheckedBox
+                  label={'Lease Period'}
+                  data={propsFormik.values.kind_place === 'HDB'
+                    ? list.lease_your_place_hdb_new
+                    : list.lease_your_place_new}
                   name={'lease_period'}
-                  label={'Lease period'}
-                  onValueChange={onChangeText}
-                  items={
-                    props.values.kind_place === 'HDB'
-                      ? list.lease_your_place_hdb
-                      : list.lease_your_place
-                  }
-                  error={props.errors.lease_period}
-                  stylePicke
-                  r={'linear'}
-                /> */}
-
-                {/* <AppQA
-                  data={
-                    props.values.kind_place === 'HDB'
-                      ? list.lease_your_place_hdb_new
-                      : list.lease_your_place_new
-                  }
-                  value={props.values.lease_period}
-                  setValue={onChangeText}
-                  typeList={'even'}
-                  name={'lease_your_place'}
-                  error={props.errors.lease_your_place}
-                  isMultiChoice
-                /> */}
-
-                <AppButton
-                  label={'Lease Period (Months)'}
-                  typeButton={'underline'}
-                  title={props.values.lease_period}
-                  onPress={() => { }}
+                  selected={propsFormik.values.lease_period}
+                  onPressDone={onChangeText}
+                  viewContent={renderPeriod(propsFormik.values.lease_period)}
                 />
-
-
                 <AppModal
                   label={'Rental price'}
-                  customTitle={renderPriceTitle(props.values)}>
+                  customTitle={renderPriceTitle(propsFormik.values)}>
                   <>
                     <AppSlider
                       onValuesChangeFinish={onValuesChangeFinish}
-                      min_range_value={props.values.min_range_price}
-                      max_range_value={props.values.max_range_price}
+                      min_range_value={propsFormik.values.min_range_price}
+                      max_range_value={propsFormik.values.max_range_price}
                       iconLeft={'dolar'}
                       sliderLength={DEVICE.width - SIZE.padding * 3}
                     />
                   </>
                 </AppModal>
                 <AppPicker
-                  value={props.values.staying_with_guests}
+                  value={propsFormik.values.staying_with_guests}
                   name={'staying_with_guests'}
                   label={'Stay with guests'}
                   onValueChange={onChangeText}
                   items={list.staying_width_guests}
-                  error={props.errors.staying_with_guests}
+                  error={propsFormik.errors.staying_with_guests}
                   stylePicker={'linear'}
                 />
                 <View
@@ -238,7 +271,7 @@ const RoomDetailGeneral = ({ props }: any) => {
                     }}>
                     {'Active/Inactive property'}
                   </AppText>
-                  {!props.values.room_active ? (
+                  {!propsFormik.values.room_active ? (
                     <IconEyeCloseFullFill />
                   ) : (
                     <IconEyeOpenFullFill />
@@ -246,7 +279,7 @@ const RoomDetailGeneral = ({ props }: any) => {
 
                   <View style={{ marginLeft: 10, marginRight: 3 }}>
                     <ToggleSwitch
-                      isOn={props.values.room_active}
+                      isOn={propsFormik.values.room_active}
                       onColor="#2A6B58"
                       offColor="#D8D8D8"
                       label=""
@@ -277,6 +310,7 @@ const RoomDetailGeneral = ({ props }: any) => {
               </View>
             </>
           )}
+
         </Formik>
       </ScrollView>
       <AppButton
@@ -284,7 +318,7 @@ const RoomDetailGeneral = ({ props }: any) => {
         title={'Save change'}
         size={'small'}
         iconRight={'tick'}
-        onPress={props.handleSubmit}
+        onPress={handleSubmit}
       />
     </>
   );
@@ -304,6 +338,9 @@ const styles = StyleSheet.create({
     height: 1,
     backgroundColor: colors.borderProfileList,
   },
+  period: {
+    // backgroundColor: 'red'
+  }
 });
 
 export { RoomDetailGeneral };

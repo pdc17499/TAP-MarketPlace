@@ -53,8 +53,6 @@ const Route = React.memo(({ props }: any) => {
   };
 
   const renderItem = ({ item, section }: itemProps) => {
-    console.log('tem', item);
-
     const { isActive } = item;
     const hide =
       (key === 'active' && !isActive) || (key === 'inactive' && isActive);
@@ -68,11 +66,6 @@ const Route = React.memo(({ props }: any) => {
           marginBottom: SIZE.medium_space,
           opacity: isActive ? 1 : 0.5,
         }}>
-        {/* <Image
-          source={room_sample}
-          style={styles.bgRoom}
-        /> */}
-
         {item?.PicturesVideo
           ? <Image
             source={{ uri: item?.PicturesVideo[0] }}
@@ -83,7 +76,6 @@ const Route = React.memo(({ props }: any) => {
             style={styles.bgRoom}
           />
         }
-
         <AppText style={styles.roomTitle}>
           {item?.PlaceType + '  '}
           <IconDot style={{ marginBottom: 4 }} />
@@ -99,7 +91,7 @@ const Route = React.memo(({ props }: any) => {
         )}
         <View style={styles.locationView}>
           <IconPickLocation iconFillColor={'black'} width={16} height={16} />
-          <AppText style={styles.location}>{item?.RentalAddress}</AppText>
+          <AppText numberOfLines={3} style={styles.location}>{item?.RentalAddress}</AppText>
         </View>
       </Pressable>
     );
