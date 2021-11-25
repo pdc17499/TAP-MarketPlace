@@ -10,6 +10,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: SIZE.padding,
     // flex: 1,
   },
+  keyboard: {flex: 1, paddingHorizontal: SIZE.padding},
   title: {
     fontSize: SIZE.big_size,
     ...fontFamily.fontCampWeight600,

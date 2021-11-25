@@ -189,7 +189,6 @@ export interface UserInfo {
   password: string;
   rental_account: string;
   updatedAt: string;
-  date_of_birth: string;
   preferences: Array<string>;
   isContactVerified?: boolean;
 }

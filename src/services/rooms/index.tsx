@@ -1,8 +1,10 @@
+import {DEVICE} from '@util';
 import api from '../api';
 import {
   GET_LIST_ROOMS,
   GET_ROOM_DETAIL,
   DELETE_ROOM,
+  UPLOAD_FILE,
 } from './types';
 
 // room detail
@@ -26,5 +28,32 @@ export const deleteRoomApi: any = async (data: any) => {
   return response;
 };
 
+export const uploadFile: any = async (image: any) => {
+  let form = new FormData();
+  const isHEIC =
+    image?.sourceURL?.endsWith('.heic') || image?.sourceURL?.endsWith('.HEIC');
 
-
+  console.log({image});
+  form.append(`file`, {
+    fileName: image?.path.replace(/^.*[\\\/]/, ''),
+    name: image?.path.replace(/^.*[\\\/]/, ''),
+    width: image?.width,
+    uri: image?.path,
+    path: image?.path,
+    size: image?.size,
+    type: DEVICE.isIos
+      ? `image/${
+          isHEIC
+            ? image?.path.split('.')[0] + '.JPG'
+            : image?.path.split('.').pop()
+        }`
+      : image?.mime,
+    height: image?.height,
+  });
+  const response = await api.post(UPLOAD_FILE, form, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
+  return response;
+};

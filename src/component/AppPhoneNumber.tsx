@@ -80,9 +80,6 @@ export const AppPhoneNumber = React.memo((props: IAppPhoneNumber) => {
 
   const onNavigateVerify = () => {
     if (value && value !== '') {
-      // const contact = `${countryCode} ${value
-      //   .toString()
-      //   .replace(/[^a-zA-Z0-9]/g, '')}`;
       console.log({value});
       dispatch(
         verifyPhonenumber({

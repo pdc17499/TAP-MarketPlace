@@ -1,12 +1,11 @@
 import {IconQuestion} from '@assets';
-import {AppButton, AppText, Header, AppPhoneNumber, AppInput} from '@component';
+import {AppButton, AppText, Header, AppPhoneNumber} from '@component';
 import {useNavigation} from '@react-navigation/core';
-import {PROFILE, VERIFY_CODE} from '@routeName';
-import {scaleWidth, SIZE} from '@util';
+import {PROFILE} from '@routeName';
+import {SIZE} from '@util';
 import React, {useState} from 'react';
-import {Alert, Pressable, TouchableOpacity, View} from 'react-native';
+import {Alert, Pressable, View} from 'react-native';
 import {styles} from './style';
-import {DataSignupProps, VerifyAccountProps} from '@interfaces';
 import {useDispatch, useSelector} from 'react-redux';
 import {verifyPhonenumber} from '@redux';
 
@@ -20,8 +19,8 @@ const VerifyAccount = (props: VerifyCodeProp) => {
   const navigation: any = useNavigation();
   const [isShowRules, setIsShowRules] = useState(false);
   const [contact, setContact] = useState('');
-  // const email = props.route?.params?.email;
   const user = useSelector((state: any) => state?.auth?.user);
+  const [error, setError] = useState('');
 
   console.log({user});
 
@@ -31,13 +30,23 @@ const VerifyAccount = (props: VerifyCodeProp) => {
 
   const moveToVerifyCode = () => {
     if (contact !== '') {
-      console.log({contact});
-      dispatch(
-        verifyPhonenumber({
-          email: user?.email,
-          contact: contact,
-        }),
-      );
+      const index = contact.indexOf(' ');
+      if (index === -1) {
+        setError('Code number is required');
+      } else {
+        const nPhone = contact.substring(index + 1, contact.length);
+        if (nPhone === '') {
+          setError('Phone number is required');
+        } else {
+          setError('');
+          dispatch(
+            verifyPhonenumber({
+              email: user?.email,
+              contact: contact,
+            }),
+          );
+        }
+      }
     } else {
       Alert.alert('Please enter your phone number!');
     }
@@ -64,6 +73,7 @@ const VerifyAccount = (props: VerifyCodeProp) => {
           onChangePhone={onChangeContact}
           maxLength={30}
           name={'contact'}
+          error={error}
         />
 
         <AppText style={styles.sendCodeTxt}>
@@ -106,7 +116,6 @@ const VerifyAccount = (props: VerifyCodeProp) => {
           title={'Skip for now'}
           typeButton={'link'}
           customStyleTitle={styles.skipTxt}
-          // onPress={moveToVerifyCode}
         />
       </View>
     </View>

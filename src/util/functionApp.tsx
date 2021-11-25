@@ -1,6 +1,6 @@
 import moment from 'moment';
 
-const BASE_URL = 'https://tap-api.adamo.tech/';
+const BASE_URL = 'https://tap-api.adamo.tech';
 
 export const getBaseURL = () => {
   return BASE_URL;
