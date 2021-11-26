@@ -1,4 +1,4 @@
-import {AppButton, AppText, Header} from '@component';
+import { AppButton, AppText, Header } from '@component';
 import {
   colors,
   fontFamily,
@@ -7,7 +7,7 @@ import {
   OPTIONS_GALLERY,
   STYLE,
 } from '@util';
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   StyleSheet,
@@ -21,21 +21,24 @@ import { useDispatch } from 'react-redux';
 import ImagePicker, { ImageOrVideo } from 'react-native-image-crop-picker';
 import { useActionSheet } from '@expo/react-native-action-sheet';
 import Video from 'react-native-video';
-import {bg_room_unit_picture, IconAddVideos, IconClear} from '@assets';
-import {NavigationUtils} from '@navigation';
-import {ADD_SUCCESS, USER_INFORMATION_NAME} from '@routeName';
+import { bg_room_unit_picture, IconAddVideos, IconClear } from '@assets';
+import { NavigationUtils } from '@navigation';
+import { ADD_SUCCESS, USER_INFORMATION_NAME } from '@routeName';
 import {
   DraxDragWithReceiverEventData,
   DraxProvider,
   DraxView,
 } from 'react-native-drax';
+import { updateRoomGallery } from '@redux';
 
 const RoomDetailGallery = ({ navigation, route }: any) => {
   const dispatch = useDispatch();
   const gallery = route.params.gallery;
   const [files, setFiles] = useState(gallery);
-  const {showActionSheetWithOptions} = useActionSheet();
-  const {optionPhotos, optionVideos} = OPTIONS_GALLERY;
+  const { showActionSheetWithOptions } = useActionSheet();
+  const { optionPhotos, optionVideos } = OPTIONS_GALLERY;
+  console.log('heloo');
+
 
   const uploadPhotos = (mediaType: any) => {
     const isPhoto = mediaType === 'photo';
@@ -110,7 +113,8 @@ const RoomDetailGallery = ({ navigation, route }: any) => {
   };
 
   const onDone = () => {
-    NavigationUtils.navigate(ADD_SUCCESS);
+    dispatch(updateRoomGallery(files))
+    NavigationUtils.goBack();
   };
 
   const addFile = (mediaType: any) => {
@@ -155,8 +159,8 @@ const RoomDetailGallery = ({ navigation, route }: any) => {
   };
 
   const onReceiveDragDrop = (event: DraxDragWithReceiverEventData) => {
-    console.log({event});
-    const {dragged, receiver} = event;
+    console.log({ event });
+    const { dragged, receiver } = event;
     const idDragged = parseInt(dragged.id);
     const idReceiver = parseInt(receiver.id);
     let nFiles: any = [...files];
@@ -197,11 +201,11 @@ const RoomDetailGallery = ({ navigation, route }: any) => {
             longPressDelay={0}
             onReceiveDragDrop={onReceiveDragDrop}>
             {typeFile === 1 || typeFile === 3 ? (
-              <Image source={{uri}} style={styles.itemImage} />
+              <Image source={{ uri }} style={styles.itemImage} />
             ) : (
               <>
                 <Video
-                  source={{uri}}
+                  source={{ uri }}
                   style={styles.itemImage}
                   resizeMode={'cover'}
                   muted
@@ -242,7 +246,7 @@ const RoomDetailGallery = ({ navigation, route }: any) => {
           </>
         ) : (
           <>
-            <View style={{paddingBottom: scaleWidth(400)}}>
+            <View style={{ paddingBottom: scaleWidth(400) }}>
               <Image source={bg_room_unit_picture} style={styles.bgImage} />
             </View>
             <AppText style={styles.title}>

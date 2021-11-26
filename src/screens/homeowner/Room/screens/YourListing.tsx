@@ -142,8 +142,6 @@ const YourListing = () => {
   const [index, setIndex] = React.useState(0);
   useEffect(() => {
     dispatch(getListRooms());
-    // let isMounted = true;
-    // return () => { isMounted = false }
   }, []);
 
   const [routes] = React.useState([

@@ -1,5 +1,6 @@
 import {
   AppButton,
+  AppInput,
   AppModal,
   AppPicker,
   AppQA,
@@ -48,6 +49,9 @@ import { deleteRoom, updateRoom } from '@redux';
 const RoomDetailGeneral = ({ props }: any) => {
   const key = props;
   const ROOM: any = useSelector((state: any) => state?.rooms?.roomDetail);
+  console.log('roo', ROOM);
+
+
   const dispatch = useDispatch();
   const navigation: any = useNavigation();
   const formRef = useRef<FormikValues>()
@@ -60,6 +64,9 @@ const RoomDetailGeneral = ({ props }: any) => {
     max_range_price: ROOM?.RentalPrice?.Max,
     staying_with_guests: ROOM?.StayWithGuest ? 'Yes' : 'No',
     room_active: ROOM?.isActive,
+    rental_price: ROOM?.RentalPrice?.Price,
+    rental_type: ROOM?.RentalPrice?.type,
+
   });
   const list = ROOM_UNIT_HOWNER;
   const formInitialValues = {
@@ -70,18 +77,22 @@ const RoomDetailGeneral = ({ props }: any) => {
     max_range_price: room?.max_range_price,
     staying_with_guests: room?.staying_with_guests,
     room_active: room?.room_active,
+    rental_price: room?.rental_price,
+    rental_type: room?.rental_type,
   };
 
   const validationForm = yup.object().shape({
-    // location: yup.string(),
-    // kind_place: validateForm().common.selectAtLeast,
-    // lease_period: validateForm().common.atLeastOnePicker,
+    location: yup.string(),
+    kind_place: validateForm().common.selectAtLeast,
+    lease_period: validateForm().common.atLeastOneArray,
     // ethnicity: validateForm().common.atLeastOnePicker,
-    // staying_with_guests: validateForm().common.atLeastOnePicker,
+    staying_with_guests: validateForm().common.selectAtLeast,
     // room_active: validateForm().common.atLeastOnePicker,
   });
 
   const onChangeText = (value: any, name?: string) => {
+    console.log('ss', value, name);
+
     const nRoom: any = { ...room };
     if (name) {
       nRoom[name] = value;
@@ -145,18 +156,18 @@ const RoomDetailGeneral = ({ props }: any) => {
         "RentalAddress": room?.location,
         "PlaceType": room?.kind_place,
         "RoomDetails": {
-          "RoomType": ROOM?.RoomType,
-          "BedroomNumber": ROOM?.BedroomNumber,
-          "BathroomNumber": ROOM?.BathroomNumber,
-          "AttachedBathroom": ROOM?.AttachedBathroom,
+          "RoomType": ROOM?.RoomDetails?.RoomType,
+          "BedroomNumber": ROOM?.RoomDetails?.BedroomNumber,
+          "BathroomNumber": ROOM?.RoomDetails?.BathroomNumber,
+          "AttachedBathroom": ROOM?.RoomDetails?.AttachedBathroom,
           "StayWithGuest": room?.staying_with_guests === 'Yes',
-          "AllowCook": ROOM?.AllowCook,
-          "KeyWords": ROOM?.KeyWords,
-          // "builtYear": ROOM?.builtYear,
-          // "floorLevel": ROOM?.floorLevel,
-          // "floorSizeMax": ROOM?.floorSizeMax,
-          // "floorSizeMin": ROOM?.floorSizeMin,
-          // "roomFurnishing": ROOM?.roomFurnishing,
+          "AllowCook": ROOM?.RoomDetails?.AllowCook,
+          "KeyWords": ROOM?.RoomDetails?.KeyWords,
+          "buildYear": ROOM?.RoomDetails?.builtYear,
+          "floorLevel": ROOM?.RoomDetails?.floorLevel,
+          "floorSizeMax": ROOM?.RoomDetails?.floorSizeMax,
+          "floorSizeMin": ROOM?.RoomDetails?.floorSizeMin,
+          "roomFurnished": ROOM?.RoomDetails?.roomFurnishing,
         },
         "LeasePeriod": {
           "type": room?.kind_place?.value === 'HDB',
@@ -164,15 +175,15 @@ const RoomDetailGeneral = ({ props }: any) => {
         },
         "PicturesVideo": ROOM?.PicturesVideo || [],
         "RentalPrice": {
-          "type": ROOM?.RentalPrice?.type,
+          "type": room?.rental_type,
           "Min": room?.min_range_price,
           "Max": room?.max_range_price,
-          "Price": ROOM?.RentalPrice?.Price
+          "Price": room?.rental_price,
         },
         "isActive": room?.room_active
       }
     }
-    console.log('helo', { body })
+
     dispatch(updateRoom(body, ROOM?.id))
   }
 
@@ -235,19 +246,49 @@ const RoomDetailGeneral = ({ props }: any) => {
                   onPressDone={onChangeText}
                   viewContent={renderPeriod(propsFormik.values.lease_period)}
                 />
-                <AppModal
-                  label={'Rental price'}
-                  customTitle={renderPriceTitle(propsFormik.values)}>
-                  <>
-                    <AppSlider
-                      onValuesChangeFinish={onValuesChangeFinish}
-                      min_range_value={propsFormik.values.min_range_price}
-                      max_range_value={propsFormik.values.max_range_price}
-                      iconLeft={'dolar'}
-                      sliderLength={DEVICE.width - SIZE.padding * 3}
-                    />
-                  </>
-                </AppModal>
+                {propsFormik.errors.lease_period && (
+                  <AppText style={styles.error}>
+                    {propsFormik.errors.lease_period}
+                  </AppText>
+                )}
+                <AppPicker
+                  value={propsFormik.values.rental_type}
+                  name={'rental_type'}
+                  label={'Rental type'}
+                  onValueChange={onChangeText}
+                  items={list.rental_price}
+                  error={propsFormik.errors.rental_price}
+                  stylePicker={'linear'}
+                // style={{ backgroundColor: 'red', with: '100%' }}
+                />
+
+                {room?.rental_type === 'Price range'
+                  ? <AppModal
+                    label={'Price range'}
+                    customTitle={renderPriceTitle(propsFormik.values)}>
+                    <>
+                      <AppSlider
+                        onValuesChangeFinish={onValuesChangeFinish}
+                        min_range_value={propsFormik.values.min_range_price}
+                        max_range_value={propsFormik.values.max_range_price}
+                        iconLeft={'dolar'}
+                        sliderLength={DEVICE.width - SIZE.padding * 3}
+                      />
+                    </>
+                  </AppModal>
+                  : <AppInput
+                    label={'Rental Price'}
+                    value={propsFormik.values.rental_price}
+                    name={'rental_price'}
+                    iconLeft={'dolar'}
+                    onValueChange={onChangeText}
+                    keyboardType={'number-pad'}
+                    containerStyle={styles.inputStyle}
+                    inputStyle={{ fontSize: scaleSize(18) }}
+                    autoFocus
+                    typeInput={'price'}
+                    error={propsFormik.errors.rental_price}
+                  />}
                 <AppPicker
                   value={propsFormik.values.staying_with_guests}
                   name={'staying_with_guests'}
@@ -340,7 +381,16 @@ const styles = StyleSheet.create({
   },
   period: {
     // backgroundColor: 'red'
-  }
+  },
+  inputStyle: {
+    marginTop: SIZE.base_space,
+    marginBottom: SIZE.padding,
+  },
+  error: {
+    marginTop: 6,
+    color: colors.red,
+    fontSize: scaleSize(15),
+  },
 });
 
 export { RoomDetailGeneral };

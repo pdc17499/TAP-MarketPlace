@@ -19,6 +19,7 @@ import {
   SIZE,
   SLIDER,
   STYLE,
+  validateForm,
   YEARS,
 } from '@util';
 import { useNavigation } from '@react-navigation/core';
@@ -70,14 +71,15 @@ const RoomDetailUnit = ({ props }: any) => {
     room_type: ROOM?.RoomDetails?.RoomType,
     bedroom_number: ROOM?.RoomDetails?.BedroomNumber,
     bathroom_number: ROOM?.RoomDetails?.BathroomNumber,
-    room_furnishing: ROOM?.RoomDetails?.RoomFurnishing,
-    floor_size_min: ROOM?.RoomDetails?.FloorSizeMin,
-    floor_size_max: ROOM?.RoomDetails?.FloorSizeMax,
-    floor_level: ROOM?.RoomDetails?.FloorLevel,
-    built_year: ROOM?.RoomDetails?.BuiltYear,
     allow_cooking: ROOM?.RoomDetails?.AllowCook ? 'Yes' : 'No',
     amenities: ROOM?.RoomDetails?.KeyWords,
     gallery: ROOM?.PicturesVideo,
+    room_furnishing: ROOM?.RoomDetails?.roomFurnished,
+    floor_size_min: ROOM?.RoomDetails?.floorSizeMin,
+    floor_size_max: ROOM?.RoomDetails?.floorSizeMax,
+    floor_level: ROOM?.RoomDetails?.floorLevel,
+    built_year: ROOM?.RoomDetails?.buildYear,
+    attached_bathroom: ROOM?.RoomDetails?.AttachedBathroom,
   });
   const [visible, setVisible] = useState(false);
 
@@ -105,15 +107,22 @@ const RoomDetailUnit = ({ props }: any) => {
     allow_cooking: room.allow_cooking,
     amenities: room.amenities,
     gallery: room.gallery,
+    attached_bathroom: room.attached_bathroom,
   };
 
   const validationForm = yup.object().shape({
-    // location: yup.string(),
-    // kind_place: validateForm().common.selectAtLeast,
-    // lease_period: validateForm().common.atLeastOnePicker,
-    // ethnicity: validateForm().common.atLeastOnePicker,
-    // staying_with_guests: validateForm().common.atLeastOnePicker,
-    // room_active: validateForm().common.atLeastOnePicker,
+    room_type: validateForm().common.selectAtLeast,
+    // bedroom_number: validateForm().common.selectAtLeast,
+    // bathroom_number: validateForm().common.selectAtLeast,
+    room_furnishing: validateForm().common.selectAtLeast,
+    // floor_size_min: room.floor_size_min,
+    // floor_size_max: room.floor_size_max,
+    // floor_level: room.floor_level,
+    // built_year: room.built_year,
+    // allow_cooking: room.allow_cooking,
+    // amenities: room.amenities,
+    // gallery: room.gallery,
+    // attached_bathroom: room.attached_bathroom,
   });
 
   const onChangeValue = (value: any, name?: string) => {
@@ -318,6 +327,7 @@ const RoomDetailUnit = ({ props }: any) => {
   }
 
   const updateRoomInfomation = () => {
+
     console.log('room', room);
     console.log('ROOM', ROOM);
 
@@ -329,18 +339,18 @@ const RoomDetailUnit = ({ props }: any) => {
           "RoomType": room?.room_type,
           "BedroomNumber": room?.bedroom_number,
           "BathroomNumber": room?.bathroom_number,
-          "AttachedBathroom": ROOM?.AttachedBathroom,
-          "StayWithGuest": ROOM?.StayWithGuest,
+          "AttachedBathroom": room?.attached_bathroom === 'Yes',
+          "StayWithGuest": ROOM?.RoomDetails?.StayWithGuest,
           "AllowCook": room?.allow_cooking === 'Yes',
           "KeyWords": room?.amenities,
-          // "builtYear": room?.built_year,
-          // "floorLevel": room?.floor_level,
-          // "floorSizeMax": room?.floor_size_max,
-          // "floorSizeMin": room?.floor_size_min,
-          // "roomFurnishing": room?.room_furnishing,
+          "buildYear": room?.built_year,
+          "floorLevel": room?.floor_level,
+          "floorSizeMax": room?.floor_size_max,
+          "floorSizeMin": room?.floor_size_min,
+          "roomFurnished": room?.room_furnishing,
         },
         "LeasePeriod": ROOM?.LeasePeriod,
-        "PicturesVideo": ROOM?.PicturesVideo || [],
+        "PicturesVideo": room.gallery || [],
         "RentalPrice": ROOM?.RentalPrice,
         "isActive": ROOM?.isActive
       }
@@ -366,12 +376,28 @@ const RoomDetailUnit = ({ props }: any) => {
             <>
               <View>
                 {renderAppPicker(props, 'room_type', 'Rental type')}
-                {renderAppPicker(props, 'bedroom_number', 'Number of Bedrooms')}
-                {renderAppPicker(
-                  props,
-                  'bathroom_number',
-                  'Number of Bathrooms',
-                )}
+                {room.room_type === 'Room'
+                  ? <AppPicker
+                    value={props.values.attached_bathroom}
+                    name={'attached_bathroom'}
+                    label={'Attached Bathroom'}
+                    onValueChange={onChangeValue}
+                    items={list.attached_bathroom}
+                    error={props.errors.attached_bathroom}
+                    stylePicker={'linear'}
+                  />
+                  : <>
+                    {renderAppPicker(props, 'bedroom_number', 'Number of Bedrooms')}
+                    {renderAppPicker(
+                      props,
+                      'bathroom_number',
+                      'Number of Bathrooms',
+                    )}
+                  </>}
+
+
+
+
                 <AppModal
                   label={'Floor size'}
                   customTitle={renderFloorSizeContent(props.values)}>

@@ -1,5 +1,5 @@
-import { AppButton, AppInput, AppPhoneNumber, AppText, Header } from '@component';
-import React, { useEffect, useState } from 'react';
+import { AppButton, AppText } from '@component';
+import React, { } from 'react';
 import { View, StyleSheet, Pressable, Image } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -7,23 +7,15 @@ import {
   fontFamily,
   scaleHeight,
   scaleSize,
-  scaleWidth,
   SIZE,
 } from '@util';
-import * as yup from 'yup';
-import { Formik } from 'formik';
-import { UserInfo } from '@interfaces';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import {
-  CaretRight,
-  IconChangePassword,
   IconCheckCircle,
-  IconDeleteUser,
   IconDot,
   IconPickLocation,
   IconPlus,
 } from '@assets';
-import { CHANGE_PASSWORD, ROOM_UNIT_ADDRESS, YOUR_LISTING } from '@routeName';
+import { ROOM_UNIT_ADDRESS, YOUR_LISTING } from '@routeName';
 import { useNavigation } from '@react-navigation/native';
 import { resetDataSignup } from '@redux';
 
@@ -40,16 +32,17 @@ const AddSuccess = (props: AddSuccessProp) => {
 
   const index = roomData.location.title.lastIndexOf(' ');
 
-  const photo = roomData.list_photo[0].path;
+  const photo = roomData?.list_photo[0]?.uri;
   console.log('dataa', roomData);
   const moveToYourListing = () => {
     navigation.navigate(YOUR_LISTING);
   };
 
   const moveToRoomUnit = () => {
-    // dispatch(resetDataSignup())
+    dispatch(resetDataSignup());
     navigation.navigate(ROOM_UNIT_ADDRESS);
   };
+
 
   return (
     <View style={styles.container}>
