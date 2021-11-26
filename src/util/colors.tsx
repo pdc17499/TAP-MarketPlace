@@ -16,7 +16,8 @@ const colors = {
   google: '#EFEFEF',
   borderTextFacebook: '#5A9DF4',
   borderProfileList: '#ECECEC',
-  textPlace: '#65666D'
+  textPlace: '#65666D',
+  icTabbar: '#C2C2C2',
 };
 
-export { colors };
+export {colors};

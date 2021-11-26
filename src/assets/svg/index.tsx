@@ -18,6 +18,7 @@ type iconProps = {
   height?: number;
   iconFillColor?: string;
   style?: any;
+  isActive?: boolean;
 };
 
 export const EyeIconOpen = () => (
@@ -1068,6 +1069,71 @@ export const IconVerifyPhone = (props: iconProps) => (
       d="M13.438 8.125L8.854 12.5l-2.291-2.188"
       stroke="#2A6B58"
       strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </Svg>
+);
+
+export const IconLiked = (props: iconProps) => (
+  <Svg width={29} height={28} fill="none" {...props}>
+    <Path
+      d="M9.352 21.408l3.616 2.8c.467.467 1.517.7 2.217.7h4.433c1.4 0 2.917-1.05 3.267-2.45l2.8-8.516c.583-1.634-.467-3.034-2.217-3.034h-4.666c-.7 0-1.284-.583-1.167-1.4l.583-3.733c.234-1.05-.466-2.217-1.516-2.567-.934-.35-2.1.117-2.567.817l-4.783 7.117"
+      stroke={props.isActive ? '#DE9236' : '#C2C2C2'}
+      strokeWidth={props.isActive ? 0 : 1.5}
+      strokeMiterlimit={10}
+      fill={props.isActive ? '#DE9236' : 'white'}
+    />
+    <Path
+      d="M3.402 21.408V9.975c0-1.633.7-2.217 2.334-2.217h1.166c1.634 0 2.334.584 2.334 2.217v11.433c0 1.634-.7 2.217-2.334 2.217H5.736c-1.634 0-2.334-.583-2.334-2.217z"
+      stroke={props.isActive ? 'white' : '#C2C2C2'}
+      strokeWidth={props.isActive ? 0 : 1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      fill={props.isActive ? '#DE9236' : 'white'}
+    />
+  </Svg>
+);
+
+export const IconMatches = (props: iconProps) => (
+  <Svg width={29} height={28} fill="none" {...props}>
+    <Path
+      d="M26.326 10.507l-7.531-1.152-3.376-7.202c-.252-.537-1.133-.537-1.386 0L10.66 9.355l-7.532 1.152a.767.767 0 00-.432 1.293l5.472 5.617-1.294 7.94A.766.766 0 008 26.153l6.728-3.723 6.727 3.724a.766.766 0 001.126-.794l-1.293-7.94 5.471-5.618a.768.768 0 00-.432-1.294z"
+      fill={props.isActive ? '#DE9236' : 'white'}
+      stroke={props.isActive ? '#DE9236' : '#C2C2C2'}
+      strokeWidth={props.isActive ? 0 : 1.5}
+    />
+  </Svg>
+);
+
+export const IconChat = (props: iconProps) => (
+  <Svg width={29} height={28} fill="none" {...props}>
+    <Path
+      d="M10.292 22.167H9.71c-4.667 0-7-1.167-7-7V9.334c0-4.667 2.333-7 7-7h9.333c4.667 0 7 2.333 7 7v5.833c0 4.667-2.333 7-7 7h-.583c-.362 0-.712.175-.933.466l-1.75 2.334c-.77 1.027-2.03 1.027-2.8 0l-1.75-2.333c-.187-.257-.619-.467-.934-.467z"
+      stroke={props.isActive ? '#DE9236' : '#C2C2C2'}
+      fill={props.isActive ? '#DE9236' : 'white'}
+      strokeWidth={props.isActive ? 0 : 1.5}
+      strokeMiterlimit={10}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <Path
+      d="M19.038 12.833h.01M14.37 12.833h.01M9.702 12.833h.01"
+      stroke={props.isActive ? 'white' : '#C2C2C2'}
+      strokeWidth={2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </Svg>
+);
+
+export const IconProfile = (props: iconProps) => (
+  <Svg width={29} height={28} fill="none" {...props}>
+    <Path
+      d="M14.312 12.682a2.133 2.133 0 00-.385 0 5.157 5.157 0 01-4.982-5.169c0-2.858 2.31-5.18 5.18-5.18a5.183 5.183 0 015.18 5.18c-.011 2.8-2.216 5.075-4.993 5.169zM8.479 16.986c-2.824 1.89-2.824 4.97 0 6.849 3.208 2.146 8.47 2.146 11.678 0 2.823-1.89 2.823-4.97 0-6.849-3.197-2.135-8.458-2.135-11.678 0z"
+      stroke={props.isActive ? '#DE9236' : '#C2C2C2'}
+      strokeWidth={props.isActive ? 1 : 1.5}
+      fill={props.isActive ? '#DE9236' : 'white'}
       strokeLinecap="round"
       strokeLinejoin="round"
     />

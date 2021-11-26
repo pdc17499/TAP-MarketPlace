@@ -14,13 +14,13 @@ import {
   ACCOUNT_SETTING,
   BASIC_INFORMATION,
   CHANGE_PASSWORD,
-  HOME,
   PROFILE_LIFE_STYLE,
   PROFILE,
   ROOM_DETAIL,
   ROOM_DETAIL_LOCATION,
   ROOM_DETAIL_GELLERY,
   ADD_SUCCESS,
+  TABBAR,
 } from './routeName';
 
 import {
@@ -35,7 +35,6 @@ import {
   AccountSetting,
   BasicInfomation,
   ChangePassword,
-  Home,
   ProfileLifeStyle,
   Profile,
   RoomDetail,
@@ -44,6 +43,7 @@ import {
   RoomUnitKindPlace,
   AddSuccess,
 } from '../screens';
+import {BottomTabs} from './BottomTabs';
 
 const Stack = createStackNavigator();
 const screenOptions = {
@@ -53,10 +53,10 @@ const screenOptions = {
 const AuthenStack = () => {
   return (
     <Stack.Navigator screenOptions={screenOptions}>
+      <Stack.Screen name={TABBAR} component={BottomTabs} />
       <Stack.Screen name={PROFILE} component={Profile} />
       <Stack.Screen name={VERIFY_ACCOUNT} component={VerifyAccount} />
       <Stack.Screen name={VERIFY_CODE} component={VerifyCode} />
-      <Stack.Screen name={HOME} component={Home} />
       <Stack.Screen name={BASIC_INFORMATION} component={BasicInfomation} />
       <Stack.Screen name={CHANGE_PASSWORD} component={ChangePassword} />
       <Stack.Screen name={ACCOUNT_SETTING} component={AccountSetting} />

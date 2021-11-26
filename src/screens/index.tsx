@@ -27,8 +27,11 @@ import {
   AgencyBasicInformation,
 } from './auth/UserInformation';
 
-//Authenticate
-import {Home} from './homeowner/Home';
+//Authenticate - Tabbar
+import {Matches} from './homeowner/Matches';
+import {Liked} from './homeowner/Liked';
+import {Chat} from './homeowner/Chat';
+
 import {
   Profile,
   BasicInfomation,
@@ -70,7 +73,9 @@ export {
   AgencyInformationName,
   AgencyBasicInformation,
   // Authenticate
-  Home,
+  Matches,
+  Liked,
+  Chat,
   UpdateNewPassword,
   Profile,
   BasicInfomation,

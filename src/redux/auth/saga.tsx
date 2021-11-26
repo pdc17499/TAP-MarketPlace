@@ -22,6 +22,7 @@ import {
   PROFILE,
   SIGNIN,
   SIGNUP,
+  TABBAR,
   UPDATE_NEW_PASSWORD,
   VERIFY_ACCOUNT,
   VERIFY_CODE,
@@ -168,7 +169,7 @@ export function* verifyCodePhonenumberSaga(action: any) {
       action.payload,
     );
     if (result) {
-      NavigationUtils.reset(PROFILE);
+      NavigationUtils.reset(TABBAR);
     }
   } catch (error) {
     GlobalService.hideLoading();
