@@ -19,6 +19,7 @@ type iconProps = {
   iconFillColor?: string;
   style?: any;
   isActive?: boolean;
+  strokeWidth?: number;
 };
 
 export const EyeIconOpen = () => (
@@ -168,7 +169,7 @@ export const IconClear = (props: iconProps) => (
     <Path
       d="M15.625 4.375l-11.25 11.25M15.625 15.625L4.375 4.375"
       stroke={props.iconFillColor || '#AAA'}
-      strokeWidth={2}
+      strokeWidth={props.strokeWidth || 2}
       strokeLinecap="round"
       strokeLinejoin="round"
     />
@@ -470,7 +471,7 @@ export const IconTabActive = (props: iconProps) => (
 
 export const IconDot = (props: iconProps) => (
   <Svg width={6} height={7} fill="none" {...props}>
-    <Circle cx={3} cy={3.5} r={3} fill="#AAA" />
+    <Circle cx={3} cy={3.5} r={3} fill={props.iconFillColor || '#AAA'} />
   </Svg>
 );
 
@@ -1134,6 +1135,46 @@ export const IconProfile = (props: iconProps) => (
       stroke={props.isActive ? '#DE9236' : '#C2C2C2'}
       strokeWidth={props.isActive ? 1 : 1.5}
       fill={props.isActive ? '#DE9236' : 'white'}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </Svg>
+);
+
+export const IconLike = (props: iconProps) => (
+  <Svg width={36} height={36} fill="none" {...props}>
+    <Path
+      d="M12.584 27.735v-15.24c0-.6.18-1.185.51-1.68l4.095-6.09c.645-.975 2.25-1.665 3.615-1.155 1.47.495 2.445 2.145 2.13 3.615l-.78 4.905c-.06.45.06.855.315 1.17.255.285.63.465 1.035.465h6.165c1.185 0 2.205.48 2.805 1.32.57.81.675 1.86.3 2.925l-3.69 11.235c-.465 1.86-2.49 3.375-4.5 3.375h-5.85c-1.005 0-2.415-.345-3.06-.99l-1.92-1.485a2.977 2.977 0 01-1.17-2.37zM7.815 9.57H6.27c-2.325 0-3.27.9-3.27 3.12v15.09c0 2.22.945 3.12 3.27 3.12h1.545c2.325 0 3.27-.9 3.27-3.12V12.69c0-2.22-.945-3.12-3.27-3.12z"
+      fill={props.iconFillColor || '#FAFAFA'}
+    />
+  </Svg>
+);
+
+export const IconRefresh = (props: iconProps) => (
+  <Svg width={24} height={24} fill="none" {...props}>
+    <Path
+      d="M7.484 9.348h-4.5v-4.5"
+      stroke="#073729"
+      strokeWidth={2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <Path
+      d="M6.166 17.834a8.25 8.25 0 100-11.668L2.984 9.348"
+      stroke="#073729"
+      strokeWidth={2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </Svg>
+);
+
+export const IconFilter = (props: iconProps) => (
+  <Svg width={24} height={24} fill="none" {...props}>
+    <Path
+      d="M13.875 16.125H3.75M20.25 16.125h-2.625M15.75 18a1.875 1.875 0 100-3.75 1.875 1.875 0 000 3.75zM7.875 7.875H3.75M20.25 7.875h-8.625M9.75 9.75a1.875 1.875 0 100-3.75 1.875 1.875 0 000 3.75z"
+      stroke="#073729"
+      strokeWidth={2}
       strokeLinecap="round"
       strokeLinejoin="round"
     />

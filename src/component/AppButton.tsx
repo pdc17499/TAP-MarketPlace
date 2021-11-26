@@ -1,7 +1,13 @@
 import React, {useCallback} from 'react';
-import {TouchableOpacity, StyleSheet, View, Image} from 'react-native';
+import {
+  TouchableOpacity,
+  StyleSheet,
+  View,
+  Image,
+  TextStyle,
+} from 'react-native';
 import {AppText} from './AppText';
-import {colors, fontFamily, scaleSize, SIZE} from '@util';
+import {colors, fontFamily, scaleSize, scaleWidth, SIZE} from '@util';
 import {debounce} from 'lodash';
 import {ButtonProps} from '@interfaces';
 import {
@@ -20,6 +26,7 @@ const AppButton = React.memo((props: ButtonProps) => {
     label,
     customStyleButton,
     customStyleTitle,
+    customStyleLabel,
     onPress,
     disabled,
     iconRight,
@@ -41,23 +48,28 @@ const AppButton = React.memo((props: ButtonProps) => {
     [onPress],
   );
 
-  const bgLinear = {
+  const bgLinear: TextStyle = {
     backgroundColor: 'transparent',
-    borderWidth: isActive ? 1.5 : 1,
-    borderColor: isActive ? colors.orange : colors.borderPrimary,
+    borderBottomWidth: isActive ? 1.5 : 1,
+    borderBottomColor: isActive ? colors.orange : colors.borderProfileList,
+    minHeight: 'auto',
+    paddingBottom: scaleWidth(20),
+    borderRadius: 0,
+    justifyContent: 'flex-start',
   };
 
-  const titleLinear = {
-    color: isActive ? colors.textPrimary : colors.textSecondPrimary,
+  const titleLinear: TextStyle = {
+    color: isActive ? colors.textPrimary : colors.textPrimary,
     fontFamily: isActive
       ? fontFamily.fontWeight600.fontFamily
       : fontFamily.fontWeight500.fontFamily,
+    textAlign: 'left',
   };
 
   const buttonStyle = [
     styles.container,
-    typeButton === 'linear' ? bgLinear : {},
     {minHeight: size === 'small' ? SIZE.btn_height_small : SIZE.btn_height},
+    typeButton === 'linear' ? bgLinear : {},
     typeButton === 'link' ? styles.bgLink : {},
     typeButton === 'underline' ? styles.bgUnderline : {},
     customStyleButton,
@@ -97,7 +109,9 @@ const AppButton = React.memo((props: ButtonProps) => {
 
   return (
     <View style={containerStyle}>
-      {label && <AppText style={styles.label}>{label}</AppText>}
+      {label && (
+        <AppText style={[styles.label, customStyleLabel]}>{label}</AppText>
+      )}
       <TouchableOpacity
         style={buttonStyle}
         disabled={disabled}

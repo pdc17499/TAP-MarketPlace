@@ -7,6 +7,7 @@ const list_place = require('./list_place.png');
 const bg_room_unit_picture = require('./bg_room_unit_picture.png');
 const avatar_default = require('./avatar_default.png');
 const room_sample = require('./room_sample.png');
+const searching = require('./searching.png');
 
 export {
   logo,
@@ -17,5 +18,5 @@ export {
   list_place,
   bg_room_unit_picture,
   avatar_default,
-  room_sample,
+  searching,
 };

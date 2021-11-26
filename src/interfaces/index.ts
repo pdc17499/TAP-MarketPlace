@@ -11,7 +11,8 @@ export interface ButtonProps {
   label?: string;
   containerStyle?: ViewStyle;
   customStyleButton?: ViewStyle | ViewStyle[];
-  customStyleTitle?: any;
+  customStyleLabel?: TextStyle;
+  customStyleTitle?: TextStyle;
   onPress?: any;
   disabled?: boolean;
   image?: any;

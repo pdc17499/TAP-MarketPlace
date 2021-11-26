@@ -18,6 +18,7 @@ const colors = {
   borderProfileList: '#ECECEC',
   textPlace: '#65666D',
   icTabbar: '#C2C2C2',
+  green: '#2ED6A5',
 };
 
 export {colors};
