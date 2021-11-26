@@ -9,6 +9,8 @@ import {
   DELETE_ROOM_REDUX,
   UPLOAD_FILE,
   UPDATE_ROOM,
+  UPDATE_ROOM_REDUX,
+  UPDATE_ROOM_GALLERY,
 } from '@redux';
 
 
@@ -58,6 +60,12 @@ export const updateRoom = (payload: any, id: string) => ({
   id,
 });
 
+export const updateRoomRedux = (payload: any) => ({
+  type: UPDATE_ROOM_REDUX,
+  payload,
+})
+
+
 // export const updateRoomRedux = (payload: any, id: string) => ({
 //   type: UPDATE_ROOM,
 //   payload,
@@ -66,6 +74,11 @@ export const updateRoom = (payload: any, id: string) => ({
 
 export const uploadFile = (payload: any) => ({
   type: UPLOAD_FILE,
+  payload,
+});
+
+export const updateRoomGallery = (payload: Array<string>) => ({
+  type: UPDATE_ROOM_GALLERY,
   payload,
 });
 

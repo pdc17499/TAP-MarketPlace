@@ -18,7 +18,7 @@ import { getRoomDetail } from '@redux';
 import Video from 'react-native-video';
 
 const RoomDetail = (route: any) => {
-  // console.log('paa', route.route.params.id);
+  console.log('paa', route);
   const roomId = route.route.params.id
   const dispatch = useDispatch()
 
@@ -48,7 +48,6 @@ const RoomDetail = (route: any) => {
       return isImage ? 3 : 4;
     }
   };
-
 
   const renderScene = ({ route }: any) => {
     switch (route.key) {

@@ -1,5 +1,5 @@
 import { put, takeLatest } from 'redux-saga/effects';
-import { setListRooms, setRoomDetail, getListRooms, saveNewRoom, deleteRoomRedux } from './action'
+import { setListRooms, setRoomDetail, getListRooms, saveNewRoom, deleteRoomRedux, updateRoomRedux } from './action'
 import {
   GlobalService,
   getListRoomsApi,
@@ -110,6 +110,7 @@ export function* updateRoomSaga(action: any) {
         type: 'success',
         message: ' Update Room Success!',
       });
+      yield put(updateRoomRedux(result?.data));
       NavigationUtils.navigate(YOUR_LISTING);
     }
   } catch (error) {

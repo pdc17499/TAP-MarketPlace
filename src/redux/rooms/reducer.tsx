@@ -5,11 +5,11 @@ import {
   DELETE_ROOM,
   SAVE_NEW_ROOM,
   DELETE_ROOM_REDUX,
-  UPDATE_ROOM
+  UPDATE_ROOM_REDUX,
+  UPDATE_ROOM_GALLERY
 } from './type';
 import { INITIAL_STATE_ROOMS } from './state';
 import _ from 'lodash';
-
 
 export default function dataSave(state = INITIAL_STATE_ROOMS, action: any) {
   switch (action.type) {
@@ -27,17 +27,22 @@ export default function dataSave(state = INITIAL_STATE_ROOMS, action: any) {
       state.listRooms.push(action?.payload)
       return { ...state, listRooms: [...state.listRooms] };
 
-    case UPDATE_ROOM:
-      const index = state.listRooms.findIndex(item => item.id === action.id)
-      console.log('index', index);
-      state.listRooms[index] = action?.payload?.roomDesc
-      return { ...state, listRooms: [...state.listRooms], RoomDetails: action?.payload?.roomDesc };
+    case UPDATE_ROOM_REDUX:
+      const index = state.listRooms.findIndex(item => item.id === action?.payload?.id)
+      console.log('index111', index);
+      state.listRooms[index] = action?.payload;
+      state.roomDetail = action?.payload;
+      return { ...state, listRooms: [...state.listRooms], roomDetail: { ...state.roomDetail } };
 
     case DELETE_ROOM_REDUX:
       console.log('actionDelete', action?.payload);
       const nListRooms = state.listRooms.filter(item => item.id !== action?.payload)
       return { ...state, listRooms: [...nListRooms] };
-    // return state;
+
+    case UPDATE_ROOM_GALLERY:
+      state.roomDetail.PicturesVideo = action?.payload
+      return { ...state, roomDetail: { ...state.roomDetail } };
+
     default:
       return state;
   }

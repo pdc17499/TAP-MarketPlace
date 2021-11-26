@@ -11,7 +11,12 @@ export const DELETE_ROOM = 'DELETE_ROOM';
 export const DELETE_ROOM_REDUX = 'DELETE_ROOM_REDUX';
 
 export const UPDATE_ROOM = 'UPDATE_ROOM';
+export const UPDATE_ROOM_REDUX = 'UPDATE_ROOM_REDUX';
+
 export const UPLOAD_FILE = 'UPLOAD_FILE';
+
+export const UPDATE_ROOM_GALLERY = 'UPDATE_ROOM_GALLERY';
+
 
 
 
