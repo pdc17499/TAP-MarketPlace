@@ -54,70 +54,51 @@ const DATA = [
     title: 'Your Listing',
     icon: <IconHouseLine />,
     screen: YOUR_LISTING,
+    notRole: 'Tenant',
   },
   {
     id: 2,
     title: 'Basic Infomation',
     icon: <IconUser />,
     screen: BASIC_INFORMATION,
+    notRole: 'Agent',
   },
   {
     id: 3,
-    title: 'Lifestyle & Preferences',
-    icon: <IconThumbsUp />,
-    screen: PROFILE_LIFE_STYLE,
+    title: 'Agent Infomation',
+    icon: <IconUser />,
+    screen: BASIC_INFORMATION,
+    notRole: 'Tenant, Homeowner',
   },
   {
     id: 4,
-    title: 'Account Setting',
-    icon: <IconSetting />,
-    screen: ACCOUNT_SETTING,
-  },
-  // {
-  //   id: 5,
-  //   title: 'Verify my account',
-  //   icon: <IconShieldCheck />,
-  // },
-];
-
-const DATA2 = [
-  {
-    id: 1,
-    title: 'Basic Infomation',
-    icon: <IconUser />,
-    screen: BASIC_INFORMATION,
-  },
-  {
-    id: 2,
     title: 'Lifestyle & Preferences',
     icon: <IconThumbsUp />,
     screen: PROFILE_LIFE_STYLE,
+    notRole: 'Agent',
   },
   {
-    id: 3,
+    id: 5,
     title: 'Searching Filter',
     icon: <IconFilter />,
     screen: SEARCHING_FILTER,
+    notRole: 'Agent, Homeowner',
   },
   {
-    id: 4,
+    id: 6,
     title: 'Account Setting',
     icon: <IconSetting />,
     screen: ACCOUNT_SETTING,
+    notRole: '',
   },
-  // {
-  //   id: 5,
-  //   title: 'Verify my account',
-  //   icon: <IconShieldCheck />,
-  // },
 ];
 
 const Profile = (props: ProfileProp) => {
   const navigation = useNavigation<screenNavigationProp>();
   const USER = useSelector((state: any) => state.auth.user);
-  const TYPE_USER = useSelector((state: any) => state.auth.typeUser);
-  console.log('TYPE', TYPE_USER);
-  console.log('INFO', USER);
+  const role = useSelector((state: any) => state.auth.role);
+  // console.log('TYPE', role);
+  // console.log('INFO', USER);
   const dispatch = useDispatch();
   const {showActionSheetWithOptions} = useActionSheet();
 
@@ -196,17 +177,25 @@ const Profile = (props: ProfileProp) => {
     }
   };
 
-  const renderItem = ({item}: any) => (
-    <Pressable onPress={() => moveToDetail(item)}>
-      <View style={styles.item}>
-        {item.icon}
-        <AppText style={item.id === 5 ? styles.titleBold : styles.title}>
-          {item.title}
-        </AppText>
-        {item.id !== 5 && <CaretRight />}
-      </View>
-    </Pressable>
-  );
+  const renderItem = ({item}: any) => {
+    const idType = role?.idType || '';
+    if (item.notRole.includes(idType)) {
+      return <View />;
+    }
+
+    return (
+      <Pressable onPress={() => moveToDetail(item)}>
+        <View style={styles.item}>
+          {item.icon}
+          <AppText style={item.id === 5 ? styles.titleBold : styles.title}>
+            {item.title}
+          </AppText>
+          {item.id !== 5 && <CaretRight />}
+        </View>
+      </Pressable>
+    );
+  };
+
   console.log({USER});
   const ListHeaderComponent = () => (
     <>
@@ -240,7 +229,7 @@ const Profile = (props: ProfileProp) => {
         style={styles.body}
         contentContainerStyle={{paddingBottom: scaleHeight(100)}}
         showsVerticalScrollIndicator={false}
-        data={TYPE_USER === 'Tenant' ? DATA2 : DATA}
+        data={DATA}
         renderItem={renderItem}
         keyExtractor={(item: any) => item.id}
         ListHeaderComponent={ListHeaderComponent}
