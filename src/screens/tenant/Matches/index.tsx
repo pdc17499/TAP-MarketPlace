@@ -45,7 +45,7 @@ function* range(start: number, end: number) {
   }
 }
 
-const Matches = () => {
+const MatchesTenant = () => {
   const dispath = useDispatch();
   const [state, setState] = useState({
     cards: [...range(1, 10)],
@@ -368,4 +368,4 @@ const Matches = () => {
   );
 };
 
-export {Matches};
+export {MatchesTenant};

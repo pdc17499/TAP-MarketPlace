@@ -1,14 +1,15 @@
 import * as React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux';
-import UnAuthenStack from './UnAuthenStack';
-import AuthenStack from './AuthenStack';
+import UnAuthenStack from './unauthenstack';
+import TenantStack from './tenant';
+import HomeownerStack from './homeowner';
+import AgentStack from './agent';
 import {resetDataSignup} from '@redux';
-import {getToken} from '@services';
 
 //main stack app
 const NavigationApp = React.forwardRef((props: any, ref: any) => {
-  let token: any = useSelector((state: any) => state?.auth?.token);
+  let {token, role}: any = useSelector((state: any) => state?.auth);
   const dispatch = useDispatch();
   console.log({token});
   React.useEffect(() => {
@@ -19,7 +20,13 @@ const NavigationApp = React.forwardRef((props: any, ref: any) => {
     if (!token) {
       return <UnAuthenStack />;
     } else {
-      return <AuthenStack />;
+      if (role?.idType === 'Tenant') {
+        return <TenantStack />;
+      } else if (role?.idType === 'Homeowner') {
+        return <HomeownerStack />;
+      } else {
+        return <AgentStack />;
+      }
     }
   };
   return (

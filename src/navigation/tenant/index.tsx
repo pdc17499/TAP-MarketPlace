@@ -21,7 +21,7 @@ import {
   ROOM_DETAIL_GELLERY,
   ADD_SUCCESS,
   TABBAR,
-} from './routeName';
+} from '../routeName';
 
 import {
   RoomUnitGallery,
@@ -42,18 +42,18 @@ import {
   RoomDetailGallery,
   RoomUnitKindPlace,
   AddSuccess,
-} from '../screens';
-import {BottomTabs} from './BottomTabs';
+} from '../../screens';
+import {TenantBottomTabs} from './TenantBottomTabs';
 
 const Stack = createStackNavigator();
 const screenOptions = {
   headerShown: false,
 };
 
-const AuthenStack = () => {
+const TenantStack = () => {
   return (
     <Stack.Navigator screenOptions={screenOptions}>
-      <Stack.Screen name={TABBAR} component={BottomTabs} />
+      <Stack.Screen name={TABBAR} component={TenantBottomTabs} />
       <Stack.Screen name={PROFILE} component={Profile} />
       <Stack.Screen name={VERIFY_ACCOUNT} component={VerifyAccount} />
       <Stack.Screen name={VERIFY_CODE} component={VerifyCode} />
@@ -61,26 +61,8 @@ const AuthenStack = () => {
       <Stack.Screen name={CHANGE_PASSWORD} component={ChangePassword} />
       <Stack.Screen name={ACCOUNT_SETTING} component={AccountSetting} />
       <Stack.Screen name={PROFILE_LIFE_STYLE} component={ProfileLifeStyle} />
-      <Stack.Screen name={YOUR_LISTING} component={YourListing} />
-      <Stack.Screen name={ROOM_DETAIL} component={RoomDetail} />
-      <Stack.Screen
-        name={ROOM_DETAIL_LOCATION}
-        component={RoomDetailLocation}
-      />
-      <Stack.Screen name={ROOM_DETAIL_GELLERY} component={RoomDetailGallery} />
-      {/* Room unit */}
-      <Stack.Screen name={ROOM_UNIT_ADDRESS} component={RoomUnitAddress} />
-      <Stack.Screen name={ROOM_UNIT_GALLERY} component={RoomUnitGallery} />
-      <Stack.Screen name={ROOM_UNIT_KIND_PLACE} component={RoomUnitKindPlace} />
-      <Stack.Screen
-        name={ROOM_UNIT_PLACE_OFFER}
-        component={RoomUnitPlaceOffer}
-      />
-      <Stack.Screen name={ROOM_UNIT_TYPE_ROOM} component={RoomUnitTypeRoom} />
-      <Stack.Screen name={ROOM_UNIT_PRICE} component={RoomUnitPrice} />
-      <Stack.Screen name={ADD_SUCCESS} component={AddSuccess} />
     </Stack.Navigator>
   );
 };
 
-export default AuthenStack;
+export default TenantStack;

@@ -1,13 +1,7 @@
 import React, {useCallback} from 'react';
-import {
-  TouchableOpacity,
-  StyleSheet,
-  View,
-  Image,
-  TextStyle,
-} from 'react-native';
+import {TouchableOpacity, StyleSheet, View, Image} from 'react-native';
 import {AppText} from './AppText';
-import {colors, fontFamily, scaleSize, scaleWidth, SIZE} from '@util';
+import {colors, fontFamily, scaleSize, SIZE} from '@util';
 import {debounce} from 'lodash';
 import {ButtonProps} from '@interfaces';
 import {
@@ -48,28 +42,23 @@ const AppButton = React.memo((props: ButtonProps) => {
     [onPress],
   );
 
-  const bgLinear: TextStyle = {
+  const bgLinear = {
     backgroundColor: 'transparent',
-    borderBottomWidth: isActive ? 1.5 : 1,
-    borderBottomColor: isActive ? colors.orange : colors.borderProfileList,
-    minHeight: 'auto',
-    paddingBottom: scaleWidth(20),
-    borderRadius: 0,
-    justifyContent: 'flex-start',
+    borderWidth: isActive ? 1.5 : 1,
+    borderColor: isActive ? colors.orange : colors.borderPrimary,
   };
 
-  const titleLinear: TextStyle = {
-    color: isActive ? colors.textPrimary : colors.textPrimary,
+  const titleLinear = {
+    color: isActive ? colors.textPrimary : colors.textSecondPrimary,
     fontFamily: isActive
       ? fontFamily.fontWeight600.fontFamily
       : fontFamily.fontWeight500.fontFamily,
-    textAlign: 'left',
   };
 
   const buttonStyle = [
     styles.container,
-    {minHeight: size === 'small' ? SIZE.btn_height_small : SIZE.btn_height},
     typeButton === 'linear' ? bgLinear : {},
+    {minHeight: size === 'small' ? SIZE.btn_height_small : SIZE.btn_height},
     typeButton === 'link' ? styles.bgLink : {},
     typeButton === 'underline' ? styles.bgUnderline : {},
     customStyleButton,

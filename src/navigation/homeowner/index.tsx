@@ -21,7 +21,7 @@ import {
   ROOM_DETAIL_GELLERY,
   ADD_SUCCESS,
   TABBAR,
-} from './routeName';
+} from '../routeName';
 
 import {
   RoomUnitGallery,
@@ -42,18 +42,18 @@ import {
   RoomDetailGallery,
   RoomUnitKindPlace,
   AddSuccess,
-} from '../screens';
-import {BottomTabs} from './BottomTabs';
+} from '../../screens';
+import {HomeBottomTabs} from './HomeBottomTabs';
 
 const Stack = createStackNavigator();
 const screenOptions = {
   headerShown: false,
 };
 
-const AuthenStack = () => {
+const HomeownerStack = () => {
   return (
     <Stack.Navigator screenOptions={screenOptions}>
-      <Stack.Screen name={TABBAR} component={BottomTabs} />
+      <Stack.Screen name={TABBAR} component={HomeBottomTabs} />
       <Stack.Screen name={PROFILE} component={Profile} />
       <Stack.Screen name={VERIFY_ACCOUNT} component={VerifyAccount} />
       <Stack.Screen name={VERIFY_CODE} component={VerifyCode} />
@@ -83,4 +83,4 @@ const AuthenStack = () => {
   );
 };
 
-export default AuthenStack;
+export default HomeownerStack;

@@ -64,5 +64,6 @@ export const changePasswordApi: any = async (data: any) => {
 
 export const getProfileUserApi: any = async () => {
   const response = await api.get(GET_PROFILE_USER);
+  console.log({response});
   return response;
 };

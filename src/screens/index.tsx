@@ -49,6 +49,7 @@ import {
   AddSuccess,
   RoomDetailGallery,
 } from './homeowner/Room';
+import { MatchesTenant } from './tenant/Matches';
 
 export {
   ChooseRole,
@@ -88,4 +89,6 @@ export {
   RoomDetailLocation,
   AddSuccess,
   RoomDetailGallery,
+  //Tenant
+  MatchesTenant,
 };
