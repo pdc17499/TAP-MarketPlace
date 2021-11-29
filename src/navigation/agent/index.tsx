@@ -53,7 +53,7 @@ const screenOptions = {
 const AgentStack = () => {
   return (
     <Stack.Navigator screenOptions={screenOptions}>
-      <Stack.Screen name={TABBAR} component={TenantBottomTabs} />
+      {/* <Stack.Screen name={TABBAR} component={TenantBottomTabs} /> */}
       <Stack.Screen name={PROFILE} component={Profile} />
       <Stack.Screen name={VERIFY_ACCOUNT} component={VerifyAccount} />
       <Stack.Screen name={VERIFY_CODE} component={VerifyCode} />

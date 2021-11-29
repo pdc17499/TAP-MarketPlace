@@ -21,6 +21,7 @@ import {
   ROOM_DETAIL_GELLERY,
   ADD_SUCCESS,
   TABBAR,
+  SEARCHING_FILTER,
 } from '../routeName';
 
 import {
@@ -42,6 +43,7 @@ import {
   RoomDetailGallery,
   RoomUnitKindPlace,
   AddSuccess,
+  SearchingFilter,
 } from '../../screens';
 import {TenantBottomTabs} from './TenantBottomTabs';
 
@@ -61,6 +63,7 @@ const TenantStack = () => {
       <Stack.Screen name={CHANGE_PASSWORD} component={ChangePassword} />
       <Stack.Screen name={ACCOUNT_SETTING} component={AccountSetting} />
       <Stack.Screen name={PROFILE_LIFE_STYLE} component={ProfileLifeStyle} />
+      <Stack.Screen name={SEARCHING_FILTER} component={SearchingFilter} />
     </Stack.Navigator>
   );
 };

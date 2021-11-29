@@ -1,5 +1,5 @@
-import { AppText } from '@component';
-import React, { useEffect, useState } from 'react';
+import {AppText} from '@component';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Image,
@@ -7,9 +7,9 @@ import {
   Pressable,
   DeviceEventEmitter,
 } from 'react-native';
-import { useDispatch } from 'react-redux';
-import { getProfileUser, logoutApp, updateUserInfo } from '@redux';
-import { useSelector } from 'react-redux';
+import {useDispatch} from 'react-redux';
+import {getProfileUser, logoutApp, updateUserInfo} from '@redux';
+import {useSelector} from 'react-redux';
 import {
   IconHouseLine,
   IconUser,
@@ -29,7 +29,7 @@ import {
   SEARCHING_FILTER,
   YOUR_LISTING,
 } from '@routeName';
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 import {
   colors,
   fontFamily,
@@ -40,10 +40,10 @@ import {
   scaleWidth,
   SIZE,
 } from '@util';
-import { StyleSheet } from 'react-native';
-import { useActionSheet } from '@expo/react-native-action-sheet';
-import { GlobalService, uploadFile } from '@services';
-interface ProfileProp { }
+import {StyleSheet} from 'react-native';
+import {useActionSheet} from '@expo/react-native-action-sheet';
+import {GlobalService, uploadFile} from '@services';
+interface ProfileProp {}
 
 interface screenNavigationProp {
   navigate: any;
@@ -119,7 +119,7 @@ const Profile = (props: ProfileProp) => {
   console.log('TYPE', TYPE_USER);
   console.log('INFO', USER);
   const dispatch = useDispatch();
-  const { showActionSheetWithOptions } = useActionSheet();
+  const {showActionSheetWithOptions} = useActionSheet();
 
   useEffect(() => {
     DeviceEventEmitter.addListener('UNAUTHENTICATION', logOut);
@@ -146,7 +146,7 @@ const Profile = (props: ProfileProp) => {
       },
       buttonIndex => {
         // Do something here depending on the button index selected
-        console.log({ buttonIndex });
+        console.log({buttonIndex});
         if (buttonIndex === 0) {
           uploadPhotos();
         } else if (buttonIndex === 1) {
@@ -186,7 +186,7 @@ const Profile = (props: ProfileProp) => {
       const body = {
         image: url,
       };
-      dispatch(updateUserInfo({ body, id: USER?.id }));
+      dispatch(updateUserInfo({body, id: USER?.id}));
     }
   };
 
@@ -196,7 +196,7 @@ const Profile = (props: ProfileProp) => {
     }
   };
 
-  const renderItem = ({ item }: any) => (
+  const renderItem = ({item}: any) => (
     <Pressable onPress={() => moveToDetail(item)}>
       <View style={styles.item}>
         {item.icon}
@@ -207,12 +207,12 @@ const Profile = (props: ProfileProp) => {
       </View>
     </Pressable>
   );
-  console.log({ USER });
+  console.log({USER});
   const ListHeaderComponent = () => (
     <>
       <Pressable onPress={openGallery}>
         <Image
-          source={USER?.image ? { uri: USER?.image } : avatar_default}
+          source={USER?.image ? {uri: USER?.image} : avatar_default}
           style={styles.avatar}
         />
       </Pressable>
@@ -335,4 +335,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export { Profile };
+export {Profile};

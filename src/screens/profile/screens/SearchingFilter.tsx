@@ -7,10 +7,10 @@ import {
   Header,
   ModalCheckedBox,
 } from '@component';
-import React, { useEffect, useState } from 'react';
-import { View, StyleSheet } from 'react-native';
-import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux';
+import React, {useEffect, useState} from 'react';
+import {View, StyleSheet} from 'react-native';
+import {useDispatch} from 'react-redux';
+import {useSelector} from 'react-redux';
 import {
   colors,
   DEVICE,
@@ -21,19 +21,19 @@ import {
   validateForm,
 } from '@util';
 import * as yup from 'yup';
-import { Formik } from 'formik';
-import { ROOM_UNIT_HOWNER } from '@mocks';
-import { pickerProps } from '@interfaces';
-import { getRoomTenant } from '@redux';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { CaretRight, IconDola } from '@assets';
-import { ROOM_DETAIL_LOCATION } from '@routeName';
-import { useNavigation } from '@react-navigation/core';
+import {Formik} from 'formik';
+import {ROOM_UNIT_HOWNER} from '@mocks';
+import {pickerProps} from '@interfaces';
+import {getRoomTenant} from '@redux';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import {CaretRight, IconDola} from '@assets';
+import {ROOM_DETAIL_LOCATION} from '@routeName';
+import {useNavigation} from '@react-navigation/core';
 
 const SearchingFilter = () => {
   const dispatch = useDispatch();
   const navigation: any = useNavigation();
-  const list = ROOM_UNIT_HOWNER;
+  const list: any = ROOM_UNIT_HOWNER;
   const dataRoom: any = useSelector((state: any) => state?.rooms?.roomDetail);
   const [room, setRoom] = useState({
     location: dataRoom?.RentalAddress,
@@ -49,7 +49,7 @@ const SearchingFilter = () => {
   });
   console.log('222', room);
   useEffect(() => {
-    dispatch(getRoomTenant())
+    dispatch(getRoomTenant());
     // setRoom(dataRoom)
   }, []);
 
@@ -63,7 +63,7 @@ const SearchingFilter = () => {
     bedroom_number: room.bedroom_number,
     bathroom_number: room.bathroom_number,
     amenities: room.amenities,
-    allow_cooking: room.allow_cooking
+    allow_cooking: room.allow_cooking,
   };
 
   const validationForm = yup.object().shape({
@@ -74,23 +74,22 @@ const SearchingFilter = () => {
   });
 
   const onLocation = (locate: string) => {
-    navigation.navigate(ROOM_DETAIL_LOCATION, { locate, onChangeText });
+    navigation.navigate(ROOM_DETAIL_LOCATION, {locate, onChangeText});
   };
 
   const onChangeText = (value: any, name?: string) => {
     console.log('ss', value, name);
-    const nRoom: any = { ...room };
+    const nRoom: any = {...room};
     if (name) {
       nRoom[name] = value;
       setRoom(nRoom);
-      console.log({ value });
+      console.log({value});
     }
   };
 
-
   const onChangeValue = (item: any, name?: string) => {
     if (name) {
-      const nData: any = { ...room };
+      const nData: any = {...room};
       nData[name] = item;
       setRoom(nData);
     }
@@ -99,22 +98,19 @@ const SearchingFilter = () => {
   const renderPeriod = (period: Array<string>) => {
     if (period?.length > 0) {
       return (
-        <View style={{ flexDirection: 'row' }} >
+        <View style={{flexDirection: 'row'}}>
           {period.map((item: string, index: number) => {
-            if (index === 0) return <AppText>{`${item} months`}</AppText>
-            else
-              return (
-                <AppText>{` - ${item} months`}</AppText>
-              );
+            if (index === 0) return <AppText>{`${item} months`}</AppText>;
+            else return <AppText>{` - ${item} months`}</AppText>;
           })}
         </View>
       );
     }
-  }
+  };
 
   const renderPriceTitle = (values: any) => {
     return (
-      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+      <View style={{flexDirection: 'row', alignItems: 'center'}}>
         <IconDola width={10} height={15} iconFillColor={colors.secondPrimary} />
         <AppText
           isPrice
@@ -137,8 +133,8 @@ const SearchingFilter = () => {
   };
 
   const onValuesChangeFinish = (values: any) => {
-    console.log({ values });
-    const nRoom: any = { ...room };
+    console.log({values});
+    const nRoom: any = {...room};
     nRoom['min_range_price'] = values[0];
     nRoom['max_range_price'] = values[1];
     setRoom(nRoom);
@@ -182,34 +178,32 @@ const SearchingFilter = () => {
 
   const onSubmit = () => {
     const body = {
-      "roomDesc": {
-        "RentalAddress": room.location,
-        "PlaceType": room.kind_place,
-        "RoomDetails": {
-          "RoomType": room?.room_type,
-          "BedroomNumber": room?.bedroom_number,
-          "BathroomNumber": room?.bathroom_number,
-          "AllowCook": room?.allow_cooking === 'Yes',
-          "KeyWords": room?.amenities,
-          "AttachedBathroom": false,
-          "StayWithGuest": false,
+      roomDesc: {
+        RentalAddress: room.location,
+        PlaceType: room.kind_place,
+        RoomDetails: {
+          RoomType: room?.room_type,
+          BedroomNumber: room?.bedroom_number,
+          BathroomNumber: room?.bathroom_number,
+          AllowCook: room?.allow_cooking === 'Yes',
+          KeyWords: room?.amenities,
+          AttachedBathroom: false,
+          StayWithGuest: false,
         },
-        "LeasePeriod": {
-          "type": room?.kind_place?.value === 'HDB',
-          "value": room?.lease_period,
+        LeasePeriod: {
+          type: room?.kind_place?.value === 'HDB',
+          value: room?.lease_period,
         },
-        "BudgetPrice": {
-          "Min": room?.min_range_price,
-          "Max": room?.max_range_price,
-        }
-      }
-    }
+        BudgetPrice: {
+          Min: room?.min_range_price,
+          Max: room?.max_range_price,
+        },
+      },
+    };
     console.log('body', body);
 
     // dispatch(updateUserInfo({ body, id: user?.id }));
   };
-
-
 
   const RenderForm = () => (
     <KeyboardAwareScrollView showsVerticalScrollIndicator={false}>
@@ -242,9 +236,11 @@ const SearchingFilter = () => {
               <AppText style={styles.title}>{'Rental Details'}</AppText>
               <ModalCheckedBox
                 label={'Lease Period'}
-                data={props.values.kind_place === 'HDB'
-                  ? list.lease_your_place_hdb_new
-                  : list.lease_your_place_new}
+                data={
+                  props.values.kind_place === 'HDB'
+                    ? list.lease_your_place_hdb_new
+                    : list.lease_your_place_new
+                }
                 name={'lease_period'}
                 selected={props.values.lease_period}
                 onPressDone={onChangeText}
@@ -282,9 +278,13 @@ const SearchingFilter = () => {
                 viewContent={renderAmenities(props.values.amenities)}
               />
             </View>
-            <AppText style={styles.txtBottom1}>{'Your lifestyle & preferences also affect matching results '}</AppText>
+            <AppText style={styles.txtBottom1}>
+              {'Your lifestyle & preferences also affect matching results '}
+            </AppText>
             <View style={styles.item}>
-              <AppText style={styles.txtBottom2}>{'Change your Lifestyle & Preferences'}</AppText>
+              <AppText style={styles.txtBottom2}>
+                {'Change your Lifestyle & Preferences'}
+              </AppText>
               <CaretRight />
             </View>
             <AppButton
@@ -303,10 +303,7 @@ const SearchingFilter = () => {
   return (
     <View style={styles.container}>
       <Header back />
-      <View style={styles.body}>
-
-        {RenderForm()}
-      </View>
+      <View style={styles.body}>{RenderForm()}</View>
     </View>
   );
 };
@@ -373,7 +370,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     // justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: SIZE.padding
+    marginBottom: SIZE.padding,
   },
   txtBottom1: {
     ...fontFamily.fontWeight400,
@@ -381,14 +378,14 @@ const styles = StyleSheet.create({
     color: colors.textPlace,
     lineHeight: scaleSize(25),
     marginTop: scaleWidth(48),
-    marginBottom: SIZE.base_space
+    marginBottom: SIZE.base_space,
   },
   txtBottom2: {
     ...fontFamily.fontWeight600,
     fontSize: scaleSize(16),
     color: colors.primary,
     flex: 1,
-  }
+  },
 });
 
-export { SearchingFilter };
+export {SearchingFilter};

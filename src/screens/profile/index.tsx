@@ -3,6 +3,7 @@ import {BasicInfomation} from './screens/BasicInfomation';
 import {ChangePassword} from './screens/ChangePassword';
 import {ProfileLifeStyle} from './screens/ProfileLifeStyle';
 import {AccountSetting} from './screens/AccountSetting';
+import {SearchingFilter} from './screens/SearchingFilter';
 
 export {
   Profile,
@@ -10,4 +11,5 @@ export {
   ChangePassword,
   ProfileLifeStyle,
   AccountSetting,
+  SearchingFilter,
 };

@@ -11,6 +11,7 @@ import {VerifyCode} from './auth/VerifyCode';
 import {UserInformationGender} from './auth/UserInformationGender';
 import {LifeStyle} from './auth/LifeStyle';
 import {Preferences} from './auth/Preferences';
+import {UpdateNewPassword} from './auth/UpdateNewPassword';
 import {
   RoomUnitGallery,
   RoomUnitAddress,
@@ -21,25 +22,11 @@ import {
   ListLocations,
 } from './auth/RoomUnit';
 
-// Sign in Information
+// Sign up Agent
 import {
   AgencyInformationName,
   AgencyBasicInformation,
 } from './auth/UserInformation';
-
-//Authenticate - Tabbar
-import {Matches} from './homeowner/Matches';
-import {Liked} from './homeowner/Liked';
-import {Chat} from './homeowner/Chat';
-
-import {
-  Profile,
-  BasicInfomation,
-  ChangePassword,
-  ProfileLifeStyle,
-  AccountSetting,
-} from './homeowner/Profile';
-import {UpdateNewPassword} from './auth/UpdateNewPassword';
 
 // Room
 import {
@@ -50,8 +37,23 @@ import {
   RoomDetailGallery,
 } from './homeowner/Room';
 
+//HomeOwner - Tabbar
+import {Matches} from './homeowner/Matches';
+import {Liked} from './homeowner/Liked';
+import {Chat} from './homeowner/Chat';
+
+// Tenant
 import {MatchesTenant} from './tenant/Matches';
-import {SearchingFilter} from './tenant/Profile/screens/SearchingFilter';
+
+//Profile
+import {
+  Profile,
+  BasicInfomation,
+  ChangePassword,
+  ProfileLifeStyle,
+  AccountSetting,
+  SearchingFilter,
+} from './profile';
 
 export {
   ChooseRole,
@@ -85,14 +87,13 @@ export {
   ChangePassword,
   ProfileLifeStyle,
   AccountSetting,
+  SearchingFilter,
   // Room
   YourListing,
   RoomDetail,
   RoomDetailLocation,
   AddSuccess,
   RoomDetailGallery,
-  //Tenant
-  SearchingFilter,
   //Tenant
   MatchesTenant,
 };
