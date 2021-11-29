@@ -1,5 +1,6 @@
 import {
   bg_room_unit_picture,
+  IconChatFull,
   IconClear,
   IconDot,
   IconFilter,
@@ -64,11 +65,13 @@ const MatchesTenant = () => {
     return (
       <View key={index.toString()} style={styles.card}>
         <View>
-          <AppText style={styles.userName}>{'Mai Kim Tai'}</AppText>
+          <AppText style={styles.userName}>{'Amber Park'}</AppText>
           <View style={styles.subTitleView}>
-            <AppText style={styles.subTitle}>{'Teacher'}</AppText>
-            <IconDot iconFillColor={'white'} style={{marginHorizontal: 6}} />
-            <AppText style={styles.subTitle}>{'Singapore'}</AppText>
+            <IconPickLocation
+              iconFillColor={'white'}
+              style={{marginRight: 6}}
+            />
+            <AppText style={styles.subTitle}>{'1 Wallich St'}</AppText>
           </View>
         </View>
         <View style={styles.bottomView}>
@@ -76,13 +79,6 @@ const MatchesTenant = () => {
             <AppText style={styles.age}>{'Age'}</AppText>
             <AppText style={styles.subTitle}>{'29 - 40'}</AppText>
           </View>
-          <View
-            style={{
-              width: 1,
-              height: 26,
-              backgroundColor: 'white',
-            }}
-          />
           <View>
             <AppText style={styles.age}>{'Gender'}</AppText>
             <AppText style={styles.subTitle}>{'Male'}</AppText>
@@ -92,7 +88,7 @@ const MatchesTenant = () => {
         <FastImage
           style={styles.imageUser}
           source={{
-            uri: BASE_URL + '/videos/6c82c7892a2db755abcdd02ef9e11fc1',
+            uri: BASE_URL + '/images/6883c3d4ef08ff6890ccdf8a0a973cd1',
             priority: FastImage.priority.normal,
           }}
         />
@@ -361,6 +357,12 @@ const MatchesTenant = () => {
             style={styles.likeView}
             onPress={onLike}>
             <IconLike />
+          </TouchableOpacity>
+          <TouchableOpacity
+            activeOpacity={0.85}
+            style={styles.chatView}
+            onPress={onLike}>
+            <IconChatFull />
           </TouchableOpacity>
         </View>
       )}

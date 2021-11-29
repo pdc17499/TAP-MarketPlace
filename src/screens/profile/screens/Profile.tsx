@@ -81,7 +81,7 @@ const DATA = [
   {
     id: 5,
     title: 'Searching Filter',
-    icon: <IconFilter />,
+    icon: <IconFilter iconFillColor={colors.textFouthPrimary} />,
     screen: SEARCHING_FILTER,
     notRole: 'Agent, Homeowner',
   },
@@ -188,10 +188,10 @@ const Profile = (props: ProfileProp) => {
       <Pressable onPress={() => moveToDetail(item)}>
         <View style={styles.item}>
           {item.icon}
-          <AppText style={item.id === 5 ? styles.titleBold : styles.title}>
+          <AppText style={item.id === 10 ? styles.titleBold : styles.title}>
             {item.title}
           </AppText>
-          {item.id !== 5 && <CaretRight />}
+          {item.id !== 10 && <CaretRight />}
         </View>
       </Pressable>
     );

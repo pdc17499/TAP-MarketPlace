@@ -68,7 +68,7 @@ const AccountSetting = () => {
       contact: user?.contact,
     };
     console.log({body});
-    // dispatch(updateUserInfo({body, id: user?.id}));
+    dispatch(updateUserInfo({body, id: user?.id}));
   };
 
   const handleSubmit = () => {
