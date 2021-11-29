@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {createStackNavigator} from '@react-navigation/stack';
+import { createStackNavigator } from '@react-navigation/stack';
 import {
   VERIFY_ACCOUNT,
   VERIFY_CODE,
@@ -21,6 +21,7 @@ import {
   ROOM_DETAIL_GELLERY,
   ADD_SUCCESS,
   TABBAR,
+  AGENT_INFORMATION,
 } from '../routeName';
 
 import {
@@ -42,8 +43,9 @@ import {
   RoomDetailGallery,
   RoomUnitKindPlace,
   AddSuccess,
+  AgentInformation
 } from '../../screens';
-import {TenantBottomTabs} from './TenantBottomTabs';
+import { TenantBottomTabs } from './TenantBottomTabs';
 
 const Stack = createStackNavigator();
 const screenOptions = {
@@ -57,7 +59,7 @@ const AgentStack = () => {
       <Stack.Screen name={PROFILE} component={Profile} />
       <Stack.Screen name={VERIFY_ACCOUNT} component={VerifyAccount} />
       <Stack.Screen name={VERIFY_CODE} component={VerifyCode} />
-      <Stack.Screen name={BASIC_INFORMATION} component={BasicInfomation} />
+      <Stack.Screen name={AGENT_INFORMATION} component={AgentInformation} />
       <Stack.Screen name={CHANGE_PASSWORD} component={ChangePassword} />
       <Stack.Screen name={ACCOUNT_SETTING} component={AccountSetting} />
       <Stack.Screen name={PROFILE_LIFE_STYLE} component={ProfileLifeStyle} />

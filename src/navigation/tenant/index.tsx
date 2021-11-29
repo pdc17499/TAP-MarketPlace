@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {createStackNavigator} from '@react-navigation/stack';
+import { createStackNavigator } from '@react-navigation/stack';
 import {
   VERIFY_ACCOUNT,
   VERIFY_CODE,
@@ -45,7 +45,7 @@ import {
   AddSuccess,
   SearchingFilter,
 } from '../../screens';
-import {TenantBottomTabs} from './TenantBottomTabs';
+import { TenantBottomTabs } from './TenantBottomTabs';
 
 const Stack = createStackNavigator();
 const screenOptions = {
