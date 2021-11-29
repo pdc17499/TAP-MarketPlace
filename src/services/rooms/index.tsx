@@ -1,4 +1,4 @@
-import {DEVICE} from '@util';
+import { DEVICE } from '@util';
 import api from '../api';
 import {
   GET_LIST_ROOMS,
@@ -6,6 +6,8 @@ import {
   DELETE_ROOM,
   UPDATE_ROOM,
   UPLOAD_FILE,
+  GET_ROOM_TENANT,
+  UPDATE_ROOM_TENANT,
 } from './types';
 
 // room detail
@@ -47,7 +49,7 @@ export const uploadFile: any = async (image: any) => {
   const isHEIC =
     image?.sourceURL?.endsWith('.heic') || image?.sourceURL?.endsWith('.HEIC');
 
-  console.log({image});
+  console.log({ image });
   form.append(`file`, {
     fileName: image?.path.replace(/^.*[\\\/]/, ''),
     name: image?.path.replace(/^.*[\\\/]/, ''),
@@ -56,11 +58,10 @@ export const uploadFile: any = async (image: any) => {
     path: image?.path,
     size: image?.size,
     type: DEVICE.isIos
-      ? `image/${
-          isHEIC
-            ? image?.path.split('.')[0] + '.JPG'
-            : image?.path.split('.').pop()
-        }`
+      ? `image/${isHEIC
+        ? image?.path.split('.')[0] + '.JPG'
+        : image?.path.split('.').pop()
+      }`
       : image?.mime,
     height: image?.height,
   });
@@ -69,5 +70,16 @@ export const uploadFile: any = async (image: any) => {
       'Content-Type': 'multipart/form-data',
     },
   });
+  return response;
+};
+
+
+export const getRoomTenantApi: any = async () => {
+  const response = await api.get(GET_ROOM_TENANT);
+  return response;
+};
+
+export const updateRoomTenantApi: any = async (data: any) => {
+  const response = await api.patch(UPDATE_ROOM_TENANT, data);
   return response;
 };

@@ -306,7 +306,6 @@ const RoomDetailUnit = ({ props }: any) => {
             const index = list.amenities.findIndex(
               (itm: pickerProps) => item === itm.value,
             );
-
             return (
               <View style={styles.itemAmenity}>
                 {index !== -1 && list.amenities[index].icon}
@@ -394,9 +393,6 @@ const RoomDetailUnit = ({ props }: any) => {
                       'Number of Bathrooms',
                     )}
                   </>}
-
-
-
 
                 <AppModal
                   label={'Floor size'}

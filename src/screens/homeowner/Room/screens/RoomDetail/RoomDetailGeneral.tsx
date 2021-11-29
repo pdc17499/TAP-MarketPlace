@@ -50,8 +50,6 @@ const RoomDetailGeneral = ({ props }: any) => {
   const key = props;
   const ROOM: any = useSelector((state: any) => state?.rooms?.roomDetail);
   console.log('roo', ROOM);
-
-
   const dispatch = useDispatch();
   const navigation: any = useNavigation();
   const formRef = useRef<FormikValues>()
@@ -261,7 +259,6 @@ const RoomDetailGeneral = ({ props }: any) => {
                   stylePicker={'linear'}
                 // style={{ backgroundColor: 'red', with: '100%' }}
                 />
-
                 {room?.rental_type === 'Price range'
                   ? <AppModal
                     label={'Price range'}
@@ -285,7 +282,6 @@ const RoomDetailGeneral = ({ props }: any) => {
                     keyboardType={'number-pad'}
                     containerStyle={styles.inputStyle}
                     inputStyle={{ fontSize: scaleSize(18) }}
-                    autoFocus
                     typeInput={'price'}
                     error={propsFormik.errors.rental_price}
                   />}

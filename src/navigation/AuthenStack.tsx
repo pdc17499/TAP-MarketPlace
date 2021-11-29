@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {createStackNavigator} from '@react-navigation/stack';
+import { createStackNavigator } from '@react-navigation/stack';
 import {
   VERIFY_ACCOUNT,
   VERIFY_CODE,
@@ -21,6 +21,7 @@ import {
   ROOM_DETAIL_GELLERY,
   ADD_SUCCESS,
   TABBAR,
+  SEARCHING_FILTER,
 } from './routeName';
 
 import {
@@ -42,8 +43,9 @@ import {
   RoomDetailGallery,
   RoomUnitKindPlace,
   AddSuccess,
+  SearchingFilter
 } from '../screens';
-import {BottomTabs} from './BottomTabs';
+import { BottomTabs } from './BottomTabs';
 
 const Stack = createStackNavigator();
 const screenOptions = {
@@ -80,6 +82,9 @@ const AuthenStack = () => {
       <Stack.Screen name={ROOM_UNIT_TYPE_ROOM} component={RoomUnitTypeRoom} />
       <Stack.Screen name={ROOM_UNIT_PRICE} component={RoomUnitPrice} />
       <Stack.Screen name={ADD_SUCCESS} component={AddSuccess} />
+
+      {/* Tenant */}
+      <Stack.Screen name={SEARCHING_FILTER} component={SearchingFilter} />
     </Stack.Navigator>
   );
 };

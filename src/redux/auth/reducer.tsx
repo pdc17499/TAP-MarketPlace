@@ -14,6 +14,7 @@ export default function dataSave(state = INITIAL_STATE_AUTH, action: any) {
     case SAVE_DATA_USER:
       return {
         ...state,
+        typeUser: action?.payload?.role?.idType || state?.typeUser,
         user: action?.payload?.user || state?.user,
         token: action?.payload?.tokens || state?.token,
       };

@@ -1,16 +1,16 @@
 //UnAuthenticate
-import {ChooseRole} from './auth/ChooseRole';
-import {Welcome} from './auth/Welcome';
-import {SignIn} from './auth/SignIn';
-import {ResetPassword} from './auth/ResetPassword';
-import {SignUp} from './auth/SignUp';
-import {SignUpEmail} from './auth/SignUpEmail';
-import {UserInformationName} from './auth/UserInformationName';
-import {VerifyAccount} from './auth/VerifyAccount';
-import {VerifyCode} from './auth/VerifyCode';
-import {UserInformationGender} from './auth/UserInformationGender';
-import {LifeStyle} from './auth/LifeStyle';
-import {Preferences} from './auth/Preferences';
+import { ChooseRole } from './auth/ChooseRole';
+import { Welcome } from './auth/Welcome';
+import { SignIn } from './auth/SignIn';
+import { ResetPassword } from './auth/ResetPassword';
+import { SignUp } from './auth/SignUp';
+import { SignUpEmail } from './auth/SignUpEmail';
+import { UserInformationName } from './auth/UserInformationName';
+import { VerifyAccount } from './auth/VerifyAccount';
+import { VerifyCode } from './auth/VerifyCode';
+import { UserInformationGender } from './auth/UserInformationGender';
+import { LifeStyle } from './auth/LifeStyle';
+import { Preferences } from './auth/Preferences';
 import {
   RoomUnitGallery,
   RoomUnitAddress,
@@ -28,9 +28,9 @@ import {
 } from './auth/UserInformation';
 
 //Authenticate - Tabbar
-import {Matches} from './homeowner/Matches';
-import {Liked} from './homeowner/Liked';
-import {Chat} from './homeowner/Chat';
+import { Matches } from './homeowner/Matches';
+import { Liked } from './homeowner/Liked';
+import { Chat } from './homeowner/Chat';
 
 import {
   Profile,
@@ -39,7 +39,7 @@ import {
   ProfileLifeStyle,
   AccountSetting,
 } from './homeowner/Profile';
-import {UpdateNewPassword} from './auth/UpdateNewPassword';
+import { UpdateNewPassword } from './auth/UpdateNewPassword';
 
 // Room
 import {
@@ -49,6 +49,10 @@ import {
   AddSuccess,
   RoomDetailGallery,
 } from './homeowner/Room';
+
+import {
+  SearchingFilter
+} from './tenant/Profile/screens/SearchingFilter'
 
 export {
   ChooseRole,
@@ -88,4 +92,7 @@ export {
   RoomDetailLocation,
   AddSuccess,
   RoomDetailGallery,
+
+  //Tenant
+  SearchingFilter
 };

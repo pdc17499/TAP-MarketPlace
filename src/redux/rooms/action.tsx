@@ -11,6 +11,8 @@ import {
   UPDATE_ROOM,
   UPDATE_ROOM_REDUX,
   UPDATE_ROOM_GALLERY,
+  GET_ROOM_TENANT,
+  UPDATE_ROOM_TENANT,
 } from '@redux';
 
 
@@ -80,6 +82,16 @@ export const uploadFile = (payload: any) => ({
 export const updateRoomGallery = (payload: Array<string>) => ({
   type: UPDATE_ROOM_GALLERY,
   payload,
+});
+
+
+export const getRoomTenant = () => ({
+  type: GET_ROOM_TENANT,
+});
+
+export const updateRoomTenant = (payload: any) => ({
+  type: UPDATE_ROOM_TENANT,
+  payload
 });
 
 

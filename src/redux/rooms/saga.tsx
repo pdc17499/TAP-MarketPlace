@@ -8,6 +8,8 @@ import {
   deleteRoomApi,
   updateRoomApi,
   uploadFileApi,
+  getRoomTenantApi,
+  updateRoomTenantApi,
 } from '@services';
 
 import { showMessage } from 'react-native-flash-message';
@@ -22,6 +24,8 @@ import {
   DELETE_ROOM,
   UPDATE_ROOM,
   UPLOAD_FILE,
+  GET_ROOM_TENANT,
+  UPDATE_ROOM_TENANT
 } from '@redux';
 export interface ResponseGenerator2 {
   result?: any;
@@ -120,6 +124,41 @@ export function* updateRoomSaga(action: any) {
   }
 }
 
+
+export function* getRoomTenantSaga() {
+  try {
+    GlobalService.showLoading();
+    const result: ResponseGenerator2 = yield getRoomTenantApi();
+    console.log('hello', result?.data);
+    if (result) {
+      console.log('ress', result);
+      yield put(setRoomDetail(result?.data[0]));
+    }
+  } catch (error) {
+    GlobalService.hideLoading();
+  } finally {
+    GlobalService.hideLoading();
+  }
+}
+
+export function* updateRoomTenantSaga() {
+  try {
+    GlobalService.showLoading();
+    const result: ResponseGenerator2 = yield updateRoomTenantApi();
+    console.log('hello', result?.data);
+
+    if (result) {
+      console.log('ress', result);
+      yield put(setRoomDetail(result?.data));
+    }
+  } catch (error) {
+    GlobalService.hideLoading();
+  } finally {
+    GlobalService.hideLoading();
+  }
+}
+
+
 // export function* upLoadFileSaga(action: any) {
 //   try {
 //     GlobalService.showLoading();
@@ -145,5 +184,9 @@ export function* roomsSaga() {
   yield takeLatest(DELETE_ROOM, deleteRoomSaga);
   yield takeLatest(UPDATE_ROOM, updateRoomSaga);
   // yield takeLatest(UPLOAD_FILE, upLoadFileSaga);
+
+  yield takeLatest(GET_ROOM_TENANT, getRoomTenantSaga);
+  yield takeLatest(UPDATE_ROOM_TENANT, updateRoomTenantSaga);
+
 
 }

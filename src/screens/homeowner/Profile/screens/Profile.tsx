@@ -1,5 +1,5 @@
-import {AppText} from '@component';
-import React, {useEffect, useState} from 'react';
+import { AppText } from '@component';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Image,
@@ -7,9 +7,9 @@ import {
   Pressable,
   DeviceEventEmitter,
 } from 'react-native';
-import {useDispatch} from 'react-redux';
-import {getProfileUser, logoutApp, updateUserInfo} from '@redux';
-import {useSelector} from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { getProfileUser, logoutApp, updateUserInfo } from '@redux';
+import { useSelector } from 'react-redux';
 import {
   IconHouseLine,
   IconUser,
@@ -19,15 +19,17 @@ import {
   IconShieldCheck,
   IconLogOut,
   avatar_default,
+  IconFilter,
 } from '@assets';
 import ImagePicker from 'react-native-image-crop-picker';
 import {
   ACCOUNT_SETTING,
   BASIC_INFORMATION,
   PROFILE_LIFE_STYLE,
+  SEARCHING_FILTER,
   YOUR_LISTING,
 } from '@routeName';
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import {
   colors,
   fontFamily,
@@ -37,10 +39,10 @@ import {
   scaleWidth,
   SIZE,
 } from '@util';
-import {StyleSheet} from 'react-native';
-import {useActionSheet} from '@expo/react-native-action-sheet';
-import {GlobalService, uploadFile} from '@services';
-interface ProfileProp {}
+import { StyleSheet } from 'react-native';
+import { useActionSheet } from '@expo/react-native-action-sheet';
+import { GlobalService, uploadFile } from '@services';
+interface ProfileProp { }
 
 interface screenNavigationProp {
   navigate: any;
@@ -70,20 +72,53 @@ const DATA = [
     icon: <IconSetting />,
     screen: ACCOUNT_SETTING,
   },
+  // {
+  //   id: 5,
+  //   title: 'Verify my account',
+  //   icon: <IconShieldCheck />,
+  // },
+];
+
+const DATA2 = [
   {
-    id: 5,
-    title: 'Verify my account',
-    icon: <IconShieldCheck />,
+    id: 1,
+    title: 'Basic Infomation',
+    icon: <IconUser />,
+    screen: BASIC_INFORMATION,
   },
+  {
+    id: 2,
+    title: 'Lifestyle & Preferences',
+    icon: <IconThumbsUp />,
+    screen: PROFILE_LIFE_STYLE,
+  },
+  {
+    id: 3,
+    title: 'Searching Filter',
+    icon: <IconFilter />,
+    screen: SEARCHING_FILTER,
+  },
+  {
+    id: 4,
+    title: 'Account Setting',
+    icon: <IconSetting />,
+    screen: ACCOUNT_SETTING,
+  },
+  // {
+  //   id: 5,
+  //   title: 'Verify my account',
+  //   icon: <IconShieldCheck />,
+  // },
 ];
 
 const Profile = (props: ProfileProp) => {
   const navigation = useNavigation<screenNavigationProp>();
   const USER = useSelector((state: any) => state.auth.user);
-  // const USER = INITIAL_STATE_DATA_SIGN_UP
+  const TYPE_USER = useSelector((state: any) => state.auth.typeUser);
+  console.log('TYPE', TYPE_USER);
   console.log('INFO', USER);
   const dispatch = useDispatch();
-  const {showActionSheetWithOptions} = useActionSheet();
+  const { showActionSheetWithOptions } = useActionSheet();
 
   useEffect(() => {
     DeviceEventEmitter.addListener('UNAUTHENTICATION', logOut);
@@ -110,7 +145,7 @@ const Profile = (props: ProfileProp) => {
       },
       buttonIndex => {
         // Do something here depending on the button index selected
-        console.log({buttonIndex});
+        console.log({ buttonIndex });
         if (buttonIndex === 0) {
           uploadPhotos();
         } else if (buttonIndex === 1) {
@@ -150,7 +185,7 @@ const Profile = (props: ProfileProp) => {
       const body = {
         image: url,
       };
-      dispatch(updateUserInfo({body, id: USER?.id}));
+      dispatch(updateUserInfo({ body, id: USER?.id }));
     }
   };
 
@@ -160,7 +195,7 @@ const Profile = (props: ProfileProp) => {
     }
   };
 
-  const renderItem = ({item}: any) => (
+  const renderItem = ({ item }: any) => (
     <Pressable onPress={() => moveToDetail(item)}>
       <View style={styles.item}>
         {item.icon}
@@ -171,14 +206,12 @@ const Profile = (props: ProfileProp) => {
       </View>
     </Pressable>
   );
-
-  console.log({USER});
-
+  console.log({ USER });
   const ListHeaderComponent = () => (
     <>
       <Pressable onPress={openGallery}>
         <Image
-          source={USER?.image ? {uri: USER?.image} : avatar_default}
+          source={USER?.image ? { uri: USER?.image } : avatar_default}
           style={styles.avatar}
         />
       </Pressable>
@@ -205,7 +238,7 @@ const Profile = (props: ProfileProp) => {
       <FlatList
         style={styles.body}
         showsVerticalScrollIndicator={false}
-        data={DATA}
+        data={TYPE_USER === 'Tenant' ? DATA2 : DATA}
         renderItem={renderItem}
         keyExtractor={(item: any) => item.id}
         ListHeaderComponent={ListHeaderComponent}
@@ -273,7 +306,6 @@ const styles = StyleSheet.create({
     marginLeft: scaleWidth(20),
     flex: 1,
   },
-
   item: {
     flexDirection: 'row',
     justifyContent: 'center',
@@ -301,4 +333,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export {Profile};
+export { Profile };
