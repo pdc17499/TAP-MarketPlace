@@ -49,6 +49,7 @@ import {
   AddSuccess,
   RoomDetailGallery,
 } from './homeowner/Room';
+import { MatchesTenant } from './tenant/Matches';
 
 import {
   SearchingFilter
@@ -95,4 +96,6 @@ export {
 
   //Tenant
   SearchingFilter
+  //Tenant
+  MatchesTenant,
 };

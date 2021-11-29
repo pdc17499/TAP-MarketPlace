@@ -23,7 +23,7 @@ import {
   IconWorking,
 } from '../assets';
 import React from 'react';
-import { colors } from '@util';
+import {colors} from '@util';
 
 export const ROOM_UNIT_HOWNER = {
   kind_place: [
@@ -576,76 +576,64 @@ export const ROOM_UNIT_HOWNER = {
     {
       value: 'Live with partner',
       label: 'Live with partner',
-      icon: <IconPartner />,
-      iconSelected: <IconPartner iconFillColor={colors.textPrimary} />,
+      icon: IconPartner,
     },
     {
       value: 'Live with kids',
       label: 'Live with kids',
-      icon: <IconKids />,
-      iconSelected: <IconKids iconFillColor={colors.textPrimary} />,
+      icon: IconKids,
     },
     {
       value: 'Working',
       label: 'Working',
-      icon: <IconWorking />,
-      iconSelected: <IconWorking iconFillColor={colors.textPrimary} />,
+      icon: IconWorking,
     },
     {
       value: 'Vegetarian',
       label: 'Vegetarian',
-      icon: <IconVegetarian />,
-      iconSelected: <IconVegetarian iconFillColor={colors.textPrimary} />,
+      icon: IconVegetarian,
     },
     {
       value: 'Own pets',
       label: 'Own pets',
-      icon: <IconOwnPets />,
-      iconSelected: <IconOwnPets iconFillColor={colors.textPrimary} />,
+      icon: IconOwnPets,
     },
     {
       value: 'Smoking',
       label: 'Smoking',
-      icon: <IconSmoking />,
-      iconSelected: <IconSmoking iconFillColor={colors.textPrimary} />,
+      icon: IconSmoking,
     },
   ],
   preferences: [
     {
       value: 'Allow guests',
       label: 'Live with partner',
-      icon: <IconAllowGuests />,
-      iconSelected: <IconAllowGuests iconFillColor={colors.textPrimary} />,
+      icon: IconAllowGuests,
     },
     {
       value: 'Allow smoking',
       label: 'Allow smoking',
-      icon: <IconSmoking />,
-      iconSelected: <IconSmoking iconFillColor={colors.textPrimary} />,
+      icon: IconSmoking,
     },
     {
       value: 'Pet friendly',
       label: 'Pet friendly',
-      icon: <IconOwnPets />,
-      iconSelected: <IconOwnPets iconFillColor={colors.textPrimary} />,
+      icon: IconOwnPets,
     },
     {
       value: 'Diversity friendly',
       label: 'Diversity friendly',
-      icon: <IconDiversity />,
-      iconSelected: <IconDiversity iconFillColor={colors.textPrimary} />,
+      icon: IconDiversity,
     },
     {
       value: 'Female only',
       label: 'Female only',
-      icon: <IconFemale />,
-      iconSelected: <IconFemale iconFillColor={colors.textPrimary} />,
+      icon: IconFemale,
     },
     {
       value: 'Student',
       label: 'Student',
-      icon: <IconStudent />,
-      iconSelected: <IconStudent iconFillColor={colors.textPrimary} />,
+      icon: IconStudent,
     },
   ],
   agency_name: [

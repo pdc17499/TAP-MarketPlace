@@ -23,7 +23,7 @@ import {
   PREFERENCES,
   AGENCY_INFORMATION_NAME,
   AGENCY_BASIC_INFORMATION,
-} from './routeName';
+} from '../routeName';
 
 import {
   ChooseRole,
@@ -47,7 +47,7 @@ import {
   Preferences,
   AgencyInformationName,
   AgencyBasicInformation,
-} from '../screens';
+} from '../../screens';
 
 const Stack = createStackNavigator();
 const screenOptions = {

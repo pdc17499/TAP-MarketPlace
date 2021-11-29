@@ -153,20 +153,24 @@ export interface AppQAProps {
   title?: string;
   subTitle?: string;
   titleHighlight?: Array<string>;
-  value: any;
-  setValue: any;
+  value?: any;
+  setValue?: any;
   typeList?: 'column' | 'row' | 'wrap' | 'even';
   isMultiChoice?: boolean;
   children?: ReactElement;
   customStyleTitle?: TextStyle;
   customStyleTitleButton?: TextStyle;
   customStyleViewButton?: ViewStyle;
-  customStyleButton?: any;
-  name: string;
+  customStyleButton?: ViewStyle | ViewStyle[];
+  name?: string;
   isFlex?: boolean;
   error?: string;
   typeTitle?: 'base' | 'center-mix' | 'other';
   showIconLeft?: any;
+  widthLeftIcon?: number;
+  heightLeftIcon?: number;
+  fillColorIcon?: string;
+  disabled?: boolean
 }
 
 export interface UserInfo {

@@ -74,11 +74,12 @@ const SignUpEmail = (props: SignUpEmailProp) => {
 
   const hanldeSubmit = () => {
     console.log(state);
+    const isPriceRange = state?.rental_price?.value === 'Price range';
     const RentalPrice = {
       type: state?.rental_price?.value,
-      Min: state?.min_range_price,
-      Max: state?.max_range_price,
-      Price: parseInt(state?.negotiable_price || '0'),
+      Min: isPriceRange ? state?.min_range_price : 0,
+      Max: isPriceRange ? state?.max_range_price : 0,
+      Price: isPriceRange ? 0 : parseInt(state?.negotiable_price || '0'),
     };
 
     const BudgetPrice = {

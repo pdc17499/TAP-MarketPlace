@@ -5,6 +5,7 @@ export type AuthState = {
   loading: boolean;
   user: any;
   token: any;
+  role: any;
   showIntroScreen: boolean;
   typeUser: 'Homeowner' | 'Tenant' | 'Agent';
   dataSignup: DataSignupProps;
@@ -65,6 +66,7 @@ export const INITIAL_STATE_AUTH: AuthState = {
   loading: false,
   user: null,
   token: null,
+  role: null,
   showIntroScreen: true,
   typeUser: 'Homeowner',
   dataSignup: INITIAL_STATE_DATA_SIGN_UP,

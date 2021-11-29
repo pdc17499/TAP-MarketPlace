@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { createStackNavigator } from '@react-navigation/stack';
+import {createStackNavigator} from '@react-navigation/stack';
 import {
   VERIFY_ACCOUNT,
   VERIFY_CODE,
@@ -21,8 +21,7 @@ import {
   ROOM_DETAIL_GELLERY,
   ADD_SUCCESS,
   TABBAR,
-  SEARCHING_FILTER,
-} from './routeName';
+} from '../routeName';
 
 import {
   RoomUnitGallery,
@@ -43,19 +42,18 @@ import {
   RoomDetailGallery,
   RoomUnitKindPlace,
   AddSuccess,
-  SearchingFilter
-} from '../screens';
-import { BottomTabs } from './BottomTabs';
+} from '../../screens';
+import {TenantBottomTabs} from './TenantBottomTabs';
 
 const Stack = createStackNavigator();
 const screenOptions = {
   headerShown: false,
 };
 
-const AuthenStack = () => {
+const AgentStack = () => {
   return (
     <Stack.Navigator screenOptions={screenOptions}>
-      <Stack.Screen name={TABBAR} component={BottomTabs} />
+      <Stack.Screen name={TABBAR} component={TenantBottomTabs} />
       <Stack.Screen name={PROFILE} component={Profile} />
       <Stack.Screen name={VERIFY_ACCOUNT} component={VerifyAccount} />
       <Stack.Screen name={VERIFY_CODE} component={VerifyCode} />
@@ -81,11 +79,8 @@ const AuthenStack = () => {
       <Stack.Screen name={ROOM_UNIT_TYPE_ROOM} component={RoomUnitTypeRoom} />
       <Stack.Screen name={ROOM_UNIT_PRICE} component={RoomUnitPrice} />
       <Stack.Screen name={ADD_SUCCESS} component={AddSuccess} />
-
-      {/* Tenant */}
-      <Stack.Screen name={SEARCHING_FILTER} component={SearchingFilter} />
     </Stack.Navigator>
   );
 };
 
-export default AuthenStack;
+export default AgentStack;

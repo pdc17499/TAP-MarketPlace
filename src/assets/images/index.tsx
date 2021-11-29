@@ -19,4 +19,5 @@ export {
   bg_room_unit_picture,
   avatar_default,
   searching,
+  room_sample,
 };

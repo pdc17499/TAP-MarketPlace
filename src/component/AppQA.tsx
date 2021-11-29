@@ -25,6 +25,10 @@ const AppQA = React.memo((props: AppQAProps) => {
     error,
     titleHighlight,
     showIconLeft,
+    widthLeftIcon = 36,
+    heightLeftIcon = 36,
+    fillColorIcon,
+    disabled,
   } = props;
   const listStyle = typeList === 'column' ? {} : styles.listRow;
   const itemStyle =
@@ -48,15 +52,16 @@ const AppQA = React.memo((props: AppQAProps) => {
       ? [styles.mixTitle, customStyleTitle]
       : [styles.title, customStyleTitle];
 
-  const selected = value
-    ? isMultiChoice
-      ? value[name]
-        ? [...value[name]]
-        : []
-      : value[name]
-      ? {...value[name]}
-      : {}
-    : null;
+  const selected =
+    value && name
+      ? isMultiChoice
+        ? value[name]
+          ? [...value[name]]
+          : []
+        : value[name]
+        ? {...value[name]}
+        : {}
+      : null;
 
   const styleViewButton = [
     customStyleViewButton,
@@ -69,6 +74,8 @@ const AppQA = React.memo((props: AppQAProps) => {
 
   const onChangeValue = (item: mockProps, isActive: boolean) => {
     let nValue: any = {...value};
+
+    if (!name) return;
 
     if (isMultiChoice) {
       if (isActive) {
@@ -101,8 +108,19 @@ const AppQA = React.memo((props: AppQAProps) => {
   };
 
   const renderIconLeft = (item: mockProps, isActive: boolean) => {
-    const icon = item?.icon ? item.icon : null;
-    return item?.iconSelected && isActive ? item?.iconSelected : icon;
+    const SourceIcon = item?.icon ? item.icon : null;
+    const iconFillColor = fillColorIcon
+      ? fillColorIcon
+      : isActive
+      ? colors.textPrimary
+      : colors.textSecondPrimary;
+    return (
+      <SourceIcon
+        iconFillColor={iconFillColor}
+        width={widthLeftIcon}
+        height={heightLeftIcon}
+      />
+    );
   };
 
   return (
@@ -135,6 +153,7 @@ const AppQA = React.memo((props: AppQAProps) => {
                 title={item.value}
                 customStyleButton={[itemStyle, customStyleButton]}
                 customStyleTitle={customStyleTitleButton}
+                disabled={disabled}
               />
               {isActive && children}
             </View>
