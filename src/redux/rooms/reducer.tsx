@@ -10,6 +10,7 @@ import {
 } from './type';
 import { INITIAL_STATE_ROOMS } from './state';
 import _ from 'lodash';
+import { RESET_DATA_ROOM } from '@redux';
 
 export default function dataSave(state = INITIAL_STATE_ROOMS, action: any) {
   switch (action.type) {
@@ -42,6 +43,13 @@ export default function dataSave(state = INITIAL_STATE_ROOMS, action: any) {
     case UPDATE_ROOM_GALLERY:
       state.roomDetail.PicturesVideo = action?.payload
       return { ...state, roomDetail: { ...state.roomDetail } };
+
+    case RESET_DATA_ROOM:
+      return {
+        ...state,
+        listRooms: [],
+        roomDetail: null
+      };
 
     default:
       return state;

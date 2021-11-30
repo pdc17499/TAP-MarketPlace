@@ -66,7 +66,7 @@ const RoomDetailUnit = ({ props }: any) => {
   const navigation: any = useNavigation();
   const dispatch = useDispatch();
   const ROOM: any = useSelector((state: any) => state?.rooms?.roomDetail);
-  const formRef = useRef<FormikValues>()
+  const formRef: any = useRef<FormikValues>()
   const [room, setRoom] = useState({
     room_type: ROOM?.RoomDetails?.RoomType,
     bedroom_number: ROOM?.RoomDetails?.BedroomNumber,
@@ -83,7 +83,7 @@ const RoomDetailUnit = ({ props }: any) => {
   });
   const [visible, setVisible] = useState(false);
 
-
+  const isRoomType = room?.room_type === 'Room';
 
   const openModal = () => {
     setVisible(true);
@@ -336,9 +336,9 @@ const RoomDetailUnit = ({ props }: any) => {
         "PlaceType": ROOM?.PlaceType,
         "RoomDetails": {
           "RoomType": room?.room_type,
-          "BedroomNumber": room?.bedroom_number,
-          "BathroomNumber": room?.bathroom_number,
-          "AttachedBathroom": room?.attached_bathroom === 'Yes',
+          "BedroomNumber": isRoomType ? 0 : room?.bedroom_number,
+          "BathroomNumber": isRoomType ? 0 : room?.bathroom_number,
+          "AttachedBathroom": isRoomType ? (room?.attached_bathroom === 'Yes') : false,
           "StayWithGuest": ROOM?.RoomDetails?.StayWithGuest,
           "AllowCook": room?.allow_cooking === 'Yes',
           "KeyWords": room?.amenities,

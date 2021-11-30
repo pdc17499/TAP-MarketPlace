@@ -45,7 +45,7 @@ import {
   AddSuccess,
   AgentInformation
 } from '../../screens';
-import { TenantBottomTabs } from './TenantBottomTabs';
+import { AgentBottomTabs } from './AgentBottomTabs';
 
 const Stack = createStackNavigator();
 const screenOptions = {
@@ -55,7 +55,7 @@ const screenOptions = {
 const AgentStack = () => {
   return (
     <Stack.Navigator screenOptions={screenOptions}>
-      {/* <Stack.Screen name={TABBAR} component={TenantBottomTabs} /> */}
+      <Stack.Screen name={TABBAR} component={AgentBottomTabs} />
       <Stack.Screen name={PROFILE} component={Profile} />
       <Stack.Screen name={VERIFY_ACCOUNT} component={VerifyAccount} />
       <Stack.Screen name={VERIFY_CODE} component={VerifyCode} />

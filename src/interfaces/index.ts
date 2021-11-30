@@ -170,7 +170,7 @@ export interface AppQAProps {
   widthLeftIcon?: number;
   heightLeftIcon?: number;
   fillColorIcon?: string;
-  disabled?: boolean
+  disabled?: boolean;
 }
 
 export interface UserInfo {
@@ -196,7 +196,17 @@ export interface UserInfo {
   updatedAt: string;
   preferences: Array<string>;
   isContactVerified?: boolean;
+  agencyName: string;
+  licenseNumber: string;
+  salespersonNumber: string;
 }
+
+// export interface AgentInfo {
+//   name: string;
+//   agencyName: string;
+//   licenseNumber: string;
+//   salespersonNumber: string;
+// }
 
 export interface ListRooms {
   LeasePeriod: any;

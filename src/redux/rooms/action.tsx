@@ -13,6 +13,7 @@ import {
   UPDATE_ROOM_GALLERY,
   GET_ROOM_TENANT,
   UPDATE_ROOM_TENANT,
+  RESET_DATA_ROOM,
 } from '@redux';
 
 
@@ -92,6 +93,10 @@ export const getRoomTenant = () => ({
 export const updateRoomTenant = (payload: any) => ({
   type: UPDATE_ROOM_TENANT,
   payload
+});
+
+export const resetDataRoom = () => ({
+  type: RESET_DATA_ROOM,
 });
 
 

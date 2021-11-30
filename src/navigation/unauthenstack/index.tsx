@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {createStackNavigator} from '@react-navigation/stack';
+import { createStackNavigator } from '@react-navigation/stack';
 import {
   CHOOSE_ROLE,
   RESETPASSWORD,
@@ -23,6 +23,7 @@ import {
   PREFERENCES,
   AGENCY_INFORMATION_NAME,
   AGENCY_BASIC_INFORMATION,
+  INTRODUCE_HOMEOWNER,
 } from '../routeName';
 
 import {
@@ -47,6 +48,7 @@ import {
   Preferences,
   AgencyInformationName,
   AgencyBasicInformation,
+  IntroduceHomeowner
 } from '../../screens';
 
 const Stack = createStackNavigator();
@@ -93,6 +95,9 @@ const UnAuthenStack = () => {
       />
       <Stack.Screen name={VERIFY_CODE} component={VerifyCode} />
       <Stack.Screen name={VERIFY_ACCOUNT} component={VerifyAccount} />
+
+      <Stack.Screen name={INTRODUCE_HOMEOWNER} component={IntroduceHomeowner} />
+
     </Stack.Navigator>
   );
 };

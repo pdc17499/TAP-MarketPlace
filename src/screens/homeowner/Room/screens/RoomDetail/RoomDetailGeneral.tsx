@@ -7,25 +7,25 @@ import {
   AppText,
   ModalCheckedBox,
 } from '@component';
-import React, {useState, useRef} from 'react';
-import {View, Image, Pressable, StyleSheet, ScrollView} from 'react-native';
+import React, { useState, useRef } from 'react';
+import { View, Image, Pressable, StyleSheet, ScrollView } from 'react-native';
 import {
   IconDelete,
   IconDola,
   IconEyeCloseFullFill,
   IconEyeOpenFullFill,
 } from '@assets';
-import {colors, DEVICE, fontFamily, scaleSize, SIZE, validateForm} from '@util';
-import {useNavigation} from '@react-navigation/core';
-import {Formik, FormikValues} from 'formik';
-import {ROOM_UNIT_HOWNER} from '@mocks';
+import { colors, DEVICE, fontFamily, scaleSize, SIZE, validateForm } from '@util';
+import { useNavigation } from '@react-navigation/core';
+import { Formik, FormikValues } from 'formik';
+import { ROOM_UNIT_HOWNER } from '@mocks';
 import * as yup from 'yup';
-import {ROOM_DETAIL_LOCATION} from '@routeName';
+import { ROOM_DETAIL_LOCATION } from '@routeName';
 import ToggleSwitch from 'toggle-switch-react-native';
-import {useDispatch, useSelector} from 'react-redux';
-import {deleteRoom, updateRoom} from '@redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { deleteRoom, updateRoom } from '@redux';
 
-const RoomDetailGeneral = ({props}: any) => {
+const RoomDetailGeneral = ({ props }: any) => {
   const key = props;
   const ROOM: any = useSelector((state: any) => state?.rooms?.roomDetail);
   console.log('roo', ROOM);
@@ -69,29 +69,29 @@ const RoomDetailGeneral = ({props}: any) => {
   const onChangeText = (value: any, name?: string) => {
     console.log('ss', value, name);
 
-    const nRoom: any = {...room};
+    const nRoom: any = { ...room };
     if (name) {
       nRoom[name] = value;
       setRoom(nRoom);
-      console.log({value});
+      console.log({ value });
     }
   };
 
   const onValuesChangeFinish = (values: any) => {
-    console.log({values});
-    const nRoom: any = {...room};
+    console.log({ values });
+    const nRoom: any = { ...room };
     nRoom['min_range_price'] = values[0];
     nRoom['max_range_price'] = values[1];
     setRoom(nRoom);
   };
 
   const onLocation = (locate: string) => {
-    navigation.navigate(ROOM_DETAIL_LOCATION, {locate, onChangeText});
+    navigation.navigate(ROOM_DETAIL_LOCATION, { locate, onChangeText });
   };
 
   const renderPriceTitle = (values: any) => {
     return (
-      <View style={{flexDirection: 'row', alignItems: 'center'}}>
+      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
         <IconDola width={10} height={15} iconFillColor={colors.secondPrimary} />
         <AppText
           isPrice
@@ -167,15 +167,15 @@ const RoomDetailGeneral = ({props}: any) => {
   const renderPeriod = (period: Array<string>) => {
     if (period?.length > 0) {
       return (
-        <View style={{flexDirection: 'row'}}>
+        <View style={{ flexDirection: 'row' }}>
           {period.map((item: string, index: number) => {
             if (index === 0)
               return (
-                <AppText style={styles.period}>{`${item} months`}</AppText>
+                <AppText style={styles.period}>{`${item}`}</AppText>
               );
             else
               return (
-                <AppText style={styles.period}>{` - ${item} months`}</AppText>
+                <AppText style={styles.period}>{` - ${item}`}</AppText>
               );
           })}
         </View>
@@ -186,8 +186,8 @@ const RoomDetailGeneral = ({props}: any) => {
   return (
     <>
       <ScrollView
-        style={{flex: 1}}
-        contentContainerStyle={{paddingBottom: SIZE.big_space + SIZE.padding}}
+        style={{ flex: 1 }}
+        contentContainerStyle={{ paddingBottom: SIZE.big_space + SIZE.padding }}
         showsVerticalScrollIndicator={false}>
         <View style={styles.line} />
         <Formik
@@ -219,8 +219,8 @@ const RoomDetailGeneral = ({props}: any) => {
                   label={'Lease Period'}
                   data={
                     propsFormik.values.kind_place === 'HDB'
-                      ? list.lease_your_place_hdb_new
-                      : list.lease_your_place_new
+                      ? list.lease_your_place_hdb
+                      : list.lease_your_place
                   }
                   name={'lease_period'}
                   selected={propsFormik.values.lease_period}
@@ -240,7 +240,7 @@ const RoomDetailGeneral = ({props}: any) => {
                   items={list.rental_price}
                   error={propsFormik.errors.rental_price}
                   stylePicker={'linear'}
-                  // style={{ backgroundColor: 'red', with: '100%' }}
+                // style={{ backgroundColor: 'red', with: '100%' }}
                 />
 
                 {room?.rental_type === 'Price range' ? (
@@ -300,7 +300,7 @@ const RoomDetailGeneral = ({props}: any) => {
                     <IconEyeOpenFullFill />
                   )}
 
-                  <View style={{marginLeft: 10, marginRight: 3}}>
+                  <View style={{ marginLeft: 10, marginRight: 3 }}>
                     <ToggleSwitch
                       isOn={propsFormik.values.room_active}
                       onColor="#2A6B58"
@@ -374,4 +374,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export {RoomDetailGeneral};
+export { RoomDetailGeneral };

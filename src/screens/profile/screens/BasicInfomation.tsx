@@ -20,11 +20,11 @@ import {
   validateForm,
 } from '@util';
 import * as yup from 'yup';
-import {Formik} from 'formik';
-import {ROOM_UNIT_HOWNER} from '@mocks';
-import {UserInfo} from '@interfaces';
-import {saveDataUser, updateUserInfo} from '@redux';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import { Formik } from 'formik';
+import { ROOM_UNIT_HOWNER } from '@mocks';
+import { UserInfo } from '@interfaces';
+import { saveDataUser, updateUserInfo } from '@redux';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import moment from 'moment';
 import { CaretRight } from '@assets';
@@ -40,7 +40,7 @@ const BasicInfomation = () => {
     setUser(dataUser);
   }, [dataUser]);
 
-  console.log({user});
+  console.log({ user });
 
   const formateDateServer = (date: any) => {
     if (date) {
@@ -62,15 +62,15 @@ const BasicInfomation = () => {
 
   const validationForm = yup.object().shape({
     name: validateForm().common.reuqire,
-    gender: validateForm().common.atLeastOnePicker,
-    nationality: validateForm().common.selectAtLeast,
+    // gender: validateForm().common.atLeastOnePicker,
+    // nationality: validateForm().common.selectAtLeast,
     // ageGroup: validateForm().common.atLeastOnePicker,
     // dob: validateForm().common.reuqire,
   });
 
   const onChangeValue = (item: any, name?: string) => {
     if (name) {
-      const nData: any = {...user};
+      const nData: any = { ...user };
       nData[name] = item;
       setUser(nData);
     }
@@ -100,16 +100,23 @@ const BasicInfomation = () => {
   };
 
   const onSubmit = () => {
-    const body = {
-      name: user?.name,
-      nationality: user?.nationality,
-      occupation: user?.occupation,
-      ethnicity: user?.ethnicity,
-      gender: user?.gender || '',
-      ageGroup: user?.ageGroup || '',
-      dob: formateDate(user?.dob),
-    };
 
+    let body: any = {
+      name: user?.name,
+      // nationality: user?.nationality,
+      // occupation: user?.occupation,
+      // ethnicity: user?.ethnicity,
+      // gender: user?.gender || '',
+      // ageGroup: user?.ageGroup || '',
+      // dob: formateDate(user?.dob),
+    };
+    if (user?.nationality) body = { ...body, nationality: user?.nationality }
+    if (user?.occupation) body = { ...body, occupation: user?.occupation }
+    if (user?.ethnicity) body = { ...body, ethnicity: user?.ethnicity }
+    if (user?.gender) body = { ...body, gender: user?.gender }
+    if (user?.ageGroup && user?.ageGroup !== 'N/A') body = { ...body, ageGroup: user?.ageGroup }
+    if (user?.dob) body = { ...body, dob: formateDate(user?.dob) }
+    console.log('bbb', body)
     dispatch(updateUserInfo({ body, id: user?.id }));
   };
 
@@ -170,7 +177,7 @@ const BasicInfomation = () => {
                     <Pressable
                       hitSlop={STYLE.hitSlop}
                       onPress={showDatepicker}
-                      style={{marginTop: SIZE.padding}}>
+                      style={{ marginTop: SIZE.padding }}>
                       {!props.values.dob ? (
                         renderCustomPlaceHolder('date of birth')
                       ) : (

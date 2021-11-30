@@ -45,6 +45,9 @@ import { Chat } from './homeowner/Chat';
 // Tenant
 import { MatchesTenant } from './tenant/Matches';
 
+//Agent
+import { IntroduceHomeowner } from './agent/Screens';
+
 //Profile
 import {
   Profile,
@@ -99,5 +102,7 @@ export {
   MatchesTenant,
 
   //Agent
-  AgentInformation
+  AgentInformation,
+  IntroduceHomeowner
+
 };

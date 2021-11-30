@@ -21,32 +21,33 @@ import { Formik } from 'formik';
 import { ROOM_UNIT_HOWNER } from '@mocks';
 import { UserInfo } from '@interfaces';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { updateUserInfo } from '@redux';
 
 const AgentInformation = () => {
   const dispatch = useDispatch();
   const list = ROOM_UNIT_HOWNER;
-  const [user, setUser] = useState<any>();
-  const dataUser: UserInfo = useSelector((state: any) => state?.auth?.user);
+  const [user, setUser] = useState<UserInfo>();
+  const dataUser: any = useSelector((state: any) => state?.auth?.user);
   const [showDate, setShowDate] = useState(false);
 
   useEffect(() => {
     setUser(dataUser);
   }, [dataUser]);
 
-  console.log({ user });
+  // console.log({ user });
 
   const formInitialValues = {
     name: user?.name,
-    agency_name: user?.agencyName,
-    license_number: user?.licenseNumber,
-    sales_number: user?.salespersonNumber,
+    agencyName: user?.agencyName,
+    licenseNumber: user?.licenseNumber,
+    salespersonNumber: user?.salespersonNumber,
   };
 
   const validationForm = yup.object().shape({
     name: validateForm().common.reuqire,
-    agency_name: validateForm().common.reuqire,
-    license_number: validateForm().common.reuqire,
-    sales_number: validateForm().common.reuqire,
+    agencyName: validateForm().common.reuqire,
+    licenseNumber: validateForm().common.reuqire,
+    salespersonNumber: validateForm().common.reuqire,
   });
 
   const onChangeValue = (item: any, name?: string) => {
@@ -59,10 +60,13 @@ const AgentInformation = () => {
 
   const onSubmit = () => {
     const body = {
-
+      name: user?.name,
+      agencyName: user?.agencyName,
+      licenseNumber: user?.licenseNumber,
+      salespersonNumber: user?.salespersonNumber
     };
-
-    // dispatch(updateUserInfo({ body, id: user?.id }));
+    console.log('h2', body);
+    dispatch(updateUserInfo({ body, id: user?.id }));
   };
 
   const RenderForm = () => (
@@ -86,27 +90,27 @@ const AgentInformation = () => {
               />
               <AppInput
                 label={'Agency name'}
-                value={props.values.agency_name}
+                value={props.values.agencyName}
                 onValueChange={onChangeValue}
-                error={props.errors.agency_name}
+                error={props.errors.agencyName}
                 typeInput={'linear'}
-                name={'agency_name'}
+                name={'agencyName'}
               />
               <AppInput
                 label={'CEA License no.'}
-                value={props.values.license_number}
+                value={props.values.licenseNumber}
                 onValueChange={onChangeValue}
-                error={props.errors.license_number}
+                error={props.errors.licenseNumber}
                 typeInput={'linear'}
-                name={'license_number'}
+                name={'licenseNumber'}
               />
               <AppInput
                 label={'CEA Salesperson no.'}
-                value={props.values.sales_number}
+                value={props.values.salespersonNumber}
                 onValueChange={onChangeValue}
-                error={props.errors.sales_number}
+                error={props.errors.salespersonNumber}
                 typeInput={'linear'}
-                name={'sales_number'}
+                name={'salespersonNumber'}
               />
             </View>
             <AppButton

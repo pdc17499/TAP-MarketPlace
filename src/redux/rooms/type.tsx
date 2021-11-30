@@ -1,5 +1,6 @@
 export const GET_LIST_ROOMS = 'GET_LIST_ROOMS';
 export const SET_LIST_ROOMS = 'SET_LIST_ROOMS';
+export const RESET_DATA_ROOM = 'RESET_DATA_ROOM'
 
 export const GET_ROOM_DETAIL = 'GET_ROOM_DETAIL';
 export const SET_ROOM_DETAIL = 'SET_ROOM_DETAIL';
@@ -17,7 +18,7 @@ export const UPLOAD_FILE = 'UPLOAD_FILE';
 
 export const UPDATE_ROOM_GALLERY = 'UPDATE_ROOM_GALLERY';
 
-// Tenant 
+// Tenant room
 export const GET_ROOM_TENANT = 'GET_ROOM_TENANT';
 export const UPDATE_ROOM_TENANT = 'UPDATE_ROOM_TENANT';
 

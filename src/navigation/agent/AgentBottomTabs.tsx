@@ -1,11 +1,11 @@
-import {AppText} from '@component';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {Chat, Liked, Matches, Profile} from '@screens';
+import { AppText } from '@component';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { Chat, Liked, Matches, Profile } from '@screens';
 import * as React from 'react';
-import {View, TouchableOpacity, StyleSheet} from 'react-native';
-import {colors, fontFamily, scaleHeight, scaleSize, scaleWidth} from '@util';
-import {ifIphoneX} from 'react-native-iphone-x-helper';
-import {IconChat, IconLiked, IconMatches, IconProfile} from '@assets';
+import { View, TouchableOpacity, StyleSheet } from 'react-native';
+import { colors, fontFamily, scaleHeight, scaleSize, scaleWidth } from '@util';
+import { ifIphoneX } from 'react-native-iphone-x-helper';
+import { IconChat, IconLiked, IconMatches, IconProfile } from '@assets';
 
 type routeType = {
   name: string;
@@ -18,7 +18,7 @@ interface typeProps {
   navigation: any;
 }
 const CustomTab = (props: typeProps) => {
-  const {state, descriptors, navigation} = props;
+  const { state, descriptors, navigation } = props;
 
   const renderLable = (key: string) => {
     console.log('key', key);
@@ -41,7 +41,7 @@ const CustomTab = (props: typeProps) => {
   return (
     <View style={styles.flexRow} key={state.key}>
       {state.routes.map((route: routeType, index: Number) => {
-        const {options} = descriptors[route.key];
+        const { options } = descriptors[route.key];
         const isFocused = state.index === index;
         const labelStyle = isFocused ? styles.labelActive : styles.label;
 
@@ -64,7 +64,7 @@ const CustomTab = (props: typeProps) => {
           <TouchableOpacity
             key={route.name}
             accessibilityRole="button"
-            accessibilityState={isFocused ? {selected: true} : {}}
+            accessibilityState={isFocused ? { selected: true } : {}}
             accessibilityLabel={options.tabBarAccessibilityLabel}
             testID={options.tabBarTestID}
             activeOpacity={0.85}
@@ -81,7 +81,7 @@ const CustomTab = (props: typeProps) => {
 
 const Tab = createBottomTabNavigator();
 
-export function TenantBottomTabs() {
+export function AgentBottomTabs() {
   return (
     <Tab.Navigator
       screenOptions={{
