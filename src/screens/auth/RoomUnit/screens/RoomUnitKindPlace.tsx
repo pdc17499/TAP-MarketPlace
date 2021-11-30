@@ -107,7 +107,8 @@ const RoomUnitKindPlace = () => {
             isMultiChoice={isTenant}
           />
         )}
-        {props.values.kind_place && (
+        {(props.values.kind_place ||
+          props.values.kind_place_tenant?.length > 0) && (
           <>
             <AppQA
               data={months}

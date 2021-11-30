@@ -11,6 +11,7 @@ import {
   UPDATE_USER_INFO,
   CHANGE_PASSWORD,
   GET_PROFILE_USER,
+  SIGNUP_TENANT,
 } from './types';
 
 export const loginApi: any = async (data: any) => {
@@ -20,6 +21,11 @@ export const loginApi: any = async (data: any) => {
 
 export const signUpApi: any = async (data: any) => {
   const response = await api.post(SIGNUP, data);
+  return response;
+};
+
+export const signUpTenantApi: any = async (data: any) => {
+  const response = await api.post(SIGNUP_TENANT, data);
   return response;
 };
 

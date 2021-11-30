@@ -15,6 +15,7 @@ import {
   removeToken,
   changePasswordApi,
   getProfileUserApi,
+  signUpTenantApi,
 } from '@services';
 // import {VERTIFIEMAIL, VERIFYCODE} from '@routeName';
 import {showMessage} from 'react-native-flash-message';
@@ -61,8 +62,10 @@ export function* loginSaga(action: any) {
 export function* signUpSaga(action: any) {
   try {
     GlobalService.showLoading();
-    const {body} = action?.payload;
-    const result: ResponseGenerator = yield signUpApi(body);
+    const {body, isTenant} = action?.payload;
+    const result: ResponseGenerator = yield isTenant
+      ? signUpTenantApi(body)
+      : signUpApi(body);
     console.log({result});
     if (result) {
       NavigationUtils.reset(VERIFY_ACCOUNT);

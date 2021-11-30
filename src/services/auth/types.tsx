@@ -1,4 +1,5 @@
 const SIGNUP = 'v1/auth/register';
+const SIGNUP_TENANT = 'v1/auth/tenantRegister';
 const VERIFY_EMAIL = 'confirm-verify';
 const FORGOT_PASSWORD = 'v1/users/forgot-password';
 const LOGIN = 'v1/auth/login';
@@ -16,6 +17,7 @@ const GET_PROFILE_USER = 'v1/auth/infor';
 export {
   LOGIN,
   SIGNUP,
+  SIGNUP_TENANT,
   LOGOUT,
   VERIFY_EMAIL,
   FORGOT_PASSWORD,

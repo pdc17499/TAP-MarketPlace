@@ -1,51 +1,29 @@
 import React from 'react';
 
-import { createStackNavigator } from '@react-navigation/stack';
+import {createStackNavigator} from '@react-navigation/stack';
 import {
   VERIFY_ACCOUNT,
   VERIFY_CODE,
-  ROOM_UNIT_ADDRESS,
-  ROOM_UNIT_GALLERY,
-  ROOM_UNIT_KIND_PLACE,
-  ROOM_UNIT_PLACE_OFFER,
-  ROOM_UNIT_PRICE,
-  ROOM_UNIT_TYPE_ROOM,
-  YOUR_LISTING,
   ACCOUNT_SETTING,
   BASIC_INFORMATION,
   CHANGE_PASSWORD,
   PROFILE_LIFE_STYLE,
   PROFILE,
-  ROOM_DETAIL,
-  ROOM_DETAIL_LOCATION,
-  ROOM_DETAIL_GELLERY,
-  ADD_SUCCESS,
   TABBAR,
   SEARCHING_FILTER,
 } from '../routeName';
 
 import {
-  RoomUnitGallery,
-  RoomUnitAddress,
-  RoomUnitPlaceOffer,
-  RoomUnitPrice,
-  RoomUnitTypeRoom,
   VerifyAccount,
   VerifyCode,
-  YourListing,
   AccountSetting,
   BasicInfomation,
   ChangePassword,
   ProfileLifeStyle,
   Profile,
-  RoomDetail,
-  RoomDetailLocation,
-  RoomDetailGallery,
-  RoomUnitKindPlace,
-  AddSuccess,
   SearchingFilter,
 } from '../../screens';
-import { TenantBottomTabs } from './TenantBottomTabs';
+import {TenantBottomTabs} from './TenantBottomTabs';
 
 const Stack = createStackNavigator();
 const screenOptions = {

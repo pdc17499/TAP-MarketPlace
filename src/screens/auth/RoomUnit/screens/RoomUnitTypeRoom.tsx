@@ -42,14 +42,30 @@ const RoomUnitTypeRoom = () => {
 
   const validationSchema = yup.object().shape({
     room_type: validateForm().common.selectAtLeast,
-    bedroom_number: yup.string().when('room_type', {
-      is: 'Entire Home',
-      then: validateForm().common.selectAtLeast,
-    }),
-    bathroom_number: yup.string().when('room_type', {
-      is: 'Entire Home',
-      then: validateForm().common.selectAtLeast,
-    }),
+    bedroom_number: isTenant
+      ? yup.object().nullable()
+      : yup.string().when('room_type', {
+          is: 'Entire Home',
+          then: validateForm().common.selectAtLeast,
+        }),
+    bathroom_number: isTenant
+      ? yup.object().nullable()
+      : yup.string().when('room_type', {
+          is: 'Entire Home',
+          then: validateForm().common.selectAtLeast,
+        }),
+    bedroom_number_tenant: !isTenant
+      ? yup.array().nullable()
+      : yup.array().when('room_type', {
+          is: 'Entire Home',
+          then: validateForm().common.atLeastOneArray,
+        }),
+    bathroom_number_tenant: !isTenant
+      ? yup.array().nullable()
+      : yup.array().when('room_type', {
+          is: 'Entire Home',
+          then: validateForm().common.atLeastOneArray,
+        }),
     attached_bathroom: yup.string().when('room_type', {
       is: 'Room',
       then: validateForm().common.selectAtLeast,
@@ -66,14 +82,14 @@ const RoomUnitTypeRoom = () => {
   const onNext = () => {
     const data = {...dataSignUp};
     const {room_type} = data;
-    if (!isTenant) {
-      if (room_type.value === 'Entire Home') {
-        data.attached_bathroom = {};
-        data.staying_with_guests = {};
-      } else {
-        data.bedroom_number = {};
-        data.bathroom_number = {};
-      }
+    if (room_type.value === 'Entire Home') {
+      data.attached_bathroom = {};
+      data.staying_with_guests = {};
+    } else {
+      data.bedroom_number = {};
+      data.bathroom_number = {};
+      data.bedroom_number_tenant = [];
+      data.bathroom_number_tenant = [];
     }
     dispatch(setDataSignup({data}));
     navigation.navigate(ROOM_UNIT_PLACE_OFFER);

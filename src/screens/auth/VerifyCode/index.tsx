@@ -73,7 +73,7 @@ const VerifyCode = ({navigation, route}: VerifyCodeProp) => {
 
   const onVerfiyCode = async () => {
     if (isForgetPassword) {
-      dispatch(verifyCodeForgotPassword({email, code: parseInt(value)}));
+      dispatch(verifyCodeForgotPassword({email, code: value}));
     } else {
       try {
         GlobalService.showLoading();

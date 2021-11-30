@@ -141,36 +141,6 @@ const RoomUnitGallery = React.memo(() => {
   };
 
   const getUrlFile = async (image: any) => {
-    // let formData = new FormData();
-    // formData.append('file', {
-    //   name: '202111212135080000.mp4',
-    //   uri: '/Users/ad-m7/Downloads/202111212135080000.mp4',
-    //   type: 'video/mp4',
-    // });
-    // fetch('http://bdb8-222-252-30-49.ngrok.io/video_upload', {
-    //   method: 'POST',
-    //   headers: {
-    //     // 'X-Requested-With': 'XMLHttpRequest',
-    //     'Content-Type': 'multipart/form-data',
-    //   },
-    //   body: formData,
-    // })
-    //   .then(async (response: any) => {
-    //     console.log(111, await response.json());
-    //   })
-    //   .then(async res => {
-    //     console.log({res});
-    //     // this.setState({loading: false});
-    //     // console.log(res);
-    //     // if (res.error == 0) {
-    //     //   this.props.navigation.navigate('Feed');
-    //     // }
-    //   })
-    //   .catch(error => {
-    //     console.log({error});
-    //     // this.setState({loading: false});
-    //   });
-
     // console.log(1111);
     // let formData = new FormData();
     // formData.append('file', {

@@ -65,7 +65,7 @@ const SignUpEmail = (props: SignUpEmailProp) => {
     if (files?.length > 0) {
       const urls: string[] = [];
       files.map((file: ImageOrVideo) => {
-        urls.push(file.path);
+        urls.push(file.uri);
       });
 
       return urls;
@@ -92,6 +92,16 @@ const SignUpEmail = (props: SignUpEmailProp) => {
       BedroomNumber: state?.bedroom_number?.value,
       BathroomNumber: state?.bathroom_number?.value,
       AttachedBathroom: state?.attached_bathroom?.value === 'Yes',
+      AllowCook: state?.allow_cooking?.value === 'Yes',
+      StayWithGuest: state?.staying_with_guests?.value === 'Yes',
+      KeyWords: state?.key_your_place,
+    };
+
+    const RoomDetailsTenant = {
+      RoomType: state?.room_type?.value,
+      BedroomNumber: state?.bedroom_number_tenant,
+      BathroomNumber: state?.bathroom_number_tenant,
+      AttachedBathroom: state?.attached_bathroom?.value,
       AllowCook: state?.allow_cooking?.value === 'Yes',
       StayWithGuest: state?.staying_with_guests?.value === 'Yes',
       KeyWords: state?.key_your_place,
@@ -124,18 +134,19 @@ const SignUpEmail = (props: SignUpEmailProp) => {
           Latitude: state?.location.lat,
           Longitude: state?.location.long,
         },
-        PlaceType: [state?.kind_place?.value],
+        PlaceType: isTenant
+          ? state?.kind_place_tenant
+          : state?.kind_place?.value,
         LeasePeriod: {
           type: state?.kind_place?.value === 'HDB',
           value: state?.lease_your_place,
         },
-        // PicturesVideo: getUrlFiles(),
       },
     };
 
     if (isTenant) {
       body.roomDesc.BudgetPrice = BudgetPrice;
-      body.roomDesc.RoomProperty = RoomDetails;
+      body.roomDesc.RoomProperty = RoomDetailsTenant;
     } else {
       if (isAgent) {
         const nUserInfo = {...body.userInfor, ...agenyInfo};
@@ -143,10 +154,11 @@ const SignUpEmail = (props: SignUpEmailProp) => {
       }
       body.roomDesc.RentalPrice = RentalPrice;
       body.roomDesc.RoomDetails = RoomDetails;
+      body.roomDesc.PicturesVideo = getUrlFiles();
     }
 
-    console.log({body});
-    dispatch(signUp({body}));
+    console.log({body, isTenant});
+    dispatch(signUp({body, isTenant}));
     // navigation.navigate(VERIFY_ACCOUNT);
   };
 
