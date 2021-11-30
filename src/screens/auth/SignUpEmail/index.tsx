@@ -120,7 +120,11 @@ const SignUpEmail = (props: SignUpEmailProp) => {
       },
       roomDesc: {
         RentalAddress: state?.location.title,
-        PlaceType: state?.kind_place?.value,
+        Location: {
+          Latitude: state?.location.lat,
+          Longitude: state?.location.long,
+        },
+        PlaceType: [state?.kind_place?.value],
         LeasePeriod: {
           type: state?.kind_place?.value === 'HDB',
           value: state?.lease_your_place,

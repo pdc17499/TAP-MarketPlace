@@ -19,6 +19,7 @@ export const INITIAL_STATE_DATA_SIGN_UP: DataSignupProps = {
     title: '',
   },
   kind_place: {},
+  kind_place_tenant: [],
   rental_price: {},
   negotiable_price: '',
   fixed_price: '',

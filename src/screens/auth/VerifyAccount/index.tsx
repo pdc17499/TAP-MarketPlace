@@ -1,7 +1,7 @@
 import {IconQuestion} from '@assets';
 import {AppButton, AppText, Header, AppPhoneNumber} from '@component';
 import {useNavigation} from '@react-navigation/core';
-import {PROFILE} from '@routeName';
+import {PROFILE, TABBAR} from '@routeName';
 import {SIZE} from '@util';
 import React, {useState} from 'react';
 import {Alert, Pressable, View} from 'react-native';
@@ -53,7 +53,7 @@ const VerifyAccount = (props: VerifyCodeProp) => {
   };
 
   const onSkip = () => {
-    navigation.replace(PROFILE);
+    navigation.replace(TABBAR);
   };
 
   const onChangeContact = (nContact: string) => {

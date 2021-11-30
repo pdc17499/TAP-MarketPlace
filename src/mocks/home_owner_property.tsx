@@ -80,6 +80,28 @@ export const ROOM_UNIT_HOWNER = {
       value: 'Price range',
     },
   ],
+  months: [
+    {
+      label: '3 months',
+      value: '3 months',
+    },
+    {
+      label: '6 months',
+      value: '6 months',
+    },
+    {
+      label: '9 months',
+      value: '9 months',
+    },
+    {
+      label: '12 months',
+      value: '12 months',
+    },
+    {
+      label: '36 months',
+      value: '36 months',
+    },
+  ],
   lease_your_place: [
     {
       label: '3 months',
@@ -114,42 +136,6 @@ export const ROOM_UNIT_HOWNER = {
     {
       label: '36 months',
       value: '36 months',
-    },
-  ],
-  lease_your_place_new: [
-    {
-      label: '3',
-      value: '3',
-    },
-    {
-      label: '9',
-      value: '9',
-    },
-    {
-      label: '12',
-      value: '12',
-    },
-    {
-      label: '36',
-      value: '36',
-    },
-  ],
-  lease_your_place_hdb_new: [
-    {
-      label: '6',
-      value: '6',
-    },
-    {
-      label: '9',
-      value: '9',
-    },
-    {
-      label: '12',
-      value: '12',
-    },
-    {
-      label: '36',
-      value: '36',
     },
   ],
   staying_width_guests: [

@@ -56,7 +56,9 @@ const RoomUnitAddress = () => {
     <>
       <Header back />
       <View style={styles.container}>
-        <KeyboardAwareScrollView style={{flex: 1}}>
+        <KeyboardAwareScrollView
+          style={{flex: 1}}
+          showsVerticalScrollIndicator={false}>
           <AppText style={styles.title}>{title}</AppText>
           <AppInput
             iconRight={location?.title == '' ? 'other' : 'clear'}
@@ -71,7 +73,7 @@ const RoomUnitAddress = () => {
             onSelectLocation={onSelectLocation}
           />
         </KeyboardAwareScrollView>
-        {location?.title !== '' && (
+        {location?.lat !== -1 && (
           <AppButton
             title={'Continue'}
             onPress={onNext}

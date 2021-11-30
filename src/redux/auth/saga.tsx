@@ -145,14 +145,16 @@ export function* resetNewPasswordSaga(action: any) {
 export function* verifyPhonenumberSaga(action: any) {
   try {
     GlobalService.showLoading();
-    const {contact, email} = action.payload;
-    const result: ResponseGenerator = yield verifyPhonenumberApi(
-      action.payload,
-    );
+    const {contact, email, isAccSettingScreen} = action.payload;
+    const result: ResponseGenerator = yield verifyPhonenumberApi({
+      contact,
+      email,
+    });
     if (result) {
       NavigationUtils.navigate(VERIFY_CODE, {
         contact,
         email,
+        isAccSettingScreen,
       });
     }
   } catch (error) {
@@ -165,10 +167,15 @@ export function* verifyPhonenumberSaga(action: any) {
 export function* verifyCodePhonenumberSaga(action: any) {
   try {
     GlobalService.showLoading();
-    const result: ResponseGenerator = yield verifyCodePhonenumberApi(
-      action.payload,
-    );
-    if (result) {
+    const {contact, code, isAccSettingScreen} = action.payload;
+    const result: ResponseGenerator = yield verifyCodePhonenumberApi({
+      code,
+      contact,
+    });
+    console.log({result});
+    if (isAccSettingScreen) {
+      NavigationUtils.goBack();
+    } else {
       NavigationUtils.reset(TABBAR);
     }
   } catch (error) {
@@ -190,6 +197,7 @@ export function* upDateUserInfoSaga(action: any) {
         message: 'Update User Information Successfully!',
       });
       yield put(saveDataUser({user: result}));
+      NavigationUtils.goBack();
     }
   } catch (error) {
     GlobalService.hideLoading();

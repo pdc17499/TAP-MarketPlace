@@ -1,6 +1,6 @@
 import {AppButton, AppInput, AppText, Header} from '@component';
 import {ROOM_UNIT_KIND_PLACE} from '@routeName';
-import {colors, fontFamily, scaleWidth, SIZE} from '@util';
+import {colors, fontFamily, INIT_LOCATION_DATA, scaleWidth, SIZE} from '@util';
 import React, {useEffect, useState} from 'react';
 import {View, StyleSheet} from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
@@ -11,25 +11,39 @@ interface screenNavigationProp {
 }
 
 const RoomDetailLocation = ({navigation, route}: any) => {
-  const {locate, onChangeText} = route.params;
-  console.log({locate, route});
-  const [location, setLocation] = useState('');
+  const {locate, onChangeValue} = route.params;
+  const [location, setLocation] = useState(INIT_LOCATION_DATA);
 
   useEffect(() => {
-    setLocation(locate);
+    const nLocate = {
+      name: locate.name,
+      lat: locate.lat,
+      long: locate.long,
+    };
+    console.log({nLocate});
+    setLocation(nLocate);
   }, [locate]);
 
   const onChangeLocation = async (text: string) => {
-    setLocation(text);
+    const nLocate = {...location, name: text};
+    setLocation(nLocate);
   };
 
-  const onSelectLocation = (location: any) => {
-    const nLocation = `${location.name} - ${location.formatted_address}`;
+  const onSelectLocation = (nlocation: any) => {
+    const nLocation = {
+      name: `${nlocation.name} - ${nlocation.formatted_address}`,
+      lat: nlocation?.geometry?.location?.lat,
+      long: nlocation?.geometry?.location?.lng,
+    };
     setLocation(nLocation);
   };
 
+  const onClear = () => {
+    setLocation(INIT_LOCATION_DATA);
+  };
+
   const onDone = () => {
-    onChangeText(location, 'location');
+    onChangeValue(location, 'location');
     navigation.goBack();
   };
 
@@ -42,19 +56,19 @@ const RoomDetailLocation = ({navigation, route}: any) => {
           showsVerticalScrollIndicator={false}>
           <AppText style={styles.title}>{'Property location'}</AppText>
           <AppInput
-            iconRight={location == '' ? 'other' : 'clear'}
+            iconRight={location.name == '' ? 'other' : 'clear'}
             iconLeft="map"
             placeholder={'Search by Address'}
-            value={location}
+            value={location.name}
             onValueChange={onChangeLocation}
-            onPressRightIcon={() => onChangeLocation('')}
+            onPressRightIcon={onClear}
           />
           <ListLocations
-            location={{title: location, lat: -1, long: -1}}
+            location={{title: location.name, lat: -1, long: -1}}
             onSelectLocation={onSelectLocation}
           />
         </KeyboardAwareScrollView>
-        {location !== '' && (
+        {location.lat !== -1 && (
           <AppButton
             title={'Done'}
             onPress={onDone}

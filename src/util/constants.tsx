@@ -44,4 +44,18 @@ const OPTIONS_GALLERY = {
   optionVideos: ['Upload Video', 'Take a video', 'Cancel'],
 };
 
-export {DEVICE, SLIDER, FILE_SIZE, DEFAULT_COUNTRY, STYLE, OPTIONS_GALLERY};
+const INIT_LOCATION_DATA = {
+  name: '',
+  lat: -1,
+  long: -1,
+};
+
+export {
+  DEVICE,
+  SLIDER,
+  FILE_SIZE,
+  DEFAULT_COUNTRY,
+  STYLE,
+  OPTIONS_GALLERY,
+  INIT_LOCATION_DATA,
+};

@@ -27,16 +27,12 @@ const AccountSetting = () => {
   const navigation = useNavigation<screenNavigationProp>();
   const [user, setUser] = useState<UserInfo>();
   const dataUser: UserInfo = useSelector((state: any) => state?.auth?.user);
-  const [showDate, setShowDate] = useState(false);
   const dispatch = useDispatch();
-  const [showButton, setShowButton] = useState(false);
-  const [countryCode, setCountryCode] = useState('');
   const formRef: any = useRef<FormikValues>();
 
   useEffect(() => {
     setUser(dataUser);
-    console.log(dataUser);
-  }, []);
+  }, [dataUser]);
 
   const formInitialValues = {
     email: user?.email,
@@ -56,13 +52,8 @@ const AccountSetting = () => {
     }
   };
 
-  // const validatePhone = (contact: number) => {
-  //   return contact ? contact.toString().replace(/[^a-zA-Z0-9]/g, '') : '';
-  // };
-
   const onSubmit = (values: any) => {
     console.log({values});
-    // const contact = `${values.contact.toString().replace(/[^a-zA-Z0-9]/g, '')}`;
     const body = {
       email: user?.email,
       contact: user?.contact,
@@ -111,6 +102,7 @@ const AccountSetting = () => {
                   error={props.errors.contact}
                   showVerifyNumber
                   isContactVerified={user?.isContactVerified}
+                  isAccSettingScreen
                 />
               </View>
               <Pressable onPress={() => navigation.navigate(CHANGE_PASSWORD)}>
@@ -122,10 +114,10 @@ const AccountSetting = () => {
                   <CaretRight iconFillColor={colors.textSecondPrimary} />
                 </View>
               </Pressable>
-              <View style={styles.item}>
+              <Pressable style={styles.item}>
                 <IconDeleteUser />
                 <AppText style={styles.titleDelete}>{'Delete account'}</AppText>
-              </View>
+              </Pressable>
             </View>
           </>
         )}
