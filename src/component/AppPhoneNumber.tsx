@@ -25,6 +25,7 @@ interface IAppPhoneNumber {
   maxLength?: number;
   showVerifyNumber?: boolean;
   isContactVerified?: boolean;
+  isAccSettingScreen?: boolean;
 }
 
 export const AppPhoneNumber = React.memo((props: IAppPhoneNumber) => {
@@ -38,6 +39,7 @@ export const AppPhoneNumber = React.memo((props: IAppPhoneNumber) => {
     name,
     showVerifyNumber,
     isContactVerified,
+    isAccSettingScreen,
   } = props;
   const [phone, setPhone] = useState({
     code: '',
@@ -85,9 +87,10 @@ export const AppPhoneNumber = React.memo((props: IAppPhoneNumber) => {
         verifyPhonenumber({
           email: dataUser?.email,
           contact: value,
+          isAccSettingScreen,
         }),
       );
-      navigation.navigate(VERIFY_CODE, {contact: value});
+      // navigation.navigate(VERIFY_CODE, {contact: value});
     } else {
       Alert.alert('Please enter your phone number!');
     }

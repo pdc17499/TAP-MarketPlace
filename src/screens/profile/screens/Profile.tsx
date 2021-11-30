@@ -1,5 +1,5 @@
-import { AppText } from '@component';
-import React, { useEffect, useState } from 'react';
+import {AppText} from '@component';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Image,
@@ -7,9 +7,9 @@ import {
   Pressable,
   DeviceEventEmitter,
 } from 'react-native';
-import { useDispatch } from 'react-redux';
-import { getProfileUser, logoutApp, updateUserInfo } from '@redux';
-import { useSelector } from 'react-redux';
+import {useDispatch} from 'react-redux';
+import {getProfileUser, logoutApp, updateUserInfo} from '@redux';
+import {useSelector} from 'react-redux';
 import {
   IconHouseLine,
   IconUser,
@@ -30,7 +30,7 @@ import {
   SEARCHING_FILTER,
   YOUR_LISTING,
 } from '@routeName';
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 import {
   colors,
   fontFamily,
@@ -41,10 +41,10 @@ import {
   scaleWidth,
   SIZE,
 } from '@util';
-import { StyleSheet } from 'react-native';
-import { useActionSheet } from '@expo/react-native-action-sheet';
-import { GlobalService, uploadFile } from '@services';
-interface ProfileProp { }
+import {StyleSheet} from 'react-native';
+import {useActionSheet} from '@expo/react-native-action-sheet';
+import {GlobalService, uploadFile} from '@services';
+interface ProfileProp {}
 
 interface screenNavigationProp {
   navigate: any;
@@ -98,8 +98,6 @@ const Profile = (props: ProfileProp) => {
   const navigation = useNavigation<screenNavigationProp>();
   const USER = useSelector((state: any) => state.auth.user);
   const role = useSelector((state: any) => state.auth.role);
-  // console.log('TYPE', role);
-  // console.log('INFO', USER);
   const dispatch = useDispatch();
   const { showActionSheetWithOptions } = useActionSheet();
   const [message, setMessage] = useState(0)
@@ -141,7 +139,7 @@ const Profile = (props: ProfileProp) => {
       },
       buttonIndex => {
         // Do something here depending on the button index selected
-        console.log({ buttonIndex });
+        console.log({buttonIndex});
         if (buttonIndex === 0) {
           uploadPhotos();
         } else if (buttonIndex === 1) {
@@ -181,7 +179,7 @@ const Profile = (props: ProfileProp) => {
       const body = {
         image: url,
       };
-      dispatch(updateUserInfo({ body, id: USER?.id }));
+      dispatch(updateUserInfo({body, id: USER?.id}));
     }
   };
 
@@ -191,7 +189,7 @@ const Profile = (props: ProfileProp) => {
     }
   };
 
-  const renderItem = ({ item }: any) => {
+  const renderItem = ({item}: any) => {
     const idType = role?.idType || '';
     if (item.notRole.includes(idType)) {
       return <View />;
@@ -215,14 +213,13 @@ const Profile = (props: ProfileProp) => {
     );
   };
 
-  console.log({ USER });
-
+  console.log({USER});
 
   const ListHeaderComponent = () => (
     <>
       <Pressable onPress={openGallery}>
         <Image
-          source={USER?.image ? { uri: USER?.image } : avatar_default}
+          source={USER?.image ? {uri: USER?.image} : avatar_default}
           style={styles.avatar}
         />
       </Pressable>
@@ -248,7 +245,7 @@ const Profile = (props: ProfileProp) => {
     <View style={styles.container}>
       <FlatList
         style={styles.body}
-        contentContainerStyle={{ paddingBottom: scaleHeight(100) }}
+        contentContainerStyle={{paddingBottom: scaleHeight(100)}}
         showsVerticalScrollIndicator={false}
         data={DATA}
         renderItem={renderItem}
@@ -359,4 +356,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export { Profile };
+export {Profile};

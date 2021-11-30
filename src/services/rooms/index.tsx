@@ -1,4 +1,4 @@
-import { DEVICE } from '@util';
+import {DEVICE} from '@util';
 import api from '../api';
 import {
   GET_LIST_ROOMS,
@@ -36,7 +36,6 @@ export const updateRoomApi: any = async (data: any, id: string) => {
   return response;
 };
 
-
 export const uploadFileApi: any = async (file: string) => {
   var bodyFormData = new FormData();
   bodyFormData.append('file', file);
@@ -49,7 +48,7 @@ export const uploadFile: any = async (image: any) => {
   const isHEIC =
     image?.sourceURL?.endsWith('.heic') || image?.sourceURL?.endsWith('.HEIC');
 
-  console.log({ image });
+  console.log({image});
   form.append(`file`, {
     fileName: image?.path.replace(/^.*[\\\/]/, ''),
     name: image?.path.replace(/^.*[\\\/]/, ''),
@@ -58,10 +57,11 @@ export const uploadFile: any = async (image: any) => {
     path: image?.path,
     size: image?.size,
     type: DEVICE.isIos
-      ? `image/${isHEIC
-        ? image?.path.split('.')[0] + '.JPG'
-        : image?.path.split('.').pop()
-      }`
+      ? `image/${
+          isHEIC
+            ? image?.path.split('.')[0] + '.JPG'
+            : image?.path.split('.').pop()
+        }`
       : image?.mime,
     height: image?.height,
   });
@@ -72,7 +72,6 @@ export const uploadFile: any = async (image: any) => {
   });
   return response;
 };
-
 
 export const getRoomTenantApi: any = async () => {
   const response = await api.get(GET_ROOM_TENANT);

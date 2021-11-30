@@ -27,20 +27,28 @@ const RoomUnitKindPlace = () => {
     dispatch(setDataSignup({data}));
   };
 
+  const isTenant = dataSignUp?.role_user === 'Tenant';
+
   const formInitialValues = {
     lease_your_place: dataSignUp?.lease_your_place,
     kind_place: dataSignUp?.kind_place?.value,
+    kind_place_tenant: dataSignUp?.kind_place_tenant,
   };
 
   const validationSchema = yup.object().shape({
     lease_your_place: validateForm().common.atLeastOneArray,
-    kind_place: validateForm().common.selectAtLeast,
+    kind_place: !isTenant
+      ? validateForm().common.selectAtLeast
+      : yup.object().nullable(),
+    kind_place_tenant: isTenant
+      ? validateForm().common.atLeastOneArray
+      : yup.array().nullable(),
   });
 
   const onNext = () => {
     const data = {...dataSignUp};
     const {kind_place, lease_your_place} = data;
-    if (lease_your_place?.length > 0) {
+    if (lease_your_place?.length > 0 && !isTenant) {
       const month = kind_place.value === 'HDB' ? '3 months' : '6 months';
       data.lease_your_place = lease_your_place.filter(
         (item: string) => item !== month,
@@ -51,8 +59,6 @@ const RoomUnitKindPlace = () => {
     navigation.navigate(ROOM_UNIT_PRICE);
   };
 
-  const isTenant = dataSignUp?.role_user === 'Tenant';
-
   const title = isTenant
     ? 'Property type you prefer'
     : 'What kind of place will you host?';
@@ -61,29 +67,51 @@ const RoomUnitKindPlace = () => {
     ? 'Lease period you prefer'
     : 'How long will you want to lease your place?';
 
+  const listPlace = list.months;
+  const months = isTenant
+    ? listPlace
+    : dataSignUp?.kind_place?.value === 'HDB'
+    ? listPlace.filter(item => item.label !== '3 months')
+    : listPlace.filter(item => item.label !== '6 months');
+
+  console.log({months, listPlace}, dataSignUp?.kind_place);
+
   const renderFormStepSecond = (props: any) => {
     console.log({props});
     return (
       <>
-        <AppQA
-          isFlex
-          data={isTenant ? list.kind_place_tenant : list.kind_place}
-          title={title}
-          value={dataSignUp}
-          setValue={setData}
-          typeList={'even'}
-          name={'kind_place'}
-          customStyleTitle={{maxWidth: scaleWidth(isTenant ? 320 : 240)}}
-          error={props.errors.kind_place}
-        />
-        {props.values.kind_place && (
+        {isTenant ? (
+          <AppQA
+            isFlex
+            data={list.kind_place_tenant}
+            title={title}
+            value={dataSignUp}
+            setValue={setData}
+            typeList={'even'}
+            name={'kind_place_tenant'}
+            customStyleTitle={{maxWidth: scaleWidth(isTenant ? 320 : 240)}}
+            error={props.errors.kind_place_tenant}
+            isMultiChoice={isTenant}
+          />
+        ) : (
+          <AppQA
+            isFlex
+            data={list.kind_place}
+            title={title}
+            value={dataSignUp}
+            setValue={setData}
+            typeList={'even'}
+            name={'kind_place'}
+            customStyleTitle={{maxWidth: scaleWidth(isTenant ? 320 : 240)}}
+            error={props.errors.kind_place}
+            isMultiChoice={isTenant}
+          />
+        )}
+        {(props.values.kind_place ||
+          props.values.kind_place_tenant?.length > 0) && (
           <>
             <AppQA
-              data={
-                props.values.kind_place === 'HDB'
-                  ? list.lease_your_place_hdb
-                  : list.lease_your_place
-              }
+              data={months}
               title={titleSecond}
               value={dataSignUp}
               setValue={setData}

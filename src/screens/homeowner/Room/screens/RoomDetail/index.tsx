@@ -125,7 +125,7 @@ const RoomDetail = (route: any) => {
         {ROOM?.PicturesVideo ? (
           renderImage(ROOM?.PicturesVideo[0])
         ) : (
-          <Image source={room_sample} style={styles.itemImage}></Image>
+          <Image source={room_sample} style={styles.itemImage} />
         )}
         <TabView
           navigationState={{index, routes}}

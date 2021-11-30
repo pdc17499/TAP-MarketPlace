@@ -15,6 +15,7 @@ import {
   removeToken,
   changePasswordApi,
   getProfileUserApi,
+  signUpTenantApi,
 } from '@services';
 // import {VERTIFIEMAIL, VERIFYCODE} from '@routeName';
 import { showMessage } from 'react-native-flash-message';
@@ -62,9 +63,11 @@ export function* loginSaga(action: any) {
 export function* signUpSaga(action: any) {
   try {
     GlobalService.showLoading();
-    const { body } = action?.payload;
-    const result: ResponseGenerator = yield signUpApi(body);
-    console.log({ result });
+    const {body, isTenant} = action?.payload;
+    const result: ResponseGenerator = yield isTenant
+      ? signUpTenantApi(body)
+      : signUpApi(body);
+    console.log({result});
     if (result) {
       NavigationUtils.reset(VERIFY_ACCOUNT);
       const token = result?.data?.tokens?.access?.token;
@@ -147,14 +150,16 @@ export function* resetNewPasswordSaga(action: any) {
 export function* verifyPhonenumberSaga(action: any) {
   try {
     GlobalService.showLoading();
-    const { contact, email } = action.payload;
-    const result: ResponseGenerator = yield verifyPhonenumberApi(
-      action.payload,
-    );
+    const {contact, email, isAccSettingScreen} = action.payload;
+    const result: ResponseGenerator = yield verifyPhonenumberApi({
+      contact,
+      email,
+    });
     if (result) {
       NavigationUtils.navigate(VERIFY_CODE, {
         contact,
         email,
+        isAccSettingScreen,
       });
     }
   } catch (error) {
@@ -167,10 +172,15 @@ export function* verifyPhonenumberSaga(action: any) {
 export function* verifyCodePhonenumberSaga(action: any) {
   try {
     GlobalService.showLoading();
-    const result: ResponseGenerator = yield verifyCodePhonenumberApi(
-      action.payload,
-    );
-    if (result) {
+    const {contact, code, isAccSettingScreen} = action.payload;
+    const result: ResponseGenerator = yield verifyCodePhonenumberApi({
+      code,
+      contact,
+    });
+    console.log({result});
+    if (isAccSettingScreen) {
+      NavigationUtils.goBack();
+    } else {
       NavigationUtils.reset(TABBAR);
     }
   } catch (error) {
@@ -191,7 +201,8 @@ export function* upDateUserInfoSaga(action: any) {
         type: 'success',
         message: 'Update User Information Successfully!',
       });
-      yield put(saveDataUser({ user: result }));
+      yield put(saveDataUser({user: result}));
+      NavigationUtils.goBack();
     }
   } catch (error) {
     GlobalService.hideLoading();

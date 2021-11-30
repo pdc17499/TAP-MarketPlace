@@ -9,15 +9,17 @@ import {
   useBlurOnFulfill,
   useClearByFocusCell,
 } from 'react-native-confirmation-code-field';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {
   forgotPassword,
+  ResponseGenerator,
+  saveDataUser,
   verifyCodeForgotPassword,
   verifyCodePhonenumber,
   verifyPhonenumber,
 } from '@redux';
-import {PROFILE} from '@routeName';
-import {NavigationUtils} from '@navigation';
+import {GlobalService, verifyCodePhonenumberApi} from '@services';
+import {TABBAR} from '@routeName';
 
 interface VerifyCodeProp {
   navigation: any;
@@ -26,9 +28,9 @@ interface VerifyCodeProp {
 
 const VerifyCode = ({navigation, route}: VerifyCodeProp) => {
   let contact = '';
-  // let COUNTRY_CODE = '';
   let email = route.params?.email;
   const isForgetPassword = route.params?.isForgetPassword;
+  const isAccSettingScreen = route.params?.isAccSettingScreen;
   if (!isForgetPassword) {
     contact = route.params?.contact;
   }
@@ -37,6 +39,7 @@ const VerifyCode = ({navigation, route}: VerifyCodeProp) => {
   const CELL_COUNT = 4;
   const [value, setValue] = useState('');
   const ref = useBlurOnFulfill({value, cellCount: CELL_COUNT});
+  const {user, role} = useSelector((state: any) => state.auth);
   const [prop, getCellOnLayoutHandler] = useClearByFocusCell({
     value,
     setValue,
@@ -64,17 +67,34 @@ const VerifyCode = ({navigation, route}: VerifyCodeProp) => {
     }, 1000);
   };
 
+  // console.log()
+
   const codeTo = isForgetPassword ? email : `${contact}`;
-  const onVerfiyCode = () => {
+
+  const onVerfiyCode = async () => {
     if (isForgetPassword) {
-      dispatch(verifyCodeForgotPassword({email, code: parseInt(value)}));
+      dispatch(verifyCodeForgotPassword({email, code: value}));
     } else {
-      dispatch(
-        verifyCodePhonenumber({
+      try {
+        GlobalService.showLoading();
+        const result: ResponseGenerator = await verifyCodePhonenumberApi({
+          code: value.toString(),
           contact,
-          code: parseInt(value),
-        }),
-      );
+        });
+        console.log({result});
+        if (isAccSettingScreen) {
+          const nUser = {...user};
+          nUser.isContactVerified = true;
+          dispatch(saveDataUser({user: nUser}));
+          navigation.goBack();
+        } else {
+          navigation.reset(TABBAR);
+        }
+      } catch (error) {
+        GlobalService.hideLoading();
+      } finally {
+        GlobalService.hideLoading();
+      }
     }
   };
 
@@ -84,7 +104,7 @@ const VerifyCode = ({navigation, route}: VerifyCodeProp) => {
     if (isForgetPassword) {
       dispatch(forgotPassword({email}));
     } else {
-      dispatch(verifyPhonenumber({email, contact}));
+      dispatch(verifyPhonenumber({email, contact, isAccSettingScreen}));
     }
   };
 

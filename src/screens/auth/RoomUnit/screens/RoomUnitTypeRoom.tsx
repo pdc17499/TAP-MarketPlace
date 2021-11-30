@@ -36,18 +36,36 @@ const RoomUnitTypeRoom = () => {
     attached_bathroom: dataSignUp?.attached_bathroom?.value,
     allow_cooking: dataSignUp?.allow_cooking?.value,
     staying_with_guests: dataSignUp?.staying_with_guests?.value,
+    bedroom_number_tenant: dataSignUp?.bedroom_number_tenant,
+    bathroom_number_tenant: dataSignUp?.bathroom_number_tenant,
   };
 
   const validationSchema = yup.object().shape({
     room_type: validateForm().common.selectAtLeast,
-    bedroom_number: yup.string().when('room_type', {
-      is: 'Entire Home',
-      then: validateForm().common.selectAtLeast,
-    }),
-    bathroom_number: yup.string().when('room_type', {
-      is: 'Entire Home',
-      then: validateForm().common.selectAtLeast,
-    }),
+    bedroom_number: isTenant
+      ? yup.object().nullable()
+      : yup.string().when('room_type', {
+          is: 'Entire Home',
+          then: validateForm().common.selectAtLeast,
+        }),
+    bathroom_number: isTenant
+      ? yup.object().nullable()
+      : yup.string().when('room_type', {
+          is: 'Entire Home',
+          then: validateForm().common.selectAtLeast,
+        }),
+    bedroom_number_tenant: !isTenant
+      ? yup.array().nullable()
+      : yup.array().when('room_type', {
+          is: 'Entire Home',
+          then: validateForm().common.atLeastOneArray,
+        }),
+    bathroom_number_tenant: !isTenant
+      ? yup.array().nullable()
+      : yup.array().when('room_type', {
+          is: 'Entire Home',
+          then: validateForm().common.atLeastOneArray,
+        }),
     attached_bathroom: yup.string().when('room_type', {
       is: 'Room',
       then: validateForm().common.selectAtLeast,
@@ -70,6 +88,8 @@ const RoomUnitTypeRoom = () => {
     } else {
       data.bedroom_number = {};
       data.bathroom_number = {};
+      data.bedroom_number_tenant = [];
+      data.bathroom_number_tenant = [];
     }
     dispatch(setDataSignup({data}));
     navigation.navigate(ROOM_UNIT_PLACE_OFFER);
@@ -129,8 +149,17 @@ const RoomUnitTypeRoom = () => {
                         value={dataSignUp}
                         setValue={setData}
                         typeList={'row'}
-                        name={'bedroom_number'}
-                        error={propsFormik.errors.bedroom_number}
+                        name={
+                          isTenant ? 'bedroom_number_tenant' : 'bedroom_number'
+                        }
+                        error={
+                          propsFormik.errors[
+                            isTenant
+                              ? 'bedroom_number_tenant'
+                              : 'bedroom_number'
+                          ]
+                        }
+                        isMultiChoice={isTenant}
                       />
                       <AppQA
                         data={list.bathroom_number}
@@ -138,8 +167,19 @@ const RoomUnitTypeRoom = () => {
                         value={dataSignUp}
                         setValue={setData}
                         typeList={'row'}
-                        name={'bathroom_number'}
-                        error={propsFormik.errors.bathroom_number}
+                        name={
+                          isTenant
+                            ? 'bathroom_number_tenant'
+                            : 'bathroom_number'
+                        }
+                        error={
+                          propsFormik.errors[
+                            isTenant
+                              ? 'bathroom_number_tenant'
+                              : 'bathroom_number'
+                          ]
+                        }
+                        isMultiChoice={isTenant}
                       />
                       <AppQA
                         data={list.allow_cooking}
