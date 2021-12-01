@@ -64,22 +64,28 @@ export const AppModalCountry = (props: AppModalCountryProps) => {
   ];
 
   const renderCountry = ({item, index}: any) => {
-    if (item.name.includes(search)) {
-      return (
-        <Pressable
-          style={styles.countryView}
-          onPress={() => onSelectCountry(item)}>
-          <AppText numberOfLines={2}>
-            {type === 'country'
-              ? `${item.flag}  ${item.name}`
-              : `(${item.dial_code})   ${item.name}`}
-          </AppText>
-        </Pressable>
-      );
-    }
-
-    return <View />;
+    return (
+      <Pressable
+        style={styles.countryView}
+        onPress={() => onSelectCountry(item)}>
+        <AppText numberOfLines={2}>
+          {type === 'country'
+            ? `${item.flag}  ${item.name}`
+            : `(${item.dial_code})   ${item.name}`}
+        </AppText>
+      </Pressable>
+    );
   };
+
+  const listCountry = countryDial.filter((item: any) => {
+    const {name, dial_code} = item;
+    if (
+      name.toUpperCase().includes(search.toUpperCase()) ||
+      dial_code.includes(search)
+    ) {
+      return item;
+    }
+  });
 
   return (
     <>
@@ -117,9 +123,10 @@ export const AppModalCountry = (props: AppModalCountryProps) => {
             />
           </View>
           <FlatList
-            data={countryDial}
+            data={listCountry}
             renderItem={renderCountry}
             showsVerticalScrollIndicator={false}
+            initialNumToRender={300}
           />
         </View>
       </Modal>
@@ -143,7 +150,7 @@ const styles = StyleSheet.create({
     left: 0,
     top: 0,
     paddingHorizontal: SIZE.base_space,
-    paddingTop: SIZE.base_space,
+    paddingTop: SIZE.padding,
   },
   label: {
     color: colors.secondPrimary,

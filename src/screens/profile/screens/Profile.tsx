@@ -100,7 +100,7 @@ const Profile = (props: ProfileProp) => {
   const role = useSelector((state: any) => state.auth.role);
   const dispatch = useDispatch();
   const {showActionSheetWithOptions} = useActionSheet();
-  const [message, setMessage] = useState(0);
+  // const [message, setMessage] = useState(0);
 
   useEffect(() => {
     DeviceEventEmitter.addListener('UNAUTHENTICATION', logOut);
@@ -171,13 +171,14 @@ const Profile = (props: ProfileProp) => {
   const getUrlFile = async (image: any) => {
     GlobalService.showLoading();
     const result = await uploadFile(image);
-    const base_url = getBaseURL();
+    // const base_url = getBaseURL();
     if (result.imagePath) {
-      const url: string = base_url + '/v1/file' + result?.imagePath;
+      const url: string = result?.imagePath;
+      console.log({url});
       const body = {
         image: url,
       };
-      dispatch(updateUserInfo({body, id: USER?.id}));
+      dispatch(updateUserInfo({body, id: USER?.id, isNotBack: true}));
     }
   };
 

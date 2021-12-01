@@ -21,7 +21,6 @@ const CustomTab = (props: typeProps) => {
   const {state, descriptors, navigation} = props;
 
   const renderLable = (key: string) => {
-    console.log('key', key);
     switch (key) {
       case 'Matches':
         return 'Matches';
