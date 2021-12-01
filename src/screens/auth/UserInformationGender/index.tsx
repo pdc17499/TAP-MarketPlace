@@ -30,7 +30,7 @@ const UserInformationGender = () => {
 
   const formInitialValues = {
     country: dataSignUp?.country,
-    gender: dataSignUp?.homeowner_gender?.value,
+    gender: isAgent ? dataSignUp?.homeowner_gender?.value : dataSignUp?.gender?.value,
     // age_group: dataSignUp?.age_group?.id,
     staying_with_guests: dataSignUp?.staying_with_guests?.value,
   };
@@ -79,7 +79,7 @@ const UserInformationGender = () => {
               title={isAgent ? 'What is her/his gender' : 'How would you describe your gender?'}
               value={dataSignUp}
               setValue={setData}
-              name={'homeowner_gender'}
+              name={isAgent ? 'homeowner_gender' : 'gender'}
               typeList={'row'}
               typeTitle={'base'}
               error={props.errors.gender}
