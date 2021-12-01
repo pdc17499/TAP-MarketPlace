@@ -1,8 +1,8 @@
-import {AppButton, AppQA, Header} from '@component';
-import {ROOM_UNIT_HOWNER} from '@mocks';
-import {useNavigation} from '@react-navigation/core';
-import {setDataSignup} from '@redux';
-import {ROOM_UNIT_GALLERY, USER_INFORMATION_NAME} from '@routeName';
+import { AppButton, AppQA, Header } from '@component';
+import { ROOM_UNIT_HOWNER } from '@mocks';
+import { useNavigation } from '@react-navigation/core';
+import { setDataSignup } from '@redux';
+import { ROOM_UNIT_GALLERY, USER_INFORMATION_NAME } from '@routeName';
 import {
   colors,
   DEVICE,
@@ -12,11 +12,11 @@ import {
   validateForm,
 } from '@util';
 import React from 'react';
-import {View, StyleSheet} from 'react-native';
-import {ScrollView} from 'react-native-gesture-handler';
-import {useDispatch, useSelector} from 'react-redux';
+import { View, StyleSheet } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
+import { useDispatch, useSelector } from 'react-redux';
 import * as yup from 'yup';
-import {Formik} from 'formik';
+import { Formik } from 'formik';
 
 const RoomUnitPlaceOffer = () => {
   const navigation: any = useNavigation();
@@ -24,9 +24,10 @@ const RoomUnitPlaceOffer = () => {
   const list = ROOM_UNIT_HOWNER;
   const dataSignUp = useSelector((state: any) => state?.auth?.dataSignup);
   const setData = (data: any) => {
-    dispatch(setDataSignup({data}));
+    dispatch(setDataSignup({ data }));
   };
   const isTenant = dataSignUp?.role_user === 'Tenant';
+  const isAgent = dataSignUp?.role_user === 'Agent';
 
   const formInitialValues = {
     key_your_place: dataSignUp?.key_your_place,
@@ -42,14 +43,14 @@ const RoomUnitPlaceOffer = () => {
 
   const title = isTenant
     ? 'What do you wish to have at your new place?'
-    : ' Let your guests know what your place has to offer';
+    : (isAgent ? 'Let your guests know what this place has to offer' : 'Let your guests know what your place has to offer');
 
   return (
     <>
       <Header back />
       <View style={styles.container}>
         <ScrollView
-          style={{flex: 1, height: DEVICE.height}}
+          style={{ flex: 1, height: DEVICE.height }}
           showsVerticalScrollIndicator={false}>
           <Formik
             initialValues={formInitialValues}
@@ -85,7 +86,7 @@ const RoomUnitPlaceOffer = () => {
   );
 };
 
-export {RoomUnitPlaceOffer};
+export { RoomUnitPlaceOffer };
 
 const styles = StyleSheet.create({
   container: {

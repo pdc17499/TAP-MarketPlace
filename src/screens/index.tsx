@@ -1,17 +1,17 @@
 //UnAuthenticate
-import {ChooseRole} from './auth/ChooseRole';
-import {Welcome} from './auth/Welcome';
-import {SignIn} from './auth/SignIn';
-import {ResetPassword} from './auth/ResetPassword';
-import {SignUp} from './auth/SignUp';
-import {SignUpEmail} from './auth/SignUpEmail';
-import {UserInformationName} from './auth/UserInformationName';
-import {VerifyAccount} from './auth/VerifyAccount';
-import {VerifyCode} from './auth/VerifyCode';
-import {UserInformationGender} from './auth/UserInformationGender';
-import {LifeStyle} from './auth/LifeStyle';
-import {Preferences} from './auth/Preferences';
-import {UpdateNewPassword} from './auth/UpdateNewPassword';
+import { ChooseRole } from './auth/ChooseRole';
+import { Welcome } from './auth/Welcome';
+import { SignIn } from './auth/SignIn';
+import { ResetPassword } from './auth/ResetPassword';
+import { SignUp } from './auth/SignUp';
+import { SignUpEmail } from './auth/SignUpEmail';
+import { UserInformationName } from './auth/UserInformationName';
+import { VerifyAccount } from './auth/VerifyAccount';
+import { VerifyCode } from './auth/VerifyCode';
+import { UserInformationGender } from './auth/UserInformationGender';
+import { LifeStyle } from './auth/LifeStyle';
+import { Preferences } from './auth/Preferences';
+import { UpdateNewPassword } from './auth/UpdateNewPassword';
 import {
   RoomUnitGallery,
   RoomUnitAddress,
@@ -24,6 +24,7 @@ import {
 
 // Sign up Agent
 import {
+  IntroduceHomeowner,
   AgencyInformationName,
   AgencyBasicInformation,
 } from './auth/UserInformation';
@@ -38,15 +39,15 @@ import {
 } from './homeowner/Room';
 
 //HomeOwner - Tabbar
-import {Matches} from './homeowner/Matches';
-import {Liked} from './homeowner/Liked';
-import {Chat} from './homeowner/Chat';
+import { Matches } from './homeowner/Matches';
+import { Liked } from './homeowner/Liked';
+import { Chat } from './homeowner/Chat';
 
 // Tenant
-import {MatchesTenant} from './tenant/Matches';
+import { MatchesTenant } from './tenant/Matches';
 
 //Agent
-// import { IntroduceHomeowner } from './agent/Screens';
+
 
 //Profile
 import {
@@ -102,5 +103,6 @@ export {
   MatchesTenant,
   //Agent
   AgentInformation,
-  // IntroduceHomeowner
+  IntroduceHomeowner,
+
 };

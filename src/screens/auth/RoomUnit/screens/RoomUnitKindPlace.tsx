@@ -1,14 +1,14 @@
-import {AppButton, AppQA, Header} from '@component';
-import {DataSignupProps, RoomStepProps} from '@interfaces';
-import {ROOM_UNIT_HOWNER} from '@mocks';
-import {useNavigation} from '@react-navigation/core';
-import {setDataSignup} from '@redux';
-import {ROOM_UNIT_PRICE} from '@routeName';
-import {fontFamily, scaleWidth, SIZE, validateForm} from '@util';
-import {Formik} from 'formik';
+import { AppButton, AppQA, Header } from '@component';
+import { DataSignupProps, RoomStepProps } from '@interfaces';
+import { ROOM_UNIT_HOWNER } from '@mocks';
+import { useNavigation } from '@react-navigation/core';
+import { setDataSignup } from '@redux';
+import { ROOM_UNIT_PRICE } from '@routeName';
+import { fontFamily, scaleWidth, SIZE, validateForm } from '@util';
+import { Formik } from 'formik';
 import React from 'react';
-import {View, StyleSheet, ScrollView} from 'react-native';
-import {useDispatch, useSelector} from 'react-redux';
+import { View, StyleSheet, ScrollView } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
 import * as yup from 'yup';
 
 interface screenNavigationProp {
@@ -23,11 +23,12 @@ const RoomUnitKindPlace = () => {
     (state: any) => state?.auth?.dataSignup,
   );
   const setData = (data: DataSignupProps) => {
-    console.log({data});
-    dispatch(setDataSignup({data}));
+    console.log({ data });
+    dispatch(setDataSignup({ data }));
   };
 
   const isTenant = dataSignUp?.role_user === 'Tenant';
+  const isAgent = dataSignUp?.role_user === 'Agent';
 
   const formInitialValues = {
     lease_your_place: dataSignUp?.lease_your_place,
@@ -46,38 +47,38 @@ const RoomUnitKindPlace = () => {
   });
 
   const onNext = () => {
-    const data = {...dataSignUp};
-    const {kind_place, lease_your_place} = data;
+    const data = { ...dataSignUp };
+    const { kind_place, lease_your_place } = data;
     if (lease_your_place?.length > 0 && !isTenant) {
       const month = kind_place.value === 'HDB' ? '3 months' : '6 months';
       data.lease_your_place = lease_your_place.filter(
         (item: string) => item !== month,
       );
-      console.log({data});
+      console.log({ data });
     }
-    dispatch(setDataSignup({data}));
+    dispatch(setDataSignup({ data }));
     navigation.navigate(ROOM_UNIT_PRICE);
   };
 
   const title = isTenant
     ? 'Property type you prefer'
-    : 'What kind of place will you host?';
+    : (isAgent ? 'What kind of place will you be posting?' : 'What kind of place will you host?')
 
   const titleSecond = isTenant
     ? 'Lease period you prefer'
-    : 'How long will you want to lease your place?';
+    : (isAgent ? 'How long will the owner want to lease this place' : 'How long will you want to lease your place?');
 
   const listPlace = list.lease_your_place;
   const months = isTenant
     ? listPlace
     : dataSignUp?.kind_place?.value === 'HDB'
-    ? listPlace.filter(item => item.label !== '3 months')
-    : listPlace.filter(item => item.label !== '6 months');
+      ? listPlace.filter(item => item.label !== '3 months')
+      : listPlace.filter(item => item.label !== '6 months');
 
-  console.log({months, listPlace}, dataSignUp?.kind_place);
+  console.log({ months, listPlace }, dataSignUp?.kind_place);
 
   const renderFormStepSecond = (props: any) => {
-    console.log({props});
+    console.log({ props });
     return (
       <>
         {isTenant ? (
@@ -89,7 +90,7 @@ const RoomUnitKindPlace = () => {
             setValue={setData}
             typeList={'even'}
             name={'kind_place_tenant'}
-            customStyleTitle={{maxWidth: scaleWidth(isTenant ? 320 : 240)}}
+            customStyleTitle={{ maxWidth: scaleWidth(isTenant ? 320 : 240) }}
             error={props.errors.kind_place_tenant}
             isMultiChoice={isTenant}
           />
@@ -102,32 +103,32 @@ const RoomUnitKindPlace = () => {
             setValue={setData}
             typeList={'even'}
             name={'kind_place'}
-            customStyleTitle={{maxWidth: scaleWidth(isTenant ? 320 : 240)}}
+            customStyleTitle={{ maxWidth: scaleWidth(isTenant ? 320 : 240) }}
             error={props.errors.kind_place}
             isMultiChoice={isTenant}
           />
         )}
         {(props.values.kind_place ||
           props.values.kind_place_tenant?.length > 0) && (
-          <>
-            <AppQA
-              data={months}
-              title={titleSecond}
-              value={dataSignUp}
-              setValue={setData}
-              typeList={'even'}
-              name={'lease_your_place'}
-              error={props.errors.lease_your_place}
-              isMultiChoice
-            />
-            <AppButton
-              title={'Continue'}
-              onPress={props.handleSubmit}
-              iconRight={'arNext'}
-              containerStyle={{marginBottom: SIZE.medium_space}}
-            />
-          </>
-        )}
+            <>
+              <AppQA
+                data={months}
+                title={titleSecond}
+                value={dataSignUp}
+                setValue={setData}
+                typeList={'even'}
+                name={'lease_your_place'}
+                error={props.errors.lease_your_place}
+                isMultiChoice
+              />
+              <AppButton
+                title={'Continue'}
+                onPress={props.handleSubmit}
+                iconRight={'arNext'}
+                containerStyle={{ marginBottom: SIZE.medium_space }}
+              />
+            </>
+          )}
       </>
     );
   };
@@ -149,7 +150,7 @@ const RoomUnitKindPlace = () => {
   );
 };
 
-export {RoomUnitKindPlace};
+export { RoomUnitKindPlace };
 
 const styles = StyleSheet.create({
   container: {

@@ -1,16 +1,16 @@
-import {AppButton, AppModalCountry, AppQA, AppText, Header} from '@component';
-import {useNavigation} from '@react-navigation/core';
-import {fontFamily, SIZE, validateForm} from '@util';
-import {Formik} from 'formik';
+import { AppButton, AppModalCountry, AppQA, AppText, Header } from '@component';
+import { useNavigation } from '@react-navigation/core';
+import { fontFamily, SIZE, validateForm } from '@util';
+import { Formik } from 'formik';
 import React from 'react';
-import {View, ScrollView} from 'react-native';
-import {styles} from './style';
+import { View, ScrollView } from 'react-native';
+import { styles } from './style';
 import * as yup from 'yup';
-import {ROOM_UNIT_HOWNER} from '@mocks';
-import {useDispatch, useSelector} from 'react-redux';
-import {setDataSignup} from '@redux';
-import {LIFE_STYLE, SIGNUP} from '@routeName';
-import {DataSignupProps} from '@interfaces';
+import { ROOM_UNIT_HOWNER } from '@mocks';
+import { useDispatch, useSelector } from 'react-redux';
+import { setDataSignup } from '@redux';
+import { AGENCY_BASIC_INFORMATION, LIFE_STYLE, SIGNUP } from '@routeName';
+import { DataSignupProps } from '@interfaces';
 interface screenNavigationProp {
   navigate: any;
 }
@@ -23,13 +23,14 @@ const UserInformationGender = () => {
     (state: any) => state?.auth?.dataSignup,
   );
   const setData = (data: any) => {
-    dispatch(setDataSignup({data}));
+    dispatch(setDataSignup({ data }));
   };
   const isTenant = dataSignUp?.role_user === 'Tenant';
+  const isAgent = dataSignUp?.role_user === 'Agent';
 
   const formInitialValues = {
     country: dataSignUp?.country,
-    gender: dataSignUp?.gender?.value,
+    gender: isAgent ? dataSignUp?.homeowner_gender?.value : dataSignUp?.gender?.value,
     // age_group: dataSignUp?.age_group?.id,
     staying_with_guests: dataSignUp?.staying_with_guests?.value,
   };
@@ -45,23 +46,23 @@ const UserInformationGender = () => {
   };
 
   const onSkip = (props: any) => {
-    const nData: DataSignupProps = {...dataSignUp};
+    const nData: DataSignupProps = { ...dataSignUp };
     nData.gender = {};
     nData.age_group = {};
     setData(nData);
     props.setErrors({});
-    navigation.navigate(SIGNUP);
+    navigation.navigate(isAgent ? AGENCY_BASIC_INFORMATION : SIGNUP);
   };
 
   const onChangeText = (item: any, name?: string) => {
     if (name) {
-      const nData: any = {...dataSignUp};
+      const nData: any = { ...dataSignUp };
       nData[name] = item;
       setData(nData);
     }
   };
 
-  console.log({dataSignUp});
+  console.log({ dataSignUp });
 
   const RenderForm = () => (
     <Formik
@@ -71,18 +72,18 @@ const UserInformationGender = () => {
       enableReinitialize
       onSubmit={onContinue}>
       {(props: any) => (
-        <View style={{flex: 1, paddingBottom: SIZE.medium_space}}>
-          <View style={{flex: 1, marginBottom: SIZE.big_space * 2}}>
+        <View style={{ flex: 1, paddingBottom: SIZE.medium_space }}>
+          <View style={{ flex: 1, marginBottom: SIZE.big_space * 2 }}>
             <AppQA
               data={list.gender}
-              title={'How would you describe your gender?'}
+              title={isAgent ? 'What is her/his gender' : 'How would you describe your gender?'}
               value={dataSignUp}
               setValue={setData}
-              name={'gender'}
+              name={isAgent ? 'homeowner_gender' : 'gender'}
               typeList={'row'}
               typeTitle={'base'}
               error={props.errors.gender}
-              customStyleTitle={{...fontFamily.fontWeight500}}
+              customStyleTitle={{ ...fontFamily.fontWeight500 }}
             />
 
             {/* <AppPicker
@@ -96,13 +97,13 @@ const UserInformationGender = () => {
             /> */}
 
             <AppModalCountry
-              label={'Where do you come from?'}
+              label={isAgent ? 'Where does she/he come from?' : 'Where do you come from?'}
               name={'country'}
               value={props.values.country}
               onValueChange={onChangeText}
               type={'country'}
               typeButton={'base'}
-              customStyleButton={{paddingTop: 0}}
+              customStyleButton={{ paddingTop: 0 }}
             />
 
             {/* <AppQA
@@ -123,7 +124,7 @@ const UserInformationGender = () => {
             iconRight={'arNext'}
             onPress={props.handleSubmit}
           />
-          {(props.values.staying_with_guests === 'Yes' || isTenant) && (
+          {(props.values.staying_with_guests === 'Yes' || isTenant || isAgent) && (
             <AppButton
               customStyleButton={styles.button}
               title={'Skip'}
@@ -151,4 +152,4 @@ const UserInformationGender = () => {
   );
 };
 
-export {UserInformationGender};
+export { UserInformationGender };

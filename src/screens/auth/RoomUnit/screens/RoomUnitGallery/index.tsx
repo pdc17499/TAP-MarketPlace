@@ -1,5 +1,5 @@
-import {AppButton, AppText, Header} from '@component';
-import {addNewRoom, setDataSignup} from '@redux';
+import { AppButton, AppText, Header } from '@component';
+import { addNewRoom, setDataSignup } from '@redux';
 import {
   colors,
   DEVICE,
@@ -10,7 +10,7 @@ import {
   SIZE,
   STYLE,
 } from '@util';
-import React, {useEffect, useRef, useState} from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   View,
   Image,
@@ -21,15 +21,16 @@ import {
   UIManager,
   Platform,
 } from 'react-native';
-import {useDispatch, useSelector} from 'react-redux';
-import ImagePicker, {ImageOrVideo} from 'react-native-image-crop-picker';
-import {useActionSheet} from '@expo/react-native-action-sheet';
+import { useDispatch, useSelector } from 'react-redux';
+import ImagePicker, { ImageOrVideo } from 'react-native-image-crop-picker';
+import { useActionSheet } from '@expo/react-native-action-sheet';
 import Video from 'react-native-video';
-import {bg_room_unit_picture, IconAddVideos, IconClear} from '@assets';
-import {NavigationUtils} from '@navigation';
+import { bg_room_unit_picture, IconAddVideos, IconClear } from '@assets';
+import { NavigationUtils } from '@navigation';
 import {
   ADD_SUCCESS,
   AGENCY_BASIC_INFORMATION,
+  HOMEOWNER_NAME,
   USER_INFORMATION_NAME,
 } from '@routeName';
 import {
@@ -37,8 +38,8 @@ import {
   DraxProvider,
   DraxView,
 } from 'react-native-drax';
-import {GlobalService, uploadFileApi, uploadFile} from '@services';
-import {styles} from './styles';
+import { GlobalService, uploadFileApi, uploadFile } from '@services';
+import { styles } from './styles';
 import axios from 'axios';
 
 const RoomUnitGallery = React.memo(() => {
@@ -47,10 +48,10 @@ const RoomUnitGallery = React.memo(() => {
   const token = useSelector((state: any) => state?.auth?.token);
   const room: any = useSelector((state: any) => state?.rooms?.roomDetail);
   const setData = (data: any) => {
-    dispatch(setDataSignup({data}));
+    dispatch(setDataSignup({ data }));
   };
   const [files, setFiles] = useState([]);
-  const {showActionSheetWithOptions} = useActionSheet();
+  const { showActionSheetWithOptions } = useActionSheet();
   const BASE_URL = getBaseURL() + '/v1/file';
   const numPhotos = useRef(0);
   const numVideos = useRef(0);
@@ -165,7 +166,7 @@ const RoomUnitGallery = React.memo(() => {
     //     console.log({error});
     //   });
     const result = await uploadFile(image);
-    console.log({result});
+    console.log({ result });
     return result;
   };
 
@@ -191,7 +192,7 @@ const RoomUnitGallery = React.memo(() => {
   };
 
   const onDone = () => {
-    const nData = {...dataSignUp};
+    const nData = { ...dataSignUp };
     nData.list_photo = files;
     setData(nData);
     if (token) {
@@ -226,15 +227,12 @@ const RoomUnitGallery = React.memo(() => {
           },
         },
       };
-      console.log({body});
+      console.log({ body });
 
-      dispatch(addNewRoom({body}));
+      dispatch(addNewRoom({ body }));
     } else {
-      if (dataSignUp?.role_user === 'Agent') {
-        NavigationUtils.navigate(AGENCY_BASIC_INFORMATION);
-      } else {
-        NavigationUtils.navigate(USER_INFORMATION_NAME);
-      }
+      NavigationUtils.navigate(USER_INFORMATION_NAME);
+
     }
   };
 
@@ -251,7 +249,7 @@ const RoomUnitGallery = React.memo(() => {
         cancelButtonIndex,
       },
       buttonIndex => {
-        console.log({buttonIndex});
+        console.log({ buttonIndex });
         if (buttonIndex === 0) {
           uploadPhotos(mediaType);
         } else if (buttonIndex === 1) {
@@ -267,8 +265,8 @@ const RoomUnitGallery = React.memo(() => {
   };
 
   const onReceiveDragDrop = (event: DraxDragWithReceiverEventData) => {
-    console.log({event});
-    const {dragged, receiver} = event;
+    console.log({ event });
+    const { dragged, receiver } = event;
     const idDragged = parseInt(dragged.id);
     const idReceiver = parseInt(receiver.id);
     let nFiles: any = [...files];
@@ -289,8 +287,8 @@ const RoomUnitGallery = React.memo(() => {
 
     const styleView =
       index === 1 || index % 3 == 1
-        ? {marginBottom: SIZE.padding, marginHorizontal: SIZE.padding - 1}
-        : {marginBottom: SIZE.padding};
+        ? { marginBottom: SIZE.padding, marginHorizontal: SIZE.padding - 1 }
+        : { marginBottom: SIZE.padding };
     return (
       <>
         <View style={styleView} key={index.toString()}>
@@ -311,11 +309,11 @@ const RoomUnitGallery = React.memo(() => {
               <IconClear iconFillColor={colors.white} width={14} height={14} />
             </View>
             {isPhoto ? (
-              <Image source={{uri: file.uri}} style={styles.itemImage} />
+              <Image source={{ uri: file.uri }} style={styles.itemImage} />
             ) : (
               <>
                 <Video
-                  source={{uri: file.uri}}
+                  source={{ uri: file.uri }}
                   style={styles.itemImage}
                   resizeMode={'cover'}
                   muted
@@ -337,7 +335,7 @@ const RoomUnitGallery = React.memo(() => {
   };
 
   const renderListImage = () => {
-    console.log({files});
+    console.log({ files });
     return (
       <DraxProvider>
         {files.length > 0 ? (
@@ -357,7 +355,7 @@ const RoomUnitGallery = React.memo(() => {
           </>
         ) : (
           <>
-            <View style={{paddingBottom: scaleWidth(400)}}>
+            <View style={{ paddingBottom: scaleWidth(400) }}>
               <Image source={bg_room_unit_picture} style={styles.bgImage} />
             </View>
             <AppText style={styles.title}>
@@ -417,4 +415,4 @@ const RoomUnitGallery = React.memo(() => {
   );
 });
 
-export {RoomUnitGallery};
+export { RoomUnitGallery };

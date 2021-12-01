@@ -27,8 +27,8 @@ const IntroduceHomeowner = () => {
           {"Let's introduce your first homeowner's property"}
         </AppText>
 
-        <AppText>
-          {"You can update more properties later"}
+        <AppText style={styles.miniTxt}>
+          {"You can update more properties later."}
         </AppText>
 
         <AppButton
@@ -38,7 +38,6 @@ const IntroduceHomeowner = () => {
           iconRight={'arNext'}
           size={'small'}
         />
-
       </View>
     </>
   );
@@ -51,18 +50,26 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: SIZE.padding,
     backgroundColor: colors.white,
+    justifyContent: 'center'
+
   },
   title: {
     ...fontFamily.fontCampWeight600,
     fontSize: SIZE.medium_size,
     lineHeight: SIZE.medium_size * 1.3,
     marginBottom: SIZE.padding,
-    marginTop: SIZE.padding - SIZE.base_space,
-    maxWidth: scaleWidth(240),
+    // marginTop: SIZE.padding - SIZE.base_space,
+    // maxWidth: scaleWidth(240),
   },
   customStyleButton: {
     paddingTop: SIZE.base_space / 2,
     paddingBottom: SIZE.medium_space,
+    marginTop: scaleWidth(80)
   },
+  miniTxt: {
+    ...fontFamily.fontCampWeight500,
+    color: colors.textThirdPrimary,
+    fontSize: SIZE.base_size
+  }
 
 });

@@ -149,6 +149,8 @@ export interface DataSignupProps {
   agency_name: string;
   license_no: string;
   sale_person_no: string;
+  homeowner_name: string;
+  homeowner_gender: mockProps;
 }
 
 export interface RoomProps {

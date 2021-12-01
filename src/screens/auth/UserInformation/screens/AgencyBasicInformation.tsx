@@ -1,4 +1,4 @@
-import {AppButton, AppText, Header, AppInput, AppPicker} from '@component';
+import { AppButton, AppText, Header, AppInput, AppPicker } from '@component';
 import {
   colors,
   fontFamily,
@@ -7,22 +7,22 @@ import {
   SIZE,
   validateForm,
 } from '@util';
-import React, {useRef} from 'react';
-import {StyleSheet, View} from 'react-native';
-import {DataSignupProps} from '@interfaces';
-import {useDispatch, useSelector} from 'react-redux';
-import {ROOM_UNIT_HOWNER} from '@mocks';
-import {Formik, FormikValues} from 'formik';
+import React, { useRef } from 'react';
+import { StyleSheet, View } from 'react-native';
+import { DataSignupProps } from '@interfaces';
+import { useDispatch, useSelector } from 'react-redux';
+import { ROOM_UNIT_HOWNER } from '@mocks';
+import { Formik, FormikValues } from 'formik';
 import * as yup from 'yup';
-import {setDataSignup} from '@redux';
-import {AGENCY_INFORMATION_NAME} from '@routeName';
+import { setDataSignup } from '@redux';
+import { AGENCY_INFORMATION_NAME } from '@routeName';
 
 interface VerifyCodeProp {
   navigation: any;
   route: any;
 }
 
-const AgencyBasicInformation = ({navigation}: VerifyCodeProp) => {
+const AgencyBasicInformation = ({ navigation }: VerifyCodeProp) => {
   const dispatch = useDispatch();
   const dataSignUp: DataSignupProps = useSelector(
     (state: any) => state?.auth?.dataSignup,
@@ -43,9 +43,9 @@ const AgencyBasicInformation = ({navigation}: VerifyCodeProp) => {
 
   const onChangeValue = (value: any, name?: string) => {
     if (name) {
-      const data: any = {...dataSignUp};
+      const data: any = { ...dataSignUp };
       data[name] = value;
-      dispatch(setDataSignup({data}));
+      dispatch(setDataSignup({ data }));
     }
   };
 
@@ -74,14 +74,17 @@ const AgencyBasicInformation = ({navigation}: VerifyCodeProp) => {
           onSubmit={onSubmit}>
           {props => (
             <>
-              <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                <AppPicker
-                  value={props.values.gender}
-                  name={'gender'}
-                  onValueChange={onChangeValue}
-                  items={list.gender_agency}
-                  customStyleInputPicker={{width: scaleWidth(90)}}
-                />
+              <View style={{ flexDirection: 'row' }}>
+                <View>
+                  <AppPicker
+                    value={props.values.gender}
+                    name={'gender'}
+                    onValueChange={onChangeValue}
+                    items={list.gender_agency}
+                    style={{ width: scaleWidth(90), marginRight: scaleWidth(20) }}
+                  />
+                </View>
+
                 <AppInput
                   name={'user_name'}
                   value={props.values.user_name}
@@ -154,9 +157,9 @@ const styles = StyleSheet.create({
   },
   input: {
     flex: 1,
-    marginLeft: SIZE.base_space,
+    // marginLeft: SIZE.base_space,
     marginTop: SIZE.base_space,
   },
 });
 
-export {AgencyBasicInformation};
+export { AgencyBasicInformation };

@@ -1,16 +1,16 @@
-import {AppButton, AppQA, Header} from '@component';
-import {useNavigation} from '@react-navigation/core';
+import { AppButton, AppQA, Header } from '@component';
+import { useNavigation } from '@react-navigation/core';
 import React from 'react';
-import {ScrollView} from 'react-native';
-import {styles} from './style';
-import {SIGNUP} from '@routeName';
-import {colors, validateForm} from '@util';
-import {DataSignupProps} from '@interfaces';
-import {useDispatch, useSelector} from 'react-redux';
-import {setDataSignup} from '@redux';
+import { ScrollView } from 'react-native';
+import { styles } from './style';
+import { AGENCY_BASIC_INFORMATION, SIGNUP } from '@routeName';
+import { colors, validateForm } from '@util';
+import { DataSignupProps } from '@interfaces';
+import { useDispatch, useSelector } from 'react-redux';
+import { setDataSignup } from '@redux';
 import * as yup from 'yup';
-import {Formik} from 'formik';
-import {ROOM_UNIT_HOWNER} from '@mocks';
+import { Formik } from 'formik';
+import { ROOM_UNIT_HOWNER } from '@mocks';
 
 interface screenNavigationProp {
   navigate: any;
@@ -23,9 +23,11 @@ const Preferences = (props: any) => {
     (state: any) => state?.auth?.dataSignup,
   );
   const setData = (data: any) => {
-    dispatch(setDataSignup({data}));
+    dispatch(setDataSignup({ data }));
   };
   const isTenant = dataSignUp?.role_user === 'Tenant';
+  const isAgent = dataSignUp?.role_user === 'Agent';
+
   const list = ROOM_UNIT_HOWNER;
 
   const formInitialValues = {
@@ -38,25 +40,26 @@ const Preferences = (props: any) => {
   });
 
   const onSkip = (props: any) => {
-    const nData: DataSignupProps = {...dataSignUp};
+    const nData: DataSignupProps = { ...dataSignUp };
     nData.preferences = [];
     setData(nData);
     props.setErrors({});
-    navigation.navigate(SIGNUP);
+    navigation.navigate(isAgent ? AGENCY_BASIC_INFORMATION : SIGNUP);
   };
 
   const onContinue = () => {
-    navigation.navigate(SIGNUP);
+    if (isAgent) navigation.navigate(AGENCY_BASIC_INFORMATION)
+    else navigation.navigate(SIGNUP);
   };
 
   const renderFormStepSecond = (props: any) => {
-    console.log({props});
+    console.log({ props });
     return (
       <>
         <AppQA
           isFlex
           data={list.preferences}
-          title={'What’s your preferences?'}
+          title={isAgent ? 'What’s her/his preferences?' : 'What’s your preferences?'}
           value={dataSignUp}
           setValue={setData}
           typeList={'even'}
@@ -73,7 +76,7 @@ const Preferences = (props: any) => {
           iconRight={'arNext'}
           onPress={props.handleSubmit}
         />
-        {(props.values.staying_with_guests === 'Yes' || isTenant) && (
+        {(props.values.staying_with_guests === 'Yes' || isTenant || isAgent) && (
           <AppButton
             title={'Skip'}
             typeButton={'link'}
@@ -86,7 +89,7 @@ const Preferences = (props: any) => {
 
   return (
     <>
-      <Header back customContainer={{backgroundColor: colors.bgSreen}} />
+      <Header back customContainer={{ backgroundColor: colors.bgSreen }} />
       <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
         <Formik
           initialValues={formInitialValues}
@@ -101,4 +104,4 @@ const Preferences = (props: any) => {
   );
 };
 
-export {Preferences};
+export { Preferences };

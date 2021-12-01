@@ -31,9 +31,8 @@ const ChooseRole = (props: any) => {
   const isHomeowner = role === 'Homeowner' || role === 'Agent';
 
   const onNext = () => {
-    // if (role === 'Agent') navigation.navigate(INTRODUCE_HOMEOWNER)
-    // else 
-    navigation.navigate(ROOM_UNIT_ADDRESS);
+    if (role === 'Agent') navigation.navigate(INTRODUCE_HOMEOWNER)
+    else navigation.navigate(ROOM_UNIT_ADDRESS);
   };
 
 
