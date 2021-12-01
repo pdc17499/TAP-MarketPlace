@@ -7,7 +7,7 @@ import {
   Header,
   ModalCheckedBox,
 } from '@component';
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect} from 'react';
 import {View, StyleSheet} from 'react-native';
 import {useDispatch} from 'react-redux';
 import {useSelector} from 'react-redux';
@@ -21,10 +21,10 @@ import {
   validateForm,
 } from '@util';
 import * as yup from 'yup';
-import {Formik, FormikValues} from 'formik';
+import {Formik} from 'formik';
 import {ROOM_UNIT_HOWNER} from '@mocks';
 import {pickerProps, RoomProps} from '@interfaces';
-import {getRoomTenant, setRoomDetail, updateRoomTenant} from '@redux';
+import {getRoomTenant, updateRoomTenant} from '@redux';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {IconDola} from '@assets';
 import {ROOM_DETAIL_LOCATION} from '@routeName';
@@ -175,14 +175,11 @@ const SearchingFilter = () => {
             })}
           </>
         );
-      } else if (
-        name === 'bedroom_number_tenant' ||
-        name === 'bathroom_number_tenant'
-      ) {
-        return <AppText style={styles.valueModal}>{data.join(' , ')}</AppText>;
       } else {
-        return <AppText style={styles.valueModal}>{data.join(' - ')}</AppText>;
+        return <AppText style={styles.valueModal}>{data.join(', ')}</AppText>;
       }
+    } else {
+      return <AppText style={styles.placeHolder}>{'N/A'}</AppText>;
     }
   };
 
@@ -359,6 +356,11 @@ const styles = StyleSheet.create({
   valueModal: {
     fontSize: scaleSize(18),
     ...fontFamily.fontWeight500,
+  },
+  placeHolder: {
+    fontSize: scaleSize(18),
+    ...fontFamily.fontWeight500,
+    color: colors.textSecondPrimary,
   },
   message: {
     fontSize: SIZE.medium_size,

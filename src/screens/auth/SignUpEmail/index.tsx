@@ -64,7 +64,7 @@ const SignUpEmail = (props: SignUpEmailProp) => {
     const files = dataSignUp?.list_photo;
     if (files?.length > 0) {
       const urls: string[] = [];
-      files.map((file: ImageOrVideo) => {
+      files.map((file: any) => {
         urls.push(file.uri);
       });
 

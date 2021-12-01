@@ -100,6 +100,7 @@ const BasicInfomation = () => {
     let body: any = {
       name: user?.name,
     };
+    console.log(111, user?.occupation);
     if (user?.nationality) body = {...body, nationality: user?.nationality};
     if (user?.occupation) body = {...body, occupation: user?.occupation};
     if (user?.ethnicity) body = {...body, ethnicity: user?.ethnicity};
@@ -165,6 +166,10 @@ const BasicInfomation = () => {
                   error={props.errors.ageGroup || props.errors.dob}
                   stylePicker={'linear'}
                   showDot
+                  placeholder={{
+                    label: '',
+                    value: '',
+                  }}
                   customSubview={
                     <Pressable
                       hitSlop={STYLE.hitSlop}

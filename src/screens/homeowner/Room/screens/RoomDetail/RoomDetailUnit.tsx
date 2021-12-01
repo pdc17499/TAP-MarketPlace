@@ -7,9 +7,9 @@ import {
   Header,
   ModalCheckedBox,
 } from '@component';
-import React, { useEffect, useRef, useState } from 'react';
-import { View, Image, Pressable, StyleSheet, ScrollView } from 'react-native';
-import { IconBack, IconClear, IconDola, IconEdit, room_sample } from '@assets';
+import React, {useEffect, useRef, useState} from 'react';
+import {View, Image, Pressable, StyleSheet, ScrollView} from 'react-native';
+import {IconBack, IconClear, IconDola, IconEdit, room_sample} from '@assets';
 import {
   colors,
   DEVICE,
@@ -22,17 +22,17 @@ import {
   validateForm,
   YEARS,
 } from '@util';
-import { useNavigation } from '@react-navigation/core';
-import { Formik, FormikValues } from 'formik';
-import { ROOM_UNIT_HOWNER } from '@mocks';
+import {useNavigation} from '@react-navigation/core';
+import {Formik, FormikValues} from 'formik';
+import {ROOM_UNIT_HOWNER} from '@mocks';
 import * as yup from 'yup';
 import Carousel from 'react-native-snap-carousel';
 import Modal from 'react-native-modal';
 import Video from 'react-native-video';
-import { pickerProps } from '@interfaces';
-import { ROOM_DETAIL_GELLERY } from '@routeName';
-import { useDispatch, useSelector } from 'react-redux';
-import { updateRoom } from '@redux';
+import {pickerProps} from '@interfaces';
+import {ROOM_DETAIL_GELLERY, ROOM_UNIT_GALLERY} from '@routeName';
+import {useDispatch, useSelector} from 'react-redux';
+import {updateRoom} from '@redux';
 
 const state = {
   activeIndex: 0,
@@ -60,13 +60,12 @@ const state = {
   ],
 };
 
-
-const RoomDetailUnit = ({ props }: any) => {
+const RoomDetailUnit = ({props}: any) => {
   const key = props;
   const navigation: any = useNavigation();
   const dispatch = useDispatch();
   const ROOM: any = useSelector((state: any) => state?.rooms?.roomDetail);
-  const formRef: any = useRef<FormikValues>()
+  const formRef: any = useRef<FormikValues>();
   const [room, setRoom] = useState({
     room_type: ROOM?.RoomDetails?.RoomType,
     bedroom_number: ROOM?.RoomDetails?.BedroomNumber,
@@ -126,19 +125,19 @@ const RoomDetailUnit = ({ props }: any) => {
   });
 
   const onChangeValue = (value: any, name?: string) => {
-    const nRoom: any = { ...room };
+    const nRoom: any = {...room};
     if (name) {
       nRoom[name] = value;
       setRoom(nRoom);
-      console.log({ value });
+      console.log({value});
     }
   };
 
-  const onSubmit = (values: any) => { };
+  const onSubmit = (values: any) => {};
 
   const onValuesChangeFinish = (values: any) => {
-    console.log({ values });
-    const nRoom: any = { ...room };
+    console.log({values});
+    const nRoom: any = {...room};
     nRoom['floor_size_min'] = values[0];
     nRoom['floor_size_max'] = values[1];
     setRoom(nRoom);
@@ -146,7 +145,7 @@ const RoomDetailUnit = ({ props }: any) => {
 
   const renderFloorSizeContent = (values: any) => {
     return (
-      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+      <View style={{flexDirection: 'row', alignItems: 'center'}}>
         <IconDola width={10} height={15} iconFillColor={colors.secondPrimary} />
         <AppText
           isPrice
@@ -193,7 +192,7 @@ const RoomDetailUnit = ({ props }: any) => {
   };
 
   const onGallery = (gallery: Array<string>) => {
-    navigation.navigate(ROOM_DETAIL_GELLERY, { gallery });
+    navigation.navigate(ROOM_UNIT_GALLERY, {gallery});
   };
 
   const renderGallery = (gallery: Array<any>) => {
@@ -203,7 +202,7 @@ const RoomDetailUnit = ({ props }: any) => {
       length > 4 ? styles.smallImage : styles.smallImageWidthSpace;
 
     return (
-      <View style={{ paddingTop: SIZE.padding, marginBottom: 50 }}>
+      <View style={{paddingTop: SIZE.padding, marginBottom: 50}}>
         <View style={styles.row}>
           <AppText style={styles.label}>{'Gallery'}</AppText>
           <Pressable
@@ -214,7 +213,7 @@ const RoomDetailUnit = ({ props }: any) => {
         </View>
         {length > 0 && (
           <Pressable onPress={openModal}>
-            <Image source={{ uri: gallery[0] }} style={styles.firstImage} />
+            <Image source={{uri: gallery[0]}} style={styles.firstImage} />
             <View style={styleList}>
               {gallery.map((item: any, index: number) => {
                 const isVideo = checkVideo(item);
@@ -223,14 +222,14 @@ const RoomDetailUnit = ({ props }: any) => {
                     <View key={index.toString()}>
                       {isVideo ? (
                         <Video
-                          source={{ uri: item }}
+                          source={{uri: item}}
                           style={styleFile}
                           resizeMode={'cover'}
-                        // controls
-                        // paused
+                          // controls
+                          // paused
                         />
                       ) : (
-                        <Image source={{ uri: item }} style={styleFile} />
+                        <Image source={{uri: item}} style={styleFile} />
                       )}
                       {index === 4 && (
                         <View style={styles.shadowGallery}>
@@ -277,22 +276,22 @@ const RoomDetailUnit = ({ props }: any) => {
 
   var typesVideo = ['mp4'];
 
-  const _renderFile = ({ item, index }: any) => {
-    console.log({ item });
+  const _renderFile = ({item, index}: any) => {
+    console.log({item});
     const isVideo = checkVideo(item);
 
     return (
       <View key={index.toString()}>
         {isVideo ? (
           <Video
-            source={{ uri: item }}
+            source={{uri: item}}
             style={styles.gallery}
             resizeMode={'contain'}
-          // controls
-          // paused
+            // controls
+            // paused
           />
         ) : (
-          <Image source={{ uri: item }} style={styles.gallery} />
+          <Image source={{uri: item}} style={styles.gallery} />
         )}
       </View>
     );
@@ -321,46 +320,47 @@ const RoomDetailUnit = ({ props }: any) => {
 
   const handleSubmit = () => {
     if (formRef.current) {
-      formRef.current.handleSubmit()
+      formRef.current.handleSubmit();
     }
-  }
+  };
 
   const updateRoomInfomation = () => {
-
     console.log('room', room);
     console.log('ROOM', ROOM);
 
     const body = {
-      "roomDesc": {
-        "RentalAddress": ROOM?.RentalAddress,
-        "PlaceType": ROOM?.PlaceType,
-        "RoomDetails": {
-          "RoomType": room?.room_type,
-          "BedroomNumber": isRoomType ? 0 : room?.bedroom_number,
-          "BathroomNumber": isRoomType ? 0 : room?.bathroom_number,
-          "AttachedBathroom": isRoomType ? (room?.attached_bathroom === 'Yes') : false,
-          "StayWithGuest": ROOM?.RoomDetails?.StayWithGuest,
-          "AllowCook": room?.allow_cooking === 'Yes',
-          "KeyWords": room?.amenities,
-          "buildYear": room?.built_year,
-          "floorLevel": room?.floor_level,
-          "floorSizeMax": room?.floor_size_max,
-          "floorSizeMin": room?.floor_size_min,
-          "roomFurnished": room?.room_furnishing,
+      roomDesc: {
+        RentalAddress: ROOM?.RentalAddress,
+        PlaceType: ROOM?.PlaceType,
+        RoomDetails: {
+          RoomType: room?.room_type,
+          BedroomNumber: isRoomType ? 0 : room?.bedroom_number,
+          BathroomNumber: isRoomType ? 0 : room?.bathroom_number,
+          AttachedBathroom: isRoomType
+            ? room?.attached_bathroom === 'Yes'
+            : false,
+          StayWithGuest: ROOM?.RoomDetails?.StayWithGuest,
+          AllowCook: room?.allow_cooking === 'Yes',
+          KeyWords: room?.amenities,
+          buildYear: room?.built_year,
+          floorLevel: room?.floor_level,
+          floorSizeMax: room?.floor_size_max,
+          floorSizeMin: room?.floor_size_min,
+          roomFurnished: room?.room_furnishing,
         },
-        "LeasePeriod": ROOM?.LeasePeriod,
-        "PicturesVideo": room.gallery || [],
-        "RentalPrice": ROOM?.RentalPrice,
-        "isActive": ROOM?.isActive
-      }
-    }
-    dispatch(updateRoom(body, ROOM?.id))
-  }
+        LeasePeriod: ROOM?.LeasePeriod,
+        PicturesVideo: room.gallery || [],
+        RentalPrice: ROOM?.RentalPrice,
+        isActive: ROOM?.isActive,
+      },
+    };
+    dispatch(updateRoom(body, ROOM?.id));
+  };
 
   return (
     <>
       <ScrollView
-        style={{ flex: 1 }}
+        style={{flex: 1}}
         contentContainerStyle={styles.contentContainerStyle}
         showsVerticalScrollIndicator={false}>
         <View style={styles.line} />
@@ -375,8 +375,8 @@ const RoomDetailUnit = ({ props }: any) => {
             <>
               <View>
                 {renderAppPicker(props, 'room_type', 'Rental type')}
-                {room.room_type === 'Room'
-                  ? <AppPicker
+                {room.room_type === 'Room' ? (
+                  <AppPicker
                     value={props.values.attached_bathroom}
                     name={'attached_bathroom'}
                     label={'Attached Bathroom'}
@@ -385,14 +385,20 @@ const RoomDetailUnit = ({ props }: any) => {
                     error={props.errors.attached_bathroom}
                     stylePicker={'linear'}
                   />
-                  : <>
-                    {renderAppPicker(props, 'bedroom_number', 'Number of Bedrooms')}
+                ) : (
+                  <>
+                    {renderAppPicker(
+                      props,
+                      'bedroom_number',
+                      'Number of Bedrooms',
+                    )}
                     {renderAppPicker(
                       props,
                       'bathroom_number',
                       'Number of Bathrooms',
                     )}
-                  </>}
+                  </>
+                )}
 
                 <AppModal
                   label={'Floor size'}
@@ -528,4 +534,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export { RoomDetailUnit };
+export {RoomDetailUnit};

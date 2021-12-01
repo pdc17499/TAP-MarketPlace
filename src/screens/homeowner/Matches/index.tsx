@@ -92,7 +92,7 @@ const Matches = () => {
         <FastImage
           style={styles.imageUser}
           source={{
-            uri: BASE_URL + '/videos/6c82c7892a2db755abcdd02ef9e11fc1',
+            uri: 'https://tap-marketplace.s3.ap-southeast-1.amazonaws.com/0780d6638c564c402591136ac5bea57a',
             priority: FastImage.priority.normal,
           }}
         />

@@ -215,21 +215,25 @@ export const ROOM_UNIT_HOWNER = {
       label: 'No',
       value: 'No',
     },
-  ],
-  attached_bathroom_tenant: [
-    {
-      label: 'Yes',
-      value: 'Yes',
-    },
-    {
-      label: 'No',
-      value: 'No',
-    },
     {
       label: 'Any',
       value: 'Any',
     },
   ],
+  // attached_bathroom_tenant: [
+  //   {
+  //     label: 'Yes',
+  //     value: 'Yes',
+  //   },
+  //   {
+  //     label: 'No',
+  //     value: 'No',
+  //   },
+  //   {
+  //     label: 'Any',
+  //     value: 'Any',
+  //   },
+  // ],
   room_furnishing: [
     {
       label: 'Unfurnished',

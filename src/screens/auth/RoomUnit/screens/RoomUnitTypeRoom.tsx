@@ -111,8 +111,8 @@ const RoomUnitTypeRoom = () => {
     ? 'Attached bathroom'
     : 'Do you prefer attached bathroom?';
   const listAttached = isTenant
-    ? list.attached_bathroom_tenant
-    : list.attached_bathroom;
+    ? list.attached_bathroom
+    : list.attached_bathroom.filter(item => item.label !== 'Any');
 
   return (
     <View style={{ flex: 1 }}>

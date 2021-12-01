@@ -38,21 +38,19 @@ import {
   DraxProvider,
   DraxView,
 } from 'react-native-drax';
-import { GlobalService, uploadFileApi, uploadFile } from '@services';
-import { styles } from './styles';
-import axios from 'axios';
+import {uploadFile} from '@services';
+import {styles} from './styles';
 
-const RoomUnitGallery = React.memo(() => {
+const RoomUnitGallery = React.memo(({route}: any) => {
   const dispatch = useDispatch();
   const dataSignUp = useSelector((state: any) => state?.auth?.dataSignup);
   const token = useSelector((state: any) => state?.auth?.token);
-  const room: any = useSelector((state: any) => state?.rooms?.roomDetail);
+  const gallery = route?.params?.gallery;
   const setData = (data: any) => {
     dispatch(setDataSignup({ data }));
   };
   const [files, setFiles] = useState([]);
-  const { showActionSheetWithOptions } = useActionSheet();
-  const BASE_URL = getBaseURL() + '/v1/file';
+  const {showActionSheetWithOptions} = useActionSheet();
   const numPhotos = useRef(0);
   const numVideos = useRef(0);
   if (DEVICE.isAndroid) {
@@ -62,10 +60,16 @@ const RoomUnitGallery = React.memo(() => {
   }
 
   useEffect(() => {
+    if (gallery) {
+      setFiles(gallery);
+    }
+  }, []);
+
+  useEffect(() => {
     numPhotos.current = 0;
     numVideos.current = 0;
     files.map((file: any) => {
-      if (file.format.includes('images')) {
+      if (typeof file === 'string' || file.format.includes('images')) {
         numPhotos.current += 1;
       } else {
         numVideos.current += 1;
@@ -105,6 +109,7 @@ const RoomUnitGallery = React.memo(() => {
   };
 
   const validateFile = async (nFiles: any, isPhoto: boolean) => {
+    // console.log();
     if (
       isPhoto &&
       nFiles.length + numPhotos.current > FILE_SIZE.MAX_IMAGE_COUNT
@@ -112,7 +117,7 @@ const RoomUnitGallery = React.memo(() => {
       Alert.alert('You can only upload up to 10 photos');
     } else if (
       !isPhoto &&
-      nFiles.length + numVideos.current > FILE_SIZE.MAX_IMAGE_COUNT
+      nFiles.length + numVideos.current > FILE_SIZE.MAX_VIDEO_COUNT
     ) {
       Alert.alert('You can only upload up to 1 video');
     } else {
@@ -142,29 +147,6 @@ const RoomUnitGallery = React.memo(() => {
   };
 
   const getUrlFile = async (image: any) => {
-    console.log(1111);
-    // let formData = new FormData();
-    // formData.append('file', {
-    //   name: image?.path.replace(/^.*[\\\/]/, ''),
-    //   uri: image?.path.replace('file://', ''),
-    //   type: image?.mime,
-    // });
-    // console.log({formData});
-    // axios
-    //   .post('https://4241-222-252-30-49.ngrok.io/v1/file/upload', formData, {
-    //     responseType: 'json',
-    //     timeout: 30000,
-    //     headers: {
-    //       'X-Requested-With': 'XMLHttpRequest',
-    //       'Content-Type': 'multipart/form-data',
-    //     },
-    //   })
-    //   .then(response => {
-    //     console.log({response});
-    //   })
-    //   .catch(error => {
-    //     console.log({error});
-    //   });
     const result = await uploadFile(image);
     console.log({ result });
     return result;
@@ -272,7 +254,9 @@ const RoomUnitGallery = React.memo(() => {
     let nFiles: any = [...files];
     nFiles = move(nFiles, idDragged, idReceiver);
     const firstFile = nFiles[0];
-    if (!firstFile.format.includes('images')) {
+    if (
+      !(typeof firstFile === 'string' || firstFile.format.includes('images'))
+    ) {
       Alert.alert('Profile photo must be an image');
     } else {
       LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
@@ -283,7 +267,7 @@ const RoomUnitGallery = React.memo(() => {
   };
 
   const renderImage = (file: any, index: number) => {
-    const isPhoto = file.format.includes('images');
+    const isPhoto = typeof file === 'string' || file.format.includes('images');
 
     const styleView =
       index === 1 || index % 3 == 1
@@ -309,7 +293,10 @@ const RoomUnitGallery = React.memo(() => {
               <IconClear iconFillColor={colors.white} width={14} height={14} />
             </View>
             {isPhoto ? (
-              <Image source={{ uri: file.uri }} style={styles.itemImage} />
+              <Image
+                source={{uri: typeof file === 'string' ? file : file.uri}}
+                style={styles.itemImage}
+              />
             ) : (
               <>
                 <Video
@@ -408,7 +395,9 @@ const RoomUnitGallery = React.memo(() => {
         }}
       />
       <ScrollView showsVerticalScrollIndicator={false}>
-        {token && <AppText style={styles.textGallery}>{'Gallery'}</AppText>}
+        {gallery && files?.length > 0 && (
+          <AppText style={styles.textGallery}>{'Gallery'}</AppText>
+        )}
         {renderListImage()}
       </ScrollView>
     </View>

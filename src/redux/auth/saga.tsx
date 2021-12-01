@@ -218,7 +218,7 @@ export function* verifyCodePhonenumberSaga(action: any) {
 export function* upDateUserInfoSaga(action: any) {
   try {
     GlobalService.showLoading();
-    const {body, id} = action.payload;
+    const {body, id, isNotBack} = action.payload;
     const result: ResponseGenerator = yield updateUserInfoApi(body, id);
     console.log({result});
     if (result) {
@@ -227,7 +227,9 @@ export function* upDateUserInfoSaga(action: any) {
         message: 'Update User Information Successfully!',
       });
       yield put(saveDataUser({user: result}));
-      NavigationUtils.goBack();
+      if (!isNotBack) {
+        NavigationUtils.goBack();
+      }
     }
   } catch (error) {
     GlobalService.hideLoading();
