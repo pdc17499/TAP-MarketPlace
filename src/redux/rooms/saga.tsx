@@ -1,5 +1,12 @@
-import { put, takeLatest } from 'redux-saga/effects';
-import { setListRooms, setRoomDetail, getListRooms, saveNewRoom, deleteRoomRedux, updateRoomRedux } from './action'
+import {put, takeLatest} from 'redux-saga/effects';
+import {
+  setListRooms,
+  setRoomDetail,
+  getListRooms,
+  saveNewRoom,
+  deleteRoomRedux,
+  updateRoomRedux,
+} from './action';
 import {
   GlobalService,
   getListRoomsApi,
@@ -12,11 +19,9 @@ import {
   updateRoomTenantApi,
 } from '@services';
 
-import { showMessage } from 'react-native-flash-message';
-import {
-  ADD_SUCCESS, YOUR_LISTING,
-} from '@routeName';
-import { NavigationUtils } from '@navigation';
+import {showMessage} from 'react-native-flash-message';
+import {ADD_SUCCESS, YOUR_LISTING} from '@routeName';
+import {NavigationUtils} from '@navigation';
 import {
   GET_LIST_ROOMS,
   GET_ROOM_DETAIL,
@@ -25,7 +30,7 @@ import {
   UPDATE_ROOM,
   UPLOAD_FILE,
   GET_ROOM_TENANT,
-  UPDATE_ROOM_TENANT
+  UPDATE_ROOM_TENANT,
 } from '@redux';
 export interface ResponseGenerator2 {
   result?: any;
@@ -70,13 +75,13 @@ export function* getRoomDetailSaga(action: any) {
 export function* addNewRoomSaga(action: any) {
   try {
     GlobalService.showLoading();
-    const { body } = action?.payload;
-    console.log('body', { body });
+    const {body} = action?.payload;
+    console.log('body', {body});
 
     const result: ResponseGenerator2 = yield addNewRoomApi(body);
     console.log('resyult', result?.data);
     if (result) {
-      yield put(saveNewRoom(result?.data))
+      yield put(saveNewRoom(result?.data));
       NavigationUtils.navigate(ADD_SUCCESS);
     }
   } catch (error) {
@@ -108,7 +113,10 @@ export function* deleteRoomSaga(action: any) {
 export function* updateRoomSaga(action: any) {
   try {
     GlobalService.showLoading();
-    const result: ResponseGenerator2 = yield updateRoomApi(action.payload, action.id);
+    const result: ResponseGenerator2 = yield updateRoomApi(
+      action.payload,
+      action.id,
+    );
     if (result) {
       showMessage({
         type: 'success',
@@ -123,7 +131,6 @@ export function* updateRoomSaga(action: any) {
     GlobalService.hideLoading();
   }
 }
-
 
 export function* getRoomTenantSaga() {
   try {
@@ -141,10 +148,12 @@ export function* getRoomTenantSaga() {
   }
 }
 
-export function* updateRoomTenantSaga() {
+export function* updateRoomTenantSaga(action: any) {
   try {
     GlobalService.showLoading();
-    const result: ResponseGenerator2 = yield updateRoomTenantApi();
+    const result: ResponseGenerator2 = yield updateRoomTenantApi(
+      action.payload,
+    );
     console.log('hello', result?.data);
 
     if (result) {
@@ -157,7 +166,6 @@ export function* updateRoomTenantSaga() {
     GlobalService.hideLoading();
   }
 }
-
 
 // export function* upLoadFileSaga(action: any) {
 //   try {
@@ -187,6 +195,4 @@ export function* roomsSaga() {
 
   yield takeLatest(GET_ROOM_TENANT, getRoomTenantSaga);
   yield takeLatest(UPDATE_ROOM_TENANT, updateRoomTenantSaga);
-
-
 }

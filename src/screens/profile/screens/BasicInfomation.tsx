@@ -6,10 +6,10 @@ import {
   AppText,
   Header,
 } from '@component';
-import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, Pressable } from 'react-native';
-import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux';
+import React, {useEffect, useState} from 'react';
+import {View, StyleSheet, Pressable} from 'react-native';
+import {useDispatch} from 'react-redux';
+import {useSelector} from 'react-redux';
 import {
   colors,
   fontFamily,
@@ -20,14 +20,14 @@ import {
   validateForm,
 } from '@util';
 import * as yup from 'yup';
-import { Formik } from 'formik';
-import { ROOM_UNIT_HOWNER } from '@mocks';
-import { UserInfo } from '@interfaces';
-import { saveDataUser, updateUserInfo } from '@redux';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import {Formik} from 'formik';
+import {ROOM_UNIT_HOWNER} from '@mocks';
+import {UserInfo} from '@interfaces';
+import {saveDataUser, updateUserInfo} from '@redux';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import moment from 'moment';
-import { CaretRight } from '@assets';
+import {CaretRight} from '@assets';
 
 const BasicInfomation = () => {
   const dispatch = useDispatch();
@@ -37,17 +37,18 @@ const BasicInfomation = () => {
   const [showDate, setShowDate] = useState(false);
 
   useEffect(() => {
-    setUser(dataUser);
+    const nUser = {...dataUser};
+    nUser.dob = formateDateServer(dataUser?.dob);
+    console.log({nUser});
+    setUser(nUser);
   }, [dataUser]);
 
-  console.log({ user });
+  console.log({user});
 
   const formateDateServer = (date: any) => {
-    if (date) {
-      return moment(date, 'YYYY-MM-DDTHH:mm:ssSSZ').format('DD/MM/YYYY');
-    }
-
-    return '';
+    return date
+      ? moment(date, 'YYYY-MM-DDTHH:mm:ssSSZ').format('DD/MM/YYYY')
+      : '';
   };
 
   const formInitialValues = {
@@ -57,7 +58,7 @@ const BasicInfomation = () => {
     ethnicity: user?.ethnicity,
     gender: user?.gender,
     ageGroup: user?.ageGroup,
-    dob: formateDateServer(user?.dob),
+    dob: user?.dob,
   };
 
   const validationForm = yup.object().shape({
@@ -70,7 +71,7 @@ const BasicInfomation = () => {
 
   const onChangeValue = (item: any, name?: string) => {
     if (name) {
-      const nData: any = { ...user };
+      const nData: any = {...user};
       nData[name] = item;
       setUser(nData);
     }
@@ -92,32 +93,22 @@ const BasicInfomation = () => {
   };
 
   const formateDate = (date: any) => {
-    if (date) {
-      return moment(date, 'DD/MM/YYYY').format('YYYY-MM-DD');
-    }
-
-    return '';
+    return date ? moment(date, 'DD/MM/YYYY').format('YYYY-MM-DD') : '';
   };
 
   const onSubmit = () => {
-
     let body: any = {
       name: user?.name,
-      // nationality: user?.nationality,
-      // occupation: user?.occupation,
-      // ethnicity: user?.ethnicity,
-      // gender: user?.gender || '',
-      // ageGroup: user?.ageGroup || '',
-      // dob: formateDate(user?.dob),
     };
-    if (user?.nationality) body = { ...body, nationality: user?.nationality }
-    if (user?.occupation) body = { ...body, occupation: user?.occupation }
-    if (user?.ethnicity) body = { ...body, ethnicity: user?.ethnicity }
-    if (user?.gender) body = { ...body, gender: user?.gender }
-    if (user?.ageGroup && user?.ageGroup !== 'N/A') body = { ...body, ageGroup: user?.ageGroup }
-    if (user?.dob) body = { ...body, dob: formateDate(user?.dob) }
-    console.log('bbb', body)
-    dispatch(updateUserInfo({ body, id: user?.id }));
+    if (user?.nationality) body = {...body, nationality: user?.nationality};
+    if (user?.occupation) body = {...body, occupation: user?.occupation};
+    if (user?.ethnicity) body = {...body, ethnicity: user?.ethnicity};
+    if (user?.gender) body = {...body, gender: user?.gender};
+    if (user?.ageGroup && user?.ageGroup !== 'N/A')
+      body = {...body, ageGroup: user?.ageGroup};
+    if (user?.dob) body = {...body, dob: formateDate(user?.dob)};
+    console.log('bbb', body);
+    dispatch(updateUserInfo({body, id: user?.id}));
   };
 
   const renderCustomPlaceHolder = (name: string) => {
@@ -162,6 +153,7 @@ const BasicInfomation = () => {
                 items={list.gender}
                 error={props.errors.gender}
                 stylePicker={'linear'}
+                showDot
               />
               <View>
                 <AppPicker
@@ -172,12 +164,12 @@ const BasicInfomation = () => {
                   items={list.group_age}
                   error={props.errors.ageGroup || props.errors.dob}
                   stylePicker={'linear'}
-                  customStyleInputPicker={{}}
+                  showDot
                   customSubview={
                     <Pressable
                       hitSlop={STYLE.hitSlop}
                       onPress={showDatepicker}
-                      style={{ marginTop: SIZE.padding }}>
+                      style={{marginTop: SIZE.padding}}>
                       {!props.values.dob ? (
                         renderCustomPlaceHolder('date of birth')
                       ) : (
@@ -223,6 +215,7 @@ const BasicInfomation = () => {
                   value: '',
                 }}
                 customePlaceholder={renderCustomPlaceHolder('Ethnicity')}
+                showDot
               />
               <AppPicker
                 value={props.values.ethnicity}
@@ -237,6 +230,7 @@ const BasicInfomation = () => {
                   value: '',
                 }}
                 customePlaceholder={renderCustomPlaceHolder('Occupation')}
+                showDot
               />
             </View>
 
@@ -353,4 +347,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export { BasicInfomation };
+export {BasicInfomation};

@@ -7,7 +7,7 @@ import React, {useState} from 'react';
 import {Alert, Pressable, View} from 'react-native';
 import {styles} from './style';
 import {useDispatch, useSelector} from 'react-redux';
-import {verifyPhonenumber} from '@redux';
+import {updatePhonenumber, verifyPhonenumber} from '@redux';
 
 interface VerifyCodeProp {
   navigation: any;
@@ -40,7 +40,7 @@ const VerifyAccount = (props: VerifyCodeProp) => {
         } else {
           setError('');
           dispatch(
-            verifyPhonenumber({
+            updatePhonenumber({
               email: user?.email,
               contact: contact,
             }),

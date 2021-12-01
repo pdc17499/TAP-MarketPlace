@@ -20,6 +20,7 @@ import {
 } from '@redux';
 import {GlobalService, verifyCodePhonenumberApi} from '@services';
 import {TABBAR} from '@routeName';
+import {NavigationUtils} from '@navigation';
 
 interface VerifyCodeProp {
   navigation: any;
@@ -34,7 +35,7 @@ const VerifyCode = ({navigation, route}: VerifyCodeProp) => {
   if (!isForgetPassword) {
     contact = route.params?.contact;
   }
-  console.log('VerifyCode', route.params);
+  // console.log('VerifyCode', route.params);
   const [timerCount, setTimer] = useState(25);
   const CELL_COUNT = 4;
   const [value, setValue] = useState('');
@@ -75,26 +76,13 @@ const VerifyCode = ({navigation, route}: VerifyCodeProp) => {
     if (isForgetPassword) {
       dispatch(verifyCodeForgotPassword({email, code: value}));
     } else {
-      try {
-        GlobalService.showLoading();
-        const result: ResponseGenerator = await verifyCodePhonenumberApi({
-          code: value.toString(),
+      dispatch(
+        verifyCodePhonenumber({
           contact,
-        });
-        console.log({result});
-        if (isAccSettingScreen) {
-          const nUser = {...user};
-          nUser.isContactVerified = true;
-          dispatch(saveDataUser({user: nUser}));
-          navigation.goBack();
-        } else {
-          navigation.reset(TABBAR);
-        }
-      } catch (error) {
-        GlobalService.hideLoading();
-      } finally {
-        GlobalService.hideLoading();
-      }
+          code: value,
+          isAccSettingScreen,
+        }),
+      );
     }
   };
 

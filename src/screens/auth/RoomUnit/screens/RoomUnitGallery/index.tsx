@@ -64,7 +64,7 @@ const RoomUnitGallery = React.memo(() => {
     numPhotos.current = 0;
     numVideos.current = 0;
     files.map((file: any) => {
-      if (file.uri.includes('images')) {
+      if (file.format.includes('images')) {
         numPhotos.current += 1;
       } else {
         numVideos.current += 1;
@@ -125,7 +125,7 @@ const RoomUnitGallery = React.memo(() => {
           if (response) {
             arrFile.push({
               format: response.format,
-              uri: BASE_URL + response.imagePath,
+              uri: response.imagePath,
             });
             showFiles(arrFile);
           }
@@ -141,7 +141,7 @@ const RoomUnitGallery = React.memo(() => {
   };
 
   const getUrlFile = async (image: any) => {
-    // console.log(1111);
+    console.log(1111);
     // let formData = new FormData();
     // formData.append('file', {
     //   name: image?.path.replace(/^.*[\\\/]/, ''),
@@ -150,7 +150,7 @@ const RoomUnitGallery = React.memo(() => {
     // });
     // console.log({formData});
     // axios
-    //   .post('https://31a2-222-252-30-49.ngrok.io/upload', formData, {
+    //   .post('https://4241-222-252-30-49.ngrok.io/v1/file/upload', formData, {
     //     responseType: 'json',
     //     timeout: 30000,
     //     headers: {
@@ -274,7 +274,7 @@ const RoomUnitGallery = React.memo(() => {
     let nFiles: any = [...files];
     nFiles = move(nFiles, idDragged, idReceiver);
     const firstFile = nFiles[0];
-    if (!firstFile.uri.includes('images')) {
+    if (!firstFile.format.includes('images')) {
       Alert.alert('Profile photo must be an image');
     } else {
       LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
@@ -285,7 +285,7 @@ const RoomUnitGallery = React.memo(() => {
   };
 
   const renderImage = (file: any, index: number) => {
-    const isPhoto = file.uri.includes('images');
+    const isPhoto = file.format.includes('images');
 
     const styleView =
       index === 1 || index % 3 == 1

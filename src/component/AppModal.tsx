@@ -18,6 +18,7 @@ const AppModal = React.memo((props: AppModalProps) => {
     children,
     customTitle,
     onPressDone,
+    error,
   } = props;
 
   const openModal = () => {
@@ -42,23 +43,24 @@ const AppModal = React.memo((props: AppModalProps) => {
   ];
 
   return (
-    <View style={containerStyle}>
-      <Pressable onPress={openModal}>
-        {label && <AppText style={styles.label}>{label}</AppText>}
-        <View style={buttonStyle}>
-          {customTitle ? (
-            customTitle
-          ) : (
-            <AppText style={titleStyle}>{title || 'N/A'}</AppText>
-          )}
-        </View>
-      </Pressable>
-      <Modal
-        isVisible={visible}
-        backdropOpacity={0.3}
-        animationOutTiming={400}
-        animationInTiming={400}>
-        <Pressable style={styles.modal} onPress={closeModal}>
+    <>
+      <View style={containerStyle}>
+        <Pressable onPress={openModal}>
+          {label && <AppText style={styles.label}>{label}</AppText>}
+          <View style={buttonStyle}>
+            {customTitle ? (
+              customTitle
+            ) : (
+              <AppText style={titleStyle}>{title || 'N/A'}</AppText>
+            )}
+          </View>
+        </Pressable>
+        <Modal
+          isVisible={visible}
+          backdropOpacity={0.3}
+          animationOutTiming={400}
+          animationInTiming={400}>
+          <Pressable style={styles.modal} onPress={closeModal} />
           <View style={styles.modalBox}>
             {children}
             <AppButton
@@ -68,9 +70,10 @@ const AppModal = React.memo((props: AppModalProps) => {
               iconRight={'tick'}
             />
           </View>
-        </Pressable>
-      </Modal>
-    </View>
+        </Modal>
+      </View>
+      {error && <AppText style={styles.error}>{error}</AppText>}
+    </>
   );
 });
 
@@ -81,9 +84,12 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
   },
   modal: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
+    zIndex: 0,
   },
   modalBox: {
     backgroundColor: 'white',
@@ -118,6 +124,11 @@ const styles = StyleSheet.create({
     textDecorationLine: 'underline',
     textDecorationStyle: 'solid',
     textDecorationColor: colors.textSecondPrimary,
+  },
+  error: {
+    marginTop: 6,
+    color: colors.red,
+    fontSize: scaleSize(15),
   },
 });
 

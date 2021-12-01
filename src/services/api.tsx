@@ -11,7 +11,7 @@ const ApiConfigs: any = {
   headers: {
     'X-Requested-With': 'XMLHttpRequest',
     'Content-Type': 'application/json',
-    timeout: 10000,
+    timeout: 30000,
   },
 };
 
@@ -40,7 +40,7 @@ api.interceptors.response.use(
     describeSuccessResponse(response);
     try {
       const message = response?.data?.message;
-      if (message) {
+      if (message && message !== 'OK') {
         showMessage({
           message: message,
           type: 'success',

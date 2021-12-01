@@ -149,7 +149,7 @@ export const AppPhoneNumber = React.memo((props: IAppPhoneNumber) => {
       {showVerifyNumber && !isContactVerified && (
         <Pressable style={styles.verifyPress} onPress={onNavigateVerify}>
           <AppText style={{fontSize: scaleSize(14), color: colors.primary}}>
-            {'Verify this number'}
+            {'Verify account with phone number'}
           </AppText>
           <CaretRight width={14} height={14} iconFillColor={colors.primary} />
         </Pressable>

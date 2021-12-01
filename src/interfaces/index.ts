@@ -152,31 +152,34 @@ export interface DataSignupProps {
 }
 
 export interface RoomProps {
-  room_type: string;
-  bedroom_number: number;
-  bathroom_number: number;
-  allow_cooking: string;
-  amenities: Array<string>;
-  gallery: Array<string>;
-  room_furnishing: string;
-  floor_size_min: number;
-  floor_size_max: number;
-  floor_level: string;
-  built_year: string;
-  attached_bathroom: string;
-  location: {
+  room_type?: string;
+  bedroom_number?: number;
+  bathroom_number?: number;
+  allow_cooking?: string;
+  amenities?: Array<string>;
+  gallery?: Array<string>;
+  room_furnishing?: string;
+  floor_size_min?: number;
+  floor_size_max?: number;
+  floor_level?: string;
+  built_year?: string;
+  attached_bathroom?: string;
+  location?: {
     name: string;
     lat: number;
     long: number;
   };
-  kind_place: string;
-  lease_period: Array<string>;
-  min_range_price: number;
-  max_range_price: number;
-  staying_with_guests: string;
-  room_active: boolean;
-  rental_price: number;
-  rental_type: string;
+  kind_place?: string;
+  kind_place_tenant?: Array<string>;
+  bedroom_number_tenant?: Array<string>;
+  bathroom_number_tenant?: Array<string>;
+  lease_your_place?: Array<string>;
+  min_range_price?: number;
+  max_range_price?: number;
+  staying_with_guests?: string;
+  room_active?: boolean;
+  rental_price?: number;
+  rental_type?: string;
 }
 
 export interface AppQAProps {
@@ -292,6 +295,7 @@ export interface IAppPicker {
   customePlaceholder?: JSX.Element;
   customStyleInputPicker?: TextStyle;
   customSubview?: JSX.Element;
+  showDot?: boolean;
 }
 
 export interface ListingRoomProps {
@@ -322,6 +326,7 @@ export interface AppModalProps {
   children?: JSX.Element;
   customTitle?: JSX.Element;
   onPressDone?: () => void;
+  error?: string;
 }
 
 export interface AppModalCountryProps {
@@ -339,4 +344,15 @@ export interface AppModalCountryProps {
   customStyleContainer?: ViewStyle | ViewStyle[];
   type?: 'phone_code' | 'country';
   typeButton?: 'linear' | 'base';
+}
+
+export interface ModalCheckedBoxProps {
+  data: any;
+  label?: string;
+  selected: Array<string>;
+  name: string;
+  onPressDone?: (list: Array<string>, name: string) => void;
+  viewContent?: any;
+  title?: string;
+  error?: string;
 }

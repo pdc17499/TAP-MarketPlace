@@ -14,6 +14,7 @@ import {
   VERIFY_CODE_PHONE_NUMBER,
   CHANGE_PASSWORD,
   GET_PROFILE_USER,
+  UPDATE_PHONE_NUMBER,
 } from '@redux';
 
 export const loginApp = (payload: any) => ({
@@ -51,6 +52,11 @@ export const verifyCodeForgotPassword = (payload: any) => ({
 
 export const resetNewPassword = (payload: any) => ({
   type: RESET_NEW_PASSWORD,
+  payload,
+});
+
+export const updatePhonenumber = (payload: any) => ({
+  type: UPDATE_PHONE_NUMBER,
   payload,
 });
 

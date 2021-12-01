@@ -11,6 +11,7 @@ import {
   PROFILE,
   TABBAR,
   SEARCHING_FILTER,
+  ROOM_DETAIL_LOCATION,
 } from '../routeName';
 
 import {
@@ -22,6 +23,7 @@ import {
   ProfileLifeStyle,
   Profile,
   SearchingFilter,
+  RoomDetailLocation,
 } from '../../screens';
 import {TenantBottomTabs} from './TenantBottomTabs';
 
@@ -42,6 +44,10 @@ const TenantStack = () => {
       <Stack.Screen name={ACCOUNT_SETTING} component={AccountSetting} />
       <Stack.Screen name={PROFILE_LIFE_STYLE} component={ProfileLifeStyle} />
       <Stack.Screen name={SEARCHING_FILTER} component={SearchingFilter} />
+      <Stack.Screen
+        name={ROOM_DETAIL_LOCATION}
+        component={RoomDetailLocation}
+      />
     </Stack.Navigator>
   );
 };

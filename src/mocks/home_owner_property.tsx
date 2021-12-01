@@ -108,6 +108,10 @@ export const ROOM_UNIT_HOWNER = {
       value: '3 months',
     },
     {
+      label: '6 months',
+      value: '6 months',
+    },
+    {
       label: '9 months',
       value: '9 months',
     },

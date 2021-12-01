@@ -67,7 +67,7 @@ const RoomUnitKindPlace = () => {
     ? 'Lease period you prefer'
     : 'How long will you want to lease your place?';
 
-  const listPlace = list.months;
+  const listPlace = list.lease_your_place;
   const months = isTenant
     ? listPlace
     : dataSignUp?.kind_place?.value === 'HDB'

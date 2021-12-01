@@ -99,8 +99,8 @@ const Profile = (props: ProfileProp) => {
   const USER = useSelector((state: any) => state.auth.user);
   const role = useSelector((state: any) => state.auth.role);
   const dispatch = useDispatch();
-  const { showActionSheetWithOptions } = useActionSheet();
-  const [message, setMessage] = useState(0)
+  const {showActionSheetWithOptions} = useActionSheet();
+  const [message, setMessage] = useState(0);
 
   useEffect(() => {
     DeviceEventEmitter.addListener('UNAUTHENTICATION', logOut);
@@ -113,19 +113,17 @@ const Profile = (props: ProfileProp) => {
   };
 
   const checkMessage = () => {
-    console.log('hello', USER);
-    let num = 0
-    if (USER?.ethnicity === null) num = num + 1
-    if (USER?.ageGroup === null) num = num + 1
-    if (USER?.occupation === null) num = num + 1
-    if (USER?.nationality === null) num = num + 1
-    if (USER?.gender === null) num = num + 1
-    return num
-  }
+    let num = 0;
+    if (USER?.ethnicity === null) num = num + 1;
+    if (USER?.ageGroup === null) num = num + 1;
+    if (USER?.occupation === null) num = num + 1;
+    if (USER?.nationality === null) num = num + 1;
+    if (USER?.gender === null) num = num + 1;
+    return num;
+  };
 
   const getProfile = () => {
     dispatch(getProfileUser());
-
   };
 
   const openGallery = () => {
@@ -199,14 +197,14 @@ const Profile = (props: ProfileProp) => {
       <Pressable onPress={() => moveToDetail(item)}>
         <View style={styles.item}>
           {item.icon}
-          <AppText style={styles.title}>
-            {item.title}
-          </AppText>
-          {item.id === 2 && checkMessage() > 0 ? <View style={styles.circle}>
-            <AppText style={styles.messTxt}>{checkMessage().toString()}</AppText>
-          </View>
-            : null
-          }
+          <AppText style={styles.title}>{item.title}</AppText>
+          {item.id === 2 && checkMessage() > 0 ? (
+            <View style={styles.circle}>
+              <AppText style={styles.messTxt}>
+                {checkMessage().toString()}
+              </AppText>
+            </View>
+          ) : null}
           <CaretRight />
         </View>
       </Pressable>
@@ -345,15 +343,16 @@ const styles = StyleSheet.create({
     height: scaleWidth(20),
     borderRadius: scaleWidth(10),
     backgroundColor: colors.orange,
-    // justifyContent: 'center',
-    // alignItems: 'center',
+    justifyContent: 'center',
+    alignItems: 'center',
     position: 'absolute',
-    left: scaleWidth(160)
+    left: scaleWidth(160),
   },
   messTxt: {
     color: colors.white,
-    alignSelf: 'center'
-  }
+    alignSelf: 'center',
+    fontSize: scaleSize(13),
+  },
 });
 
 export {Profile};

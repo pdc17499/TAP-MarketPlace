@@ -1,21 +1,13 @@
 import {IconCheckedBox, IconUncheckedBox} from '@assets';
 import {AppModal, AppText} from '@component';
-import {scaleWidth} from '@util';
+import {ModalCheckedBoxProps} from '@interfaces';
+import {fontFamily, scaleHeight, scaleWidth} from '@util';
 import React, {useEffect, useState} from 'react';
 import {Pressable, ScrollView, StyleSheet, View} from 'react-native';
 
-interface ModalCheckedBoxProps {
-  data: any;
-  label?: string;
-  selected: Array<string>;
-  name: string;
-  onPressDone?: (list: Array<string>, name: string) => void;
-  viewContent?: any;
-  title?: string;
-}
-
 export const ModalCheckedBox = (props: ModalCheckedBoxProps) => {
-  const {data, label, selected, onPressDone, name, viewContent, title} = props;
+  const {data, label, selected, onPressDone, name, viewContent, title, error} =
+    props;
   const [selectedItem, setSelectedItem] = useState<Array<string>>([]);
 
   useEffect(() => {
@@ -43,11 +35,12 @@ export const ModalCheckedBox = (props: ModalCheckedBoxProps) => {
       label={label}
       onPressDone={onDone}
       customTitle={viewContent}
+      error={error}
       title={title}>
-      <ScrollView
-        style={styles.scrollView}
-        showsVerticalScrollIndicator={false}>
-        <Pressable>
+      <>
+        <ScrollView
+          style={styles.scrollView}
+          showsVerticalScrollIndicator={false}>
           {data?.length > 0 &&
             data.map((item: any, index: number) => {
               const isSelected =
@@ -62,8 +55,8 @@ export const ModalCheckedBox = (props: ModalCheckedBoxProps) => {
                 </View>
               );
             })}
-        </Pressable>
-      </ScrollView>
+        </ScrollView>
+      </>
     </AppModal>
   );
 };
@@ -72,6 +65,7 @@ const styles = StyleSheet.create({
   modalTxt: {
     marginRight: scaleWidth(15),
     alignSelf: 'center',
+    ...fontFamily.fontWeight500,
   },
   item: {
     flexDirection: 'row',
@@ -80,7 +74,6 @@ const styles = StyleSheet.create({
     marginBottom: scaleWidth(15),
   },
   scrollView: {
-    width: scaleWidth(250),
-    maxHeight: scaleWidth(350),
+    maxHeight: scaleHeight(350),
   },
 });

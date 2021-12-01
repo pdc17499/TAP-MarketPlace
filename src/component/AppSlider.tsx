@@ -1,6 +1,14 @@
 import {AppInput, AppText} from '@component';
 import MultiSlider from '@ptomasroos/react-native-multi-slider';
-import {colors, DEVICE, fontFamily, scaleWidth, SIZE, SLIDER} from '@util';
+import {
+  colors,
+  DEVICE,
+  fontFamily,
+  scaleSize,
+  scaleWidth,
+  SIZE,
+  SLIDER,
+} from '@util';
 import React, {useEffect, useState} from 'react';
 import {Pressable, StyleSheet, Text, View} from 'react-native';
 
@@ -129,7 +137,7 @@ const styles = StyleSheet.create({
     ...fontFamily.fontWeight500,
   },
   inputStyle: {
-    fontSize: SIZE.base_size + 2,
+    fontSize: scaleSize(18),
     paddingTop: DEVICE.isIos ? 2 : SIZE.base_space - scaleWidth(5),
   },
 });
