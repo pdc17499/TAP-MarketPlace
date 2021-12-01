@@ -1,16 +1,16 @@
-import {AppButton, AppQA, AppText, Header} from '@component';
-import {useNavigation} from '@react-navigation/core';
+import { AppButton, AppQA, AppText, Header } from '@component';
+import { useNavigation } from '@react-navigation/core';
 import React from 'react';
-import {ScrollView, View} from 'react-native';
-import {styles} from './style';
-import {PREFERENCES, SIGNUP} from '@routeName';
-import {colors, SIZE, validateForm} from '@util';
-import {DataSignupProps} from '@interfaces';
-import {useDispatch, useSelector} from 'react-redux';
-import {setDataSignup} from '@redux';
+import { ScrollView, View } from 'react-native';
+import { styles } from './style';
+import { AGENCY_BASIC_INFORMATION, PREFERENCES, SIGNUP } from '@routeName';
+import { colors, SIZE, validateForm } from '@util';
+import { DataSignupProps } from '@interfaces';
+import { useDispatch, useSelector } from 'react-redux';
+import { setDataSignup } from '@redux';
 import * as yup from 'yup';
-import {Formik} from 'formik';
-import {ROOM_UNIT_HOWNER} from '@mocks';
+import { Formik } from 'formik';
+import { ROOM_UNIT_HOWNER } from '@mocks';
 
 interface screenNavigationProp {
   navigate: any;
@@ -23,10 +23,11 @@ const LifeStyle = (props: any) => {
     (state: any) => state?.auth?.dataSignup,
   );
   const setData = (data: any) => {
-    dispatch(setDataSignup({data}));
+    dispatch(setDataSignup({ data }));
   };
   const list = ROOM_UNIT_HOWNER;
   const isTenant = dataSignUp?.role_user === 'Tenant';
+  const isAgent = dataSignUp?.role_user === 'Agent';
 
   const formInitialValues = {
     life_style: dataSignUp?.life_style,
@@ -38,11 +39,11 @@ const LifeStyle = (props: any) => {
   });
 
   const onSkip = (props: any) => {
-    const nData: DataSignupProps = {...dataSignUp};
+    const nData: DataSignupProps = { ...dataSignUp };
     nData.life_style = [];
     setData(nData);
     props.setErrors({});
-    navigation.navigate(SIGNUP);
+    navigation.navigate(isAgent ? AGENCY_BASIC_INFORMATION : SIGNUP);
   };
 
   const onContinue = () => {
@@ -50,13 +51,13 @@ const LifeStyle = (props: any) => {
   };
 
   const renderFormStepSecond = (props: any) => {
-    console.log({props});
+    console.log({ props });
     return (
       <>
         <AppQA
           isFlex
           data={list.life_style}
-          title={'What’s your lifestyle?'}
+          title={isAgent ? 'What’s her/his lifestyle?' : 'What’s your lifestyle?'}
           value={dataSignUp}
           setValue={setData}
           typeList={'even'}
@@ -73,7 +74,7 @@ const LifeStyle = (props: any) => {
           iconRight={'arNext'}
           onPress={props.handleSubmit}
         />
-        {(props.values.staying_with_guests === 'Yes' || isTenant) && (
+        {(props.values.staying_with_guests === 'Yes' || isTenant || isAgent) && (
           <AppButton
             title={'Skip'}
             typeButton={'link'}
@@ -86,7 +87,7 @@ const LifeStyle = (props: any) => {
 
   return (
     <>
-      <Header back customContainer={{backgroundColor: colors.bgSreen}} />
+      <Header back customContainer={{ backgroundColor: colors.bgSreen }} />
       <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
         <Formik
           initialValues={formInitialValues}
@@ -101,4 +102,4 @@ const LifeStyle = (props: any) => {
   );
 };
 
-export {LifeStyle};
+export { LifeStyle };

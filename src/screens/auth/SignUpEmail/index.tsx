@@ -1,23 +1,23 @@
-import {AppButton, AppInput, AppText, Header} from '@component';
-import {SIZE, validateForm} from '@util';
-import {Formik} from 'formik';
-import React, {useEffect, useState} from 'react';
-import {View} from 'react-native';
-import {styles} from './style';
+import { AppButton, AppInput, AppText, Header } from '@component';
+import { SIZE, validateForm } from '@util';
+import { Formik } from 'formik';
+import React, { useEffect, useState } from 'react';
+import { View } from 'react-native';
+import { styles } from './style';
 import * as yup from 'yup';
-import {VERIFY_ACCOUNT} from '@routeName';
-import {useDispatch, useSelector} from 'react-redux';
+import { VERIFY_ACCOUNT } from '@routeName';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   INITIAL_STATE_DATA_SIGN_UP,
   resetDataSignup,
   setDataSignup,
   signUp,
 } from '@redux';
-import {DataSignupProps, mockProps} from '@interfaces';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import {ImageOrVideo} from 'react-native-image-crop-picker';
+import { DataSignupProps, mockProps } from '@interfaces';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { ImageOrVideo } from 'react-native-image-crop-picker';
 
-interface SignUpEmailProp {}
+interface SignUpEmailProp { }
 
 const SignUpEmail = (props: SignUpEmailProp) => {
   const dispatch = useDispatch();
@@ -54,7 +54,7 @@ const SignUpEmail = (props: SignUpEmailProp) => {
 
   const onChangeValue = (item: any, name?: string) => {
     if (name) {
-      const nData: any = {...state};
+      const nData: any = { ...state };
       nData[name] = item;
       setState(nData);
     }
@@ -95,6 +95,18 @@ const SignUpEmail = (props: SignUpEmailProp) => {
       AllowCook: state?.allow_cooking?.value === 'Yes',
       StayWithGuest: state?.staying_with_guests?.value === 'Yes',
       KeyWords: state?.key_your_place,
+    };
+
+    const RoomDetailsAgent = {
+      RoomType: state?.room_type?.value,
+      BedroomNumber: state?.bedroom_number?.value,
+      BathroomNumber: state?.bathroom_number?.value,
+      AttachedBathroom: state?.attached_bathroom?.value === 'Yes',
+      AllowCook: state?.allow_cooking?.value === 'Yes',
+      StayWithGuest: state?.staying_with_guests?.value === 'Yes',
+      KeyWords: state?.key_your_place,
+      homeownerName: state?.homeowner_name,
+      homeownerGender: state?.homeowner_gender?.value,
     };
 
     const RoomDetailsTenant = {
@@ -149,16 +161,16 @@ const SignUpEmail = (props: SignUpEmailProp) => {
       body.roomDesc.RoomProperty = RoomDetailsTenant;
     } else {
       if (isAgent) {
-        const nUserInfo = {...body.userInfor, ...agenyInfo};
+        const nUserInfo = { ...body.userInfor, ...agenyInfo };
         body.userInfor = nUserInfo;
       }
       body.roomDesc.RentalPrice = RentalPrice;
-      body.roomDesc.RoomDetails = RoomDetails;
+      body.roomDesc.RoomDetails = isAgent ? RoomDetailsAgent : RoomDetails;
       body.roomDesc.PicturesVideo = getUrlFiles();
     }
 
-    console.log({body, isTenant});
-    dispatch(signUp({body, isTenant}));
+    console.log({ body, isTenant });
+    dispatch(signUp({ body, isTenant }));
     // navigation.navigate(VERIFY_ACCOUNT);
   };
 
@@ -172,7 +184,7 @@ const SignUpEmail = (props: SignUpEmailProp) => {
         onSubmit={hanldeSubmit}>
         {props => (
           <>
-            <View style={{flex: 1}}>
+            <View style={{ flex: 1 }}>
               <AppText style={styles.title}>{'Sign up'}</AppText>
               <AppInput
                 label={'Email'}
@@ -234,4 +246,4 @@ const SignUpEmail = (props: SignUpEmailProp) => {
   );
 };
 
-export {SignUpEmail};
+export { SignUpEmail };

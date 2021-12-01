@@ -1,17 +1,17 @@
-import {AppButton, AppInput, AppText, Header} from '@component';
-import {useNavigation} from '@react-navigation/core';
-import {Formik} from 'formik';
-import React, {useCallback, useEffect, useState} from 'react';
-import {View, _ScrollView, Image} from 'react-native';
-import {styles} from './style';
+import { AppButton, AppInput, AppText, Header } from '@component';
+import { useNavigation } from '@react-navigation/core';
+import { Formik } from 'formik';
+import React, { useCallback, useEffect, useState } from 'react';
+import { View, _ScrollView, Image } from 'react-native';
+import { styles } from './style';
 import * as yup from 'yup';
-import {USER_INFORMATION_GENDER} from '@routeName';
-import {logo} from '@assets';
-import {useDispatch, useSelector} from 'react-redux';
-import {setDataSignup} from '@redux';
-import {DataSignupProps} from '@interfaces';
-import {validateForm} from '@util';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import { AGENCY_BASIC_INFORMATION, USER_INFORMATION_GENDER } from '@routeName';
+import { logo } from '@assets';
+import { useDispatch, useSelector } from 'react-redux';
+import { setDataSignup } from '@redux';
+import { DataSignupProps } from '@interfaces';
+import { validateForm } from '@util';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 interface screenNavigationProp {
   navigate: any;
@@ -24,6 +24,7 @@ const UserInformationName = () => {
     (state: any) => state?.auth?.dataSignup,
   );
   const [user_name, setUsername] = useState('');
+  const isAgent = dataSignUp?.role_user === 'Agent';
 
   useEffect(() => {
     setUsername(dataSignUp.user_name);
@@ -37,7 +38,7 @@ const UserInformationName = () => {
   });
 
   const setData = (data: any) => {
-    dispatch(setDataSignup({data}));
+    dispatch(setDataSignup({ data }));
   };
 
   const handleSubmit = () => {
@@ -49,12 +50,22 @@ const UserInformationName = () => {
   };
 
   const onEndEditing = (name?: string) => {
-    console.log({name});
+    console.log({ name });
     if (name) {
-      const nData: any = {...dataSignUp};
+      const nData: any = { ...dataSignUp };
       nData[name] = user_name;
+      console.log('2', nData);
+
       setData(nData);
     }
+  };
+
+  const onSkip = (props: any) => {
+    const nData: DataSignupProps = { ...dataSignUp };
+    nData.life_style = [];
+    setData(nData);
+    props.setErrors({});
+    navigation.navigate(AGENCY_BASIC_INFORMATION);
   };
 
   const RenderForm = () => (
@@ -67,18 +78,18 @@ const UserInformationName = () => {
         onSubmit={handleSubmit}>
         {props => (
           <>
-            <View style={{flex: 1}}>
+            <View style={{ flex: 1 }}>
               <Image source={logo} style={styles.logo} />
               <AppText style={styles.title}>
                 {"Next, let's get to know"}
               </AppText>
-              <View style={{flexDirection: 'row', marginBottom: 50}}>
+              <View style={{ flexDirection: 'row', marginBottom: 50 }}>
                 <AppText style={styles.title}>{'more about '}</AppText>
-                <AppText style={styles.youTxt}>{'you'}</AppText>
+                <AppText style={styles.youTxt}>{isAgent ? 'the homeowner' : 'you'}</AppText>
               </View>
               <AppInput
-                label={"What's your name?"}
-                name={'user_name'}
+                label={isAgent ? "What's the owner's name" : "What's your name?"}
+                name={isAgent ? 'homeowner_name' : 'user_name'}
                 style={styles.input}
                 value={props.values.user_name}
                 onValueChange={onChangeValue}
@@ -95,6 +106,15 @@ const UserInformationName = () => {
                 onPress={props.handleSubmit}
               />
             ) : null}
+
+            {props.values.user_name !== '' && isAgent ? (
+              <AppButton
+                title={'Skip'}
+                typeButton={'link'}
+                onPress={() => onSkip(props)}
+              />
+            )
+              : null}
           </>
         )}
       </Formik>
@@ -109,4 +129,4 @@ const UserInformationName = () => {
   );
 };
 
-export {UserInformationName};
+export { UserInformationName };
