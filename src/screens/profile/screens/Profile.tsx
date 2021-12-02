@@ -114,11 +114,11 @@ const Profile = (props: ProfileProp) => {
 
   const checkMessage = () => {
     let num = 0;
-    if (USER?.ethnicity === null) num = num + 1;
-    if (USER?.ageGroup === null) num = num + 1;
-    if (USER?.occupation === null) num = num + 1;
-    if (USER?.nationality === null) num = num + 1;
-    if (USER?.gender === null) num = num + 1;
+    if (USER?.ethnicity === '') num = num + 1;
+    if (USER?.ageGroup === 0) num = num + 1;
+    if (USER?.occupation === '') num = num + 1;
+    if (USER?.nationality === '') num = num + 1;
+    if (USER?.gender === '') num = num + 1;
     return num;
   };
 

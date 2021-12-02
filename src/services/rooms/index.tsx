@@ -56,13 +56,7 @@ export const uploadFile: any = async (image: any) => {
     uri: image?.path,
     path: image?.path,
     size: image?.size,
-    type: DEVICE.isIos
-      ? `image/${
-          isHEIC
-            ? image?.path.split('.')[0] + '.JPG'
-            : image?.path.split('.').pop()
-        }`
-      : image?.mime,
+    type: image?.mime,
     height: image?.height,
   });
   const response = await api.post(UPLOAD_FILE, form, {

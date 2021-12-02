@@ -38,7 +38,7 @@ const AppButton = React.memo((props: ButtonProps) => {
       if (onPress) {
         onPress();
       }
-    }, 200),
+    }, 150),
     [onPress],
   );
 

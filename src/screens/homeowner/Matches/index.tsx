@@ -45,7 +45,7 @@ function* range(start: number, end: number) {
   }
 }
 
-const Matches = () => {
+const Matches = React.memo(() => {
   const dispath = useDispatch();
   const [state, setState] = useState({
     cards: [...range(1, 10)],
@@ -58,7 +58,6 @@ const Matches = () => {
   const list = ROOM_UNIT_HOWNER;
 
   const swiperRef = useRef<any>();
-  const BASE_URL = getBaseURL() + '/v1/file';
 
   const renderCard = (item: any, index: number) => {
     return (
@@ -366,6 +365,6 @@ const Matches = () => {
       )}
     </View>
   );
-};
+});
 
 export {Matches};

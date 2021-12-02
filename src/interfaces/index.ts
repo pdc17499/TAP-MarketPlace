@@ -219,7 +219,7 @@ export interface UserInfo {
   email: string;
   ethnicity: string;
   facebook_account: string;
-  gender: 'male' | 'female' | 'other';
+  gender: 'male' | 'female' | 'other' | 'N/A';
   id: number;
   image: string;
   is_representative: boolean;

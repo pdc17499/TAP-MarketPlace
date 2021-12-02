@@ -25,20 +25,18 @@ import { useDispatch, useSelector } from 'react-redux';
 import ImagePicker, { ImageOrVideo } from 'react-native-image-crop-picker';
 import { useActionSheet } from '@expo/react-native-action-sheet';
 import Video from 'react-native-video';
-import { bg_room_unit_picture, IconAddVideos, IconClear } from '@assets';
-import { NavigationUtils } from '@navigation';
-import {
-  ADD_SUCCESS,
-  AGENCY_BASIC_INFORMATION,
-  USER_INFORMATION_NAME,
-} from '@routeName';
+import {bg_room_unit_picture, IconAddVideos, IconClear} from '@assets';
+import {NavigationUtils} from '@navigation';
+import {USER_INFORMATION_NAME} from '@routeName';
 import {
   DraxDragWithReceiverEventData,
   DraxProvider,
   DraxView,
 } from 'react-native-drax';
-import { uploadFile } from '@services';
-import { styles } from './styles';
+import {GlobalService, uploadFile} from '@services';
+import {styles} from './styles';
+import {launchImageLibrary} from 'react-native-image-picker';
+const RNFS = require('react-native-fs');
 
 const RoomUnitGallery = React.memo(({ route }: any) => {
   const dispatch = useDispatch();
@@ -84,14 +82,27 @@ const RoomUnitGallery = React.memo(({ route }: any) => {
     const maxFiles = isPhoto
       ? FILE_SIZE.MAX_IMAGE_COUNT - numPhotos.current
       : FILE_SIZE.MAX_VIDEO_COUNT - numVideos.current;
+    // const options: any = {
+    //   mediaType: mediaType,
+    //   quality: 0.7,
+    //   selectionLimit: 1,
+    //   maxWidth: 1200,
+    //   maxHeight: 1200,
+    //   videoQuality: 'low',
+    // };
+    // launchImageLibrary(options).then((nFiles: any) => {
+    //   console.log({nFiles});
+    //   validateFile([nFiles], isPhoto);
+    // });
+
     ImagePicker.openPicker({
       multiple: true,
       cropping: isPhoto,
       mediaType: mediaType,
-      compressImageQuality: 0.6,
-      compressImageMaxWidth: 1000,
-      compressImageMaxHeight: 1000,
-      maxFiles: maxFiles,
+      compressImageQuality: 0.7,
+      compressImageMaxWidth: 1200,
+      compressImageMaxHeight: 1200,
+      maxFiles: isPhoto ? maxFiles : 1,
     }).then((nFiles: any) => {
       console.log({ nFiles });
       validateFile(nFiles, isPhoto);
@@ -101,11 +112,11 @@ const RoomUnitGallery = React.memo(({ route }: any) => {
   const takePhoto = (mediaType: any) => {
     const isPhoto = mediaType === 'photo';
     ImagePicker.openCamera({
-      cropping: true,
+      cropping: isPhoto,
       mediaType,
-      compressImageQuality: 0.6,
-      compressImageMaxWidth: 1000,
-      compressImageMaxHeighte: 1000,
+      compressImageQuality: 0.7,
+      compressImageMaxWidth: 1200,
+      compressImageMaxHeighte: 1200,
     }).then(async (file: ImageOrVideo) => {
       validateFile([file], isPhoto);
     });
@@ -125,12 +136,14 @@ const RoomUnitGallery = React.memo(({ route }: any) => {
       Alert.alert('You can only upload up to 1 video');
     } else {
       const arrFile: any = [];
+      GlobalService.showLoading();
       nFiles.forEach(async (file: ImageOrVideo) => {
         if (
           (isPhoto && file.size < FILE_SIZE.MAX_IMAGE_SIZE) ||
           (!isPhoto && file.size < FILE_SIZE.MAX_VIDEO_SIZE)
         ) {
           const response = await getUrlFile(file);
+          GlobalService.hideLoading();
           if (response) {
             arrFile.push({
               format: response.format,

@@ -99,15 +99,13 @@ const BasicInfomation = () => {
   const onSubmit = () => {
     let body: any = {
       name: user?.name,
+      nationality: user?.nationality,
+      occupation: user?.occupation,
+      ethnicity: user?.ethnicity,
+      gender: user?.gender === 'N/A' ? '' : user?.gender,
+      ageGroup: typeof user?.ageGroup === 'number' ? user?.ageGroup : 0,
+      dob: formateDate(user?.dob),
     };
-    console.log(111, user?.occupation);
-    if (user?.nationality) body = { ...body, nationality: user?.nationality };
-    if (user?.occupation) body = { ...body, occupation: user?.occupation };
-    if (user?.ethnicity) body = { ...body, ethnicity: user?.ethnicity };
-    if (user?.gender) body = { ...body, gender: user?.gender };
-    if (user?.ageGroup && user?.ageGroup !== 'N/A')
-      body = { ...body, ageGroup: user?.ageGroup };
-    if (user?.dob) body = { ...body, dob: formateDate(user?.dob) };
     console.log('bbb', body);
     dispatch(updateUserInfo({ body, id: user?.id }));
   };
@@ -166,10 +164,6 @@ const BasicInfomation = () => {
                   error={props.errors.ageGroup || props.errors.dob}
                   stylePicker={'linear'}
                   showDot
-                  placeholder={{
-                    label: '',
-                    value: '',
-                  }}
                   customSubview={
                     <Pressable
                       hitSlop={STYLE.hitSlop}
