@@ -358,3 +358,8 @@ export interface ModalCheckedBoxProps {
   title?: string;
   error?: string;
 }
+
+export interface ImageServerProps {
+  imagePath: string;
+  format: string;
+}

@@ -16,6 +16,7 @@ import {RoomDetailUnit} from './RoomDetailUnit';
 import {useDispatch, useSelector} from 'react-redux';
 import {getRoomDetail} from '@redux';
 import Video from 'react-native-video';
+import {ImageServerProps} from '@interfaces';
 
 const RoomDetail = (route: any) => {
   console.log('paa', route);
@@ -34,20 +35,10 @@ const RoomDetail = (route: any) => {
     {key: 'detail', title: 'Room/Unit Details'},
   ]);
   const layout = useWindowDimensions();
-  const typesVideo = ['mp4'];
 
-  const checkVideo = (file: any) => {
-    if (file?.hasOwnProperty('mime')) {
-      const isImage = file.mime.includes('image');
-      return isImage ? 1 : 2;
-    } else {
-      var parts = file?.split('.');
-      var extension = parts[parts?.length - 1];
-      const isImage = typesVideo.indexOf(extension) === -1;
-      console.log('isImange', isImage);
-      return isImage ? 3 : 4;
-    }
-  };
+  // const checkVideo = (file: any) => {
+  //   return
+  // };
 
   // const renderScene = useMemo(
   //   ({route}: any) => {
@@ -70,13 +61,13 @@ const RoomDetail = (route: any) => {
     detail: () => <RoomDetailUnit props={'detail'} />,
   });
 
-  const renderImage = (file: any) => {
-    const typeFile = checkVideo(file);
-    console.log('typleFuile', typeFile);
-    const uri = typeFile === 1 || typeFile === 2 ? file.path : file;
+  const renderImage = (file: ImageServerProps) => {
+    const isPhoto = file?.format?.includes('images');
+    console.log('typleFuile', file);
+    const uri = file?.imagePath;
     return (
       <>
-        {typeFile === 1 || typeFile === 3 ? (
+        {isPhoto ? (
           <Image source={{uri}} style={styles.itemImage} />
         ) : (
           <>
@@ -118,12 +109,18 @@ const RoomDetail = (route: any) => {
     );
   };
 
+  let firstImage: any = ROOM?.PicturesVideo[0];
+  console.log(ROOM);
+  if (firstImage && typeof firstImage === 'string') {
+    firstImage = JSON.parse(firstImage);
+  }
+
   return (
     <View style={styles.container}>
       <Header back customContainer={styles.customContainer} />
       <View style={styles.main}>
-        {ROOM?.PicturesVideo ? (
-          renderImage(ROOM?.PicturesVideo[0])
+        {firstImage ? (
+          renderImage(firstImage)
         ) : (
           <Image source={room_sample} style={styles.itemImage} />
         )}

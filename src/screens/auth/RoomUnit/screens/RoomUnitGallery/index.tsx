@@ -43,7 +43,7 @@ const RoomUnitGallery = React.memo(({route}: any) => {
   const dataSignUp = useSelector((state: any) => state?.auth?.dataSignup);
   const token = useSelector((state: any) => state?.auth?.token);
   const gallery = route?.params?.gallery;
-  const inRoomUnit = route?.params?.inRoomUnit;
+  const onChangeValue = route?.params?.onChangeValue;
   const setData = (data: any) => {
     dispatch(setDataSignup({data}));
   };
@@ -62,8 +62,6 @@ const RoomUnitGallery = React.memo(({route}: any) => {
       setFiles(gallery);
     }
   }, []);
-
-  console.log('Inroom', inRoomUnit);
 
   useEffect(() => {
     numPhotos.current = 0;
@@ -191,8 +189,10 @@ const RoomUnitGallery = React.memo(({route}: any) => {
     nData.list_photo = files;
     setData(nData);
     if (token) {
-      if (inRoomUnit) NavigationUtils.goBack();
-      else {
+      if (gallery) {
+        onChangeValue(files, 'gallery');
+        NavigationUtils.goBack();
+      } else {
         const state = nData;
         // const ImageVideo: Array<string> = state?.list_photo.map(
         //   (item: any) => item.uri,

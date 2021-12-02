@@ -7,9 +7,16 @@ import {
   Header,
   ModalCheckedBox,
 } from '@component';
-import React, { useEffect, useRef, useState } from 'react';
-import { View, Image, Pressable, StyleSheet, ScrollView } from 'react-native';
-import { IconBack, IconClear, IconDola, IconEdit, IconFloorSize, room_sample } from '@assets';
+import React, {useEffect, useRef, useState} from 'react';
+import {View, Image, Pressable, StyleSheet, ScrollView} from 'react-native';
+import {
+  IconBack,
+  IconClear,
+  IconDola,
+  IconEdit,
+  IconFloorSize,
+  room_sample,
+} from '@assets';
 import {
   colors,
   DEVICE,
@@ -22,17 +29,17 @@ import {
   validateForm,
   YEARS,
 } from '@util';
-import { useNavigation } from '@react-navigation/core';
-import { Formik, FormikValues } from 'formik';
-import { ROOM_UNIT_HOWNER } from '@mocks';
+import {useNavigation} from '@react-navigation/core';
+import {Formik, FormikValues} from 'formik';
+import {ROOM_UNIT_HOWNER} from '@mocks';
 import * as yup from 'yup';
 import Carousel from 'react-native-snap-carousel';
 import Modal from 'react-native-modal';
 import Video from 'react-native-video';
-import { pickerProps } from '@interfaces';
-import { ROOM_DETAIL_GELLERY, ROOM_UNIT_GALLERY } from '@routeName';
-import { useDispatch, useSelector } from 'react-redux';
-import { updateRoom } from '@redux';
+import {ImageServerProps, pickerProps} from '@interfaces';
+import {ROOM_DETAIL_GELLERY, ROOM_UNIT_GALLERY} from '@routeName';
+import {useDispatch, useSelector} from 'react-redux';
+import {updateRoom} from '@redux';
 
 const state = {
   activeIndex: 0,
@@ -60,13 +67,13 @@ const state = {
   ],
 };
 
-const RoomDetailUnit = ({ props }: any) => {
+const RoomDetailUnit = ({props}: any) => {
   const key = props;
   const navigation: any = useNavigation();
   const dispatch = useDispatch();
   const ROOM: any = useSelector((state: any) => state?.rooms?.roomDetail);
   console.log('2222', ROOM);
-  const inRoomUnit = true
+  const inRoomUnit = true;
 
   const formRef: any = useRef<FormikValues>();
   const [room, setRoom] = useState({
@@ -116,7 +123,7 @@ const RoomDetailUnit = ({ props }: any) => {
     room_type: validateForm().common.selectAtLeast,
     // bedroom_number: validateForm().common.selectAtLeast,
     // bathroom_number: validateForm().common.selectAtLeast,
-    room_furnishing: validateForm().common.selectAtLeast,
+    // room_furnishing: validateForm().common.selectAtLeast,
     // floor_size_min: room.floor_size_min,
     // floor_size_max: room.floor_size_max,
     // floor_level: room.floor_level,
@@ -128,19 +135,19 @@ const RoomDetailUnit = ({ props }: any) => {
   });
 
   const onChangeValue = (value: any, name?: string) => {
-    const nRoom: any = { ...room };
+    const nRoom: any = {...room};
     if (name) {
       nRoom[name] = value;
       setRoom(nRoom);
-      console.log({ value });
+      console.log({value});
     }
   };
 
-  const onSubmit = (values: any) => { };
+  const onSubmit = (values: any) => {};
 
   const onValuesChangeFinish = (values: any) => {
-    console.log({ values });
-    const nRoom: any = { ...room };
+    console.log({values});
+    const nRoom: any = {...room};
     nRoom['floor_size_min'] = values[0];
     nRoom['floor_size_max'] = values[1];
     setRoom(nRoom);
@@ -148,7 +155,7 @@ const RoomDetailUnit = ({ props }: any) => {
 
   const renderFloorSizeContent = (values: any) => {
     return (
-      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+      <View style={{flexDirection: 'row', alignItems: 'center'}}>
         <IconFloorSize iconFillColor={colors.secondPrimary} />
         <AppText
           isPrice
@@ -156,7 +163,9 @@ const RoomDetailUnit = ({ props }: any) => {
             fontSize: SIZE.base_space + 1,
             ...fontFamily.fontWeight500,
             marginLeft: 4,
-          }}>{values.floor_size_min ? `${values.floor_size_min}` : '0'}</AppText>
+          }}>
+          {values.floor_size_min ? `${values.floor_size_min}` : '0'}
+        </AppText>
         <AppText>{`  -  `}</AppText>
         <IconFloorSize iconFillColor={colors.secondPrimary} />
         <AppText
@@ -165,7 +174,9 @@ const RoomDetailUnit = ({ props }: any) => {
             fontSize: SIZE.base_space + 1,
             marginLeft: 4,
             ...fontFamily.fontWeight500,
-          }}>{values.floor_size_max ? `${values.floor_size_max} ` : '0'}</AppText>
+          }}>
+          {values.floor_size_max ? `${values.floor_size_max} ` : '0'}
+        </AppText>
       </View>
     );
   };
@@ -184,18 +195,22 @@ const RoomDetailUnit = ({ props }: any) => {
     );
   };
 
-  const checkVideo = (item: any) => {
-    if (item === 10) {
-      return false;
-    } else {
-      var parts = item.split('.');
-      var extension = parts[parts.length - 1];
-      return typesVideo.indexOf(extension) !== -1;
-    }
+  const onGallery = (gallery: Array<string>) => {
+    const nGallery = gallery.map(item => convertFile(item));
+    console.log({nGallery});
+    navigation.navigate(ROOM_UNIT_GALLERY, {
+      gallery: nGallery,
+      onChangeValue,
+    });
   };
 
-  const onGallery = (gallery: Array<string>) => {
-    navigation.navigate(ROOM_UNIT_GALLERY, { gallery, inRoomUnit });
+  const convertFile = (file: any) => {
+    console.log({file});
+    if (file && typeof file === 'string') {
+      return JSON.parse(file);
+    }
+
+    return file;
   };
 
   const renderGallery = (gallery: Array<any>) => {
@@ -205,7 +220,7 @@ const RoomDetailUnit = ({ props }: any) => {
       length > 4 ? styles.smallImage : styles.smallImageWidthSpace;
 
     return (
-      <View style={{ paddingTop: SIZE.padding, marginBottom: 50 }}>
+      <View style={{paddingTop: SIZE.padding, marginBottom: 50}}>
         <View style={styles.row}>
           <AppText style={styles.label}>{'Gallery'}</AppText>
           <Pressable
@@ -216,23 +231,28 @@ const RoomDetailUnit = ({ props }: any) => {
         </View>
         {length > 0 && (
           <Pressable onPress={openModal}>
-            <Image source={{ uri: gallery[0] }} style={styles.firstImage} />
+            <Image
+              source={{uri: convertFile(gallery[0])?.imagePath}}
+              style={styles.firstImage}
+            />
             <View style={styleList}>
-              {gallery.map((item: any, index: number) => {
-                const isVideo = checkVideo(item);
+              {gallery.map((item: ImageServerProps, index: number) => {
+                const file = convertFile(item);
+                const isVideo = file?.format?.includes('videos');
+                const uri = file?.imagePath;
                 if (index > 0 && index < 5) {
                   return (
                     <View key={index.toString()}>
                       {isVideo ? (
                         <Video
-                          source={{ uri: item }}
+                          source={{uri}}
                           style={styleFile}
                           resizeMode={'cover'}
-                        // controls
-                        // paused
+                          // controls
+                          // paused
                         />
                       ) : (
-                        <Image source={{ uri: item }} style={styleFile} />
+                        <Image source={{uri}} style={styleFile} />
                       )}
                       {index === 4 && (
                         <View style={styles.shadowGallery}>
@@ -279,22 +299,18 @@ const RoomDetailUnit = ({ props }: any) => {
 
   var typesVideo = ['mp4'];
 
-  const _renderFile = ({ item, index }: any) => {
-    console.log({ item });
-    const isVideo = checkVideo(item);
+  const _renderFile = ({item}: {item: ImageServerProps}) => {
+    console.log({item});
+    const file = convertFile(item);
+    const isVideo = file?.format?.includes('videos');
+    const uri = file?.imagePath;
 
     return (
-      <View key={index.toString()}>
+      <View key={item.toString()}>
         {isVideo ? (
-          <Video
-            source={{ uri: item }}
-            style={styles.gallery}
-            resizeMode={'contain'}
-          // controls
-          // paused
-          />
+          <Video source={{uri}} style={styles.gallery} resizeMode={'contain'} />
         ) : (
-          <Image source={{ uri: item }} style={styles.gallery} />
+          <Image source={{uri}} style={styles.gallery} />
         )}
       </View>
     );
@@ -363,7 +379,7 @@ const RoomDetailUnit = ({ props }: any) => {
   return (
     <>
       <ScrollView
-        style={{ flex: 1 }}
+        style={{flex: 1}}
         contentContainerStyle={styles.contentContainerStyle}
         showsVerticalScrollIndicator={false}>
         <View style={styles.line} />
@@ -537,4 +553,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export { RoomDetailUnit };
+export {RoomDetailUnit};
