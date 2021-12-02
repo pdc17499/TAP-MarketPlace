@@ -76,7 +76,7 @@ const UserInformationGender = () => {
           <View style={{ flex: 1, marginBottom: SIZE.big_space * 2 }}>
             <AppQA
               data={list.gender}
-              title={isAgent ? 'What is her/his gender' : 'How would you describe your gender?'}
+              title={isAgent ? 'What is her/his gender?' : 'How would you describe your gender?'}
               value={dataSignUp}
               setValue={setData}
               name={isAgent ? 'homeowner_gender' : 'gender'}
@@ -141,11 +141,11 @@ const UserInformationGender = () => {
     <View style={styles.container}>
       <Header back />
       <ScrollView style={styles.body} showsVerticalScrollIndicator={false}>
-        <AppText style={styles.title}>{'About you'}</AppText>
+        <AppText style={styles.title}>{isAgent ? 'Homeowner' : 'About you'}</AppText>
         <AppText
           style={
             styles.message
-          }>{`Hi there, ${dataSignUp?.user_name}`}</AppText>
+          }>{isAgent ? `${dataSignUp?.homeowner_name}` : `Hi there, ${dataSignUp?.user_name}`}</AppText>
         {RenderForm()}
       </ScrollView>
     </View>

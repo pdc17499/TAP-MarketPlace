@@ -93,6 +93,7 @@ const AgencyBasicInformation = ({ navigation }: VerifyCodeProp) => {
                   placeholder={'Enter your name'}
                 />
               </View>
+
               <AppText
                 style={
                   props.errors.user_name ? styles.errorInput : styles.error

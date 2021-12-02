@@ -88,7 +88,7 @@ const UserInformationName = () => {
                 <AppText style={styles.youTxt}>{isAgent ? 'the homeowner' : 'you'}</AppText>
               </View>
               <AppInput
-                label={isAgent ? "What's the owner's name" : "What's your name?"}
+                label={isAgent ? "What is the owner's name?" : "What's your name?"}
                 name={isAgent ? 'homeowner_name' : 'user_name'}
                 style={styles.input}
                 value={props.values.user_name}
