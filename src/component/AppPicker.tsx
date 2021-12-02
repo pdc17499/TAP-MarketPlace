@@ -1,11 +1,11 @@
-import {AppText} from '@component';
-import {DownIcon, IconAddPhotos, IconDotOrange} from '@assets';
-import {colors, DEVICE, fontFamily, scaleSize, scaleWidth, SIZE} from '@util';
-import React, {useRef, useState} from 'react';
-import {StyleSheet, View, Animated, Pressable} from 'react-native';
+import { AppText } from '@component';
+import { DownIcon, IconAddPhotos, IconDotOrange } from '@assets';
+import { colors, DEVICE, fontFamily, scaleSize, scaleWidth, SIZE } from '@util';
+import React, { useRef, useState } from 'react';
+import { StyleSheet, View, Animated, Pressable } from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
 import CountryPicker from 'react-native-country-picker-modal';
-import {IAppPicker} from '@interfaces';
+import { IAppPicker } from '@interfaces';
 
 export const AppPicker: React.FC<IAppPicker> = React.memo((props: any) => {
   const {
@@ -31,13 +31,13 @@ export const AppPicker: React.FC<IAppPicker> = React.memo((props: any) => {
 
   const onSelectFlag = (country: any) => {
     onValueChange(country, name);
-    console.log({country});
+    console.log({ country });
   };
   // console.log('vall', name, value);
 
   const onOpenPickerSelect = (isOpen: boolean) => setIsOpenPicker(isOpen);
 
-  const modalCountryProps = disable ? {visible: !disable} : {};
+  const modalCountryProps = disable ? { visible: !disable } : {};
   const isLinear = stylePicker === 'linear';
 
   const colorLabel = {
@@ -45,17 +45,17 @@ export const AppPicker: React.FC<IAppPicker> = React.memo((props: any) => {
   };
   const styles = isLinear
     ? {
-        ...stylesBase,
-        ...stylesLinear,
-      }
+      ...stylesBase,
+      ...stylesLinear,
+    }
     : stylesBase;
 
   const DownIconPicker = () => {
     return !isLinear ? <DownIcon /> : null;
   };
 
-  const styleInputAndroid = {...styles.inputAndroid, ...customStyleInputPicker};
-  const styleInputIOS = {...styles.inputIOS, ...customStyleInputPicker};
+  const styleInputAndroid = { ...styles.inputAndroid, ...customStyleInputPicker };
+  const styleInputIOS = { ...styles.inputIOS, ...customStyleInputPicker };
 
   return (
     <>
@@ -66,7 +66,7 @@ export const AppPicker: React.FC<IAppPicker> = React.memo((props: any) => {
               {label}
             </AppText>
             {value !== '' ? null : (
-              <View style={{position: 'absolute', top: 7, right: 0}}>
+              <View style={{ position: 'absolute', top: 7, right: 0 }}>
                 {showDot && <IconDotOrange />}
               </View>
             )}
@@ -97,7 +97,7 @@ export const AppPicker: React.FC<IAppPicker> = React.memo((props: any) => {
                 disabled={disable}
                 onValueChange={item => onValueChange(item, name)}
                 useNativeAndroidPickerStyle={false}
-                placeholder={placeholder || {label: 'N/A', value: 'N/A'}}
+                placeholder={placeholder || { label: '', value: '' }}
                 value={value}
                 items={items}
                 pickerProps={{
