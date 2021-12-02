@@ -114,12 +114,12 @@ const Profile = (props: ProfileProp) => {
 
   const checkMessage = () => {
     let num = 0;
-    const {ethnicity, ageGroup, occupation, nationality, gender} = USER;
-    if (ethnicity === '' || !ethnicity) num = num + 1;
-    if (ageGroup === 0 || !ageGroup) num = num + 1;
-    if (occupation === '' || !occupation) num = num + 1;
-    if (nationality === '' || !nationality) num = num + 1;
-    if (gender === '' || !gender) num = num + 1;
+    // const {ethnicity, ageGroup, occupation, nationality, gender} = USER;
+    if (USER?.ethnicity === '' || !USER?.ethnicity) num = num + 1;
+    if (USER?.ageGroup === 0 || !USER?.ageGroup) num = num + 1;
+    if (USER?.occupation === '' || !USER?.occupation) num = num + 1;
+    if (USER?.nationality === '' || !USER?.nationality) num = num + 1;
+    if (USER?.gender === '' || !USER?.gender) num = num + 1;
     return num;
   };
 
