@@ -91,8 +91,8 @@ export function* logoutSaga() {
   try {
     GlobalService.showLoading();
     const result: ResponseGenerator = yield logOutApi();
-    yield resetDataSignup();
-    yield resetDataRoom();
+    yield put(resetDataSignup());
+    yield put(resetDataRoom());
     yield removeToken();
   } catch (error) {
   } finally {
