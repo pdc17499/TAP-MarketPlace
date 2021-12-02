@@ -1,5 +1,5 @@
-import { AppButton, AppText, Header } from '@component';
-import { addNewRoom, setDataSignup } from '@redux';
+import {AppButton, AppText, Header} from '@component';
+import {addNewRoom, setDataSignup} from '@redux';
 import {
   colors,
   DEVICE,
@@ -10,7 +10,7 @@ import {
   SIZE,
   STYLE,
 } from '@util';
-import React, { useEffect, useRef, useState } from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {
   View,
   Image,
@@ -21,9 +21,9 @@ import {
   UIManager,
   Platform,
 } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
-import ImagePicker, { ImageOrVideo } from 'react-native-image-crop-picker';
-import { useActionSheet } from '@expo/react-native-action-sheet';
+import {useDispatch, useSelector} from 'react-redux';
+import ImagePicker, {ImageOrVideo} from 'react-native-image-crop-picker';
+import {useActionSheet} from '@expo/react-native-action-sheet';
 import Video from 'react-native-video';
 import {bg_room_unit_picture, IconAddVideos, IconClear} from '@assets';
 import {NavigationUtils} from '@navigation';
@@ -38,17 +38,17 @@ import {styles} from './styles';
 import {launchImageLibrary} from 'react-native-image-picker';
 const RNFS = require('react-native-fs');
 
-const RoomUnitGallery = React.memo(({ route }: any) => {
+const RoomUnitGallery = React.memo(({route}: any) => {
   const dispatch = useDispatch();
   const dataSignUp = useSelector((state: any) => state?.auth?.dataSignup);
   const token = useSelector((state: any) => state?.auth?.token);
   const gallery = route?.params?.gallery;
   const inRoomUnit = route?.params?.inRoomUnit;
   const setData = (data: any) => {
-    dispatch(setDataSignup({ data }));
+    dispatch(setDataSignup({data}));
   };
   const [files, setFiles] = useState([]);
-  const { showActionSheetWithOptions } = useActionSheet();
+  const {showActionSheetWithOptions} = useActionSheet();
   const numPhotos = useRef(0);
   const numVideos = useRef(0);
   if (DEVICE.isAndroid) {
@@ -69,7 +69,7 @@ const RoomUnitGallery = React.memo(({ route }: any) => {
     numPhotos.current = 0;
     numVideos.current = 0;
     files.map((file: any) => {
-      if (typeof file === 'string' || file.format.includes('images')) {
+      if (file.format.includes('images')) {
         numPhotos.current += 1;
       } else {
         numVideos.current += 1;
@@ -104,7 +104,7 @@ const RoomUnitGallery = React.memo(({ route }: any) => {
       compressImageMaxHeight: 1200,
       maxFiles: isPhoto ? maxFiles : 1,
     }).then((nFiles: any) => {
-      console.log({ nFiles });
+      console.log({nFiles});
       validateFile(nFiles, isPhoto);
     });
   };
@@ -123,7 +123,7 @@ const RoomUnitGallery = React.memo(({ route }: any) => {
   };
 
   const validateFile = async (nFiles: any, isPhoto: boolean) => {
-    console.log({ nFiles });
+    console.log({nFiles});
     if (
       isPhoto &&
       nFiles.length + numPhotos.current > FILE_SIZE.MAX_IMAGE_COUNT
@@ -145,10 +145,7 @@ const RoomUnitGallery = React.memo(({ route }: any) => {
           const response = await getUrlFile(file);
           GlobalService.hideLoading();
           if (response) {
-            arrFile.push({
-              format: response.format,
-              uri: response.imagePath,
-            });
+            arrFile.push(response);
             showFiles(arrFile);
           }
         }
@@ -164,7 +161,7 @@ const RoomUnitGallery = React.memo(({ route }: any) => {
 
   const getUrlFile = async (image: any) => {
     const result = await uploadFile(image);
-    console.log({ result });
+    console.log({result});
     return result;
   };
 
@@ -190,16 +187,16 @@ const RoomUnitGallery = React.memo(({ route }: any) => {
   };
 
   const onDone = () => {
-    const nData = { ...dataSignUp };
+    const nData = {...dataSignUp};
     nData.list_photo = files;
     setData(nData);
     if (token) {
       if (inRoomUnit) NavigationUtils.goBack();
       else {
         const state = nData;
-        const ImageVideo: Array<string> = state?.list_photo.map(
-          (item: any) => item.uri,
-        );
+        // const ImageVideo: Array<string> = state?.list_photo.map(
+        //   (item: any) => item.uri,
+        // );
         // console.log('nData', ImageVideo);
         const body = {
           roomDesc: {
@@ -218,7 +215,7 @@ const RoomUnitGallery = React.memo(({ route }: any) => {
               type: state?.kind_place?.value === 'HDB',
               value: state?.lease_your_place,
             },
-            PicturesVideo: ImageVideo,
+            PicturesVideo: state?.list_photo,
             RentalPrice: {
               type: state?.rental_price?.value,
               Min: state?.min_range_price,
@@ -227,10 +224,9 @@ const RoomUnitGallery = React.memo(({ route }: any) => {
             },
           },
         };
-        console.log({ body });
-        dispatch(addNewRoom({ body }));
+        console.log({body});
+        dispatch(addNewRoom({body}));
       }
-
     } else {
       NavigationUtils.navigate(USER_INFORMATION_NAME);
     }
@@ -249,7 +245,7 @@ const RoomUnitGallery = React.memo(({ route }: any) => {
         cancelButtonIndex,
       },
       buttonIndex => {
-        console.log({ buttonIndex });
+        console.log({buttonIndex});
         if (buttonIndex === 0) {
           uploadPhotos(mediaType);
         } else if (buttonIndex === 1) {
@@ -265,16 +261,14 @@ const RoomUnitGallery = React.memo(({ route }: any) => {
   };
 
   const onReceiveDragDrop = (event: DraxDragWithReceiverEventData) => {
-    console.log({ event });
-    const { dragged, receiver } = event;
+    console.log({event});
+    const {dragged, receiver} = event;
     const idDragged = parseInt(dragged.id);
     const idReceiver = parseInt(receiver.id);
     let nFiles: any = [...files];
     nFiles = move(nFiles, idDragged, idReceiver);
     const firstFile = nFiles[0];
-    if (
-      !(typeof firstFile === 'string' || firstFile.format.includes('images'))
-    ) {
+    if (!firstFile.format.includes('images')) {
       Alert.alert('Profile photo must be an image');
     } else {
       LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
@@ -285,12 +279,12 @@ const RoomUnitGallery = React.memo(({ route }: any) => {
   };
 
   const renderImage = (file: any, index: number) => {
-    const isPhoto = typeof file === 'string' || file.format.includes('images');
+    const isPhoto = file.format.includes('images');
 
     const styleView =
       index === 1 || index % 3 == 1
-        ? { marginBottom: SIZE.padding, marginHorizontal: SIZE.padding - 1 }
-        : { marginBottom: SIZE.padding };
+        ? {marginBottom: SIZE.padding, marginHorizontal: SIZE.padding - 1}
+        : {marginBottom: SIZE.padding};
     return (
       <>
         <View style={styleView} key={index.toString()}>
@@ -311,14 +305,11 @@ const RoomUnitGallery = React.memo(({ route }: any) => {
               <IconClear iconFillColor={colors.white} width={14} height={14} />
             </View>
             {isPhoto ? (
-              <Image
-                source={{ uri: typeof file === 'string' ? file : file.uri }}
-                style={styles.itemImage}
-              />
+              <Image source={{uri: file.imagePath}} style={styles.itemImage} />
             ) : (
               <>
                 <Video
-                  source={{ uri: file.uri }}
+                  source={{uri: file.imagePath}}
                   style={styles.itemImage}
                   resizeMode={'cover'}
                   muted
@@ -340,7 +331,7 @@ const RoomUnitGallery = React.memo(({ route }: any) => {
   };
 
   const renderListImage = () => {
-    console.log({ files });
+    console.log({files});
     return (
       <DraxProvider>
         {files.length > 0 ? (
@@ -353,14 +344,14 @@ const RoomUnitGallery = React.memo(({ route }: any) => {
             </View>
 
             <View style={styles.listImage}>
-              {files.map((uri: string, index: number) =>
-                renderImage(uri, index),
+              {files.map((file: string, index: number) =>
+                renderImage(file, index),
               )}
             </View>
           </>
         ) : (
           <>
-            <View style={{ paddingBottom: scaleWidth(400) }}>
+            <View style={{paddingBottom: scaleWidth(400)}}>
               <Image source={bg_room_unit_picture} style={styles.bgImage} />
             </View>
             <AppText style={styles.title}>
@@ -422,4 +413,4 @@ const RoomUnitGallery = React.memo(({ route }: any) => {
   );
 });
 
-export { RoomUnitGallery };
+export {RoomUnitGallery};

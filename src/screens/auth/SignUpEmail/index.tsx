@@ -1,23 +1,23 @@
-import { AppButton, AppInput, AppText, Header } from '@component';
-import { SIZE, validateForm } from '@util';
-import { Formik } from 'formik';
-import React, { useEffect, useState } from 'react';
-import { View } from 'react-native';
-import { styles } from './style';
+import {AppButton, AppInput, AppText, Header} from '@component';
+import {SIZE, validateForm} from '@util';
+import {Formik} from 'formik';
+import React, {useEffect, useState} from 'react';
+import {View} from 'react-native';
+import {styles} from './style';
 import * as yup from 'yup';
-import { VERIFY_ACCOUNT } from '@routeName';
-import { useDispatch, useSelector } from 'react-redux';
+import {VERIFY_ACCOUNT} from '@routeName';
+import {useDispatch, useSelector} from 'react-redux';
 import {
   INITIAL_STATE_DATA_SIGN_UP,
   resetDataSignup,
   setDataSignup,
   signUp,
 } from '@redux';
-import { DataSignupProps, mockProps } from '@interfaces';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { ImageOrVideo } from 'react-native-image-crop-picker';
+import {DataSignupProps, mockProps} from '@interfaces';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import {ImageOrVideo} from 'react-native-image-crop-picker';
 
-interface SignUpEmailProp { }
+interface SignUpEmailProp {}
 
 const SignUpEmail = (props: SignUpEmailProp) => {
   const dispatch = useDispatch();
@@ -54,23 +54,23 @@ const SignUpEmail = (props: SignUpEmailProp) => {
 
   const onChangeValue = (item: any, name?: string) => {
     if (name) {
-      const nData: any = { ...state };
+      const nData: any = {...state};
       nData[name] = item;
       setState(nData);
     }
   };
 
-  const getUrlFiles = () => {
-    const files = dataSignUp?.list_photo;
-    if (files?.length > 0) {
-      const urls: string[] = [];
-      files.map((file: any) => {
-        urls.push(file.uri);
-      });
+  // const getUrlFiles = () => {
+  //   const files = dataSignUp?.list_photo;
+  //   if (files?.length > 0) {
+  //     const urls: string[] = [];
+  //     files.map((file: any) => {
+  //       urls.push(file.uri);
+  //     });
 
-      return urls;
-    }
-  };
+  //     return urls;
+  //   }
+  // };
 
   const hanldeSubmit = () => {
     console.log(state);
@@ -161,16 +161,16 @@ const SignUpEmail = (props: SignUpEmailProp) => {
       body.roomDesc.RoomProperty = RoomDetailsTenant;
     } else {
       if (isAgent) {
-        const nUserInfo = { ...body.userInfor, ...agenyInfo };
+        const nUserInfo = {...body.userInfor, ...agenyInfo};
         body.userInfor = nUserInfo;
       }
       body.roomDesc.RentalPrice = RentalPrice;
       body.roomDesc.RoomDetails = isAgent ? RoomDetailsAgent : RoomDetails;
-      body.roomDesc.PicturesVideo = getUrlFiles();
+      body.roomDesc.PicturesVideo = state?.list_photo;
     }
 
-    console.log({ body, isTenant, isAgent });
-    dispatch(signUp({ body, isTenant, isAgent }));
+    console.log({body, isTenant, isAgent});
+    dispatch(signUp({body, isTenant, isAgent}));
     // navigation.navigate(VERIFY_ACCOUNT);
   };
 
@@ -184,7 +184,7 @@ const SignUpEmail = (props: SignUpEmailProp) => {
         onSubmit={hanldeSubmit}>
         {props => (
           <>
-            <View style={{ flex: 1 }}>
+            <View style={{flex: 1}}>
               <AppText style={styles.title}>{'Sign up'}</AppText>
               <AppInput
                 label={'Email'}
@@ -246,4 +246,4 @@ const SignUpEmail = (props: SignUpEmailProp) => {
   );
 };
 
-export { SignUpEmail };
+export {SignUpEmail};
