@@ -1,6 +1,6 @@
 import {AppText} from '@component';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {Chat, Liked, Matches, Profile} from '@screens';
+import {Chat, Liked, MatchesTenant, Profile} from '@screens';
 import * as React from 'react';
 import {View, TouchableOpacity, StyleSheet} from 'react-native';
 import {colors, fontFamily, scaleHeight, scaleSize, scaleWidth} from '@util';
@@ -87,7 +87,7 @@ export function AgentBottomTabs() {
         headerShown: false,
       }}
       tabBar={props => <CustomTab {...props} />}>
-      <Tab.Screen name="Matches" component={Matches} />
+      <Tab.Screen name="Matches" component={MatchesTenant} />
       <Tab.Screen name="Liked" component={Liked} />
       <Tab.Screen name="Chat" component={Chat} />
       <Tab.Screen name="Profile" component={Profile} />

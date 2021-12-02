@@ -33,12 +33,9 @@ import {
 import {useDispatch} from 'react-redux';
 import {styles} from './style';
 import FastImage from 'react-native-fast-image';
-import {ROOM_UNIT_HOWNER} from '@mocks';
-import {mockProps} from '@interfaces';
-
-interface screenNavigationProp {
-  navigate: any;
-}
+import {ROOM_UNIT_HOWNER, TENANT_PROPERTY} from '@mocks';
+import {ImageServerProps, mockProps} from '@interfaces';
+import Video from 'react-native-video';
 
 function* range(start: number, end: number) {
   for (let i = start; i <= end; i++) {
@@ -57,9 +54,9 @@ const MatchesTenant = () => {
   });
 
   const list = ROOM_UNIT_HOWNER;
-
+  const files = TENANT_PROPERTY.list_photo;
+  const matches = TENANT_PROPERTY.matches;
   const swiperRef = useRef<any>();
-  const BASE_URL = getBaseURL() + '/v1/file';
 
   const renderCard = (item: any, index: number) => {
     return (
@@ -67,28 +64,16 @@ const MatchesTenant = () => {
         <View>
           <AppText style={styles.userName}>{'Amber Park'}</AppText>
           <View style={styles.subTitleView}>
-            <IconPickLocation
-              iconFillColor={'white'}
-              style={{marginRight: 6}}
-            />
+            <IconPickLocation iconFillColor={'white'} />
             <AppText style={styles.subTitle}>{'1 Wallich St'}</AppText>
           </View>
         </View>
-        <View style={styles.bottomView}>
-          <View>
-            <AppText style={styles.age}>{'Age'}</AppText>
-            <AppText style={styles.subTitle}>{'29 - 40'}</AppText>
-          </View>
-          <View>
-            <AppText style={styles.age}>{'Gender'}</AppText>
-            <AppText style={styles.subTitle}>{'Male'}</AppText>
-          </View>
-        </View>
+        <View style={styles.bottomView}></View>
 
         <FastImage
           style={styles.imageUser}
           source={{
-            uri: 'https://tap-marketplace.s3.ap-southeast-1.amazonaws.com/0780d6638c564c402591136ac5bea57a',
+            uri: files[0].imagePath,
             priority: FastImage.priority.normal,
           }}
         />
@@ -226,9 +211,6 @@ const MatchesTenant = () => {
   const renderListAmenities = () => {
     return (
       <View style={styles.viewAmenities}>
-        <AppText style={[styles.labelAmenities]}>
-          {'Amenities expected'}
-        </AppText>
         {list.amenities.map((item: mockProps) => {
           return (
             <View
@@ -249,35 +231,12 @@ const MatchesTenant = () => {
   const UserInformation = () => {
     return (
       <View style={{paddingHorizontal: SIZE.padding}}>
-        {renderBigTitle('Basic Information')}
-        <View>
-          <AppButton
-            label={'Occupation'}
-            title={'Teacher'}
-            typeButton={'underline'}
-            disabled
-            customStyleLabel={styles.customStyleLabel}
-          />
-          <AppButton
-            label={'Ethnicity'}
-            title={'Asian / Pacific Islander'}
-            typeButton={'underline'}
-            disabled
-            customStyleLabel={styles.customStyleLabel}
-          />
-        </View>
-        {renderBigTitle('Lifestyle & Preferences')}
+        {renderBigTitle('Homeowner')}
         {renderLifeStyle('Lifestyle', list.life_style)}
-        {renderLifeStyle('Preferences', list.preferences)}
-        {renderBigTitle('Looking for...')}
-        {renderItemLooking('Location', ['D1', 'D2', 'D24', 'D25'])}
-        {renderItemLooking('Property type', ['Condo', 'HDB'])}
+        {renderBigTitle('Rental details')}
         {renderItemLooking('Lease Period', ['6 months', '12 months'])}
-        {renderItemLooking('Room type', ['Entire Home'])}
-        {renderItemLooking('Number of bedrooms', ['3'])}
-        {renderItemLooking('Number of bathrooms', ['2'])}
+        {renderBigTitle('Amenities')}
         {renderListAmenities()}
-        {renderBigTitle('Your matching room')}
         {renderMatchingRoom()}
       </View>
     );
@@ -320,24 +279,6 @@ const MatchesTenant = () => {
                 // animateCardOpacity
                 swipeBackCard
                 marginTop={0}
-                // overlayLabels={{
-                //   right: {
-                //     title: 'BLEAH',
-                //     style: {
-                //       label: {
-                //         backgroundColor: 'black',
-                //         borderColor: 'black',
-                //         color: 'white',
-                //         borderWidth: 1,
-                //       },
-                //       wrapper: {
-                //         flexDirection: 'column',
-                //         alignItems: 'center',
-                //         justifyContent: 'center',
-                //       },
-                //     },
-                //   },
-                // }}
               />
             </View>
             {!state.isEmpty && UserInformation()}
@@ -350,7 +291,7 @@ const MatchesTenant = () => {
             activeOpacity={0.85}
             style={styles.dislikeView}
             onPress={onDislike}>
-            <IconClear width={36} height={36} strokeWidth={1.5} />
+            <IconClear width={25} height={25} strokeWidth={1.5} />
           </TouchableOpacity>
           <TouchableOpacity
             activeOpacity={0.85}

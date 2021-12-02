@@ -60,11 +60,11 @@ const Route = React.memo(({props}: any) => {
       return <View />;
     }
     let firstImage: any = item?.PicturesVideo[0];
-    if (typeof firstImage === 'string') {
+    if (firstImage && typeof firstImage === 'string') {
       firstImage = JSON.parse(firstImage);
     }
 
-    console.log({firstImage});
+    console.log(111, firstImage, typeof firstImage === 'string');
 
     return (
       <Pressable
@@ -73,8 +73,8 @@ const Route = React.memo(({props}: any) => {
           marginBottom: SIZE.medium_space,
           opacity: isActive ? 1 : 0.5,
         }}>
-        {item?.PicturesVideo ? (
-          <Image source={{uri: firstImage.imagePath}} style={styles.bgRoom} />
+        {firstImage ? (
+          <Image source={{uri: firstImage?.imagePath}} style={styles.bgRoom} />
         ) : (
           <Image source={room_sample} style={styles.bgRoom} />
         )}

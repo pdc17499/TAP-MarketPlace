@@ -86,6 +86,7 @@ const styles = StyleSheet.create({
     color: colors.white,
     ...fontFamily.fontWeight500,
     textAlign: 'center',
+    marginLeft: 6,
   },
   reactionView: {
     position: 'absolute',

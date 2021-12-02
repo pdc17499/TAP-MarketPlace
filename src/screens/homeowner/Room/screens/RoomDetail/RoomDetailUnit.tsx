@@ -346,6 +346,14 @@ const RoomDetailUnit = ({props}: any) => {
   const updateRoomInfomation = () => {
     console.log('room', room);
     console.log('ROOM', ROOM);
+    let gallery = room.gallery || [];
+    const nGallery = gallery.map((item: any) => {
+      if (typeof item === 'string') {
+        return JSON.parse(item);
+      }
+
+      return item;
+    });
 
     const body = {
       roomDesc: {
@@ -368,7 +376,7 @@ const RoomDetailUnit = ({props}: any) => {
           roomFurnished: room?.room_furnishing,
         },
         LeasePeriod: ROOM?.LeasePeriod,
-        PicturesVideo: room.gallery || [],
+        PicturesVideo: nGallery,
         RentalPrice: ROOM?.RentalPrice,
         isActive: ROOM?.isActive,
       },
