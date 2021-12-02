@@ -13,6 +13,7 @@ import {
   GET_PROFILE_USER,
   SIGNUP_TENANT,
   UPDATE_PHONE_NUMBER,
+  SIGNUP_AGENT,
 } from './types';
 
 export const loginApi: any = async (data: any) => {
@@ -27,6 +28,11 @@ export const signUpApi: any = async (data: any) => {
 
 export const signUpTenantApi: any = async (data: any) => {
   const response = await api.post(SIGNUP_TENANT, data);
+  return response;
+};
+
+export const signUpAgentApi: any = async (data: any) => {
+  const response = await api.post(SIGNUP_AGENT, data);
   return response;
 };
 
@@ -78,6 +84,6 @@ export const changePasswordApi: any = async (data: any) => {
 
 export const getProfileUserApi: any = async () => {
   const response = await api.get(GET_PROFILE_USER);
-  console.log({response});
+  console.log({ response });
   return response;
 };

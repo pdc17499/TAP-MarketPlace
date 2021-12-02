@@ -6,10 +6,10 @@ import {
   AppText,
   Header,
 } from '@component';
-import React, {useEffect, useState} from 'react';
-import {View, StyleSheet, Pressable} from 'react-native';
-import {useDispatch} from 'react-redux';
-import {useSelector} from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { View, StyleSheet, Pressable } from 'react-native';
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import {
   colors,
   fontFamily,
@@ -20,14 +20,14 @@ import {
   validateForm,
 } from '@util';
 import * as yup from 'yup';
-import {Formik} from 'formik';
-import {ROOM_UNIT_HOWNER} from '@mocks';
-import {UserInfo} from '@interfaces';
-import {saveDataUser, updateUserInfo} from '@redux';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import { Formik } from 'formik';
+import { ROOM_UNIT_HOWNER } from '@mocks';
+import { UserInfo } from '@interfaces';
+import { saveDataUser, updateUserInfo } from '@redux';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import moment from 'moment';
-import {CaretRight} from '@assets';
+import { CaretRight } from '@assets';
 
 const BasicInfomation = () => {
   const dispatch = useDispatch();
@@ -37,13 +37,13 @@ const BasicInfomation = () => {
   const [showDate, setShowDate] = useState(false);
 
   useEffect(() => {
-    const nUser = {...dataUser};
+    const nUser = { ...dataUser };
     nUser.dob = formateDateServer(dataUser?.dob);
-    console.log({nUser});
+    console.log({ nUser });
     setUser(nUser);
   }, [dataUser]);
 
-  console.log({user});
+  console.log({ user });
 
   const formateDateServer = (date: any) => {
     return date
@@ -71,7 +71,7 @@ const BasicInfomation = () => {
 
   const onChangeValue = (item: any, name?: string) => {
     if (name) {
-      const nData: any = {...user};
+      const nData: any = { ...user };
       nData[name] = item;
       setUser(nData);
     }
@@ -101,15 +101,15 @@ const BasicInfomation = () => {
       name: user?.name,
     };
     console.log(111, user?.occupation);
-    if (user?.nationality) body = {...body, nationality: user?.nationality};
-    if (user?.occupation) body = {...body, occupation: user?.occupation};
-    if (user?.ethnicity) body = {...body, ethnicity: user?.ethnicity};
-    if (user?.gender) body = {...body, gender: user?.gender};
+    if (user?.nationality) body = { ...body, nationality: user?.nationality };
+    if (user?.occupation) body = { ...body, occupation: user?.occupation };
+    if (user?.ethnicity) body = { ...body, ethnicity: user?.ethnicity };
+    if (user?.gender) body = { ...body, gender: user?.gender };
     if (user?.ageGroup && user?.ageGroup !== 'N/A')
-      body = {...body, ageGroup: user?.ageGroup};
-    if (user?.dob) body = {...body, dob: formateDate(user?.dob)};
+      body = { ...body, ageGroup: user?.ageGroup };
+    if (user?.dob) body = { ...body, dob: formateDate(user?.dob) };
     console.log('bbb', body);
-    dispatch(updateUserInfo({body, id: user?.id}));
+    dispatch(updateUserInfo({ body, id: user?.id }));
   };
 
   const renderCustomPlaceHolder = (name: string) => {
@@ -174,7 +174,7 @@ const BasicInfomation = () => {
                     <Pressable
                       hitSlop={STYLE.hitSlop}
                       onPress={showDatepicker}
-                      style={{marginTop: SIZE.padding}}>
+                      style={{ marginTop: SIZE.padding }}>
                       {!props.values.dob ? (
                         renderCustomPlaceHolder('date of birth')
                       ) : (
@@ -219,7 +219,7 @@ const BasicInfomation = () => {
                   label: '',
                   value: '',
                 }}
-                customePlaceholder={renderCustomPlaceHolder('Ethnicity')}
+                customePlaceholder={renderCustomPlaceHolder('Occupation')}
                 showDot
               />
               <AppPicker
@@ -234,7 +234,7 @@ const BasicInfomation = () => {
                   label: '',
                   value: '',
                 }}
-                customePlaceholder={renderCustomPlaceHolder('Occupation')}
+                customePlaceholder={renderCustomPlaceHolder('Ethnicity')}
                 showDot
               />
             </View>
@@ -352,4 +352,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export {BasicInfomation};
+export { BasicInfomation };

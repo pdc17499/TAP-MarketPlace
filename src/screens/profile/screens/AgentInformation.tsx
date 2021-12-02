@@ -34,7 +34,7 @@ const AgentInformation = () => {
     setUser(dataUser);
   }, [dataUser]);
 
-  // console.log({ user });
+  console.log({ user });
 
   const formInitialValues = {
     name: user?.name,
@@ -87,7 +87,9 @@ const AgentInformation = () => {
                 error={props.errors.name}
                 typeInput={'linear'}
                 name={'name'}
+                gender={user?.gender}
               />
+              {/* <AppText style={{ position: 'absolute', top: 0 }}>{'Mr.'}</AppText> */}
               <AppInput
                 label={'Agency name'}
                 value={props.values.agencyName}

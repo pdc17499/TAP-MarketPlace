@@ -7,10 +7,10 @@ import {
   Header,
   ModalCheckedBox,
 } from '@component';
-import React, {useEffect} from 'react';
-import {View, StyleSheet} from 'react-native';
-import {useDispatch} from 'react-redux';
-import {useSelector} from 'react-redux';
+import React, { useEffect } from 'react';
+import { View, StyleSheet } from 'react-native';
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import {
   colors,
   DEVICE,
@@ -21,21 +21,21 @@ import {
   validateForm,
 } from '@util';
 import * as yup from 'yup';
-import {Formik} from 'formik';
-import {ROOM_UNIT_HOWNER} from '@mocks';
-import {pickerProps, RoomProps} from '@interfaces';
-import {getRoomTenant, updateRoomTenant} from '@redux';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import {IconDola} from '@assets';
-import {ROOM_DETAIL_LOCATION} from '@routeName';
-import {useNavigation} from '@react-navigation/core';
+import { Formik } from 'formik';
+import { ROOM_UNIT_HOWNER } from '@mocks';
+import { pickerProps, RoomProps } from '@interfaces';
+import { getRoomTenant, updateRoomTenant } from '@redux';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { IconDola } from '@assets';
+import { ROOM_DETAIL_LOCATION } from '@routeName';
+import { useNavigation } from '@react-navigation/core';
 
 const SearchingFilter = () => {
   const dispatch = useDispatch();
   const navigation: any = useNavigation();
   const list: any = ROOM_UNIT_HOWNER;
   const dataRoom: any = useSelector((state: any) => state?.rooms?.roomDetail);
-  console.log({dataRoom});
+  console.log({ dataRoom });
 
   useEffect(() => {
     dispatch(getRoomTenant());
@@ -88,7 +88,7 @@ const SearchingFilter = () => {
   };
 
   const onChangeMap = (location: any, props: any) => {
-    const {setFieldValue} = props;
+    const { setFieldValue } = props;
     setFieldValue('location', location);
   };
 
@@ -113,7 +113,7 @@ const SearchingFilter = () => {
     values: any,
     setFieldValue: any,
   ) => {
-    console.log({values});
+    console.log({ values });
     if (value[0] !== values.min_range_price) {
       setFieldValue('min_range_price', value[0]);
     }
@@ -138,7 +138,7 @@ const SearchingFilter = () => {
   };
 
   const renderModalCheckbox = (props: any, name: string, label: string) => {
-    const {values, errors, setFieldValue} = props;
+    const { values, errors, setFieldValue } = props;
     const data =
       name === 'bedroom_number_tenant' || name === 'bathroom_number_tenant'
         ? list.bedroom_number
@@ -157,7 +157,9 @@ const SearchingFilter = () => {
   };
 
   const renderMultipleItem = (name: string, data: Array<string>) => {
-    if (data?.length > 0) {
+    console.log('name', name);
+
+    if (data && data?.length > 0) {
       if (name === 'amenities') {
         return (
           <>
@@ -223,9 +225,9 @@ const SearchingFilter = () => {
   };
 
   const renderFormik = (props: any) => {
-    const {values, errors, setFieldValue, handleSubmit} = props;
+    const { values, errors, setFieldValue, handleSubmit } = props;
 
-    console.log({values, errors});
+    console.log({ values, errors });
 
     return (
       <>
@@ -332,7 +334,7 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: SIZE.padding,
   },
-  flexRow: {flexDirection: 'row', alignItems: 'center'},
+  flexRow: { flexDirection: 'row', alignItems: 'center' },
   titlePrice: {
     fontSize: scaleSize(18),
     ...fontFamily.fontWeight500,
@@ -410,4 +412,4 @@ const styles = StyleSheet.create({
   // },
 });
 
-export {SearchingFilter};
+export { SearchingFilter };

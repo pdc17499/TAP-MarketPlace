@@ -4,8 +4,8 @@ import {
   LOGOUT,
   RESET_DATA_SIGNUP,
 } from './type';
-import {INITIAL_STATE_AUTH} from './state';
-import {INITIAL_STATE_DATA_SIGN_UP} from '@redux';
+import { INITIAL_STATE_AUTH } from './state';
+import { INITIAL_STATE_DATA_SIGN_UP } from '@redux';
 import _ from 'lodash';
 
 export default function dataSave(state = INITIAL_STATE_AUTH, action: any) {
@@ -31,9 +31,14 @@ export default function dataSave(state = INITIAL_STATE_AUTH, action: any) {
         dataSignup: action?.payload?.data,
       };
     case RESET_DATA_SIGNUP:
-      const nState = {...state};
-      nState.dataSignup = INITIAL_STATE_DATA_SIGN_UP;
-      return nState;
+
+      return {
+        ...state,
+        dataSignup: INITIAL_STATE_DATA_SIGN_UP,
+      };
+    // const nState = {...state};
+    // nState.dataSignup = INITIAL_STATE_DATA_SIGN_UP;
+    // return nState;
     default:
       return state;
   }

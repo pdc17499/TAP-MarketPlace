@@ -1,5 +1,5 @@
-import {AppButton, AppText, Header} from '@component';
-import {addNewRoom, setDataSignup} from '@redux';
+import { AppButton, AppText, Header } from '@component';
+import { addNewRoom, setDataSignup } from '@redux';
 import {
   colors,
   DEVICE,
@@ -10,7 +10,7 @@ import {
   SIZE,
   STYLE,
 } from '@util';
-import React, {useEffect, useRef, useState} from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   View,
   Image,
@@ -21,16 +21,15 @@ import {
   UIManager,
   Platform,
 } from 'react-native';
-import {useDispatch, useSelector} from 'react-redux';
-import ImagePicker, {ImageOrVideo} from 'react-native-image-crop-picker';
-import {useActionSheet} from '@expo/react-native-action-sheet';
+import { useDispatch, useSelector } from 'react-redux';
+import ImagePicker, { ImageOrVideo } from 'react-native-image-crop-picker';
+import { useActionSheet } from '@expo/react-native-action-sheet';
 import Video from 'react-native-video';
-import {bg_room_unit_picture, IconAddVideos, IconClear} from '@assets';
-import {NavigationUtils} from '@navigation';
+import { bg_room_unit_picture, IconAddVideos, IconClear } from '@assets';
+import { NavigationUtils } from '@navigation';
 import {
   ADD_SUCCESS,
   AGENCY_BASIC_INFORMATION,
-  HOMEOWNER_NAME,
   USER_INFORMATION_NAME,
 } from '@routeName';
 import {
@@ -38,19 +37,20 @@ import {
   DraxProvider,
   DraxView,
 } from 'react-native-drax';
-import {uploadFile} from '@services';
-import {styles} from './styles';
+import { uploadFile } from '@services';
+import { styles } from './styles';
 
-const RoomUnitGallery = React.memo(({route}: any) => {
+const RoomUnitGallery = React.memo(({ route }: any) => {
   const dispatch = useDispatch();
   const dataSignUp = useSelector((state: any) => state?.auth?.dataSignup);
   const token = useSelector((state: any) => state?.auth?.token);
   const gallery = route?.params?.gallery;
+  const inRoomUnit = route?.params?.inRoomUnit;
   const setData = (data: any) => {
-    dispatch(setDataSignup({data}));
+    dispatch(setDataSignup({ data }));
   };
   const [files, setFiles] = useState([]);
-  const {showActionSheetWithOptions} = useActionSheet();
+  const { showActionSheetWithOptions } = useActionSheet();
   const numPhotos = useRef(0);
   const numVideos = useRef(0);
   if (DEVICE.isAndroid) {
@@ -64,6 +64,8 @@ const RoomUnitGallery = React.memo(({route}: any) => {
       setFiles(gallery);
     }
   }, []);
+
+  console.log('Inroom', inRoomUnit);
 
   useEffect(() => {
     numPhotos.current = 0;
@@ -91,7 +93,7 @@ const RoomUnitGallery = React.memo(({route}: any) => {
       compressImageMaxHeight: 1000,
       maxFiles: maxFiles,
     }).then((nFiles: any) => {
-      console.log({nFiles});
+      console.log({ nFiles });
       validateFile(nFiles, isPhoto);
     });
   };
@@ -110,7 +112,7 @@ const RoomUnitGallery = React.memo(({route}: any) => {
   };
 
   const validateFile = async (nFiles: any, isPhoto: boolean) => {
-    console.log({nFiles});
+    console.log({ nFiles });
     if (
       isPhoto &&
       nFiles.length + numPhotos.current > FILE_SIZE.MAX_IMAGE_COUNT
@@ -149,7 +151,7 @@ const RoomUnitGallery = React.memo(({route}: any) => {
 
   const getUrlFile = async (image: any) => {
     const result = await uploadFile(image);
-    console.log({result});
+    console.log({ result });
     return result;
   };
 
@@ -175,44 +177,47 @@ const RoomUnitGallery = React.memo(({route}: any) => {
   };
 
   const onDone = () => {
-    const nData = {...dataSignUp};
+    const nData = { ...dataSignUp };
     nData.list_photo = files;
     setData(nData);
     if (token) {
-      const state = nData;
-      const ImageVideo: Array<string> = state?.list_photo.map(
-        (item: any) => item.uri,
-      );
-      // console.log('nData', ImageVideo);
-      const body = {
-        roomDesc: {
-          RentalAddress: state?.location.title,
-          PlaceType: state?.kind_place?.value,
-          RoomDetails: {
-            RoomType: state?.room_type?.value,
-            BedroomNumber: state?.bedroom_number?.value,
-            BathroomNumber: state?.bathroom_number?.value,
-            AttachedBathroom: state?.attached_bathroom?.value === 'Yes',
-            AllowCook: state?.allow_cooking?.value === 'Yes',
-            StayWithGuest: state?.staying_with_guests?.value === 'Yes',
-            KeyWords: state?.key_your_place,
+      if (inRoomUnit) NavigationUtils.goBack();
+      else {
+        const state = nData;
+        const ImageVideo: Array<string> = state?.list_photo.map(
+          (item: any) => item.uri,
+        );
+        // console.log('nData', ImageVideo);
+        const body = {
+          roomDesc: {
+            RentalAddress: state?.location.title,
+            PlaceType: state?.kind_place?.value,
+            RoomDetails: {
+              RoomType: state?.room_type?.value,
+              BedroomNumber: state?.bedroom_number?.value,
+              BathroomNumber: state?.bathroom_number?.value,
+              AttachedBathroom: state?.attached_bathroom?.value === 'Yes',
+              AllowCook: state?.allow_cooking?.value === 'Yes',
+              StayWithGuest: state?.staying_with_guests?.value === 'Yes',
+              KeyWords: state?.key_your_place,
+            },
+            LeasePeriod: {
+              type: state?.kind_place?.value === 'HDB',
+              value: state?.lease_your_place,
+            },
+            PicturesVideo: ImageVideo,
+            RentalPrice: {
+              type: state?.rental_price?.value,
+              Min: state?.min_range_price,
+              Max: state?.max_range_price,
+              Price: parseInt(state?.negotiable_price || '0'),
+            },
           },
-          LeasePeriod: {
-            type: state?.kind_place?.value === 'HDB',
-            value: state?.lease_your_place,
-          },
-          PicturesVideo: ImageVideo,
-          RentalPrice: {
-            type: state?.rental_price?.value,
-            Min: state?.min_range_price,
-            Max: state?.max_range_price,
-            Price: parseInt(state?.negotiable_price || '0'),
-          },
-        },
-      };
-      console.log({body});
+        };
+        console.log({ body });
+        dispatch(addNewRoom({ body }));
+      }
 
-      dispatch(addNewRoom({body}));
     } else {
       NavigationUtils.navigate(USER_INFORMATION_NAME);
     }
@@ -231,7 +236,7 @@ const RoomUnitGallery = React.memo(({route}: any) => {
         cancelButtonIndex,
       },
       buttonIndex => {
-        console.log({buttonIndex});
+        console.log({ buttonIndex });
         if (buttonIndex === 0) {
           uploadPhotos(mediaType);
         } else if (buttonIndex === 1) {
@@ -247,8 +252,8 @@ const RoomUnitGallery = React.memo(({route}: any) => {
   };
 
   const onReceiveDragDrop = (event: DraxDragWithReceiverEventData) => {
-    console.log({event});
-    const {dragged, receiver} = event;
+    console.log({ event });
+    const { dragged, receiver } = event;
     const idDragged = parseInt(dragged.id);
     const idReceiver = parseInt(receiver.id);
     let nFiles: any = [...files];
@@ -271,8 +276,8 @@ const RoomUnitGallery = React.memo(({route}: any) => {
 
     const styleView =
       index === 1 || index % 3 == 1
-        ? {marginBottom: SIZE.padding, marginHorizontal: SIZE.padding - 1}
-        : {marginBottom: SIZE.padding};
+        ? { marginBottom: SIZE.padding, marginHorizontal: SIZE.padding - 1 }
+        : { marginBottom: SIZE.padding };
     return (
       <>
         <View style={styleView} key={index.toString()}>
@@ -294,13 +299,13 @@ const RoomUnitGallery = React.memo(({route}: any) => {
             </View>
             {isPhoto ? (
               <Image
-                source={{uri: typeof file === 'string' ? file : file.uri}}
+                source={{ uri: typeof file === 'string' ? file : file.uri }}
                 style={styles.itemImage}
               />
             ) : (
               <>
                 <Video
-                  source={{uri: file.uri}}
+                  source={{ uri: file.uri }}
                   style={styles.itemImage}
                   resizeMode={'cover'}
                   muted
@@ -322,7 +327,7 @@ const RoomUnitGallery = React.memo(({route}: any) => {
   };
 
   const renderListImage = () => {
-    console.log({files});
+    console.log({ files });
     return (
       <DraxProvider>
         {files.length > 0 ? (
@@ -342,7 +347,7 @@ const RoomUnitGallery = React.memo(({route}: any) => {
           </>
         ) : (
           <>
-            <View style={{paddingBottom: scaleWidth(400)}}>
+            <View style={{ paddingBottom: scaleWidth(400) }}>
               <Image source={bg_room_unit_picture} style={styles.bgImage} />
             </View>
             <AppText style={styles.title}>
@@ -404,4 +409,4 @@ const RoomUnitGallery = React.memo(({route}: any) => {
   );
 });
 
-export {RoomUnitGallery};
+export { RoomUnitGallery };

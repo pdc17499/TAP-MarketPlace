@@ -1,5 +1,6 @@
-const SIGNUP = 'v1/auth/register';
+const SIGNUP = 'v1/auth/homeownerRegister';
 const SIGNUP_TENANT = 'v1/auth/tenantRegister';
+const SIGNUP_AGENT = 'v1/auth/agentRegister';
 const VERIFY_EMAIL = 'confirm-verify';
 const FORGOT_PASSWORD = 'v1/users/forgot-password';
 const LOGIN = 'v1/auth/login';
@@ -30,4 +31,5 @@ export {
   CHANGE_PASSWORD,
   GET_PROFILE_USER,
   UPDATE_PHONE_NUMBER,
+  SIGNUP_AGENT
 };

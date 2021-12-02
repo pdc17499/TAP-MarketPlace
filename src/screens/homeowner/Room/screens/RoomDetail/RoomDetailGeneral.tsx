@@ -127,15 +127,14 @@ const RoomDetailGeneral = ({ props }: any) => {
     console.log('erro', room);
     console.log('ROOM', ROOM);
     const isPriceRange = room?.rental_type === 'Price range';
-
     const body = {
       roomDesc: {
         RentalAddress: room?.location,
         PlaceType: room?.kind_place,
         RoomDetails: {
           RoomType: ROOM?.RoomDetails?.RoomType,
-          BedroomNumber: ROOM?.RoomDetails?.BedroomNumber,
-          BathroomNumber: ROOM?.RoomDetails?.BathroomNumber,
+          BedroomNumber: ROOM?.RoomDetails?.BedroomNumber ? ROOM?.RoomDetails?.BedroomNumber.toString() : '',
+          BathroomNumber: ROOM?.RoomDetails?.BathroomNumber ? ROOM?.RoomDetails?.BathroomNumber.toString() : '',
           AttachedBathroom: ROOM?.RoomDetails?.AttachedBathroom,
           StayWithGuest: room?.staying_with_guests === 'Yes',
           AllowCook: ROOM?.RoomDetails?.AllowCook,

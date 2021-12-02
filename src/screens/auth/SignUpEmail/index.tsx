@@ -169,8 +169,8 @@ const SignUpEmail = (props: SignUpEmailProp) => {
       body.roomDesc.PicturesVideo = getUrlFiles();
     }
 
-    console.log({ body, isTenant });
-    dispatch(signUp({ body, isTenant }));
+    console.log({ body, isTenant, isAgent });
+    dispatch(signUp({ body, isTenant, isAgent }));
     // navigation.navigate(VERIFY_ACCOUNT);
   };
 
