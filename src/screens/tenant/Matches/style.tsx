@@ -74,12 +74,12 @@ const styles = StyleSheet.create({
     marginBottom: SIZE.base_space / 2,
   },
   bottomView: {
-    flexDirection: 'row',
-    marginTop: scaleHeight(350),
+    // flexDirection: 'row',
+    marginTop: scaleHeight(300),
     // paddingBottom: scaleHeight(80),
-    alignItems: 'center',
-    justifyContent: 'space-evenly',
-    marginHorizontal: -SIZE.base_space,
+    // alignItems: 'center',
+    // justifyContent: 'space-evenly',
+    // marginHorizontal: -SIZE.base_space,
     paddingRight: 10,
   },
   subTitle: {

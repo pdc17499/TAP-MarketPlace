@@ -1,5 +1,6 @@
 import {
   bg_room_unit_picture,
+  IconBedrooms,
   IconChatFull,
   IconClear,
   IconDot,
@@ -36,6 +37,9 @@ import FastImage from 'react-native-fast-image';
 import {ROOM_UNIT_HOWNER, TENANT_PROPERTY} from '@mocks';
 import {ImageServerProps, mockProps} from '@interfaces';
 import Video from 'react-native-video';
+import {MatchesHomeowner} from './components/MatchesHomeowner';
+import {MatchesRoomDetail} from './components/MatchesRoomDetail';
+import MapView, {MarkerAnimated, PROVIDER_GOOGLE} from 'react-native-maps';
 
 function* range(start: number, end: number) {
   for (let i = start; i <= end; i++) {
@@ -54,8 +58,9 @@ const MatchesTenant = () => {
   });
 
   const list = ROOM_UNIT_HOWNER;
-  const files = TENANT_PROPERTY.list_photo;
-  const matches = TENANT_PROPERTY.matches;
+  const dataTenant = TENANT_PROPERTY;
+  const files = dataTenant.list_photo;
+  const matches = dataTenant.matches;
   const swiperRef = useRef<any>();
 
   const renderCard = (item: any, index: number) => {
@@ -68,7 +73,13 @@ const MatchesTenant = () => {
             <AppText style={styles.subTitle}>{'1 Wallich St'}</AppText>
           </View>
         </View>
-        <View style={styles.bottomView}></View>
+        <View style={styles.bottomView}>
+          <AppText style={styles.userName}>{'$10,000 - $20,000'}</AppText>
+          <View style={[styles.subTitleView, {marginTop: SIZE.base_space / 2}]}>
+            <IconBedrooms iconFillColor={'white'} />
+            <AppText style={styles.subTitle}>{'3 Beds'}</AppText>
+          </View>
+        </View>
 
         <FastImage
           style={styles.imageUser}
@@ -159,55 +170,6 @@ const MatchesTenant = () => {
     return <View />;
   };
 
-  const renderLifeStyle = (title: string, list: Array<any>) => {
-    return (
-      <View style={styles.viewLifestyle}>
-        <AppQA
-          title={title}
-          data={list}
-          showIconLeft
-          typeList={'wrap'}
-          widthLeftIcon={22}
-          heightLeftIcon={22}
-          fillColorIcon={colors.primary}
-          customStyleTitle={styles.titleLifestyle}
-          customStyleTitleButton={styles.titleButtonLifestyle}
-          customStyleButton={styles.buttonLifestyle}
-        />
-      </View>
-    );
-  };
-
-  const renderMatchingRoom = () => {
-    return (
-      <View
-        style={{
-          padding: SIZE.base_space,
-          backgroundColor: colors.bgInput,
-          borderRadius: 8,
-          marginTop: SIZE.padding,
-          flexDirection: 'row',
-          alignItems: 'center',
-        }}>
-        <Image
-          source={bg_room_unit_picture}
-          style={{width: 80, height: 80, borderRadius: 8, marginRight: 10}}
-        />
-        <View style={{flex: 1}}>
-          <View style={styles.subTitleView}>
-            <AppText style={styles.titleRoom}>{'Condo'}</AppText>
-            <IconDot style={{marginHorizontal: 6}} />
-            <AppText style={styles.titleRoom}>{'Entire Home'}</AppText>
-          </View>
-          <View style={styles.subTitleView}>
-            <IconPickLocation />
-            <AppText style={styles.location}>{'12 Kallang Avenue'}</AppText>
-          </View>
-        </View>
-      </View>
-    );
-  };
-
   const renderListAmenities = () => {
     return (
       <View style={styles.viewAmenities}>
@@ -231,13 +193,35 @@ const MatchesTenant = () => {
   const UserInformation = () => {
     return (
       <View style={{paddingHorizontal: SIZE.padding}}>
+        <MatchesRoomDetail room={matches.room} />
         {renderBigTitle('Homeowner')}
-        {renderLifeStyle('Lifestyle', list.life_style)}
+        <MatchesHomeowner homeower={matches.homeowner} />
         {renderBigTitle('Rental details')}
         {renderItemLooking('Lease Period', ['6 months', '12 months'])}
         {renderBigTitle('Amenities')}
         {renderListAmenities()}
-        {renderMatchingRoom()}
+        {renderBigTitle('Location')}
+        <MapView
+          // provider={PROVIDER_GOOGLE}
+          style={{
+            width: '100%',
+            height: scaleWidth(170),
+            marginTop: SIZE.base_space,
+            borderRadius: 8,
+          }}
+          initialRegion={{
+            latitude: 1.3139961,
+            longitude: 103.7041657,
+            latitudeDelta: 0.099,
+            longitudeDelta: 0.099,
+          }}>
+          <MarkerAnimated
+            coordinate={{
+              latitude: 1.3139961,
+              longitude: 103.7041657,
+            }}
+          />
+        </MapView>
       </View>
     );
   };

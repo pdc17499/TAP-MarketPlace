@@ -24,7 +24,7 @@ export const mergeArrayServer = (
   if (listSver && listSver.length > 0) {
     const nList = listSver.map((item: string) => {
       const index = listSample.findIndex(
-        (itm: pickerProps) => item.toUpperCase() === itm.value.toUpperCase(),
+        (itm: pickerProps) => item.toUpperCase() == itm.value.toUpperCase(),
       );
       if (index !== -1) return listSample[index];
     });

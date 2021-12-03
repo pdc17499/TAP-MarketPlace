@@ -187,7 +187,7 @@ const Matches = React.memo(() => {
           typeList={'wrap'}
           widthLeftIcon={22}
           heightLeftIcon={22}
-          fillColorIcon={colors.primary}
+          fillColorIcon={colors.greenIcon}
           customStyleTitle={styles.titleLifestyle}
           customStyleTitleButton={styles.titleButtonLifestyle}
           customStyleButton={styles.buttonLifestyle}

@@ -141,24 +141,25 @@ const AppQA = React.memo((props: AppQAProps) => {
 
       {!!error && <AppText style={styles.error}>{error}</AppText>}
       <View style={listStyle}>
-        {data.map((item: mockProps) => {
-          const isActive = checkActive(item);
-          return (
-            <View key={item.value} style={styleViewButton}>
-              <AppButton
-                iconLeft={showIconLeft && renderIconLeft(item, isActive)}
-                onPress={() => onChangeValue(item, isActive)}
-                isActive={isActive}
-                typeButton={'linear'}
-                title={item.value}
-                customStyleButton={[itemStyle, customStyleButton]}
-                customStyleTitle={customStyleTitleButton}
-                disabled={disabled}
-              />
-              {isActive && children}
-            </View>
-          );
-        })}
+        {data?.length > 0 &&
+          data.map((item: mockProps) => {
+            const isActive = checkActive(item);
+            return (
+              <View key={item.value} style={styleViewButton}>
+                <AppButton
+                  iconLeft={showIconLeft && renderIconLeft(item, isActive)}
+                  onPress={() => onChangeValue(item, isActive)}
+                  isActive={isActive}
+                  typeButton={'linear'}
+                  title={item.value}
+                  customStyleButton={[itemStyle, customStyleButton]}
+                  customStyleTitle={customStyleTitleButton}
+                  disabled={disabled}
+                />
+                {isActive && children}
+              </View>
+            );
+          })}
       </View>
     </View>
   );

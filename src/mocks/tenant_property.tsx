@@ -22,13 +22,24 @@ export const TENANT_PROPERTY = {
     },
   ],
   matches: {
+    room: {
+      RoomType: 'Condo',
+      BedroomNumber: '2',
+      BathroomNumber: '3',
+      roomFurnished: 'Partially',
+      floorLevel: 'Penhouse',
+      floorSizeMin: '500',
+      floorSizeMax: '800',
+      buildYear: '2010',
+      AllowCook: 'Yes',
+    },
     homeowner: {
       image: '',
       user_name: 'Chandler Bing',
       age_group: '29 - 40',
       gender: 'Male',
-      nantionality: 'Singapore',
-      life_style: ['Working', 'Own pets', 'Vegeterian', 'Diversity friendly'],
+      nationality: 'Singapore',
+      life_style: ['Working', 'Own pets', 'Vegetarian', 'Diversity friendly'],
     },
   },
 };

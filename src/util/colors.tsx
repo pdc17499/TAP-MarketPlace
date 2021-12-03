@@ -19,6 +19,7 @@ const colors = {
   textPlace: '#65666D',
   icTabbar: '#C2C2C2',
   green: '#2ED6A5',
+  greenIcon: '#2A6B58',
 };
 
 export {colors};

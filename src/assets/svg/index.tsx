@@ -1,4 +1,4 @@
-import { colors } from '@util';
+import {colors} from '@util';
 import React from 'react';
 import Svg, {
   Path,
@@ -217,7 +217,7 @@ export const ArrowNext = (props: iconProps) => (
 );
 
 export const IconFloorSize = (props: iconProps) => (
-  <Svg width={21} height={14} fill="none" {...props}>
+  <Svg width={21} height={14} viewBox="0 0 21 14" fill="none" {...props}>
     <Path
       d="M4.338 3.906c0-1.098.72-1.782 1.818-1.782.342 0 .846.09 1.296.234l.27-1.584C7.056.594 6.498.504 5.94.504 3.942.504 2.484 1.8 2.484 3.906V5.04H.09v1.566h2.394V13.5h1.854V6.606h3.348V5.04H4.338V3.906zm9.784 7.758c-.432.18-.936.324-1.44.324-1.044 0-1.656-.522-1.656-1.746V6.606h3.132V5.04h-3.132V1.926H9.154V5.04H7.156v1.566h1.998v3.636c0 2.178 1.152 3.474 3.312 3.474.576 0 1.188-.072 1.926-.342l-.27-1.71zm3.95-4.626l1.475-1.584c.954-1.026 1.296-1.674 1.296-2.412 0-1.116-.882-2.106-2.538-2.106-1.602 0-2.52.954-2.556 2.34h1.404c.036-.684.45-1.098 1.206-1.098.648 0 1.08.396 1.08.954 0 .54-.36.936-1.098 1.692l-2.556 2.664v.738h5.166V7.038h-2.88z"
       fill="#AAA"
@@ -1191,12 +1191,159 @@ export const IconChatFull = (props: iconProps) => (
 );
 
 export const IconDotOrange = (props: iconProps) => (
-  <Svg
-    width={6}
-    height={7}
-    fill="none"
-    {...props}
-  >
+  <Svg width={6} height={7} fill="none" {...props}>
     <Circle cx={3} cy={3.5} r={3} fill="#DE9236" />
+  </Svg>
+);
+
+export const IconHandShake = (props: iconProps) => (
+  <Svg width={24} height={24} fill="none" {...props}>
+    <Path
+      d="m22.567 11.417-2.317 1.159-3-5.745 2.34-1.17a.75.75 0 0 1 1.001.323l2.306 4.415a.75.75 0 0 1-.33 1.018v0ZM3.75 12.476l-2.317-1.16a.751.751 0 0 1-.33-1.017L3.41 5.884a.75.75 0 0 1 1-.324L6.75 6.73l-3 5.745ZM20.25 12.576l-1.5 1.755-3.45 3.45a.75.75 0 0 1-.712.197l-5.433-1.359a.75.75 0 0 1-.28-.136L3.75 12.476"
+      stroke="#AAA"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <Path
+      d="m18.75 14.33-4.125-3-1.2.9a3 3 0 0 1-3.6 0l-.508-.38a.75.75 0 0 1-.08-1.13l3.668-3.67a.75.75 0 0 1 .53-.22h3.815"
+      stroke="#AAA"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <Path
+      d="m6.804 6.73 4.811-1.402a.75.75 0 0 1 .52.036l3.24 1.467M10.5 19.956l-2.826-.707a.75.75 0 0 1-.31-.161L5.25 17.25"
+      stroke="#AAA"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </Svg>
+);
+
+export const IconRoomType = (props: iconProps) => (
+  <Svg width={24} height={24} fill="none" {...props}>
+    <Path
+      d="M1.5 20.248h21M13.499 20.248v-16.5a.75.75 0 0 0-.75-.75h-9a.75.75 0 0 0-.75.75v16.5"
+      stroke="#AAA"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <Path
+      d="M20.999 20.248v-10.5a.75.75 0 0 0-.75-.75h-6.75M5.999 6.749h3M7.499 12.748h3M5.999 16.498h3M16.499 16.498h1.5M16.499 12.748h1.5"
+      stroke="#AAA"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </Svg>
+);
+
+export const IconBedrooms = (props: iconProps) => (
+  <Svg width={24} height={24} fill="none" {...props}>
+    <Path
+      d="M9.75 15.75V7.5h9.75a3 3 0 0 1 3 3v5.25M1.5 19.5v-15M1.5 15.75h21v3.75M9.75 7.5H1.5"
+      stroke={props.iconFillColor || '#AAA'}
+      strokeWidth={props.strokeWidth || 1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </Svg>
+);
+
+export const IconBathrooms = (props: iconProps) => (
+  <Svg width={24} height={24} fill="none" {...props}>
+    <Path
+      d="M5.625 22.5a1.125 1.125 0 1 0 0-2.25 1.125 1.125 0 0 0 0 2.25ZM8.25 19.875a1.125 1.125 0 1 0 0-2.25 1.125 1.125 0 0 0 0 2.25ZM2.625 19.5a1.125 1.125 0 1 0 0-2.25 1.125 1.125 0 0 0 0 2.25ZM5.25 16.875a1.125 1.125 0 1 0 0-2.25 1.125 1.125 0 0 0 0 2.25Z"
+      fill="#AAA"
+    />
+    <Path
+      d="M23.25 3.75h-2.69a.75.75 0 0 0-.53.22l-2.78 2.78L5.187 8.76a.75.75 0 0 0-.407 1.27l9.19 9.19a.75.75 0 0 0 1.27-.408L17.25 6.75"
+      stroke="#AAA"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </Svg>
+);
+
+export const IconRoomFurnishing = (props: iconProps) => (
+  <Svg width={24} height={24} fill="none" {...props}>
+    <Path
+      d="M7.5 12.75h9M4.5 9V6.75a3 3 0 0 1 3-3h9a3 3 0 0 1 3 3V9"
+      stroke="#AAA"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <Path
+      d="M7.5 15.75V12a3 3 0 1 0-3 3v3.75a.75.75 0 0 0 .75.75h13.5a.75.75 0 0 0 .75-.75V15a3 3 0 1 0-3-3v3.75"
+      stroke="#AAA"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </Svg>
+);
+export const IconFloorLevel = (props: iconProps) => (
+  <Svg width={24} height={24} fill="none" {...props}>
+    <Path
+      d="m3 16.5 9 5.25 9-5.25"
+      stroke="#AAA"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <Path
+      d="m3 12 9 5.25L21 12"
+      stroke="#AAA"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <Path
+      d="m3 7.5 9 5.25 9-5.25-9-5.25L3 7.5Z"
+      stroke="#AAA"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </Svg>
+);
+export const IconAllowCooking = (props: iconProps) => (
+  <Svg width={24} height={24} fill="none" {...props}>
+    <Path
+      d="M9 1.5v3M12 1.5v3M15 1.5v3M4.5 7.5h15a.75.75 0 0 1 .75.75v9A2.25 2.25 0 0 1 18 19.5H6a2.25 2.25 0 0 1-2.25-2.25v-9a.75.75 0 0 1 .75-.75ZM23.25 9l-3 2.25M.75 9l3 2.25"
+      stroke="#AAA"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </Svg>
+);
+
+export const IconFloorSize2 = (props: iconProps) => (
+  <Svg width={24} height={24} fill="none" {...props}>
+    <Path
+      d="M10.5 20.25h3M3.75 10.5v3M6.75 20.25H4.5a.75.75 0 0 1-.75-.75v-2.25M17.25 20.25h2.25a.75.75 0 0 0 .75-.75v-15a.75.75 0 0 0-.75-.75h-15a.75.75 0 0 0-.75.75v2.25M3.97 3.97l16.06 16.06"
+      stroke="#AAA"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </Svg>
+);
+
+export const IconBuiltYear = (props: iconProps) => (
+  <Svg width={24} height={24} fill="none" {...props}>
+    <Path
+      d="M17.343 3.475 13.409 7.41l.53 2.652 2.652.53 3.934-3.934h0a6.002 6.002 0 0 1-8.426 7.597h0L6.841 20.34a2.25 2.25 0 0 1-3.182-3.182l6.087-5.258h0a6.002 6.002 0 0 1 7.597-8.426h0Z"
+      stroke="#AAA"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
   </Svg>
 );

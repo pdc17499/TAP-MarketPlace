@@ -5,12 +5,19 @@ platform :ios, '11.0'
 
 target 'TAPMarketplace' do
   config = use_native_modules!
-
+  rn_maps_path = '../node_modules/react-native-maps'
+  
   use_react_native!(
     :path => config[:reactNativePath],
     # to enable hermes on iOS, change `false` to `true` and then install pods
     :hermes_enabled => false
   )
+
+  # react-native-maps dependencies
+  # pod 'react-native-maps', path: rn_maps_path
+  pod 'react-native-google-maps', path: rn_maps_path  # Uncomment this line if you want to support GoogleMaps on iOS
+  pod 'GoogleMaps'  # Uncomment this line if you want to support GoogleMaps on iOS
+  pod 'Google-Maps-iOS-Utils' # Uncomment this line if you want to support GoogleMaps on iOS
 
   target 'TAPMarketplaceTests' do
     inherit! :complete
