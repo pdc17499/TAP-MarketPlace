@@ -1,5 +1,5 @@
-import {AppText, Header} from '@component';
-import React, {useEffect, useMemo} from 'react';
+import { AppText, Header } from '@component';
+import React, { useEffect, useMemo } from 'react';
 import {
   View,
   Image,
@@ -8,32 +8,37 @@ import {
   useWindowDimensions,
   TouchableOpacity,
 } from 'react-native';
-import {IconTabActive, room_sample} from '@assets';
-import {colors, fontFamily, scaleSize, scaleWidth, SIZE, STYLE} from '@util';
-import {SceneMap, TabView} from 'react-native-tab-view';
-import {RoomDetailGeneral} from './RoomDetailGeneral';
-import {RoomDetailUnit} from './RoomDetailUnit';
-import {useDispatch, useSelector} from 'react-redux';
-import {getRoomDetail} from '@redux';
+import { IconTabActive, room_sample } from '@assets';
+import { colors, fontFamily, scaleSize, scaleWidth, SIZE, STYLE } from '@util';
+import { SceneMap, TabView } from 'react-native-tab-view';
+import { RoomDetailGeneral } from './RoomDetailGeneral';
+import { RoomDetailUnit } from './RoomDetailUnit';
+import { useDispatch, useSelector } from 'react-redux';
+import { getRoomDetail } from '@redux';
 import Video from 'react-native-video';
-import {ImageServerProps} from '@interfaces';
+import { ImageServerProps } from '@interfaces';
+import { RoomDetailHomeowner } from '@screens';
 
 const RoomDetail = (route: any) => {
   console.log('paa', route);
   const roomId = route.route.params.id;
   const dispatch = useDispatch();
+  const ROOM: any = useSelector((state: any) => state?.rooms?.roomDetail);
+  const typeUser: any = useSelector((state: any) => state?.auth?.typeUser);
+  const isAgent = typeUser === 'Agent'
+  const [routes] = React.useState([
+    { key: 'general', title: 'General' },
+    { key: 'detail', title: isAgent ? 'Details' : 'Room/Unit Details' },
+    // isAgent ? { key: 'homeowner', title: 'Homeowner' } : null
+  ]);
 
   useEffect(() => {
+    isAgent ? routes.push({ key: 'homeowner', title: 'Homeowner' }) : null
     dispatch(getRoomDetail(roomId));
   }, []);
 
-  const ROOM: any = useSelector((state: any) => state?.rooms?.roomDetail);
-
   const [index, setIndex] = React.useState(0);
-  const [routes] = React.useState([
-    {key: 'general', title: 'General'},
-    {key: 'detail', title: 'Room/Unit Details'},
-  ]);
+
   const layout = useWindowDimensions();
 
   // const checkVideo = (file: any) => {
@@ -59,20 +64,21 @@ const RoomDetail = (route: any) => {
   const renderScene = SceneMap({
     general: () => <RoomDetailGeneral props={'general'} />,
     detail: () => <RoomDetailUnit props={'detail'} />,
+    homeowner: () => <RoomDetailHomeowner props={'homeowner'} />
   });
 
   const renderImage = (file: ImageServerProps) => {
     const isPhoto = file?.format?.includes('images');
-    console.log('typleFuile', file);
+    // console.log('typleFuile', file);
     const uri = file?.imagePath;
     return (
       <>
         {isPhoto ? (
-          <Image source={{uri}} style={styles.itemImage} />
+          <Image source={{ uri }} style={styles.itemImage} />
         ) : (
           <>
             <Video
-              source={{uri}}
+              source={{ uri }}
               style={styles.itemImage}
               resizeMode={'cover'}
             />
@@ -83,14 +89,14 @@ const RoomDetail = (route: any) => {
   };
 
   const renderTabBar = (props: any) => {
-    const {navigationState, jumpTo} = props;
-    const {routes, index} = navigationState;
+    const { navigationState, jumpTo } = props;
+    const { routes, index } = navigationState;
 
     return (
       <>
         <View style={styles.tabContainer}>
           {routes.map((item: any, idx: number) => {
-            const {title, key} = item;
+            const { title, key } = item;
             const isActive = index === idx;
             const tabTitle = isActive ? styles.tabTitleActive : styles.tabTitle;
             return (
@@ -110,7 +116,7 @@ const RoomDetail = (route: any) => {
   };
 
   let firstImage: any = ROOM?.PicturesVideo[0];
-  console.log(ROOM);
+  // console.log(ROOM);
   if (firstImage && typeof firstImage === 'string') {
     firstImage = JSON.parse(firstImage);
   }
@@ -125,10 +131,10 @@ const RoomDetail = (route: any) => {
           <Image source={room_sample} style={styles.itemImage} />
         )}
         <TabView
-          navigationState={{index, routes}}
+          navigationState={{ index, routes }}
           renderScene={renderScene}
           onIndexChange={setIndex}
-          initialLayout={{width: layout.width}}
+          initialLayout={{ width: layout.width }}
           renderTabBar={renderTabBar}
         />
       </View>
@@ -232,4 +238,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export {RoomDetail};
+export { RoomDetail };

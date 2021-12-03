@@ -22,6 +22,7 @@ import {
   ADD_SUCCESS,
   TABBAR,
   AGENT_INFORMATION,
+  ROOM_DETAIL_HOMEOWNER,
 } from '../routeName';
 
 import {
@@ -43,7 +44,8 @@ import {
   RoomDetailGallery,
   RoomUnitKindPlace,
   AddSuccess,
-  AgentInformation
+  AgentInformation,
+  RoomDetailHomeowner
 } from '../../screens';
 import { AgentBottomTabs } from './AgentBottomTabs';
 
@@ -81,6 +83,8 @@ const AgentStack = () => {
       <Stack.Screen name={ROOM_UNIT_TYPE_ROOM} component={RoomUnitTypeRoom} />
       <Stack.Screen name={ROOM_UNIT_PRICE} component={RoomUnitPrice} />
       <Stack.Screen name={ADD_SUCCESS} component={AddSuccess} />
+      <Stack.Screen name={ROOM_DETAIL_HOMEOWNER} component={RoomDetailHomeowner} />
+
     </Stack.Navigator>
   );
 };

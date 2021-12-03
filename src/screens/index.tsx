@@ -36,6 +36,7 @@ import {
   RoomDetailLocation,
   AddSuccess,
   RoomDetailGallery,
+  RoomDetailHomeowner
 } from './homeowner/Room';
 
 //HomeOwner - Tabbar
@@ -99,6 +100,7 @@ export {
   RoomDetailLocation,
   AddSuccess,
   RoomDetailGallery,
+  RoomDetailHomeowner,
   //Tenant
   MatchesTenant,
   //Agent
