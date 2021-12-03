@@ -7,8 +7,8 @@ import {
   Header,
   ModalCheckedBox,
 } from '@component';
-import React, {useEffect, useRef, useState} from 'react';
-import {View, Image, Pressable, StyleSheet, ScrollView} from 'react-native';
+import React, { useEffect, useRef, useState } from 'react';
+import { View, Image, Pressable, StyleSheet, ScrollView } from 'react-native';
 import {
   IconBack,
   IconClear,
@@ -29,17 +29,17 @@ import {
   validateForm,
   YEARS,
 } from '@util';
-import {useNavigation} from '@react-navigation/core';
-import {Formik, FormikValues} from 'formik';
-import {ROOM_UNIT_HOWNER} from '@mocks';
+import { useNavigation } from '@react-navigation/core';
+import { Formik, FormikValues } from 'formik';
+import { ROOM_UNIT_HOWNER } from '@mocks';
 import * as yup from 'yup';
 import Carousel from 'react-native-snap-carousel';
 import Modal from 'react-native-modal';
 import Video from 'react-native-video';
-import {ImageServerProps, pickerProps} from '@interfaces';
-import {ROOM_DETAIL_GELLERY, ROOM_UNIT_GALLERY} from '@routeName';
-import {useDispatch, useSelector} from 'react-redux';
-import {updateRoom} from '@redux';
+import { ImageServerProps, pickerProps } from '@interfaces';
+import { ROOM_DETAIL_GELLERY, ROOM_UNIT_GALLERY } from '@routeName';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateRoom } from '@redux';
 
 const state = {
   activeIndex: 0,
@@ -67,13 +67,15 @@ const state = {
   ],
 };
 
-const RoomDetailUnit = ({props}: any) => {
+const RoomDetailUnit = ({ props }: any) => {
   const key = props;
   const navigation: any = useNavigation();
   const dispatch = useDispatch();
   const ROOM: any = useSelector((state: any) => state?.rooms?.roomDetail);
   // console.log('2222', ROOM);
   const inRoomUnit = true;
+  const typeUser: any = useSelector((state: any) => state?.auth?.typeUser);
+  const isHomeowner = typeUser === 'Homeowner'
 
   const formRef: any = useRef<FormikValues>();
   const [room, setRoom] = useState({
@@ -103,6 +105,9 @@ const RoomDetailUnit = ({props}: any) => {
   };
 
   const list: any = ROOM_UNIT_HOWNER;
+
+  const list_attached = isHomeowner
+    ? list.attached_bathroom.filter((item: any) => item.label !== 'Any') : list.attached_bathroom
 
   const formInitialValues = {
     room_type: room.room_type,
@@ -135,19 +140,19 @@ const RoomDetailUnit = ({props}: any) => {
   });
 
   const onChangeValue = (value: any, name?: string) => {
-    const nRoom: any = {...room};
+    const nRoom: any = { ...room };
     if (name) {
       nRoom[name] = value;
       setRoom(nRoom);
-      console.log({value});
+      console.log({ value });
     }
   };
 
-  const onSubmit = (values: any) => {};
+  const onSubmit = (values: any) => { };
 
   const onValuesChangeFinish = (values: any) => {
-    console.log({values});
-    const nRoom: any = {...room};
+    console.log({ values });
+    const nRoom: any = { ...room };
     nRoom['floor_size_min'] = values[0];
     nRoom['floor_size_max'] = values[1];
     setRoom(nRoom);
@@ -155,7 +160,7 @@ const RoomDetailUnit = ({props}: any) => {
 
   const renderFloorSizeContent = (values: any) => {
     return (
-      <View style={{flexDirection: 'row', alignItems: 'center'}}>
+      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
         <IconFloorSize iconFillColor={colors.secondPrimary} />
         <AppText
           isPrice
@@ -205,7 +210,7 @@ const RoomDetailUnit = ({props}: any) => {
   };
 
   const convertFile = (file: any) => {
-    console.log({file});
+    console.log({ file });
     if (file && typeof file === 'string') {
       return JSON.parse(file);
     }
@@ -220,7 +225,7 @@ const RoomDetailUnit = ({props}: any) => {
       length > 4 ? styles.smallImage : styles.smallImageWidthSpace;
 
     return (
-      <View style={{paddingTop: SIZE.padding, marginBottom: 50}}>
+      <View style={{ paddingTop: SIZE.padding, marginBottom: 50 }}>
         <View style={styles.row}>
           <AppText style={styles.label}>{'Gallery'}</AppText>
           <Pressable
@@ -232,7 +237,7 @@ const RoomDetailUnit = ({props}: any) => {
         {length > 0 && (
           <Pressable onPress={openModal}>
             <Image
-              source={{uri: convertFile(gallery[0])?.imagePath}}
+              source={{ uri: convertFile(gallery[0])?.imagePath }}
               style={styles.firstImage}
             />
             <View style={styleList}>
@@ -245,14 +250,14 @@ const RoomDetailUnit = ({props}: any) => {
                     <View key={index.toString()}>
                       {isVideo ? (
                         <Video
-                          source={{uri}}
+                          source={{ uri }}
                           style={styleFile}
                           resizeMode={'cover'}
-                          // controls
-                          // paused
+                        // controls
+                        // paused
                         />
                       ) : (
-                        <Image source={{uri}} style={styleFile} />
+                        <Image source={{ uri }} style={styleFile} />
                       )}
                       {index === 4 && (
                         <View style={styles.shadowGallery}>
@@ -299,8 +304,8 @@ const RoomDetailUnit = ({props}: any) => {
 
   var typesVideo = ['mp4'];
 
-  const _renderFile = ({item}: {item: ImageServerProps}) => {
-    console.log({item});
+  const _renderFile = ({ item }: { item: ImageServerProps }) => {
+    console.log({ item });
     const file = convertFile(item);
     const isVideo = file?.format?.includes('videos');
     const uri = file?.imagePath;
@@ -308,9 +313,9 @@ const RoomDetailUnit = ({props}: any) => {
     return (
       <View key={item.toString()}>
         {isVideo ? (
-          <Video source={{uri}} style={styles.gallery} resizeMode={'contain'} />
+          <Video source={{ uri }} style={styles.gallery} resizeMode={'contain'} />
         ) : (
-          <Image source={{uri}} style={styles.gallery} />
+          <Image source={{ uri }} style={styles.gallery} />
         )}
       </View>
     );
@@ -391,7 +396,7 @@ const RoomDetailUnit = ({props}: any) => {
   return (
     <>
       <ScrollView
-        style={{flex: 1}}
+        style={{ flex: 1 }}
         contentContainerStyle={styles.contentContainerStyle}
         showsVerticalScrollIndicator={false}>
         <View style={styles.line} />
@@ -412,7 +417,7 @@ const RoomDetailUnit = ({props}: any) => {
                     name={'attached_bathroom'}
                     label={'Attached Bathroom'}
                     onValueChange={onChangeValue}
-                    items={list.attached_bathroom}
+                    items={list_attached}
                     error={props.errors.attached_bathroom}
                     stylePicker={'linear'}
                   />
@@ -565,4 +570,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export {RoomDetailUnit};
+export { RoomDetailUnit };

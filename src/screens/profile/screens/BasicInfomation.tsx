@@ -8,8 +8,7 @@ import {
 } from '@component';
 import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, Pressable } from 'react-native';
-import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   colors,
   fontFamily,
@@ -99,13 +98,15 @@ const BasicInfomation = () => {
   const onSubmit = () => {
     let body: any = {
       name: user?.name,
-      nationality: user?.nationality,
-      occupation: user?.occupation,
-      ethnicity: user?.ethnicity,
+      nationality: user?.nationality || '',
+      occupation: user?.occupation || '',
+      ethnicity: user?.ethnicity || '',
       gender: user?.gender === 'N/A' ? '' : user?.gender,
       ageGroup: typeof user?.ageGroup === 'number' ? user?.ageGroup : 0,
-      dob: formateDate(user?.dob),
+
     };
+    if (user?.dob) body = { ...body, dob: formateDate(user?.dob) }
+
     console.log('bbb', body);
     dispatch(updateUserInfo({ body, id: user?.id }));
   };
