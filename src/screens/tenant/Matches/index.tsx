@@ -202,7 +202,7 @@ const MatchesTenant = () => {
         {renderListAmenities()}
         {renderBigTitle('Location')}
         <MapView
-          // provider={PROVIDER_GOOGLE}
+          provider={PROVIDER_GOOGLE}
           style={{
             width: '100%',
             height: scaleWidth(170),
@@ -212,8 +212,8 @@ const MatchesTenant = () => {
           initialRegion={{
             latitude: 1.3139961,
             longitude: 103.7041657,
-            latitudeDelta: 0.099,
-            longitudeDelta: 0.099,
+            latitudeDelta: 0.0099,
+            longitudeDelta: 0.0099,
           }}>
           <MarkerAnimated
             coordinate={{

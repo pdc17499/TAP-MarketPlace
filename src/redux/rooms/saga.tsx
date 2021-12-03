@@ -123,7 +123,7 @@ export function* updateRoomSaga(action: any) {
         message: ' Update Room Success!',
       });
       yield put(updateRoomRedux(result?.data));
-      NavigationUtils.navigate(YOUR_LISTING);
+      NavigationUtils.goBack();
     }
   } catch (error) {
     GlobalService.hideLoading();

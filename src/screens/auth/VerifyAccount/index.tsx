@@ -8,6 +8,7 @@ import {Alert, Pressable, View} from 'react-native';
 import {styles} from './style';
 import {useDispatch, useSelector} from 'react-redux';
 import {updatePhonenumber, verifyPhonenumber} from '@redux';
+import {NavigationUtils} from '@navigation';
 
 interface VerifyCodeProp {
   navigation: any;
@@ -53,7 +54,7 @@ const VerifyAccount = (props: VerifyCodeProp) => {
   };
 
   const onSkip = () => {
-    navigation.replace(TABBAR);
+    NavigationUtils.reset(TABBAR);
   };
 
   const onChangeContact = (nContact: string) => {

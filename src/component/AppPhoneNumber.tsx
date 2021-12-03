@@ -64,6 +64,7 @@ export const AppPhoneNumber = React.memo((props: IAppPhoneNumber) => {
         code: '',
         number: '',
       });
+      setIsInLine(false);
     } else {
       const index = value.indexOf(' ');
       if (index === -1) {

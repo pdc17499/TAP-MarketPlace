@@ -41,7 +41,7 @@ const AccountSetting = () => {
 
   const validationForm = yup.object().shape({
     email: validateForm().email,
-    contact: validateForm().common.reuqire,
+    contact: validateForm().phone,
   });
 
   const onChangeText = (item: any, name?: string) => {

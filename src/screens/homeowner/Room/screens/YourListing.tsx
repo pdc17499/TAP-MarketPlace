@@ -78,13 +78,15 @@ const Route = React.memo(({props}: any) => {
         ) : (
           <Image source={room_sample} style={styles.bgRoom} />
         )}
-        <AppText style={styles.roomTitle}>
-          {item?.PlaceType + '  '}
-          <IconDot style={{marginBottom: 4}} />
+        <View>
           <AppText style={styles.roomTitle}>
-            {'  ' + item?.RoomDetails?.RoomType}
+            {item?.PlaceType + '  '}
+            <IconDot style={{marginBottom: 4}} />
+            <AppText style={styles.roomTitle}>
+              {'  ' + item?.RoomDetails?.RoomType}
+            </AppText>
           </AppText>
-        </AppText>
+        </View>
         {!isActive && (
           <View style={styles.subViewInactive}>
             <IconEyeCloseFullFill />

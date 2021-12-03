@@ -1,23 +1,23 @@
-import { AppButton, AppInput, AppText, Header } from '@component';
-import { SIZE, validateForm } from '@util';
-import { Formik } from 'formik';
-import React, { useEffect, useState } from 'react';
-import { View } from 'react-native';
-import { styles } from './style';
+import {AppButton, AppInput, AppText, Header} from '@component';
+import {SIZE, validateForm} from '@util';
+import {Formik} from 'formik';
+import React, {useEffect, useState} from 'react';
+import {View} from 'react-native';
+import {styles} from './style';
 import * as yup from 'yup';
-import { VERIFY_ACCOUNT } from '@routeName';
-import { useDispatch, useSelector } from 'react-redux';
+import {VERIFY_ACCOUNT} from '@routeName';
+import {useDispatch, useSelector} from 'react-redux';
 import {
   INITIAL_STATE_DATA_SIGN_UP,
   resetDataSignup,
   setDataSignup,
   signUp,
 } from '@redux';
-import { DataSignupProps, mockProps } from '@interfaces';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { ImageOrVideo } from 'react-native-image-crop-picker';
+import {DataSignupProps, mockProps} from '@interfaces';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import {ImageOrVideo} from 'react-native-image-crop-picker';
 
-interface SignUpEmailProp { }
+interface SignUpEmailProp {}
 
 const SignUpEmail = (props: SignUpEmailProp) => {
   const dispatch = useDispatch();
@@ -54,7 +54,7 @@ const SignUpEmail = (props: SignUpEmailProp) => {
 
   const onChangeValue = (item: any, name?: string) => {
     if (name) {
-      const nData: any = { ...state };
+      const nData: any = {...state};
       nData[name] = item;
       setState(nData);
     }
@@ -74,84 +74,79 @@ const SignUpEmail = (props: SignUpEmailProp) => {
 
   const hanldeSubmit = () => {
     console.log(state);
-    const isPriceRange = state?.rental_price?.value === 'Price range';
+    const nState = {...INITIAL_STATE_DATA_SIGN_UP, ...state};
+    const isPriceRange = nState?.rental_price?.value === 'Price range';
     const RentalPrice = {
-      type: state?.rental_price?.value,
-      Min: isPriceRange ? state?.min_range_price : 0,
-      Max: isPriceRange ? state?.max_range_price : 0,
-      Price: isPriceRange ? 0 : parseInt(state?.negotiable_price || '0'),
+      type: nState?.rental_price?.value,
+      Min: isPriceRange ? nState?.min_range_price : 0,
+      Max: isPriceRange ? nState?.max_range_price : 0,
+      Price: isPriceRange ? 0 : parseInt(nState?.negotiable_price || '0'),
     };
 
     const BudgetPrice = {
-      Min: state?.min_range_price,
-      Max: state?.max_range_price,
+      Min: nState?.min_range_price,
+      Max: nState?.max_range_price,
     };
 
     const RoomDetails = {
-      RoomType: state?.room_type?.value,
-      BedroomNumber: state?.bedroom_number?.value,
-      BathroomNumber: state?.bathroom_number?.value,
-      AttachedBathroom: state?.attached_bathroom?.value === 'Yes',
-      AllowCook: state?.allow_cooking?.value === 'Yes',
-      StayWithGuest: state?.staying_with_guests?.value === 'Yes',
-      KeyWords: state?.key_your_place,
+      RoomType: nState?.room_type?.value,
+      BedroomNumber: nState?.bedroom_number?.value,
+      BathroomNumber: nState?.bathroom_number?.value,
+      AttachedBathroom: nState?.attached_bathroom?.value === 'Yes',
+      AllowCook: nState?.allow_cooking?.value === 'Yes',
+      StayWithGuest: nState?.staying_with_guests?.value === 'Yes',
+      KeyWords: nState?.key_your_place,
     };
 
     const RoomDetailsAgent = {
-      RoomType: state?.room_type?.value,
-      BedroomNumber: state?.bedroom_number?.value,
-      BathroomNumber: state?.bathroom_number?.value,
-      AttachedBathroom: state?.attached_bathroom?.value === 'Yes',
-      AllowCook: state?.allow_cooking?.value === 'Yes',
-      StayWithGuest: state?.staying_with_guests?.value === 'Yes',
-      KeyWords: state?.key_your_place,
-      homeownerName: state?.homeowner_name,
-      homeownerGender: state?.homeowner_gender?.value,
+      ...RoomDetails,
+      homeownerName: nState?.homeowner_name,
+      homeownerGender: nState?.homeowner_gender?.value,
     };
 
     const RoomDetailsTenant = {
-      RoomType: state?.room_type?.value,
-      BedroomNumber: state?.bedroom_number_tenant,
-      BathroomNumber: state?.bathroom_number_tenant,
-      AttachedBathroom: state?.attached_bathroom?.value,
-      AllowCook: state?.allow_cooking?.value === 'Yes',
-      StayWithGuest: state?.staying_with_guests?.value === 'Yes',
-      KeyWords: state?.key_your_place,
+      RoomType: nState?.room_type?.value,
+      BedroomNumber: nState?.bedroom_number_tenant,
+      BathroomNumber: nState?.bathroom_number_tenant,
+      AttachedBathroom: nState?.attached_bathroom?.value,
+      AllowCook: nState?.allow_cooking?.value === 'Yes',
+      StayWithGuest: nState?.staying_with_guests?.value === 'Yes',
+      KeyWords: nState?.key_your_place,
     };
 
     const agenyInfo = {
-      agencyName: state?.agency_name,
-      licenseNumber: state?.license_no,
-      salespersonNumber: state?.sale_person_no,
-      gender: state?.gender,
+      agencyName: nState?.agency_name,
+      licenseNumber: nState?.license_no,
+      salespersonNumber: nState?.sale_person_no,
+      gender: nState?.gender,
     };
 
     const body: any = {
-      idType: state?.role_user,
+      idType: nState?.role_user,
       userInfor: {
-        email: state.email,
-        password: state.password,
-        name: state.user_name,
-        gender: state?.gender?.value || '',
-        ageGroup: state?.age_group?.id || 0,
-        nationality: state?.country || '',
-        occupation: state?.occupation?.value || '',
-        ethnicity: state?.ethnicity?.value || '',
-        lifestyle: state?.life_style,
-        preferences: state?.preferences,
+        email: nState.email,
+        password: nState.password,
+        name: nState.user_name,
+        gender: nState?.gender?.value || '',
+        ageGroup: nState?.age_group?.id || 0,
+        nationality: nState?.country || '',
+        occupation: nState?.occupation?.value || '',
+        ethnicity: nState?.ethnicity?.value || '',
+        lifestyle: nState?.life_style,
+        preferences: nState?.preferences,
       },
       roomDesc: {
-        RentalAddress: state?.location.title,
+        RentalAddress: nState?.location.title,
         Location: {
-          Latitude: state?.location.lat,
-          Longitude: state?.location.long,
+          Latitude: nState?.location.lat,
+          Longitude: nState?.location.long,
         },
         PlaceType: isTenant
-          ? state?.kind_place_tenant
-          : state?.kind_place?.value,
+          ? nState?.kind_place_tenant
+          : nState?.kind_place?.value,
         LeasePeriod: {
-          type: state?.kind_place?.value === 'HDB',
-          value: state?.lease_your_place,
+          type: nState?.kind_place?.value === 'HDB',
+          value: nState?.lease_your_place,
         },
       },
     };
@@ -161,16 +156,16 @@ const SignUpEmail = (props: SignUpEmailProp) => {
       body.roomDesc.RoomProperty = RoomDetailsTenant;
     } else {
       if (isAgent) {
-        const nUserInfo = { ...body.userInfor, ...agenyInfo };
+        const nUserInfo = {...body.userInfor, ...agenyInfo};
         body.userInfor = nUserInfo;
       }
       body.roomDesc.RentalPrice = RentalPrice;
       body.roomDesc.RoomDetails = isAgent ? RoomDetailsAgent : RoomDetails;
-      body.roomDesc.PicturesVideo = state?.list_photo;
+      body.roomDesc.PicturesVideo = nState?.list_photo;
     }
 
-    console.log({ body, isTenant, isAgent });
-    dispatch(signUp({ body, isTenant, isAgent }));
+    console.log({body, nState});
+    dispatch(signUp({body, isTenant, isAgent}));
     // navigation.navigate(VERIFY_ACCOUNT);
   };
 
@@ -184,7 +179,7 @@ const SignUpEmail = (props: SignUpEmailProp) => {
         onSubmit={hanldeSubmit}>
         {props => (
           <>
-            <View style={{ flex: 1 }}>
+            <View style={{flex: 1}}>
               <AppText style={styles.title}>{'Sign up'}</AppText>
               <AppInput
                 label={'Email'}
@@ -246,4 +241,4 @@ const SignUpEmail = (props: SignUpEmailProp) => {
   );
 };
 
-export { SignUpEmail };
+export {SignUpEmail};

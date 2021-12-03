@@ -49,8 +49,27 @@ export const validateForm = () => {
     phone: yup
       .string()
       .required('This field is required')
-      .min(9, 'Phone must be at least 9 characters')
-      .max(11, 'Phone may not be greater than 11 characters'),
+      .test({
+        name: 'validatePhoneCode',
+        message: 'Code number is required',
+        test: function (value: any) {
+          const index = value.indexOf(' ');
+          return index > 0;
+        },
+      })
+      .test({
+        name: 'validatePhone',
+        message: 'Phone number is required',
+        test: function (value: any) {
+          const index = value.indexOf(' ');
+          if (index <= 0) {
+            return false;
+          } else {
+            const nPhone = value.substring(index + 1, value.length);
+            return nPhone !== '';
+          }
+        },
+      }),
     prefix: yup.string().required('This field is required'),
     is_volunteer: yup.number().required('This field is required'),
     dob: yup.string().required('This field is required'),
